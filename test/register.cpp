@@ -12,34 +12,19 @@ TEST_F(RegisterTest, register1)
 {
     auto client = HttpClient::newHttpClient("http://localhost:9001");
     client->enableCookies(true);
-    Cookie cookie("", "");
-    client->addCookie(cookie);
 
-    //register
-    auto req = HttpRequest::newHttpRequest();
-    req->setMethod(drogon::Post);
-    req->setParameter("login", "User1");
-    req->setParameter("email", "user1@mail.com");
-    req->setParameter("password", "11");
-    req->setPath("/api/register");
-
-    auto resp = client->sendRequest(req);
-    ReqResult& res = resp.first;
-    HttpResponsePtr& r = resp.second;
-    ASSERT_TRUE(res == ReqResult::Ok) << res;
-    ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
-    ASSERT_TRUE(r->getContentType() == CT_TEXT_PLAIN) << r->getContentType();
+    Register(client, "User1", "user1@mail.com", "11");
 
     //login
-    req = HttpRequest::newHttpRequest();
+    auto req = HttpRequest::newHttpRequest();
     req->setMethod(drogon::Post);
     req->setParameter("login", "User1");
     req->setParameter("password", "11");
     req->setPath("/api/login");
 
-    resp = client->sendRequest(req);
-    res = resp.first;
-    r = resp.second;
+    auto resp = client->sendRequest(req);
+    ReqResult& res = resp.first;
+    HttpResponsePtr& r = resp.second;
     std::string access_token = r->getHeader("access_token");
     ASSERT_TRUE(res == ReqResult::Ok) << res;
     ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
@@ -47,18 +32,56 @@ TEST_F(RegisterTest, register1)
     ASSERT_TRUE(r->getCookie("refresh_token").cookieString() != "") << r->getCookie("refresh_token").cookieString();
     ASSERT_TRUE(access_token != "") << access_token;
 
-    //unregister
-    req = HttpRequest::newHttpRequest();
+    UnRegister(client, "User1", access_token);
+}
+
+//Register, login and delete a two users
+TEST_F(RegisterTest, register2)
+{
+    auto client1 = HttpClient::newHttpClient("http://localhost:9001");
+    client1->enableCookies(true);
+    auto client2 = HttpClient::newHttpClient("http://localhost:9001");
+    client2->enableCookies(true);
+
+    Register(client1, "User1", "user1@mail.com", "11");
+    Register(client2, "User2", "user2@mail.com", "22");
+
+    //login User1
+    auto req = HttpRequest::newHttpRequest();
     req->setMethod(drogon::Post);
     req->setParameter("login", "User1");
-    req->addHeader("access_token", access_token);
-    req->setPath("/api/unregister");
-    resp = client->sendRequest(req);
-    res = resp.first;
-    r = resp.second;
+    req->setParameter("password", "11");
+    req->setPath("/api/login");
+
+    auto resp = client1->sendRequest(req);
+    ReqResult& res = resp.first;
+    HttpResponsePtr& r = resp.second;
+    std::string access_token1 = r->getHeader("access_token");
     ASSERT_TRUE(res == ReqResult::Ok) << res;
     ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
     ASSERT_TRUE(r->getContentType() == CT_TEXT_PLAIN) << r->getContentType();
+    ASSERT_TRUE(r->getCookie("refresh_token").cookieString() != "") << r->getCookie("refresh_token").cookieString();
+    ASSERT_TRUE(access_token1 != "") << access_token1;
+
+    //login User2
+    req = HttpRequest::newHttpRequest();
+    req->setMethod(drogon::Post);
+    req->setParameter("login", "User2");
+    req->setParameter("password", "22");
+    req->setPath("/api/login");
+
+    resp = client2->sendRequest(req);
+    res = resp.first;
+    r = resp.second;
+    std::string access_token2 = r->getHeader("access_token");
+    ASSERT_TRUE(res == ReqResult::Ok) << res;
+    ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
+    ASSERT_TRUE(r->getContentType() == CT_TEXT_PLAIN) << r->getContentType();
+    ASSERT_TRUE(r->getCookie("refresh_token").cookieString() != "") << r->getCookie("refresh_token").cookieString();
+    ASSERT_TRUE(access_token2 != "") << access_token2;
+
+    UnRegister(client1, "User1", access_token1);
+    UnRegister(client2, "User2", access_token2);
 }
 
 }

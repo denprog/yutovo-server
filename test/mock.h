@@ -7,6 +7,8 @@
 namespace yutovo_server_test
 {
 
+using namespace drogon;
+
 typedef unsigned int uint;
 
 extern int argc;
@@ -14,36 +16,8 @@ extern char** argv;
 
 struct RegisterTest : public testing::Test
 {
-    RegisterTest()
-    {
-        std::promise<void> p;
-        std::future<void> f = p.get_future();
-
-        app_thread = std::thread(
-            [&]()
-            {
-                drogon::app().getLoop()->queueInLoop(
-                        [&p]()
-                        {
-                            p.set_value();
-                        });
-                drogon::app().run();
-            });
-        
-        f.get();
-    }
-
-    ~RegisterTest()
-    {
-        drogon::app().getLoop()->queueInLoop(
-            []()
-            {
-                drogon::app().quit();
-            });
-        app_thread.join();
-    }
-
-    std::thread app_thread;
+    void Register(HttpClientPtr client, std::string login, std::string email, std::string password);
+    void UnRegister(HttpClientPtr client, std::string login, std::string& access_token);
 };
 
 }

@@ -27,11 +27,6 @@ void LoginFilter::doFilter(const HttpRequestPtr& req, FilterCallback&& not_valid
     std::string access_token = req->getHeader("access_token");
     auto decoded = jwt::decode(access_token);
 
-    for (auto& e : decoded.get_header_claims())
-        logger->Info("header: {}={}", e.first, e.second.to_json().to_str());
-	for (auto& e : decoded.get_payload_claims())
-        logger->Info("payload: {}={}", e.first, e.second.to_json().to_str());
-
     try
     {    
         auto user_name = decoded.get_payload_claim("user_name").to_json().to_str();
@@ -124,7 +119,7 @@ void ApiController::Register(const HttpRequestPtr& req, std::function<void (cons
 
 void ApiController::UnRegister(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
-    logger->Info("UnRegister request");
+    logger->Info("UnRegister request: login={}", req->getParameter("login"));
     orm::DbClientPtr db = app().getDbClient();
 
     try
