@@ -8,7 +8,7 @@ using namespace drogon;
 using namespace std::chrono_literals;
 
 //Register, login and delete a user
-TEST_F(ServerTest, register1)
+TEST_F(AuthTest, register1)
 {
     auto client = HttpClient::newHttpClient("http://localhost:9001");
     client->enableCookies(true);
@@ -36,7 +36,7 @@ TEST_F(ServerTest, register1)
 }
 
 //Register, login and delete a two users
-TEST_F(ServerTest, register2)
+TEST_F(AuthTest, register2)
 {
     auto client1 = HttpClient::newHttpClient("http://localhost:9001");
     client1->enableCookies(true);
@@ -85,7 +85,7 @@ TEST_F(ServerTest, register2)
 }
 
 //Wrong access token
-TEST_F(ServerTest, register3)
+TEST_F(AuthTest, register3)
 {
     auto client = HttpClient::newHttpClient("http://localhost:9001");
     client->enableCookies(true);
@@ -103,7 +103,7 @@ TEST_F(ServerTest, register3)
 }
 
 //Login and logout
-TEST_F(ServerTest, login1)
+TEST_F(AuthTest, login1)
 {
     auto client = HttpClient::newHttpClient("http://localhost:9001");
     client->enableCookies(true);
@@ -121,16 +121,18 @@ TEST_F(ServerTest, login1)
     ReqResult& res = resp.first;
     HttpResponsePtr& r = resp.second;
     std::string access_token = r->getHeader("access_token");
+    const Cookie refresh_token = r->getCookie("refresh_token");
     ASSERT_TRUE(res == ReqResult::Ok) << res;
     ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
     ASSERT_TRUE(r->getContentType() == CT_TEXT_PLAIN) << r->getContentType();
-    ASSERT_TRUE(r->getCookie("refresh_token").cookieString() != "") << r->getCookie("refresh_token").cookieString();
+    ASSERT_TRUE(refresh_token.cookieString() != "") << refresh_token.cookieString();
     ASSERT_TRUE(access_token != "") << access_token;
 
     //logout
     req = HttpRequest::newHttpRequest();
     req->setMethod(drogon::Post);
     req->addHeader("access_token", access_token);
+    client->addCookie(refresh_token);
     req->setPath("/auth/logout");
 
     resp = client->sendRequest(req);
@@ -157,7 +159,7 @@ TEST_F(ServerTest, login1)
 }
 
 //Wrong login
-TEST_F(ServerTest, login2)
+TEST_F(AuthTest, login2)
 {
     auto client = HttpClient::newHttpClient("http://localhost:9001");
     client->enableCookies(true);
@@ -203,7 +205,7 @@ TEST_F(ServerTest, login2)
 }
 
 //Wrong password
-TEST_F(ServerTest, login3)
+TEST_F(AuthTest, login3)
 {
     auto client = HttpClient::newHttpClient("http://localhost:9001");
     client->enableCookies(true);
@@ -246,6 +248,48 @@ TEST_F(ServerTest, login3)
     ASSERT_TRUE(access_token != "") << access_token;
 
     UnRegister(client, "User1", access_token);
+}
+
+//Refresh session
+TEST_F(AuthTest, refresh_session1)
+{
+    auto client = HttpClient::newHttpClient("http://localhost:9001");
+    client->enableCookies(true);
+
+    Register(client, "User1", "user1@mail.com", "11");
+
+    //login
+    auto req = HttpRequest::newHttpRequest();
+    req->setMethod(drogon::Post);
+    req->setParameter("login", "User1");
+    req->setParameter("password", "11");
+    req->setPath("/auth/login");
+
+    auto resp = client->sendRequest(req);
+    ReqResult& res = resp.first;
+    HttpResponsePtr& r = resp.second;
+    std::string access_token1 = r->getHeader("access_token");
+    const Cookie refresh_token1 = r->getCookie("refresh_token");
+    ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
+
+    //refresh session
+    req = HttpRequest::newHttpRequest();
+    req->setMethod(drogon::Post);
+    req->setParameter("login", "User1");
+    req->addHeader("access_token", access_token1);
+    client->addCookie(refresh_token1);
+    req->setPath("/auth/refresh-token");
+
+    resp = client->sendRequest(req);
+    res = resp.first;
+    r = resp.second;
+    std::string access_token2 = r->getHeader("access_token");
+    const Cookie refresh_token2 = r->getCookie("refresh_token");
+    ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
+    ASSERT_TRUE(refresh_token1.cookieString() != refresh_token2.cookieString());
+    ASSERT_TRUE(access_token1 != access_token2);
+
+    UnRegister(client, "User1", access_token2);
 }
 
 }

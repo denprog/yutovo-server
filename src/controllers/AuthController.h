@@ -50,18 +50,22 @@ public:
     ADD_METHOD_TO(AuthController::UnRegister, "/auth/unregister", Post, "yutovo_server::LoginFilter");
     ADD_METHOD_TO(AuthController::Login, "/auth/login", Post);
     ADD_METHOD_TO(AuthController::Logout, "/auth/logout", Post, "yutovo_server::LoginFilter");
+    ADD_METHOD_TO(AuthController::RefreshToken, "/auth/refresh-token", Post, "yutovo_server::LoginFilter");
     METHOD_LIST_END
 
     void Register(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, User&& user);
     void UnRegister(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
     void Login(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
     void Logout(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
+    void RefreshToken(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
 
 private:
     void SendOk(std::function<void (const HttpResponsePtr &)>& callback);
     void SendOkTokens(std::function<void (const HttpResponsePtr &)>& callback, const std::string& login, std::string& access_uuid, 
         std::string& refresh_uuid, trantor::Date expires);
     void SendError(const HttpStatusCode status_code, const char* description, std::function<void (const HttpResponsePtr &)>& callback);
+
+    bool GetRefreshUuid(const std::string& refresh_token, std::string& refresh_uuid, std::function<void (const HttpResponsePtr &)>& callback);
 
 private:
     std::string public_key, private_key;

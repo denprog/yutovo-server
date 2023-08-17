@@ -20,7 +20,7 @@ find_package(yutovo_logger REQUIRED PATHS ${INSTALL_PATH}/lib/cmake/)
 add_executable(${PROJECT_NAME}_tests
 	main.cpp
     mock.cpp
-    server_test.cpp
+    auth_test.cpp
 )
 
 target_link_libraries(${PROJECT_NAME}_tests PUBLIC

@@ -14,7 +14,7 @@ typedef unsigned int uint;
 extern int argc;
 extern char** argv;
 
-struct ServerTest : public testing::Test
+struct AuthTest : public testing::Test
 {
     void Register(HttpClientPtr client, std::string login, std::string email, std::string password);
     void UnRegister(HttpClientPtr client, std::string login, std::string& access_token);

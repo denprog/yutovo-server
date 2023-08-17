@@ -27,7 +27,7 @@ void LoginFilter::doFilter(const HttpRequestPtr& req, FilterCallback&& not_valid
     std::string access_token = req->getHeader("access_token");
 
     try
-    {    
+    {
         auto decoded = jwt::decode(access_token);
         auto login = decoded.get_payload_claim("login").to_json().to_str();
         if (login != session->get<std::string>("login"))
@@ -145,22 +145,23 @@ void AuthController::UnRegister(const HttpRequestPtr& req, std::function<void (c
 
 void AuthController::Login(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
-    logger->Info("Login request: name={}, password={}", req->getParameter("login"), req->getParameter("password"));
+    auto login = req->getParameter("login");
+    auto password = req->getParameter("password");
+    logger->Info("Login request: name={}, password={}", login, password);
     orm::DbClientPtr db = app().getDbClient();
 
     try
     {
-        orm::Result result = db->execSqlSync("select id from users where login=$1 and password=$2", 
-            req->getParameter("login"), req->getParameter("password"));
+        orm::Result result = db->execSqlSync("select id from users where login=$1 and password=$2", login, password);
         if (result.size() > 0)
         {
             //create a session with refresh and access tokens
             SessionPtr session = req->session();
             std::string refresh_uuid(boost::uuids::to_string(boost::uuids::random_generator()()));
             std::string access_uuid(boost::uuids::to_string(boost::uuids::random_generator()()));
-            session->insert("login", req->getParameter("login"));
-            session->insert("refresh_uuid", refresh_uuid);
-            session->insert("access_uuid", access_uuid);
+            session->insert("login", login);
+            //session->insert("refresh_uuid", refresh_uuid);
+            //session->insert("access_uuid", access_uuid);
             trantor::Date expires = trantor::Date::now().after(refresh_token_expires);
 
             auto row = result[0];
@@ -168,7 +169,7 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
                 row["id"].as<std::string>(), refresh_uuid, expires.secondsSinceEpoch());
             session->insert("user_id", row["id"].as<std::string>());
 
-            SendOkTokens(callback, req->getParameter("login"), access_uuid, refresh_uuid, expires);
+            SendOkTokens(callback, login, access_uuid, refresh_uuid, expires);
         }
         else
             SendError(k401Unauthorized, "Login or password are incorrect", callback);
@@ -185,7 +186,11 @@ void AuthController::Logout(const HttpRequestPtr& req, std::function<void (const
     SessionPtr session = req->session();
     std::string login = session->get<std::string>("login");
     std::string user_id = session->get<std::string>("user_id");
-    std::string refresh_uuid = session->get<std::string>("refresh_uuid");
+    std::string refresh_token = req->getCookie("refresh_token");
+    std::string refresh_uuid;
+
+    if (!GetRefreshUuid(refresh_token, refresh_uuid, callback))
+        return;
 
     logger->Info("Logout request: login={}", login);
     orm::DbClientPtr db = app().getDbClient();
@@ -194,12 +199,49 @@ void AuthController::Logout(const HttpRequestPtr& req, std::function<void (const
     {
         orm::Result result = db->execSqlSync("delete from refresh_sessions where user_id=$1 and refresh_uuid=$2", user_id, refresh_uuid);
         if (result.affectedRows() > 0)
-        {
-            session->clear();
             SendOk(callback);
-        }
         else
             SendError(k401Unauthorized, "Login or password are incorrect", callback);
+        session->clear();
+    }
+    catch (const orm::DrogonDbException& e)
+    {
+        logger->Error("Database error: {}", e.base().what());
+        SendError(k500InternalServerError, e.base().what(), callback);
+    }
+}
+
+void AuthController::RefreshToken(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
+{
+    SessionPtr session = req->session();
+    std::string login = session->get<std::string>("login");
+    std::string user_id = session->get<std::string>("user_id");
+    std::string refresh_token = req->getCookie("refresh_token");
+
+    logger->Info("RefreshToken request: login={}", login);
+    orm::DbClientPtr db = app().getDbClient();
+
+    try
+    {
+        std::string refresh_uuid;
+        if (!GetRefreshUuid(refresh_token, refresh_uuid, callback))
+            return;
+
+        orm::Result result = db->execSqlSync("delete from refresh_sessions where user_id=$1 and refresh_uuid=$2", user_id, refresh_uuid);
+        if (result.affectedRows() == 0)
+        {
+            SendError(k401Unauthorized, "Refresh session is incorrect", callback);
+            return;
+        }
+
+        refresh_uuid = std::string(boost::uuids::to_string(boost::uuids::random_generator()()));
+        std::string access_uuid(boost::uuids::to_string(boost::uuids::random_generator()()));
+        trantor::Date expires = trantor::Date::now().after(refresh_token_expires);
+
+        result = db->execSqlSync("insert into refresh_sessions (user_id, refresh_uuid, expires) values ($1, $2, $3)", 
+            user_id, refresh_uuid, expires.secondsSinceEpoch());
+
+        SendOkTokens(callback, login, access_uuid, refresh_uuid, expires);
     }
     catch (const orm::DrogonDbException& e)
     {
@@ -227,7 +269,6 @@ void AuthController::SendOkTokens(std::function<void (const HttpResponsePtr &)>&
         set_expires_at(std::chrono::system_clock::now() + std::chrono::hours{1}).
         set_payload_claim("access-uuid", jwt::claim(std::string(access_uuid))).
         set_payload_claim("login", jwt::claim(login)).
-        //sign(jwt::algorithm::rsa(public_key, private_key, "", "", nullptr, ""));
         sign(jwt::algorithm::rs256(public_key, private_key, "", ""));
 
     auto refresh_token = jwt::create().
@@ -261,6 +302,34 @@ void AuthController::SendError(const HttpStatusCode status_code, const char* des
     auto resp = HttpResponse::newHttpJsonResponse(r);
     resp->setStatusCode(status_code);
     callback(resp);
+}
+
+bool AuthController::GetRefreshUuid(const std::string& refresh_token, std::string& refresh_uuid, std::function<void (const HttpResponsePtr &)>& callback)
+{
+    try
+    {
+        auto decoded = jwt::decode(refresh_token);
+        auto verifier = jwt::verify().allow_algorithm(jwt::algorithm::rs256("", private_key, "", "")).with_issuer("auth0");
+        verifier.verify(decoded);
+        refresh_uuid = decoded.get_payload_claim("refresh_uuid").to_json().to_str();
+    }
+    catch (std::invalid_argument& ex)
+    {
+        SendError(k400BadRequest, ex.what(), callback);
+        return false;
+    }
+    catch (jwt::error::claim_not_present_exception& ex)
+    {
+        SendError(k400BadRequest, ex.what(), callback);
+        return false;
+    }
+    catch (jwt::token_verification_exception& ex)
+    {
+        SendError(k401Unauthorized, ex.what(), callback);
+        return false;
+    }
+
+    return true;
 }
 
 }
