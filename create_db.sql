@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS user_sessions
 CREATE TABLE IF NOT EXISTS refresh_sessions
 (
     user_id int,
-    refresh_token uuid not null,
+    refresh_uuid uuid not null,
     expires bigint not null,
     create_time timestamp with time zone not null default now()
 );

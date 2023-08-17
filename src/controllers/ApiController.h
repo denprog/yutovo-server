@@ -59,7 +59,7 @@ public:
 
 private:
     void SendOk(std::function<void (const HttpResponsePtr &)>& callback);
-    void SendOkTokens(std::function<void (const HttpResponsePtr &)>& callback, const std::string& user_name, std::string& access_uuid, 
+    void SendOkTokens(std::function<void (const HttpResponsePtr &)>& callback, const std::string& login, std::string& access_uuid, 
         std::string& refresh_uuid, trantor::Date expires);
     void SendError(const HttpStatusCode status_code, const char* description, std::function<void (const HttpResponsePtr &)>& callback);
 

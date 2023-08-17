@@ -6,9 +6,9 @@ namespace yutovo_server_test
 int argc = 0;
 char** argv = nullptr;
 
-//RegisterTest
+//ServerTest
 
-void RegisterTest::Register(HttpClientPtr client, std::string login, std::string email, std::string password)
+void ServerTest::Register(HttpClientPtr client, std::string login, std::string email, std::string password)
 {
     auto req = HttpRequest::newHttpRequest();
     req->setMethod(drogon::Post);
@@ -25,11 +25,10 @@ void RegisterTest::Register(HttpClientPtr client, std::string login, std::string
     ASSERT_TRUE(r->getContentType() == CT_TEXT_PLAIN) << r->getContentType();
 }
 
-void RegisterTest::UnRegister(HttpClientPtr client, std::string login, std::string& access_token)
+void ServerTest::UnRegister(HttpClientPtr client, std::string login, std::string& access_token)
 {
     auto req = HttpRequest::newHttpRequest();
     req->setMethod(drogon::Post);
-    req->setParameter("login", login);
     req->addHeader("access_token", access_token);
     req->setPath("/api/unregister");
 

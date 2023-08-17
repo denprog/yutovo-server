@@ -29,8 +29,8 @@ void LoginFilter::doFilter(const HttpRequestPtr& req, FilterCallback&& not_valid
 
     try
     {    
-        auto user_name = decoded.get_payload_claim("user_name").to_json().to_str();
-        if (user_name != session->get<std::string>("user_name"))
+        auto login = decoded.get_payload_claim("login").to_json().to_str();
+        if (login != session->get<std::string>("login"))
         {
             auto resp = HttpResponse::newHttpResponse();
             resp->setStatusCode(k401Unauthorized);
@@ -119,12 +119,14 @@ void ApiController::Register(const HttpRequestPtr& req, std::function<void (cons
 
 void ApiController::UnRegister(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
-    logger->Info("UnRegister request: login={}", req->getParameter("login"));
+    SessionPtr session = req->session();
+    std::string login = session->get<std::string>("login");
+    logger->Info("UnRegister request: login={}", login);
     orm::DbClientPtr db = app().getDbClient();
 
     try
     {
-        orm::Result result = db->execSqlSync("delete from users where login=$1", req->getParameter("login"));
+        orm::Result result = db->execSqlSync("delete from users where login=$1", login);
         if (result.affectedRows() == 0)
             SendError(k404NotFound, "Login not found", callback);
         else
@@ -152,14 +154,16 @@ void ApiController::Login(const HttpRequestPtr& req, std::function<void (const H
             SessionPtr session = req->session();
             std::string refresh_uuid(boost::uuids::to_string(boost::uuids::random_generator()()));
             std::string access_uuid(boost::uuids::to_string(boost::uuids::random_generator()()));
-            session->insert("user_name", req->getParameter("login"));
+            session->insert("login", req->getParameter("login"));
             session->insert("refresh_uuid", refresh_uuid);
             session->insert("access_uuid", access_uuid);
             trantor::Date expires = trantor::Date::now().after(refresh_token_expires);
 
             auto row = result[0];
-            result = db->execSqlSync("insert into refresh_sessions (user_id, refresh_token, expires) values ($1, $2, $3)", 
+            result = db->execSqlSync("insert into refresh_sessions (user_id, refresh_uuid, expires) values ($1, $2, $3)", 
                 row["id"].as<std::string>(), refresh_uuid, expires.secondsSinceEpoch());
+            session->insert("user_id", row["id"].as<std::string>());
+
             SendOkTokens(callback, req->getParameter("login"), access_uuid, refresh_uuid, expires);
         }
         else
@@ -174,7 +178,30 @@ void ApiController::Login(const HttpRequestPtr& req, std::function<void (const H
 
 void ApiController::Logout(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
-    auto resp = HttpResponse::newHttpResponse();
+    SessionPtr session = req->session();
+    std::string login = session->get<std::string>("login");
+    std::string user_id = session->get<std::string>("user_id");
+    std::string refresh_uuid = session->get<std::string>("refresh_uuid");
+
+    logger->Info("Logout request: login={}", login);
+    orm::DbClientPtr db = app().getDbClient();
+
+    try
+    {
+        orm::Result result = db->execSqlSync("delete from refresh_sessions where user_id=$1 and refresh_uuid=$2", user_id, refresh_uuid);
+        if (result.affectedRows() > 0)
+        {
+            session->clear();
+            SendOk(callback);
+        }
+        else
+            SendError(k401Unauthorized, "Login or password are incorrect", callback);
+    }
+    catch (const orm::DrogonDbException& e)
+    {
+        logger->Error("Database error: {}", e.base().what());
+        SendError(k500InternalServerError, e.base().what(), callback);
+    }
 }
 
 void ApiController::SendOk(std::function<void (const HttpResponsePtr &)>& callback)
@@ -185,7 +212,7 @@ void ApiController::SendOk(std::function<void (const HttpResponsePtr &)>& callba
     callback(resp);
 }
 
-void ApiController::SendOkTokens(std::function<void (const HttpResponsePtr &)>& callback, const std::string& user_name, std::string& access_uuid, 
+void ApiController::SendOkTokens(std::function<void (const HttpResponsePtr &)>& callback, const std::string& login, std::string& access_uuid, 
     std::string& refresh_uuid, trantor::Date expires)
 {
     auto access_token = jwt::create().
@@ -195,7 +222,7 @@ void ApiController::SendOkTokens(std::function<void (const HttpResponsePtr &)>& 
         set_issued_at(std::chrono::system_clock::now()).
         set_expires_at(std::chrono::system_clock::now() + std::chrono::hours{1}).
         set_payload_claim("access-uuid", jwt::claim(std::string(access_uuid))).
-        set_payload_claim("user_name", jwt::claim(user_name)).
+        set_payload_claim("login", jwt::claim(login)).
         //sign(jwt::algorithm::rsa(public_key, private_key, "", "", nullptr, ""));
         sign(jwt::algorithm::rs256(public_key, private_key, "", ""));
 
@@ -206,7 +233,7 @@ void ApiController::SendOkTokens(std::function<void (const HttpResponsePtr &)>& 
         set_issued_at(std::chrono::system_clock::now()).
         set_expires_at(std::chrono::system_clock::now() + std::chrono::hours{1}).
         set_payload_claim("refresh_uuid", jwt::claim(std::string(refresh_uuid))).
-        set_payload_claim("user_name", jwt::claim(user_name)).
+        set_payload_claim("login", jwt::claim(login)).
         sign(jwt::algorithm::rs256(public_key, private_key, "", ""));
 
     auto resp = HttpResponse::newHttpResponse();
