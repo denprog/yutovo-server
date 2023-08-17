@@ -40,16 +40,16 @@ private:
     Logger* logger = Logger::GetInstance(std::string(std::getenv("YUTOVO_DEPLOY")) + "/log", "server", true, true);
 };
 
-class ApiController : public drogon::HttpController<ApiController>
+class AuthController : public drogon::HttpController<AuthController>
 {
 public:
-    ApiController();
+    AuthController();
 
     METHOD_LIST_BEGIN
-    ADD_METHOD_TO(ApiController::Register, "/api/register", Post);
-    ADD_METHOD_TO(ApiController::UnRegister, "/api/unregister", Post, "yutovo_server::LoginFilter");
-    ADD_METHOD_TO(ApiController::Login, "/api/login", Post);
-    ADD_METHOD_TO(ApiController::Logout, "/api/logout", Post);
+    ADD_METHOD_TO(AuthController::Register, "/auth/register", Post);
+    ADD_METHOD_TO(AuthController::UnRegister, "/auth/unregister", Post, "yutovo_server::LoginFilter");
+    ADD_METHOD_TO(AuthController::Login, "/auth/login", Post);
+    ADD_METHOD_TO(AuthController::Logout, "/auth/logout", Post, "yutovo_server::LoginFilter");
     METHOD_LIST_END
 
     void Register(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, User&& user);

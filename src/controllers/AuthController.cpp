@@ -1,4 +1,4 @@
-#include "ApiController.h"
+#include "AuthController.h"
 #include <jwt-cpp/jwt.h>
 #include <fstream>
 #include <system_error>
@@ -66,9 +66,9 @@ void LoginFilter::doFilter(const HttpRequestPtr& req, FilterCallback&& not_valid
     valid_callback();
 }
 
-//ApiController
+//AuthController
 
-ApiController::ApiController()
+AuthController::AuthController()
 {
     std::ifstream key_file("server_key");
     if (!key_file.is_open())
@@ -87,7 +87,7 @@ ApiController::ApiController()
     public_key = ss.str();
 }
 
-void ApiController::Register(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, User&& user)
+void AuthController::Register(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, User&& user)
 {
     logger->Info("Register request: login={}, email={}, password={}", user.login, user.email, user.password);
     orm::DbClientPtr db = app().getDbClient();
@@ -121,7 +121,7 @@ void ApiController::Register(const HttpRequestPtr& req, std::function<void (cons
     }
 }
 
-void ApiController::UnRegister(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
+void AuthController::UnRegister(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
     SessionPtr session = req->session();
     std::string login = session->get<std::string>("login");
@@ -143,7 +143,7 @@ void ApiController::UnRegister(const HttpRequestPtr& req, std::function<void (co
     }
 }
 
-void ApiController::Login(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
+void AuthController::Login(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
     logger->Info("Login request: name={}, password={}", req->getParameter("login"), req->getParameter("password"));
     orm::DbClientPtr db = app().getDbClient();
@@ -180,7 +180,7 @@ void ApiController::Login(const HttpRequestPtr& req, std::function<void (const H
     }
 }
 
-void ApiController::Logout(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
+void AuthController::Logout(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
     SessionPtr session = req->session();
     std::string login = session->get<std::string>("login");
@@ -208,7 +208,7 @@ void ApiController::Logout(const HttpRequestPtr& req, std::function<void (const 
     }
 }
 
-void ApiController::SendOk(std::function<void (const HttpResponsePtr &)>& callback)
+void AuthController::SendOk(std::function<void (const HttpResponsePtr &)>& callback)
 {
     auto resp = HttpResponse::newHttpResponse();
     resp->setStatusCode(k200OK);
@@ -216,7 +216,7 @@ void ApiController::SendOk(std::function<void (const HttpResponsePtr &)>& callba
     callback(resp);
 }
 
-void ApiController::SendOkTokens(std::function<void (const HttpResponsePtr &)>& callback, const std::string& login, std::string& access_uuid, 
+void AuthController::SendOkTokens(std::function<void (const HttpResponsePtr &)>& callback, const std::string& login, std::string& access_uuid, 
     std::string& refresh_uuid, trantor::Date expires)
 {
     auto access_token = jwt::create().
@@ -246,7 +246,7 @@ void ApiController::SendOkTokens(std::function<void (const HttpResponsePtr &)>& 
 
     drogon::Cookie refresh_cookie("refresh_token", refresh_token);
     refresh_cookie.setHttpOnly(true);
-    refresh_cookie.setPath("/api");
+    refresh_cookie.setPath("/auth");
     refresh_cookie.setExpiresDate(expires);
 
     resp->addCookie(refresh_cookie);
@@ -254,7 +254,7 @@ void ApiController::SendOkTokens(std::function<void (const HttpResponsePtr &)>& 
     callback(resp);
 }
 
-void ApiController::SendError(const HttpStatusCode status_code, const char* description, std::function<void (const HttpResponsePtr &)>& callback)
+void AuthController::SendError(const HttpStatusCode status_code, const char* description, std::function<void (const HttpResponsePtr &)>& callback)
 {
     Json::Value r;
     r["error"] = description;

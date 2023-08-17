@@ -15,7 +15,7 @@ void ServerTest::Register(HttpClientPtr client, std::string login, std::string e
     req->setParameter("login", login);
     req->setParameter("email", email);
     req->setParameter("password", password);
-    req->setPath("/api/register");
+    req->setPath("/auth/register");
 
     auto resp = client->sendRequest(req);
     ReqResult& res = resp.first;
@@ -30,7 +30,7 @@ void ServerTest::UnRegister(HttpClientPtr client, std::string login, std::string
     auto req = HttpRequest::newHttpRequest();
     req->setMethod(drogon::Post);
     req->addHeader("access_token", access_token);
-    req->setPath("/api/unregister");
+    req->setPath("/auth/unregister");
 
     auto resp = client->sendRequest(req);
     ReqResult& res = resp.first;

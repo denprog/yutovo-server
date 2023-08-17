@@ -20,7 +20,7 @@ TEST_F(ServerTest, register1)
     req->setMethod(drogon::Post);
     req->setParameter("login", "User1");
     req->setParameter("password", "11");
-    req->setPath("/api/login");
+    req->setPath("/auth/login");
 
     auto resp = client->sendRequest(req);
     ReqResult& res = resp.first;
@@ -51,7 +51,7 @@ TEST_F(ServerTest, register2)
     req->setMethod(drogon::Post);
     req->setParameter("login", "User1");
     req->setParameter("password", "11");
-    req->setPath("/api/login");
+    req->setPath("/auth/login");
 
     auto resp = client1->sendRequest(req);
     ReqResult& res = resp.first;
@@ -68,7 +68,7 @@ TEST_F(ServerTest, register2)
     req->setMethod(drogon::Post);
     req->setParameter("login", "User2");
     req->setParameter("password", "22");
-    req->setPath("/api/login");
+    req->setPath("/auth/login");
 
     resp = client2->sendRequest(req);
     res = resp.first;
@@ -93,7 +93,7 @@ TEST_F(ServerTest, register3)
     auto req = HttpRequest::newHttpRequest();
     req->setMethod(drogon::Post);
     req->addHeader("access_token", "12345");
-    req->setPath("/api/unregister");
+    req->setPath("/auth/unregister");
 
     auto resp = client->sendRequest(req);
     ReqResult& res = resp.first;
@@ -115,7 +115,7 @@ TEST_F(ServerTest, login1)
     req->setMethod(drogon::Post);
     req->setParameter("login", "User1");
     req->setParameter("password", "11");
-    req->setPath("/api/login");
+    req->setPath("/auth/login");
 
     auto resp = client->sendRequest(req);
     ReqResult& res = resp.first;
@@ -131,7 +131,7 @@ TEST_F(ServerTest, login1)
     req = HttpRequest::newHttpRequest();
     req->setMethod(drogon::Post);
     req->addHeader("access_token", access_token);
-    req->setPath("/api/logout");
+    req->setPath("/auth/logout");
 
     resp = client->sendRequest(req);
     res = resp.first;
@@ -145,7 +145,7 @@ TEST_F(ServerTest, login1)
     req->setMethod(drogon::Post);
     req->setParameter("login", "User1");
     req->setParameter("password", "11");
-    req->setPath("/api/login");
+    req->setPath("/auth/login");
     resp = client->sendRequest(req);
     res = resp.first;
     r = resp.second;
@@ -169,7 +169,7 @@ TEST_F(ServerTest, login2)
     req->setMethod(drogon::Post);
     req->setParameter("login", "User2");
     req->setParameter("password", "11");
-    req->setPath("/api/login");
+    req->setPath("/auth/login");
 
     auto resp = client->sendRequest(req);
     ReqResult& res = resp.first;
@@ -187,7 +187,7 @@ TEST_F(ServerTest, login2)
     req->setMethod(drogon::Post);
     req->setParameter("login", "User1");
     req->setParameter("password", "11");
-    req->setPath("/api/login");
+    req->setPath("/auth/login");
 
     resp = client->sendRequest(req);
     res = resp.first;
@@ -215,7 +215,7 @@ TEST_F(ServerTest, login3)
     req->setMethod(drogon::Post);
     req->setParameter("login", "User2");
     req->setParameter("password", "22");
-    req->setPath("/api/login");
+    req->setPath("/auth/login");
 
     auto resp = client->sendRequest(req);
     ReqResult& res = resp.first;
@@ -233,7 +233,7 @@ TEST_F(ServerTest, login3)
     req->setMethod(drogon::Post);
     req->setParameter("login", "User1");
     req->setParameter("password", "11");
-    req->setPath("/api/login");
+    req->setPath("/auth/login");
 
     resp = client->sendRequest(req);
     res = resp.first;
