@@ -51,6 +51,9 @@ public:
     ADD_METHOD_TO(AuthController::Login, "/auth/login", Post);
     ADD_METHOD_TO(AuthController::Logout, "/auth/logout", Post, "yutovo_server::LoginFilter");
     ADD_METHOD_TO(AuthController::RefreshToken, "/auth/refresh-token", Post, "yutovo_server::LoginFilter");
+#ifdef TEST
+    ADD_METHOD_TO(AuthController::SetParams, "/auth/set-params", Post);
+#endif
     METHOD_LIST_END
 
     void Register(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, User&& user);
@@ -59,17 +62,22 @@ public:
     void Logout(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
     void RefreshToken(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
 
+#ifdef TEST
+    void SetParams(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
+#endif
+
 private:
     void SendOk(std::function<void (const HttpResponsePtr &)>& callback);
     void SendOkTokens(std::function<void (const HttpResponsePtr &)>& callback, const std::string& login, std::string& access_uuid, 
-        std::string& refresh_uuid, trantor::Date expires);
+        std::string& refresh_uuid, trantor::Date access_expires, trantor::Date refresh_expires);
     void SendError(const HttpStatusCode status_code, const char* description, std::function<void (const HttpResponsePtr &)>& callback);
 
     bool GetRefreshUuid(const std::string& refresh_token, std::string& refresh_uuid, std::function<void (const HttpResponsePtr &)>& callback);
 
 private:
     std::string public_key, private_key;
-    const int refresh_token_expires = 60 * 2; //seconds
+    int access_token_expires = 60 * 2; //seconds
+    int refresh_token_expires = 60 * 60 * 24; //seconds
     Logger* logger = Logger::GetInstance(std::string(std::getenv("YUTOVO_DEPLOY")) + "/log", "server", true, true);
 };
 }

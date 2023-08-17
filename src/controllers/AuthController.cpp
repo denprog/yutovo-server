@@ -58,7 +58,7 @@ void LoginFilter::doFilter(const HttpRequestPtr& req, FilterCallback&& not_valid
     catch (jwt::token_verification_exception& ex)
     {
         auto resp = HttpResponse::newHttpResponse();
-        resp->setStatusCode(k401Unauthorized);
+        resp->setStatusCode(k403Forbidden);
         not_valid_callback(resp);
         return;
     }
@@ -157,19 +157,19 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
         {
             //create a session with refresh and access tokens
             SessionPtr session = req->session();
+            session->insert("login", login);
+
             std::string refresh_uuid(boost::uuids::to_string(boost::uuids::random_generator()()));
             std::string access_uuid(boost::uuids::to_string(boost::uuids::random_generator()()));
-            session->insert("login", login);
-            //session->insert("refresh_uuid", refresh_uuid);
-            //session->insert("access_uuid", access_uuid);
-            trantor::Date expires = trantor::Date::now().after(refresh_token_expires);
+            trantor::Date access_expires = trantor::Date::now().after(access_token_expires);
+            trantor::Date refresh_expires = trantor::Date::now().after(refresh_token_expires);
 
             auto row = result[0];
             result = db->execSqlSync("insert into refresh_sessions (user_id, refresh_uuid, expires) values ($1, $2, $3)", 
-                row["id"].as<std::string>(), refresh_uuid, expires.secondsSinceEpoch());
+                row["id"].as<std::string>(), refresh_uuid, refresh_expires.secondsSinceEpoch());
             session->insert("user_id", row["id"].as<std::string>());
 
-            SendOkTokens(callback, login, access_uuid, refresh_uuid, expires);
+            SendOkTokens(callback, login, access_uuid, refresh_uuid, access_expires, refresh_expires);
         }
         else
             SendError(k401Unauthorized, "Login or password are incorrect", callback);
@@ -236,12 +236,13 @@ void AuthController::RefreshToken(const HttpRequestPtr& req, std::function<void 
 
         refresh_uuid = std::string(boost::uuids::to_string(boost::uuids::random_generator()()));
         std::string access_uuid(boost::uuids::to_string(boost::uuids::random_generator()()));
-        trantor::Date expires = trantor::Date::now().after(refresh_token_expires);
+        trantor::Date access_expires = trantor::Date::now().after(access_token_expires);
+        trantor::Date refresh_expires = trantor::Date::now().after(refresh_token_expires);
 
         result = db->execSqlSync("insert into refresh_sessions (user_id, refresh_uuid, expires) values ($1, $2, $3)", 
-            user_id, refresh_uuid, expires.secondsSinceEpoch());
+            user_id, refresh_uuid, refresh_expires.secondsSinceEpoch());
 
-        SendOkTokens(callback, login, access_uuid, refresh_uuid, expires);
+        SendOkTokens(callback, login, access_uuid, refresh_uuid, access_expires, refresh_expires);
     }
     catch (const orm::DrogonDbException& e)
     {
@@ -249,6 +250,15 @@ void AuthController::RefreshToken(const HttpRequestPtr& req, std::function<void 
         SendError(k500InternalServerError, e.base().what(), callback);
     }
 }
+
+#ifdef TEST
+void AuthController::SetParams(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
+{
+    access_token_expires = req->getOptionalParameter<int>("access_token_expires").value();
+    refresh_token_expires = req->getOptionalParameter<int>("refresh_token_expires").value();
+    SendOk(callback);
+}
+#endif
 
 void AuthController::SendOk(std::function<void (const HttpResponsePtr &)>& callback)
 {
@@ -259,14 +269,14 @@ void AuthController::SendOk(std::function<void (const HttpResponsePtr &)>& callb
 }
 
 void AuthController::SendOkTokens(std::function<void (const HttpResponsePtr &)>& callback, const std::string& login, std::string& access_uuid, 
-    std::string& refresh_uuid, trantor::Date expires)
+    std::string& refresh_uuid, trantor::Date access_expires, trantor::Date refresh_expires)
 {
     auto access_token = jwt::create().
         set_issuer("auth0").
         set_type("JWT").
         set_id("yutovo-server").
         set_issued_at(std::chrono::system_clock::now()).
-        set_expires_at(std::chrono::system_clock::now() + std::chrono::hours{1}).
+        set_expires_at(std::chrono::system_clock::from_time_t(access_expires.secondsSinceEpoch())).
         set_payload_claim("access-uuid", jwt::claim(std::string(access_uuid))).
         set_payload_claim("login", jwt::claim(login)).
         sign(jwt::algorithm::rs256(public_key, private_key, "", ""));
@@ -276,7 +286,7 @@ void AuthController::SendOkTokens(std::function<void (const HttpResponsePtr &)>&
         set_type("JWT").
         set_id("yutovo-server").
         set_issued_at(std::chrono::system_clock::now()).
-        set_expires_at(std::chrono::system_clock::now() + std::chrono::hours{1}).
+        set_expires_at(std::chrono::system_clock::from_time_t(refresh_expires.secondsSinceEpoch())).
         set_payload_claim("refresh_uuid", jwt::claim(std::string(refresh_uuid))).
         set_payload_claim("login", jwt::claim(login)).
         sign(jwt::algorithm::rs256(public_key, private_key, "", ""));
@@ -288,7 +298,7 @@ void AuthController::SendOkTokens(std::function<void (const HttpResponsePtr &)>&
     drogon::Cookie refresh_cookie("refresh_token", refresh_token);
     refresh_cookie.setHttpOnly(true);
     refresh_cookie.setPath("/auth");
-    refresh_cookie.setExpiresDate(expires);
+    refresh_cookie.setExpiresDate(refresh_expires);
 
     resp->addCookie(refresh_cookie);
     resp->addHeader("access_token", access_token);

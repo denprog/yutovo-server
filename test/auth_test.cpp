@@ -292,4 +292,72 @@ TEST_F(AuthTest, refresh_session1)
     UnRegister(client, "User1", access_token2);
 }
 
+//Check expired session
+TEST_F(AuthTest, refresh_session2)
+{
+    auto client = HttpClient::newHttpClient("http://localhost:9001");
+    client->enableCookies(true);
+
+    //set very short expire time for the tokens
+    auto req = HttpRequest::newHttpRequest();
+    req->setMethod(drogon::Post);
+    req->setParameter("access_token_expires", "1");
+    req->setParameter("refresh_token_expires", "10");
+    req->setPath("/auth/set-params");
+    auto resp = client->sendRequest(req);
+    auto r = resp.second;
+    ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
+
+    Register(client, "User1", "user1@mail.com", "11");
+
+    //login
+    req = HttpRequest::newHttpRequest();
+    req->setMethod(drogon::Post);
+    req->setParameter("login", "User1");
+    req->setParameter("password", "11");
+    req->setPath("/auth/login");
+
+    resp = client->sendRequest(req);
+    r = resp.second;
+    std::string access_token = r->getHeader("access_token");
+    const Cookie refresh_token = r->getCookie("refresh_token");
+    ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
+
+    std::this_thread::sleep_for(2s); //wait until the access token expires
+
+    req = HttpRequest::newHttpRequest();
+    req->setMethod(drogon::Post);
+    req->addHeader("access_token", access_token);
+    req->setPath("/auth/unregister");
+
+    resp = client->sendRequest(req);
+    r = resp.second;
+    ASSERT_TRUE(r->getStatusCode() == k403Forbidden) << r->getStatusCode();
+
+    //return the expire timeouts
+    req = HttpRequest::newHttpRequest();
+    req->setMethod(drogon::Post);
+    req->setParameter("access_token_expires", "120");
+    req->setParameter("refresh_token_expires", "86400");
+    req->setPath("/auth/set-params");
+    resp = client->sendRequest(req);
+    r = resp.second;
+    ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
+
+    std::this_thread::sleep_for(2s);
+
+    //login once again
+    req = HttpRequest::newHttpRequest();
+    req->setMethod(drogon::Post);
+    req->setParameter("login", "User1");
+    req->setParameter("password", "11");
+    req->setPath("/auth/login");
+    resp = client->sendRequest(req);
+    r = resp.second;
+    access_token = r->getHeader("access_token");
+    ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
+
+    UnRegister(client, "User1", access_token);
+}
+
 }

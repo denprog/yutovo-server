@@ -6,6 +6,7 @@ project(yutovo_server
 )
 
 add_compile_definitions(DEBUG)
+add_compile_definitions(TEST)
 
 set(INSTALL_PATH "$ENV{YUTOVO_DEPLOY}")
 set(THIRD_PARTY_PATH "$ENV{YUTOVO_DEPLOY}/../third_party/")
