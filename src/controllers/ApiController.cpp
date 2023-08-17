@@ -25,10 +25,10 @@ void LoginFilter::doFilter(const HttpRequestPtr& req, FilterCallback&& not_valid
     orm::DbClientPtr db = app().getDbClient();
     SessionPtr session = req->session();
     std::string access_token = req->getHeader("access_token");
-    auto decoded = jwt::decode(access_token);
 
     try
     {    
+        auto decoded = jwt::decode(access_token);
         auto login = decoded.get_payload_claim("login").to_json().to_str();
         if (login != session->get<std::string>("login"))
         {
@@ -37,6 +37,16 @@ void LoginFilter::doFilter(const HttpRequestPtr& req, FilterCallback&& not_valid
             not_valid_callback(resp);
             return;
         }
+
+        auto verifier = jwt::verify().allow_algorithm(jwt::algorithm::rs256("", private_key, "", "")).with_issuer("auth0");
+        verifier.verify(decoded);
+    }
+    catch (std::invalid_argument& ex)
+    {
+        auto resp = HttpResponse::newHttpResponse();
+        resp->setStatusCode(k400BadRequest);
+        not_valid_callback(resp);
+        return;
     }
     catch (jwt::error::claim_not_present_exception& ex)
     {
@@ -44,12 +54,6 @@ void LoginFilter::doFilter(const HttpRequestPtr& req, FilterCallback&& not_valid
         resp->setStatusCode(k400BadRequest);
         not_valid_callback(resp);
         return;
-    }
-
-    auto verifier = jwt::verify().allow_algorithm(jwt::algorithm::rs256("", private_key, "", "")).with_issuer("auth0");
-    try
-    {
-        verifier.verify(decoded);
     }
     catch (jwt::token_verification_exception& ex)
     {
