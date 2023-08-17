@@ -2,6 +2,8 @@
 #include <gmock/gmock.h>
 #include "mock.h"
 
+using namespace std::chrono_literals;
+
 int main(int argc, char** argv)
 {
 	::testing::InitGoogleTest(&argc, argv);
@@ -9,17 +11,16 @@ int main(int argc, char** argv)
 	yutovo_server_test::argc = argc;
 	yutovo_server_test::argv = argv;
 
-    std::promise<void> p;
-    std::future<void> f = p.get_future();
-
     std::thread app_thread = std::thread(
         [&]()
         {
-            p.set_value();
             drogon::app().run();
         });
     
-    f.get();
+	while (!drogon::app().isRunning())
+    {
+        std::this_thread::sleep_for(10ms);
+    }
 
 	int r = RUN_ALL_TESTS();
 
