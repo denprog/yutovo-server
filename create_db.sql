@@ -2,7 +2,7 @@ SELECT 'CREATE DATABASE yutovo' WHERE NOT EXISTS (SELECT FROM pg_database WHERE 
 
 CREATE TABLE IF NOT EXISTS users
 (
-    id serial PRIMARY KEY,
+    user_id serial PRIMARY KEY,
     login varchar(20),
     password varchar(20),
     name text,
@@ -13,10 +13,11 @@ CREATE TABLE IF NOT EXISTS users
 
 CREATE TABLE IF NOT EXISTS sessions
 (
-    id uuid PRIMARY KEY,
-    create_time timestamp with time zone,
-    last_time timestamp with time zone,
-    shared boolean,
+    session_id uuid PRIMARY KEY,
+    create_time timestamp with time zone not null default now(),
+    expire_time bigint not null,
+    shared boolean default true,
+    public boolean default true,
     folder text
 );
 

@@ -82,7 +82,7 @@
         //valid value is either 'Null' (default), 'Lax', 'Strict' or 'None'
         "session_same_site" : "Null",
         //document_root: Root path of HTTP document, defaut path is ./
-        "document_root": "./",
+        "document_root": "/home/denis/programs/Math/yutovo/yutovo_web/src/site/dist/spa/",
         //home_page: Set the HTML file of the home page, the default value is "index.html"
         //If there isn't any handler registered to the path "/", the home page file in the "document_root" is send to clients as a response
         //to the request for "/".
@@ -120,7 +120,11 @@
             "xap",
             "apk",
             "cur",
-            "xml"
+            "xml",
+            "woff",
+            "woff2",
+            "data",
+            "wasm"
         ],
         // mime: A dictionary that extends the internal MIME type support. Maps extensions into new MIME types
         // note: This option only adds MIME to the sever. `file_types` above have to be set for the server to serve them.

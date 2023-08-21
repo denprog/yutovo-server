@@ -20,6 +20,10 @@ struct AuthTest : public testing::Test
     void UnRegister(HttpClientPtr client, std::string login, std::string& access_token);
 };
 
+struct SessionTest : public testing::Test
+{
+};
+
 }
 
 #endif

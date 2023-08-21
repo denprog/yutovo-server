@@ -70,25 +70,6 @@ void LoginFilter::doFilter(const HttpRequestPtr& req, FilterCallback&& not_valid
 
 //AuthController
 
-AuthController::AuthController()
-{
-    std::ifstream key_file("server_key");
-    if (!key_file.is_open())
-        throw std::system_error(ENOENT, std::generic_category(), "Pirvate key file not open");
-    
-    std::stringstream ss;
-    ss << key_file.rdbuf();
-    private_key = ss.str();
-
-    std::ifstream public_key_file("server_key.pub");
-    if (!public_key_file.is_open())
-        throw std::system_error(ENOENT, std::generic_category(), "Public key file not open");
-    
-    ss.str("");
-    ss << public_key_file.rdbuf();
-    public_key = ss.str();
-}
-
 void AuthController::Register(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, User&& user)
 {
     logger->Info("Register request: login={}, email={}, password={}", user.login, user.email, user.password);
@@ -154,7 +135,7 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
 
     try
     {
-        orm::Result result = db->execSqlSync("select id from users where login=$1 and password=$2", login, password);
+        orm::Result result = db->execSqlSync("select user_id from users where login=$1 and password=$2", login, password);
         if (result.size() > 0)
         {
             //create a session with refresh and access tokens
@@ -168,8 +149,8 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
 
             auto row = result[0];
             result = db->execSqlSync("insert into refresh_sessions (user_id, refresh_uuid, expires) values ($1, $2, $3)", 
-                row["id"].as<std::string>(), refresh_uuid, refresh_expires.secondsSinceEpoch());
-            session->insert("user_id", row["id"].as<std::string>());
+                row["user_id"].as<std::string>(), refresh_uuid, refresh_expires.secondsSinceEpoch());
+            session->insert("user_id", row["user_id"].as<std::string>());
 
             SendOkTokens(callback, login, access_uuid, refresh_uuid, access_expires, refresh_expires);
         }
@@ -261,87 +242,5 @@ void AuthController::SetParams(const HttpRequestPtr& req, std::function<void (co
     SendOk(callback);
 }
 #endif
-
-void AuthController::SendOk(std::function<void (const HttpResponsePtr &)>& callback)
-{
-    auto resp = HttpResponse::newHttpResponse();
-    resp->setStatusCode(k200OK);
-    resp->setContentTypeCode(CT_TEXT_PLAIN);
-    callback(resp);
-}
-
-void AuthController::SendOkTokens(std::function<void (const HttpResponsePtr &)>& callback, const std::string& login, std::string& access_uuid, 
-    std::string& refresh_uuid, trantor::Date access_expires, trantor::Date refresh_expires)
-{
-    auto access_token = jwt::create().
-        set_issuer("auth0").
-        set_type("JWT").
-        set_id("yutovo-server").
-        set_issued_at(std::chrono::system_clock::now()).
-        set_expires_at(std::chrono::system_clock::from_time_t(access_expires.secondsSinceEpoch())).
-        set_payload_claim("access-uuid", jwt::claim(std::string(access_uuid))).
-        set_payload_claim("login", jwt::claim(login)).
-        sign(jwt::algorithm::rs256(public_key, private_key, "", ""));
-
-    auto refresh_token = jwt::create().
-        set_issuer("auth0").
-        set_type("JWT").
-        set_id("yutovo-server").
-        set_issued_at(std::chrono::system_clock::now()).
-        set_expires_at(std::chrono::system_clock::from_time_t(refresh_expires.secondsSinceEpoch())).
-        set_payload_claim("refresh_uuid", jwt::claim(std::string(refresh_uuid))).
-        set_payload_claim("login", jwt::claim(login)).
-        sign(jwt::algorithm::rs256(public_key, private_key, "", ""));
-
-    auto resp = HttpResponse::newHttpResponse();
-    resp->setStatusCode(k200OK);
-    resp->setContentTypeCode(CT_TEXT_PLAIN);
-
-    drogon::Cookie refresh_cookie("refresh_token", refresh_token);
-    refresh_cookie.setHttpOnly(true);
-    refresh_cookie.setPath("/auth");
-    refresh_cookie.setExpiresDate(refresh_expires);
-
-    resp->addCookie(refresh_cookie);
-    resp->addHeader("access_token", access_token);
-    callback(resp);
-}
-
-void AuthController::SendError(const HttpStatusCode status_code, const char* description, std::function<void (const HttpResponsePtr &)>& callback)
-{
-    Json::Value r;
-    r["error"] = description;
-    auto resp = HttpResponse::newHttpJsonResponse(r);
-    resp->setStatusCode(status_code);
-    callback(resp);
-}
-
-bool AuthController::GetRefreshUuid(const std::string& refresh_token, std::string& refresh_uuid, std::function<void (const HttpResponsePtr &)>& callback)
-{
-    try
-    {
-        auto decoded = jwt::decode(refresh_token);
-        auto verifier = jwt::verify().allow_algorithm(jwt::algorithm::rs256("", private_key, "", "")).with_issuer("auth0");
-        verifier.verify(decoded);
-        refresh_uuid = decoded.get_payload_claim("refresh_uuid").to_json().to_str();
-    }
-    catch (std::invalid_argument& ex)
-    {
-        SendError(k400BadRequest, ex.what(), callback);
-        return false;
-    }
-    catch (jwt::error::claim_not_present_exception& ex)
-    {
-        SendError(k400BadRequest, ex.what(), callback);
-        return false;
-    }
-    catch (jwt::token_verification_exception& ex)
-    {
-        SendError(k401Unauthorized, ex.what(), callback);
-        return false;
-    }
-
-    return true;
-}
 
 }
