@@ -15,6 +15,7 @@ void AuthTest::Register(HttpClientPtr client, std::string login, std::string ema
     body["email"] = email;
     body["password"] = password;
     auto req = HttpRequest::newHttpJsonRequest(body);
+    req->setMethod(drogon::Post);
     req->setPath("/auth/register");
 
     auto resp = client->sendRequest(req);
@@ -30,6 +31,7 @@ void AuthTest::UnRegister(HttpClientPtr client, std::string login, std::string& 
     Json::Value body;
     body["login"] = login;
     auto req = HttpRequest::newHttpJsonRequest(body);
+    req->setMethod(drogon::Post);
     req->setPath("/auth/register");
     req->addHeader("access_token", access_token);
     req->setPath("/auth/unregister");

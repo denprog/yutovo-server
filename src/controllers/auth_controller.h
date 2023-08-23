@@ -22,6 +22,8 @@ template <>
 inline yutovo_server::User fromRequest(const HttpRequest &req)
 {
     auto json = req.getJsonObject();
+    if (!json)
+        return yutovo_server::User{"", "", ""};
     return yutovo_server::User{(*json)["login"].asString(), (*json)["email"].asString(), (*json)["password"].asString()};
 }
 }
@@ -44,11 +46,11 @@ class AuthController : public drogon::HttpController<AuthController>, public Con
 {
 public:
     METHOD_LIST_BEGIN
-    ADD_METHOD_TO(AuthController::Register, "/auth/register", Get);
-    ADD_METHOD_TO(AuthController::UnRegister, "/auth/unregister", Get, "yutovo_server::LoginFilter");
-    ADD_METHOD_TO(AuthController::Login, "/auth/login", Get);
-    ADD_METHOD_TO(AuthController::Logout, "/auth/logout", Get, "yutovo_server::LoginFilter");
-    ADD_METHOD_TO(AuthController::RefreshToken, "/auth/refresh-token", Get, "yutovo_server::LoginFilter");
+    ADD_METHOD_TO(AuthController::Register, "/auth/register", Post);
+    ADD_METHOD_TO(AuthController::UnRegister, "/auth/unregister", Post, "yutovo_server::LoginFilter");
+    ADD_METHOD_TO(AuthController::Login, "/auth/login", Post);
+    ADD_METHOD_TO(AuthController::Logout, "/auth/logout", Post, "yutovo_server::LoginFilter");
+    ADD_METHOD_TO(AuthController::RefreshToken, "/auth/refresh-token", Post, "yutovo_server::LoginFilter");
 #ifdef TEST
     ADD_METHOD_TO(AuthController::SetParams, "/auth/set-params", Post);
 #endif
