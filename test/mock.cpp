@@ -10,11 +10,11 @@ char** argv = nullptr;
 
 void AuthTest::Register(HttpClientPtr client, std::string login, std::string email, std::string password)
 {
-    auto req = HttpRequest::newHttpRequest();
-    req->setMethod(drogon::Post);
-    req->setParameter("login", login);
-    req->setParameter("email", email);
-    req->setParameter("password", password);
+    Json::Value body;
+    body["login"] = login;
+    body["email"] = email;
+    body["password"] = password;
+    auto req = HttpRequest::newHttpJsonRequest(body);
     req->setPath("/auth/register");
 
     auto resp = client->sendRequest(req);
@@ -27,8 +27,10 @@ void AuthTest::Register(HttpClientPtr client, std::string login, std::string ema
 
 void AuthTest::UnRegister(HttpClientPtr client, std::string login, std::string& access_token)
 {
-    auto req = HttpRequest::newHttpRequest();
-    req->setMethod(drogon::Post);
+    Json::Value body;
+    body["login"] = login;
+    auto req = HttpRequest::newHttpJsonRequest(body);
+    req->setPath("/auth/register");
     req->addHeader("access_token", access_token);
     req->setPath("/auth/unregister");
 

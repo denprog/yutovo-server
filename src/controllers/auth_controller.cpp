@@ -74,6 +74,11 @@ void AuthController::Register(const HttpRequestPtr& req, std::function<void (con
 {
     logger->Info("Register request: login={}, email={}, password={}", user.login, user.email, user.password);
     orm::DbClientPtr db = app().getDbClient();
+    if (user.login.empty() || user.email.empty() || user.password.empty())
+    {
+        SendError(k400BadRequest, "Fields must not be empty", callback);
+        return;
+    }
 
     try
     {
@@ -106,8 +111,9 @@ void AuthController::Register(const HttpRequestPtr& req, std::function<void (con
 
 void AuthController::UnRegister(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
+    auto json = req->getJsonObject();
+    auto login = (*json)["login"].asString();
     SessionPtr session = req->session();
-    std::string login = session->get<std::string>("login");
     logger->Info("UnRegister request: login={}", login);
     orm::DbClientPtr db = app().getDbClient();
 
@@ -128,8 +134,9 @@ void AuthController::UnRegister(const HttpRequestPtr& req, std::function<void (c
 
 void AuthController::Login(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
-    auto login = req->getParameter("login");
-    auto password = req->getParameter("password");
+    auto json = req->getJsonObject();
+    auto login = (*json)["login"].asString();
+    auto password = (*json)["password"].asString();
     logger->Info("Login request: name={}, password={}", login, password);
     orm::DbClientPtr db = app().getDbClient();
 
@@ -166,8 +173,9 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
 
 void AuthController::Logout(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
+    auto json = req->getJsonObject();
+    auto login = (*json)["login"].asString();
     SessionPtr session = req->session();
-    std::string login = session->get<std::string>("login");
     std::string user_id = session->get<std::string>("user_id");
     std::string refresh_token = req->getCookie("refresh_token");
     std::string refresh_uuid;

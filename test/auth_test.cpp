@@ -16,10 +16,10 @@ TEST_F(AuthTest, register1)
     Register(client, "User1", "user1@mail.com", "11");
 
     //login
-    auto req = HttpRequest::newHttpRequest();
-    req->setMethod(drogon::Post);
-    req->setParameter("login", "User1");
-    req->setParameter("password", "11");
+    Json::Value body;
+    body["login"] = "User1";
+    body["password"] = "11";
+    auto req = HttpRequest::newHttpJsonRequest(body);
     req->setPath("/auth/login");
 
     auto resp = client->sendRequest(req);
@@ -47,10 +47,10 @@ TEST_F(AuthTest, register2)
     Register(client2, "User2", "user2@mail.com", "22");
 
     //login User1
-    auto req = HttpRequest::newHttpRequest();
-    req->setMethod(drogon::Post);
-    req->setParameter("login", "User1");
-    req->setParameter("password", "11");
+    Json::Value body;
+    body["login"] = "User1";
+    body["password"] = "11";
+    auto req = HttpRequest::newHttpJsonRequest(body);
     req->setPath("/auth/login");
 
     auto resp = client1->sendRequest(req);
@@ -64,10 +64,9 @@ TEST_F(AuthTest, register2)
     ASSERT_TRUE(access_token1 != "") << access_token1;
 
     //login User2
-    req = HttpRequest::newHttpRequest();
-    req->setMethod(drogon::Post);
-    req->setParameter("login", "User2");
-    req->setParameter("password", "22");
+    body["login"] = "User2";
+    body["password"] = "22";
+    req = HttpRequest::newHttpJsonRequest(body);
     req->setPath("/auth/login");
 
     resp = client2->sendRequest(req);
@@ -90,8 +89,7 @@ TEST_F(AuthTest, register3)
     auto client = HttpClient::newHttpClient("http://localhost:9001");
     client->enableCookies(true);
 
-    auto req = HttpRequest::newHttpRequest();
-    req->setMethod(drogon::Post);
+    auto req = HttpRequest::newHttpJsonRequest(Json::Value{});
     req->addHeader("access_token", "12345");
     req->setPath("/auth/unregister");
 
@@ -111,10 +109,10 @@ TEST_F(AuthTest, login1)
     Register(client, "User1", "user1@mail.com", "11");
 
     //login
-    auto req = HttpRequest::newHttpRequest();
-    req->setMethod(drogon::Post);
-    req->setParameter("login", "User1");
-    req->setParameter("password", "11");
+    Json::Value body;
+    body["login"] = "User1";
+    body["password"] = "11";
+    auto req = HttpRequest::newHttpJsonRequest(body);
     req->setPath("/auth/login");
 
     auto resp = client->sendRequest(req);
@@ -129,11 +127,11 @@ TEST_F(AuthTest, login1)
     ASSERT_TRUE(access_token != "") << access_token;
 
     //logout
-    req = HttpRequest::newHttpRequest();
-    req->setMethod(drogon::Post);
+    body["login"] = "User1";
+    req = HttpRequest::newHttpJsonRequest(body);
+    req->setPath("/auth/logout");
     req->addHeader("access_token", access_token);
     client->addCookie(refresh_token);
-    req->setPath("/auth/logout");
 
     resp = client->sendRequest(req);
     res = resp.first;
@@ -143,11 +141,11 @@ TEST_F(AuthTest, login1)
     ASSERT_TRUE(r->getContentType() == CT_TEXT_PLAIN) << r->getContentType();
 
     //login back for unregister
-    req = HttpRequest::newHttpRequest();
-    req->setMethod(drogon::Post);
-    req->setParameter("login", "User1");
-    req->setParameter("password", "11");
+    body["login"] = "User1";
+    body["password"] = "11";
+    req = HttpRequest::newHttpJsonRequest(body);
     req->setPath("/auth/login");
+
     resp = client->sendRequest(req);
     res = resp.first;
     r = resp.second;
@@ -167,10 +165,10 @@ TEST_F(AuthTest, login2)
     Register(client, "User1", "user1@mail.com", "11");
 
     //login with wrong login
-    auto req = HttpRequest::newHttpRequest();
-    req->setMethod(drogon::Post);
-    req->setParameter("login", "User2");
-    req->setParameter("password", "11");
+    Json::Value body;
+    body["login"] = "User2";
+    body["password"] = "11";
+    auto req = HttpRequest::newHttpJsonRequest(body);
     req->setPath("/auth/login");
 
     auto resp = client->sendRequest(req);
@@ -185,10 +183,9 @@ TEST_F(AuthTest, login2)
     ASSERT_TRUE(access_token == "") << access_token;
 
     //correct login
-    req = HttpRequest::newHttpRequest();
-    req->setMethod(drogon::Post);
-    req->setParameter("login", "User1");
-    req->setParameter("password", "11");
+    body["login"] = "User1";
+    body["password"] = "11";
+    req = HttpRequest::newHttpJsonRequest(body);
     req->setPath("/auth/login");
 
     resp = client->sendRequest(req);
@@ -213,10 +210,10 @@ TEST_F(AuthTest, login3)
     Register(client, "User1", "user1@mail.com", "11");
 
     //login with wrong login
-    auto req = HttpRequest::newHttpRequest();
-    req->setMethod(drogon::Post);
-    req->setParameter("login", "User2");
-    req->setParameter("password", "22");
+    Json::Value body;
+    body["login"] = "User2";
+    body["password"] = "22";
+    auto req = HttpRequest::newHttpJsonRequest(body);
     req->setPath("/auth/login");
 
     auto resp = client->sendRequest(req);
@@ -231,10 +228,9 @@ TEST_F(AuthTest, login3)
     ASSERT_TRUE(access_token == "") << access_token;
 
     //correct login
-    req = HttpRequest::newHttpRequest();
-    req->setMethod(drogon::Post);
-    req->setParameter("login", "User1");
-    req->setParameter("password", "11");
+    body["login"] = "User1";
+    body["password"] = "11";
+    req = HttpRequest::newHttpJsonRequest(body);
     req->setPath("/auth/login");
 
     resp = client->sendRequest(req);
@@ -259,10 +255,10 @@ TEST_F(AuthTest, refresh_session1)
     Register(client, "User1", "user1@mail.com", "11");
 
     //login
-    auto req = HttpRequest::newHttpRequest();
-    req->setMethod(drogon::Post);
-    req->setParameter("login", "User1");
-    req->setParameter("password", "11");
+    Json::Value body;
+    body["login"] = "User1";
+    body["password"] = "11";
+    auto req = HttpRequest::newHttpJsonRequest(body);
     req->setPath("/auth/login");
 
     auto resp = client->sendRequest(req);
@@ -274,8 +270,7 @@ TEST_F(AuthTest, refresh_session1)
 
     //refresh session
     req = HttpRequest::newHttpRequest();
-    req->setMethod(drogon::Post);
-    req->setParameter("login", "User1");
+    req->setMethod(drogon::Get);
     req->addHeader("access_token", access_token1);
     client->addCookie(refresh_token1);
     req->setPath("/auth/refresh-token");
@@ -311,10 +306,10 @@ TEST_F(AuthTest, refresh_session2)
     Register(client, "User1", "user1@mail.com", "11");
 
     //login
-    req = HttpRequest::newHttpRequest();
-    req->setMethod(drogon::Post);
-    req->setParameter("login", "User1");
-    req->setParameter("password", "11");
+    Json::Value body;
+    body["login"] = "User1";
+    body["password"] = "11";
+    req = HttpRequest::newHttpJsonRequest(body);
     req->setPath("/auth/login");
 
     resp = client->sendRequest(req);
@@ -325,8 +320,7 @@ TEST_F(AuthTest, refresh_session2)
 
     std::this_thread::sleep_for(2s); //wait until the access token expires
 
-    req = HttpRequest::newHttpRequest();
-    req->setMethod(drogon::Post);
+    req = HttpRequest::newHttpJsonRequest(Json::Value{});
     req->addHeader("access_token", access_token);
     req->setPath("/auth/unregister");
 
@@ -347,11 +341,11 @@ TEST_F(AuthTest, refresh_session2)
     std::this_thread::sleep_for(2s);
 
     //login once again
-    req = HttpRequest::newHttpRequest();
-    req->setMethod(drogon::Post);
-    req->setParameter("login", "User1");
-    req->setParameter("password", "11");
+    body["login"] = "User1";
+    body["password"] = "11";
+    req = HttpRequest::newHttpJsonRequest(body);
     req->setPath("/auth/login");
+
     resp = client->sendRequest(req);
     r = resp.second;
     access_token = r->getHeader("access_token");
