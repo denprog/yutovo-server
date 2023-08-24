@@ -66,12 +66,13 @@ void ControllerBase::SendOkTokens(std::function<void (const HttpResponsePtr &)>&
     resp->setContentTypeCode(CT_TEXT_PLAIN);
 
     drogon::Cookie refresh_cookie("refresh_token", refresh_token);
-    refresh_cookie.setHttpOnly(true);
-    refresh_cookie.setPath("/auth");
+    refresh_cookie.setHttpOnly(false);
+    refresh_cookie.setPath("/");
     refresh_cookie.setExpiresDate(refresh_expires);
 
     resp->addCookie(refresh_cookie);
     resp->addHeader("access_token", access_token);
+    resp->addHeader("login", login);
     callback(resp);
 }
 
@@ -84,14 +85,16 @@ void ControllerBase::SendError(const HttpStatusCode status_code, const char* des
     callback(resp);
 }
 
-bool ControllerBase::GetRefreshUuid(const std::string& refresh_token, std::string& refresh_uuid, std::function<void (const HttpResponsePtr &)>& callback)
+bool ControllerBase::ParseRefreshToken(const std::string& refresh_token, std::string& refresh_uuid, std::string& login, 
+    std::function<void (const HttpResponsePtr &)>& callback)
 {
     try
     {
         auto decoded = jwt::decode(refresh_token);
-        auto verifier = jwt::verify().allow_algorithm(jwt::algorithm::rs256("", private_key, "", "")).with_issuer("auth0");
+        auto verifier = jwt::verify().allow_algorithm(jwt::algorithm::rs256(public_key, private_key, "", "")).with_issuer("auth0");
         verifier.verify(decoded);
         refresh_uuid = decoded.get_payload_claim("refresh_uuid").to_json().to_str();
+        login = decoded.get_payload_claim("login").to_json().to_str();
     }
     catch (std::invalid_argument& ex)
     {

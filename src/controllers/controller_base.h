@@ -20,7 +20,8 @@ protected:
         std::string& refresh_uuid, trantor::Date access_expires, trantor::Date refresh_expires);
     void SendError(const HttpStatusCode status_code, const char* description, std::function<void (const HttpResponsePtr &)>& callback);
 
-    bool GetRefreshUuid(const std::string& refresh_token, std::string& refresh_uuid, std::function<void (const HttpResponsePtr &)>& callback);
+    bool ParseRefreshToken(const std::string& refresh_token, std::string& refresh_uuid, std::string& login, 
+        std::function<void (const HttpResponsePtr &)>& callback);
 
 protected:
     std::string public_key, private_key;

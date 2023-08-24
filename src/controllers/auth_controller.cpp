@@ -178,9 +178,9 @@ void AuthController::Logout(const HttpRequestPtr& req, std::function<void (const
     SessionPtr session = req->session();
     std::string user_id = session->get<std::string>("user_id");
     std::string refresh_token = req->getCookie("refresh_token");
-    std::string refresh_uuid;
 
-    if (!GetRefreshUuid(refresh_token, refresh_uuid, callback))
+    std::string refresh_uuid;
+    if (!ParseRefreshToken(refresh_token, refresh_uuid, login, callback))
         return;
 
     logger->Info("Logout request: login={}", login);
@@ -204,21 +204,30 @@ void AuthController::Logout(const HttpRequestPtr& req, std::function<void (const
 
 void AuthController::RefreshToken(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
-    SessionPtr session = req->session();
-    std::string login = session->get<std::string>("login");
-    std::string user_id = session->get<std::string>("user_id");
     std::string refresh_token = req->getCookie("refresh_token");
-
-    logger->Info("RefreshToken request: login={}", login);
     orm::DbClientPtr db = app().getDbClient();
+    SessionPtr session = req->session();
 
     try
     {
         std::string refresh_uuid;
-        if (!GetRefreshUuid(refresh_token, refresh_uuid, callback))
+        std::string login;
+        if (!ParseRefreshToken(refresh_token, refresh_uuid, login, callback))
             return;
 
-        orm::Result result = db->execSqlSync("delete from refresh_sessions where user_id=$1 and refresh_uuid=$2", user_id, refresh_uuid);
+        logger->Info("RefreshToken request: login={}, refresh_uuid={}", login, refresh_uuid);
+
+        orm::Result result = db->execSqlSync("select user_id from users where login=$1", login);
+        if (result.size() == 0)
+        {
+            SendError(k401Unauthorized, "User not found", callback);
+            return;
+        }
+
+        auto row = result[0];
+        auto user_id = row["user_id"].as<std::string>();
+
+        result = db->execSqlSync("delete from refresh_sessions where refresh_uuid=$1", refresh_uuid);
         if (result.affectedRows() == 0)
         {
             SendError(k401Unauthorized, "Refresh session is incorrect", callback);
@@ -232,6 +241,9 @@ void AuthController::RefreshToken(const HttpRequestPtr& req, std::function<void 
 
         result = db->execSqlSync("insert into refresh_sessions (user_id, refresh_uuid, expires) values ($1, $2, $3)", 
             user_id, refresh_uuid, refresh_expires.secondsSinceEpoch());
+        
+        session->insert("login", login);
+        session->insert("user_id", user_id);
 
         SendOkTokens(callback, login, access_uuid, refresh_uuid, access_expires, refresh_expires);
     }

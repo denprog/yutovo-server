@@ -50,7 +50,7 @@ public:
     ADD_METHOD_TO(AuthController::UnRegister, "/auth/unregister", Post, "yutovo_server::LoginFilter");
     ADD_METHOD_TO(AuthController::Login, "/auth/login", Post);
     ADD_METHOD_TO(AuthController::Logout, "/auth/logout", Post, "yutovo_server::LoginFilter");
-    ADD_METHOD_TO(AuthController::RefreshToken, "/auth/refresh-token", Post, "yutovo_server::LoginFilter");
+    ADD_METHOD_TO(AuthController::RefreshToken, "/auth/refresh-token", Post);
 #ifdef TEST
     ADD_METHOD_TO(AuthController::SetParams, "/auth/set-params", Post);
 #endif
