@@ -16,8 +16,9 @@ public:
     
 protected:
     void SendOk(std::function<void (const HttpResponsePtr &)>& callback);
-    void SendOkTokens(std::function<void (const HttpResponsePtr &)>& callback, const std::string& login, std::string& access_uuid, 
-        std::string& refresh_uuid, trantor::Date access_expires, trantor::Date refresh_expires);
+    void SendOkTokens(std::function<void (const HttpResponsePtr &)>& callback, const std::string& login, const std::string& access_uuid, 
+        const std::string& refresh_uuid, const std::string& user_session, trantor::Date access_expires, trantor::Date refresh_expires, 
+        trantor::Date session_expires);
     void SendError(const HttpStatusCode status_code, const char* description, std::function<void (const HttpResponsePtr &)>& callback);
 
     bool ParseRefreshToken(const std::string& refresh_token, std::string& refresh_uuid, std::string& login, 

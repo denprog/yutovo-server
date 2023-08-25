@@ -11,39 +11,23 @@ CREATE TABLE IF NOT EXISTS users
     current_session uuid
 );
 
-CREATE TABLE IF NOT EXISTS sessions
-(
-    session_id uuid PRIMARY KEY,
-    create_time timestamp with time zone not null default now(),
-    expire_time bigint not null,
-    shared boolean default true,
-    public boolean default true,
-    folder text
-);
-
-CREATE TABLE IF NOT EXISTS cookies
-(
-    cookie text PRIMARY KEY,
-    user_id int,
-    session_id uuid,
-    life_time timestamp with time zone
-);
-
 CREATE TABLE IF NOT EXISTS user_sessions
 (
-    user_id int,
-    session_id uuid,
-    refresh_token uuid not null,
-    expires bigint not null,
-    create_time timestamp with time zone not null default now()
+    session_id uuid PRIMARY KEY,
+    user_id int default -1,
+    create_time timestamp with time zone not null default now(),
+    expire_time bigint not null,
+    shared boolean default false,
+    public boolean default true,
+    filename text
 );
 
 CREATE TABLE IF NOT EXISTS refresh_sessions
 (
     user_id int,
     refresh_uuid uuid not null,
-    expires bigint not null,
-    create_time timestamp with time zone not null default now()
+    create_time timestamp with time zone not null default now(),
+    expire_time bigint not null
 );
 
 CREATE TABLE IF NOT EXISTS user_logins

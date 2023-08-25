@@ -14,6 +14,7 @@ int main(int argc, char** argv)
     std::thread app_thread = std::thread(
         [&]()
         {
+            drogon::app().loadConfigFile("config.json");
             drogon::app().run();
         });
     

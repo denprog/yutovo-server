@@ -295,5 +295,10 @@
         }
     ],
     //custom_config: custom configuration for users. This object can be get by the app().getCustomConfig() method. 
-    "custom_config": {}
+    "custom_config": 
+    {
+        "session_expire_timeout": 3600,
+        "user_session_expire_timeout": 86400,
+        "clear_db_timeout": 10
+    }
 }

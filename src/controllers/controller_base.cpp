@@ -38,8 +38,9 @@ void ControllerBase::SendOk(std::function<void (const HttpResponsePtr &)>& callb
     callback(resp);
 }
 
-void ControllerBase::SendOkTokens(std::function<void (const HttpResponsePtr &)>& callback, const std::string& login, std::string& access_uuid, 
-    std::string& refresh_uuid, trantor::Date access_expires, trantor::Date refresh_expires)
+void ControllerBase::SendOkTokens(std::function<void (const HttpResponsePtr &)>& callback, const std::string& login, const std::string& access_uuid, 
+    const std::string& refresh_uuid, const std::string& user_session, trantor::Date access_expires, trantor::Date refresh_expires, 
+    trantor::Date session_expires)
 {
     auto access_token = jwt::create().
         set_issuer("auth0").
@@ -69,8 +70,17 @@ void ControllerBase::SendOkTokens(std::function<void (const HttpResponsePtr &)>&
     refresh_cookie.setHttpOnly(false);
     refresh_cookie.setPath("/");
     refresh_cookie.setExpiresDate(refresh_expires);
-
     resp->addCookie(refresh_cookie);
+
+    if (!user_session.empty())
+    {
+        drogon::Cookie session_cookie("user_session", user_session);
+        session_cookie.setHttpOnly(true);
+        session_cookie.setPath("/");
+        session_cookie.setExpiresDate(session_expires);
+        resp->addCookie(session_cookie);
+    }
+
     resp->addHeader("access_token", access_token);
     callback(resp);
 }

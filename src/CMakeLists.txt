@@ -16,6 +16,7 @@ find_package(Boost 1.81.0 REQUIRED PATHS ${INSTALL_PATH}/lib/cmake/)
 
 add_executable(${PROJECT_NAME}
     main.cpp
+    logic/clear_db.cpp
 )
 
 aux_source_directory(controllers CTL_SRC)
@@ -76,6 +77,7 @@ install(
 
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/config.json ${CMAKE_CURRENT_BINARY_DIR}/../
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/config.json ${CMAKE_CURRENT_BINARY_DIR}/../test/
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/../keys/server_key ${CMAKE_CURRENT_BINARY_DIR}/../
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/../keys/server_key.pub ${CMAKE_CURRENT_BINARY_DIR}/../
 )

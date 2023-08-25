@@ -11,6 +11,8 @@ namespace yutovo_server
 class SessionController : public drogon::HttpController<SessionController>, public ControllerBase
 {
 public:
+    SessionController();
+
     METHOD_LIST_BEGIN
     ADD_METHOD_TO(SessionController::Root, "/{}", Get);
     ADD_METHOD_TO(SessionController::Session, "/session/{1}", Get);
@@ -26,7 +28,7 @@ public:
     void Images(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, std::string param);
 
 private:
-    int session_expires = 30 * 60 * 60 * 24; //seconds, after last using
+    int session_expires = 0; //session without user, in seconds, after last using
 };
 }
 

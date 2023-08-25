@@ -9,6 +9,12 @@ namespace yutovo_server
 
 //SessionController
 
+SessionController::SessionController()
+{
+    const Json::Value& v = app().getCustomConfig();
+    session_expires = v.get("session_expire_timeout", 3600).asInt();
+}
+
 void SessionController::Root(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
     auto p = req->path();
@@ -24,7 +30,7 @@ void SessionController::Root(const HttpRequestPtr& req, std::function<void (cons
             if (!user_session.empty())
             {
                 //find user session
-                orm::Result result = db->execSqlSync("select 1 from sessions where session_id=$1", user_session);
+                orm::Result result = db->execSqlSync("select 1 from user_sessions where session_id=$1", user_session);
                 if (result.size() > 0)
                 {
                     //redirect to the session
@@ -37,8 +43,8 @@ void SessionController::Root(const HttpRequestPtr& req, std::function<void (cons
             //create new session
             user_session = std::string(boost::uuids::to_string(boost::uuids::random_generator()()));
             trantor::Date session_expires_date = trantor::Date::now().after(session_expires);
-            orm::Result result = db->execSqlSync("insert into sessions (session_id, expire_time, folder) values ($1, $2, $3)", user_session, 
-                session_expires_date.secondsSinceEpoch(), "");
+            orm::Result result = db->execSqlSync("insert into user_sessions (session_id, expire_time) values ($1, $2)", user_session, 
+                session_expires_date.secondsSinceEpoch());
             if (result.affectedRows() == 0)
             {
                 logger->Error("Database error: Error inserting a session");
@@ -74,7 +80,6 @@ void SessionController::Session(const HttpRequestPtr& req, std::function<void (c
 {
     auto p = req->path();
     logger->Info("Request: path={}", p);
-    std::string folder;
     orm::DbClientPtr db = app().getDbClient();
     HttpAppFramework& inst = HttpAppFramework::instance();
     std::string r = HttpAppFramework::instance().getDocumentRoot();
@@ -85,18 +90,16 @@ void SessionController::Session(const HttpRequestPtr& req, std::function<void (c
         try
         {
             //find user session
-            orm::Result result = db->execSqlSync("select folder from sessions where session_id=$1", param);
+            orm::Result result = db->execSqlSync("select 1 from user_sessions where session_id=$1", param);
             if (result.size() == 0)
             {
                 logger->Error("Session not found: {}", param);
                 SendError(k500InternalServerError, "Session not found", callback);
                 return;
             }
-            auto row = result[0];
-            folder = row["folder"].as<std::string>();
 
             trantor::Date session_expires_date = trantor::Date::now().after(session_expires);
-            db->execSqlSync("update sessions set expire_time=$1 where session_id=$2", session_expires_date.secondsSinceEpoch(), param);
+            db->execSqlSync("update user_sessions set expire_time=$1 where session_id=$2", session_expires_date.secondsSinceEpoch(), param);
 
             //update the session cookie
             drogon::Cookie session_cookie("user_session", param);

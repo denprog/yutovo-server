@@ -45,6 +45,8 @@ private:
 class AuthController : public drogon::HttpController<AuthController>, public ControllerBase
 {
 public:
+    AuthController();
+
     METHOD_LIST_BEGIN
     ADD_METHOD_TO(AuthController::Register, "/auth/register", Post);
     ADD_METHOD_TO(AuthController::UnRegister, "/auth/unregister", Post, "yutovo_server::LoginFilter");
@@ -65,6 +67,12 @@ public:
 #ifdef TEST
     void SetParams(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
 #endif
+
+private:
+    void UpdateSessionTime(const std::string& user_session);
+
+private:
+    int session_expires = 0;
 };
 }
 

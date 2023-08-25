@@ -70,6 +70,12 @@ void LoginFilter::doFilter(const HttpRequestPtr& req, FilterCallback&& not_valid
 
 //AuthController
 
+AuthController::AuthController()
+{
+    const Json::Value& v = app().getCustomConfig();
+    session_expires = v.get("user_session_expire_timeout", 84600).asInt();
+}
+
 void AuthController::Register(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, User&& user)
 {
     logger->Info("Register request: login={}, email={}, password={}", user.login, user.email, user.password);
@@ -116,14 +122,19 @@ void AuthController::UnRegister(const HttpRequestPtr& req, std::function<void (c
     SessionPtr session = req->session();
     logger->Info("UnRegister request: login={}", login);
     orm::DbClientPtr db = app().getDbClient();
+    std::string user_id = session->get<std::string>("user_id");
 
     try
     {
         orm::Result result = db->execSqlSync("delete from users where login=$1", login);
         if (result.affectedRows() == 0)
+        {
             SendError(k404NotFound, "Login not found", callback);
-        else
-            SendOk(callback);
+            return;
+        }
+        db->execSqlSync("delete from user_sessions where user_id=$1", user_id);
+        session->insert("user_id", "");
+        SendOk(callback);
     }
     catch (const orm::DrogonDbException& e)
     {
@@ -143,26 +154,39 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
     try
     {
         orm::Result result = db->execSqlSync("select user_id from users where login=$1 and password=$2", login, password);
-        if (result.size() > 0)
+        if (result.size() == 0)
         {
-            //create a session with refresh and access tokens
-            SessionPtr session = req->session();
-            session->insert("login", login);
-
-            std::string refresh_uuid(boost::uuids::to_string(boost::uuids::random_generator()()));
-            std::string access_uuid(boost::uuids::to_string(boost::uuids::random_generator()()));
-            trantor::Date access_expires = trantor::Date::now().after(access_token_expires);
-            trantor::Date refresh_expires = trantor::Date::now().after(refresh_token_expires);
-
-            auto row = result[0];
-            result = db->execSqlSync("insert into refresh_sessions (user_id, refresh_uuid, expires) values ($1, $2, $3)", 
-                row["user_id"].as<std::string>(), refresh_uuid, refresh_expires.secondsSinceEpoch());
-            session->insert("user_id", row["user_id"].as<std::string>());
-
-            SendOkTokens(callback, login, access_uuid, refresh_uuid, access_expires, refresh_expires);
-        }
-        else
             SendError(k401Unauthorized, "Login or password are incorrect", callback);
+            return;
+        }
+
+        //create a session with refresh and access tokens
+        SessionPtr session = req->session();
+        session->insert("login", login);
+
+        std::string refresh_uuid(boost::uuids::to_string(boost::uuids::random_generator()()));
+        std::string access_uuid(boost::uuids::to_string(boost::uuids::random_generator()()));
+        trantor::Date access_expires = trantor::Date::now().after(access_token_expires);
+        trantor::Date refresh_expires = trantor::Date::now().after(refresh_token_expires);
+
+        auto row = result[0];
+        std::string user_id = row["user_id"].as<std::string>();
+        result = db->execSqlSync("insert into refresh_sessions (user_id, refresh_uuid, expire_time) values ($1, $2, $3)", 
+            user_id, refresh_uuid, refresh_expires.secondsSinceEpoch());
+        session->insert("user_id", user_id);
+
+        std::string user_session = req->getCookie("user_session");
+        auto session_expires_date = trantor::Date::now().after(session_expires);
+        if (!user_session.empty())
+        {
+            //if a user has many logins, a session may have another login
+            db->execSqlSync("delete from user_sessions where session_id=$1", user_session);
+            //the user session starts to have an owner
+            db->execSqlSync("insert into user_sessions (session_id, user_id, expire_time) values ($1, $2, $3)", user_session, user_id, 
+                session_expires_date.secondsSinceEpoch());
+        }
+
+        SendOkTokens(callback, login, access_uuid, refresh_uuid, user_session, access_expires, refresh_expires, session_expires_date);
     }
     catch (const orm::DrogonDbException& e)
     {
@@ -239,13 +263,18 @@ void AuthController::RefreshToken(const HttpRequestPtr& req, std::function<void 
         trantor::Date access_expires = trantor::Date::now().after(access_token_expires);
         trantor::Date refresh_expires = trantor::Date::now().after(refresh_token_expires);
 
-        result = db->execSqlSync("insert into refresh_sessions (user_id, refresh_uuid, expires) values ($1, $2, $3)", 
+        result = db->execSqlSync("insert into refresh_sessions (user_id, refresh_uuid, expire_time) values ($1, $2, $3)", 
             user_id, refresh_uuid, refresh_expires.secondsSinceEpoch());
         
         session->insert("login", login);
         session->insert("user_id", user_id);
 
-        SendOkTokens(callback, login, access_uuid, refresh_uuid, access_expires, refresh_expires);
+        std::string user_session = req->getCookie("user_session");
+        if (!user_session.empty())
+            UpdateSessionTime(user_session);
+
+        auto session_expires_date = trantor::Date::now().after(session_expires);
+        SendOkTokens(callback, login, access_uuid, refresh_uuid, user_session, access_expires, refresh_expires, session_expires_date);
     }
     catch (const orm::DrogonDbException& e)
     {
@@ -262,5 +291,12 @@ void AuthController::SetParams(const HttpRequestPtr& req, std::function<void (co
     SendOk(callback);
 }
 #endif
+
+void AuthController::UpdateSessionTime(const std::string& user_session)
+{
+    orm::DbClientPtr db = app().getDbClient();
+    trantor::Date session_expires_date = trantor::Date::now().after(session_expires);
+    db->execSqlSync("update user_sessions set expire_time=$1 where session_id=$2", session_expires_date.secondsSinceEpoch(), user_session);
+}
 
 }

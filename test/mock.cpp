@@ -6,9 +6,9 @@ namespace yutovo_server_test
 int argc = 0;
 char** argv = nullptr;
 
-//AuthTest
+//TestBase
 
-void AuthTest::Register(HttpClientPtr client, std::string login, std::string email, std::string password)
+void TestBase::Register(HttpClientPtr client, std::string login, std::string email, std::string password)
 {
     Json::Value body;
     body["login"] = login;
@@ -26,7 +26,7 @@ void AuthTest::Register(HttpClientPtr client, std::string login, std::string ema
     ASSERT_TRUE(r->getContentType() == CT_TEXT_PLAIN) << r->getContentType();
 }
 
-void AuthTest::UnRegister(HttpClientPtr client, std::string login, std::string& access_token)
+void TestBase::UnRegister(HttpClientPtr client, std::string login, std::string& access_token)
 {
     Json::Value body;
     body["login"] = login;

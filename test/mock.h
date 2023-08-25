@@ -14,13 +14,17 @@ typedef unsigned int uint;
 extern int argc;
 extern char** argv;
 
-struct AuthTest : public testing::Test
+struct TestBase
 {
     void Register(HttpClientPtr client, std::string login, std::string email, std::string password);
     void UnRegister(HttpClientPtr client, std::string login, std::string& access_token);
 };
 
-struct SessionTest : public testing::Test
+struct AuthTest : public testing::Test, TestBase
+{
+};
+
+struct SessionTest : public testing::Test, TestBase
 {
 };
 
