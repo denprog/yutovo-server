@@ -72,7 +72,6 @@ void ControllerBase::SendOkTokens(std::function<void (const HttpResponsePtr &)>&
 
     resp->addCookie(refresh_cookie);
     resp->addHeader("access_token", access_token);
-    resp->addHeader("login", login);
     callback(resp);
 }
 
