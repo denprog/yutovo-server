@@ -22,6 +22,7 @@ add_executable(${PROJECT_NAME}_tests
     mock.cpp
     auth_test.cpp
     session_test.cpp
+    service_test.cpp
 )
 
 target_link_libraries(${PROJECT_NAME}_tests PUBLIC

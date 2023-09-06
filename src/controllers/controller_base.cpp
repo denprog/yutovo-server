@@ -85,6 +85,32 @@ void ControllerBase::SendOkTokens(std::function<void (const HttpResponsePtr &)>&
     callback(resp);
 }
 
+void ControllerBase::SendJson(std::function<void (const HttpResponsePtr &)>& callback, const Json::Value& json)
+{
+    auto resp = HttpResponse::newHttpJsonResponse(json);
+    resp->setStatusCode(k200OK);
+    callback(resp);
+}
+
+void ControllerBase::SendJson(std::function<void (const HttpResponsePtr &)>& callback, const std::string& json)
+{
+    Json::Value root;   
+    Json::Reader reader;
+    if (!reader.parse(json.c_str(), root))
+    {
+        SendError(k500InternalServerError, "Solver response error", callback);
+        return;
+    }
+    SendJson(callback, root);
+}
+
+void ControllerBase::SendFile(std::function<void (const HttpResponsePtr &)>& callback, const fs::path& path)
+{
+    auto resp = HttpResponse::newFileResponse(path.c_str());
+    resp->setStatusCode(k200OK);
+    callback(resp);
+}
+
 void ControllerBase::SendError(const HttpStatusCode status_code, const char* description, std::function<void (const HttpResponsePtr &)>& callback)
 {
     Json::Value r;

@@ -28,6 +28,10 @@ struct SessionTest : public testing::Test, TestBase
 {
 };
 
+struct ServiceTest : public testing::Test, TestBase
+{
+};
+
 }
 
 #endif

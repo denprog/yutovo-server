@@ -299,6 +299,8 @@
     {
         "session_expire_timeout": 3600,
         "user_session_expire_timeout": 86400,
-        "clear_db_timeout": 10
+        "clear_db_timeout": 10,
+        "tasks_path": "/home/denis/programs/Math/yutovo/yutovo_server/tasks/",
+        "solver_address": "ws://localhost:8010"
     }
 }
