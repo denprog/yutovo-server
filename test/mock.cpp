@@ -32,7 +32,6 @@ void TestBase::UnRegister(HttpClientPtr client, std::string login, std::string& 
     body["login"] = login;
     auto req = HttpRequest::newHttpJsonRequest(body);
     req->setMethod(drogon::Post);
-    req->setPath("/auth/register");
     req->addHeader("access_token", access_token);
     req->setPath("/auth/unregister");
 

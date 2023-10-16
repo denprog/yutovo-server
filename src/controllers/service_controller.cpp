@@ -85,6 +85,12 @@ void ServiceController::GetTasks(const HttpRequestPtr& req, std::function<void (
 void ServiceController::LoadTask(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
     auto json = req->getJsonObject();
+    if (!json)
+    {
+        SendError(k400BadRequest, "Json not found in the request", callback);
+        return;
+    }
+
     auto task = (*json)["task"].asString();
     logger->Info("LoadTask request task={}", task);
     task = tasks_path + task + ".yut";
@@ -136,6 +142,103 @@ void ServiceController::ListIdentifiers(const HttpRequestPtr& req, std::function
     }
     
     SendJson(callback, solver_response);
+}
+
+void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
+{
+    logger->Info("SaveDocument request");
+    auto json = req->getJsonObject();
+    if (!json)
+    {
+        SendError(k400BadRequest, "Json not found in the request", callback);
+        return;
+    }
+
+    auto string_formats = (*json)["string_formats"];
+    auto paragraph_formats = (*json)["paragraph_formats"];
+    auto text = (*json)["text"];
+    if (!text)
+    {
+        SendError(k400BadRequest, "Text field not found in the request", callback);
+        return;
+    }
+
+    std::string user_session = req->getCookie("user_session");
+    if (user_session.empty())
+    {
+        SendError(k400BadRequest, "Wrong request", callback);
+        return;
+    }
+
+    orm::DbClientPtr db = app().getDbClient();
+
+    Json::Value doc;
+    if (string_formats)
+        doc["string_formats"] = string_formats;
+    if (paragraph_formats)
+        doc["paragraph_formats"] = paragraph_formats;
+    if (text["id"].isNull() || text["id"].asString().empty())
+    {
+        SendError(k400BadRequest, "Wrong request", callback);
+        return;
+    }
+    auto id = text["id"].asString();
+    if (id == "0")
+    {
+        //update whole document
+        doc["text"] = text;
+        try
+        {
+            orm::Result result = db->execSqlSync("update user_sessions set document=('" + 
+                doc.toStyledString() + 
+                "') where session_id=$1", user_session);
+            SendOk(callback);
+        }
+        catch (const orm::DrogonDbException& e)
+        {
+            logger->Error("Database error: {}", e.base().what());
+            SendError(k500InternalServerError, e.base().what(), callback);
+        }
+    }
+}
+
+void ServiceController::LoadDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
+{
+    logger->Info("LoadDocument request");
+    auto json = req->getJsonObject();
+    if (!json)
+    {
+        SendError(k400BadRequest, "Json not found in the request", callback);
+        return;
+    }
+
+    std::string user_session = req->getCookie("user_session");
+    if (user_session.empty())
+    {
+        SendError(k400BadRequest, "Wrong request", callback);
+        return;
+    }
+
+    orm::DbClientPtr db = app().getDbClient();
+
+    try
+    {
+        orm::Result result = db->execSqlSync("select document from user_sessions where session_id=$1", user_session);
+        if (result.size() == 0)
+        {
+            SendError(k400BadRequest, "No such session", callback);
+            return;
+        }
+
+        auto row = result[0];
+        std::string json = row["document"].as<std::string>();
+        SendJson(callback, json);
+    }
+    catch (const orm::DrogonDbException& e)
+    {
+        logger->Error("Database error: {}", e.base().what());
+        SendError(k500InternalServerError, e.base().what(), callback);
+    }
 }
 
 };

@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS user_sessions
     expire_time bigint not null,
     shared boolean default false,
     public boolean default true,
-    filename text
+    document jsonb
 );
 
 CREATE TABLE IF NOT EXISTS refresh_sessions

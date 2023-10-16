@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+#include <fstream>
 #include "mock.h"
 
 namespace yutovo_server_test
@@ -98,6 +99,67 @@ TEST_F(ServiceTest, service1)
     ASSERT_TRUE((*json)["user_functions"].isArray());
     ASSERT_TRUE((*json)["builtin_functions"].isArray());
     ASSERT_TRUE((*json)["user_variables"].isArray());
+}
+
+//Save a user document in the DB
+TEST_F(ServiceTest, document1)
+{
+    auto client = HttpClient::newHttpClient("http://localhost:9001");
+    client->enableCookies(true);
+
+    Register(client, "User1", "user1@mail.com", "11");
+
+    auto req = HttpRequest::newHttpRequest();
+    req->setMethod(drogon::Get);
+    req->setPath("/");
+
+    auto resp = client->sendRequest(req);
+    ReqResult& res = resp.first;
+    HttpResponsePtr& r = resp.second;
+    ASSERT_TRUE(res == ReqResult::Ok) << res;
+    ASSERT_TRUE(r->getStatusCode() == k302Found) << r->getStatusCode();
+    auto session_cookie = r->getCookie("user_session");
+    ASSERT_TRUE(session_cookie.value() != "");
+
+    Json::Value login_body;
+    login_body["login"] = "User1";
+    login_body["password"] = "11";
+    req = HttpRequest::newHttpJsonRequest(login_body);
+    req->setMethod(drogon::Post);
+    req->setPath("/auth/login");
+
+    resp = client->sendRequest(req);
+    r = resp.second;
+    std::string access_token = r->getHeader("access_token");
+
+    std::ifstream f("../tests/files11.yut");
+
+    Json::Value save_body;
+    f >> save_body;
+    req = HttpRequest::newHttpJsonRequest(save_body);
+    req->setMethod(drogon::Post);
+    req->setPath("/service/save-document");
+    client->addCookie(session_cookie);
+
+    resp = client->sendRequest(req, 10);
+    res = resp.first;
+    r = resp.second;
+    ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
+
+    Json::Value load_body;
+    req = HttpRequest::newHttpJsonRequest(load_body);
+    req->setMethod(drogon::Post);
+    req->setPath("/service/load-document");
+
+    resp = client->sendRequest(req, 10);
+    res = resp.first;
+    r = resp.second;
+    ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
+    ASSERT_TRUE(r->getContentType() == CT_APPLICATION_JSON) << r->getContentType();
+    const auto load_json = r->jsonObject();
+    ASSERT_TRUE(save_body == *load_json);
+
+    UnRegister(client, "User1", access_token);
 }
 
 }
