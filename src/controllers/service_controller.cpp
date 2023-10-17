@@ -182,6 +182,7 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
         SendError(k400BadRequest, "Wrong request", callback);
         return;
     }
+
     auto id = text["id"].asString();
     if (id == "0")
     {
@@ -199,6 +200,33 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
             logger->Error("Database error: {}", e.base().what());
             SendError(k500InternalServerError, e.base().what(), callback);
         }
+        return;
+    }
+
+    //update a part of the document
+    try
+    {
+        //parse the string id
+        std::vector<int> _id;
+        if (!ParseId(id, _id))
+        {
+            SendError(k400BadRequest, "Wrong Id", callback);
+            return;
+        }
+
+        std::string path = "'{\"text\"";
+        for (size_t i = 0; i < _id.size() - 1; ++i)
+            path += ",\"elements\"," + std::to_string(_id[i]);
+        path += "}'";
+
+        orm::Result result = db->execSqlSync("update user_sessions set document=jsonb_set(document," + path + 
+            ",jsonb '" + text.toStyledString() + "') where session_id=$1", user_session);
+        SendOk(callback);
+    }
+    catch (const orm::DrogonDbException& e)
+    {
+        logger->Error("Database error: {}", e.base().what());
+        SendError(k500InternalServerError, e.base().what(), callback);
     }
 }
 
@@ -219,20 +247,54 @@ void ServiceController::LoadDocument(const HttpRequestPtr& req, std::function<vo
         return;
     }
 
+    std::string id;
+    auto _id = (*json)["id"];
+    if (_id)
+        id = _id.asString();
+
     orm::DbClientPtr db = app().getDbClient();
 
     try
     {
-        orm::Result result = db->execSqlSync("select document from user_sessions where session_id=$1", user_session);
-        if (result.size() == 0)
+        if (id.empty())
         {
-            SendError(k400BadRequest, "No such session", callback);
-            return;
-        }
+            //get the whole document
+            orm::Result result = db->execSqlSync("select document from user_sessions where session_id=$1", user_session);
+            if (result.size() == 0)
+            {
+                SendError(k400BadRequest, "No such session", callback);
+                return;
+            }
 
-        auto row = result[0];
-        std::string json = row["document"].as<std::string>();
-        SendJson(callback, json);
+            auto row = result[0];
+            std::string json = row["document"].as<std::string>();
+            SendJson(callback, json);
+        }
+        else
+        {
+            //get a part of the document
+            std::vector<int> _id;
+            if (!ParseId(id, _id))
+            {
+                SendError(k400BadRequest, "Wrong Id", callback);
+                return;
+            }
+
+            std::string path = "'text'";
+            for (size_t i = 0; i < _id.size() - 1; ++i)
+                path += "->'elements'->" + std::to_string(_id[i]);
+
+            orm::Result result = db->execSqlSync("select document->" + path + " as document from user_sessions where session_id=$1", user_session);
+            if (result.size() == 0)
+            {
+                SendError(k400BadRequest, "No such session", callback);
+                return;
+            }
+
+            auto row = result[0];
+            std::string json = row["document"].as<std::string>();
+            SendJson(callback, json);
+        }
     }
     catch (const orm::DrogonDbException& e)
     {

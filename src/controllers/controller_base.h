@@ -30,6 +30,8 @@ protected:
 
     bool ParseRefreshToken(const std::string& refresh_token, std::string& refresh_uuid, std::string& login, 
         std::function<void (const HttpResponsePtr &)>& callback);
+    
+    bool ParseId(const std::string& id_str, std::vector<int>& id);
 
 protected:
     std::string public_key, private_key;

@@ -149,4 +149,23 @@ bool ControllerBase::ParseRefreshToken(const std::string& refresh_token, std::st
 
     return true;
 }
+
+bool ControllerBase::ParseId(const std::string& id_str, std::vector<int>& id)
+{
+    std::stringstream s(id_str);
+    while (s.good())
+    {
+        std::string substr;
+        getline(s, substr, ',');
+        try
+        {
+            id.push_back(std::stoi(substr));
+        }
+        catch (std::exception const& ex)
+        {
+            return false;
+        }
+    }
+    return true;
+}
 }
