@@ -185,6 +185,8 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
 
     SessionPtr session = req->session();
     std::string user_id = session->get<std::string>("user_id");
+    if (user_id.empty())
+        user_id = "-1";
     int document_id = -1;
 
     try
@@ -260,7 +262,7 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
         }
 
         std::string path = "'{\"text\"";
-        for (size_t i = 0; i < _id.size() - 1; ++i)
+        for (size_t i = 1; i < _id.size(); ++i)
             path += ",\"elements\"," + std::to_string(_id[i]);
         path += "}'";
 
@@ -328,7 +330,7 @@ void ServiceController::LoadDocument(const HttpRequestPtr& req, std::function<vo
             }
 
             std::string path = "'text'";
-            for (size_t i = 0; i < _id.size() - 1; ++i)
+            for (size_t i = 1; i < _id.size(); ++i)
                 path += "->'elements'->" + std::to_string(_id[i]);
 
             orm::Result result = db->execSqlSync("select document->" + path + 
