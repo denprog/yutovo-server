@@ -42,6 +42,7 @@ void ClearDb::ClearDbThread()
                 int64_t s = now.secondsSinceEpoch();
                 db->execSqlSync("delete from refresh_sessions where expire_time<=$1", s);
                 db->execSqlSync("delete from user_sessions where expire_time<=$1", s);
+                db->execSqlSync("delete from user_documents where user_id=-1 and document_id not in (select document_id from user_sessions)");
             }
             catch (const orm::DrogonDbException& e)
             {

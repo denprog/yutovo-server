@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS user_sessions
     expire_time bigint not null,
     shared boolean default false,
     public boolean default true,
-    document jsonb
+    document_id int default -1
 );
 
 CREATE TABLE IF NOT EXISTS refresh_sessions
@@ -28,6 +28,16 @@ CREATE TABLE IF NOT EXISTS refresh_sessions
     refresh_uuid uuid not null,
     create_time timestamp with time zone not null default now(),
     expire_time bigint not null
+);
+
+CREATE TABLE IF NOT EXISTS user_documents
+(
+    document_id serial PRIMARY KEY,
+    user_id int default -1,
+    name text,
+    create_time timestamp with time zone not null default now(),
+    change_time timestamp with time zone not null default now(),
+    document jsonb
 );
 
 CREATE TABLE IF NOT EXISTS user_logins
