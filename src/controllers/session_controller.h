@@ -18,7 +18,7 @@ public:
     ADD_METHOD_TO(SessionController::Session, "/session/{1}", Get);
     ADD_METHOD_TO(SessionController::Assets, "/assets/{1}", Get);
     ADD_METHOD_TO(SessionController::Icons, "/icons/{1}", Get);
-    ADD_METHOD_TO(SessionController::Icons, "/images/{1}", Get);
+    ADD_METHOD_TO(SessionController::Images, "/images/{1}", Get);
     METHOD_LIST_END
 
     void Root(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
