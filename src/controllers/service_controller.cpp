@@ -154,14 +154,14 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
         return;
     }
 
-    auto string_formats = (*json)["string_formats"];
-    auto paragraph_formats = (*json)["paragraph_formats"];
-    auto text = (*json)["text"];
-    if (!text)
+    Json::Value& doc = *json;
+    if (!doc.isObject() || !doc.isMember("text"))
     {
         SendError(k400BadRequest, "Text field not found in the request", callback);
         return;
     }
+
+    Json::Value& text = doc["text"];
 
     std::string user_session = req->getCookie("user_session");
     if (user_session.empty())
@@ -172,12 +172,7 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
 
     orm::DbClientPtr db = app().getDbClient();
 
-    Json::Value doc;
-    if (string_formats)
-        doc["string_formats"] = string_formats;
-    if (paragraph_formats)
-        doc["paragraph_formats"] = paragraph_formats;
-    if (text["id"].isNull() || text["id"].asString().empty())
+    if (!text.isMember("id") || text["id"].asString().empty())
     {
         SendError(k400BadRequest, "Wrong request", callback);
         return;
@@ -213,7 +208,6 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
     if (id == "0")
     {
         //update whole document
-        doc["text"] = text;
         try
         {
             if (document_id == -1)
@@ -230,6 +224,24 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
 
                 auto row = result[0];
                 document_id = row["document_id"].as<int>();
+            }
+            else
+            {
+                orm::Result result = db->execSqlSync("update user_documents set document=$1 where document_id=$2", doc.toStyledString(), document_id);
+                if (result.affectedRows() == 0)
+                {
+                    result = db->execSqlSync("insert into user_documents (user_id, document) values ($1, $2) returning document_id", 
+                        user_id, doc.toStyledString());
+                    if (result.affectedRows() == 0)
+                    {
+                        logger->Error("Database error: Error inserting a document");
+                        SendError(k500InternalServerError, "Error inserting a document", callback);
+                        return;
+                    }
+
+                    auto row = result[0];
+                    document_id = row["document_id"].as<int>();
+                }
             }
 
             db->execSqlSync("update user_sessions set document_id=$1 where session_id=$2", document_id, user_session);
