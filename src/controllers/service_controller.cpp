@@ -1,4 +1,5 @@
 #include "service_controller.h"
+#include "../logic/clear_db.h"
 #include <functional>
 
 namespace yutovo_server
@@ -210,6 +211,8 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
         //update whole document
         try
         {
+            ClearDbTurnOff t; //skip the clear db circles for a while
+
             if (document_id == -1)
             {
                 //insert new document

@@ -347,4 +347,65 @@ TEST_F(ServiceTest, document4)
     ASSERT_TRUE(el == *load_json);
 }
 
+//Run a session, login, load the document
+TEST_F(ServiceTest, document5)
+{
+    auto client = HttpClient::newHttpClient("http://localhost:9001");
+    client->enableCookies(true);
+
+    auto req = HttpRequest::newHttpRequest();
+    req->setMethod(drogon::Get);
+    req->setPath("/");
+
+    auto resp = client->sendRequest(req);
+    ReqResult& res = resp.first;
+    HttpResponsePtr& r = resp.second;
+    ASSERT_TRUE(res == ReqResult::Ok) << res;
+    ASSERT_TRUE(r->getStatusCode() == k302Found) << r->getStatusCode();
+    auto c = r->getCookie("user_session");
+    ASSERT_TRUE(c.value() != "");
+    client->addCookie(c);
+
+    std::ifstream f("../tests/files11.yut");
+
+    Json::Value save_body;
+    f >> save_body;
+    req = HttpRequest::newHttpJsonRequest(save_body);
+    req->setMethod(drogon::Post);
+    req->setPath("/service/save-document");
+
+    resp = client->sendRequest(req, 10);
+    res = resp.first;
+    r = resp.second;
+    ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
+
+    Register(client, "User1", "user1@mail.com", "11");
+
+    Json::Value login_body;
+    login_body["login"] = "User1";
+    login_body["password"] = "11";
+    req = HttpRequest::newHttpJsonRequest(login_body);
+    req->setMethod(drogon::Post);
+    req->setPath("/auth/login");
+
+    resp = client->sendRequest(req);
+    r = resp.second;
+    std::string access_token = r->getHeader("access_token");
+
+    Json::Value load_body;
+    req = HttpRequest::newHttpJsonRequest(load_body);
+    req->setMethod(drogon::Post);
+    req->setPath("/service/load-document");
+
+    resp = client->sendRequest(req, 10);
+    res = resp.first;
+    r = resp.second;
+    ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
+    ASSERT_TRUE(r->getContentType() == CT_APPLICATION_JSON) << r->getContentType();
+    const auto load_json = r->jsonObject();
+    ASSERT_TRUE(save_body == *load_json);
+
+    UnRegister(client, "User1", access_token);
+}
+
 }

@@ -16,6 +16,8 @@ extern char** argv;
 
 struct TestBase
 {
+    TestBase();
+    
     void Register(HttpClientPtr client, std::string login, std::string email, std::string password);
     void UnRegister(HttpClientPtr client, std::string login, std::string& access_token);
 };

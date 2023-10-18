@@ -8,6 +8,13 @@ char** argv = nullptr;
 
 //TestBase
 
+TestBase::TestBase()
+{
+    drogon::orm::DbClientPtr db = drogon::app().getDbClient();
+    db->execSqlSync("delete from user_sessions where user_id in (select user_id from users where login='User1' or login='User2')");
+    db->execSqlSync("delete from users where login='User1' or login='User2'");
+}
+
 void TestBase::Register(HttpClientPtr client, std::string login, std::string email, std::string password)
 {
     Json::Value body;

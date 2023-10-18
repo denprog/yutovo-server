@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
             std::this_thread::sleep_for(10ms);
         }
 
-        yutovo_server::ClearDb clear_db;
+        yutovo_server::ClearDb* clear_db = yutovo_server::ClearDb::GetInstance();
 
         app_thread.join();
     }

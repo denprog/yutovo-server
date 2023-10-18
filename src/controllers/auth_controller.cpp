@@ -1,4 +1,5 @@
 #include "auth_controller.h"
+#include "../logic/clear_db.h"
 #include <jwt-cpp/jwt.h>
 #include <fstream>
 #include <system_error>
@@ -153,6 +154,8 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
 
     try
     {
+        ClearDbTurnOff t; //skip the clear db circles for a while
+
         orm::Result result = db->execSqlSync("select user_id from users where login=$1 and password=$2", login, password);
         if (result.size() == 0)
         {
@@ -179,11 +182,19 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
         auto session_expires_date = trantor::Date::now().after(session_expires);
         if (!user_session.empty())
         {
+            int document_id = -1;
+            result = db->execSqlSync("select document_id from user_sessions where session_id=$1", user_session);
+            if (result.size() > 0)
+            {
+                auto row = result[0];
+                document_id = row["document_id"].as<int>();
+            }
+
             //if a user has many logins, a session may have another login
             db->execSqlSync("delete from user_sessions where session_id=$1", user_session);
             //the user session starts to have an owner
-            db->execSqlSync("insert into user_sessions (session_id, user_id, expire_time) values ($1, $2, $3)", user_session, user_id, 
-                session_expires_date.secondsSinceEpoch());
+            db->execSqlSync("insert into user_sessions (session_id, user_id, expire_time, document_id) values ($1, $2, $3, $4)", 
+                user_session, user_id, session_expires_date.secondsSinceEpoch(), document_id);
         }
 
         SendOkTokens(callback, login, access_uuid, refresh_uuid, user_session, access_expires, refresh_expires, session_expires_date);
