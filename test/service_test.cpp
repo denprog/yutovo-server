@@ -522,7 +522,11 @@ TEST_F(ServiceTest, document7)
     ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
     ASSERT_TRUE(r->getContentType() == CT_APPLICATION_JSON) << r->getContentType();
     auto load_json_str = r->jsonObject()->toStyledString();
-    ASSERT_TRUE(load_json_str == "{}\n") << load_json_str;
+    Json::Value v;
+    Json::Reader reader;
+    reader.parse("{\"text\":{\"id\":\"0\",\"type\":1,\"elements\":[{\"id\":\"0,0\",\"type\":2,\
+        \"elements\":[{\"id\":\"0,0,0\",\"type\":3,\"elements\":[{\"id\":\"0,0,0,0\",\"type\":4,\"elements\":\"\"}]}]}]}}", v);
+    ASSERT_TRUE(load_json_str == v.toStyledString()) << load_json_str;
 
     UnRegister(client, "User1", access_token);
 }

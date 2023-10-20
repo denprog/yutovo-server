@@ -46,20 +46,17 @@ void SessionController::Root(const HttpRequestPtr& req, std::function<void (cons
             }
 
             //create new document and session
-            orm::Result result = db->execSqlSync("insert into user_documents (user_id, document) values (-1, '{}') returning document_id");
-            if (result.affectedRows() == 0)
+            std::string document_id;
+            if (!AddDocument("-1", document_id))
             {
                 logger->Error("Database error: Error inserting a document");
                 SendError(k500InternalServerError, "Error inserting a document", callback);
                 return;
             }
 
-            auto row = result[0];
-            std::string document_id = row["document_id"].as<std::string>();
-
             user_session = std::string(boost::uuids::to_string(boost::uuids::random_generator()()));
             trantor::Date session_expires_date = trantor::Date::now().after(session_expires);
-            result = db->execSqlSync("insert into user_sessions (session_id, expire_time, document_id) values ($1, $2, $3)", user_session, 
+            auto result = db->execSqlSync("insert into user_sessions (session_id, expire_time, document_id) values ($1, $2, $3)", user_session, 
                 session_expires_date.secondsSinceEpoch(), document_id);
             if (result.affectedRows() == 0)
             {

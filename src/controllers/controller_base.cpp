@@ -184,9 +184,23 @@ bool ControllerBase::ParseId(const std::string& id_str, std::vector<int>& id)
 void ControllerBase::SetDocumentCookie(const std::string& document_id, HttpResponsePtr resp)
 {
     drogon::Cookie document_cookie("document_id", document_id);
-    document_cookie.setHttpOnly(true);
+    document_cookie.setHttpOnly(false);
     document_cookie.setPath("/");
     document_cookie.setExpiresDate(trantor::Date::now().after(session_expires));
     resp->addCookie(document_cookie);
+}
+
+bool ControllerBase::AddDocument(const std::string& user_id, std::string& document_id)
+{
+    orm::DbClientPtr db = app().getDbClient();
+    orm::Result result = db->execSqlSync("insert into user_documents (user_id, document) values ($1, $2) returning document_id", 
+        user_id, "{\"text\":{\"id\":\"0\",\"type\":1,\"elements\":[{\"id\":\"0,0\",\"type\":2,\
+        \"elements\":[{\"id\":\"0,0,0\",\"type\":3,\"elements\":[{\"id\":\"0,0,0,0\",\"type\":4,\"elements\":\"\"}]}]}]}}");
+    if (result.affectedRows() == 0)
+        return false;
+
+    auto row = result[0];
+    document_id = row["document_id"].as<std::string>();
+    return true;
 }
 }

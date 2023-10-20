@@ -36,6 +36,8 @@ protected:
 
     void SetDocumentCookie(const std::string& document_id, HttpResponsePtr resp);
 
+    bool AddDocument(const std::string& user_id, std::string& document_id);
+
 protected:
     int session_expires = 0; //session without user, in seconds, after last using
     std::string public_key, private_key;

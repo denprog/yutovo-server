@@ -175,16 +175,12 @@ void ServiceController::NewDocument(const HttpRequestPtr& req, std::function<voi
         else
         {
             //for registered user create a new document
-            orm::Result result = db->execSqlSync("insert into user_documents (user_id, document) values ($1, '{}') returning document_id", user_id);
-            if (result.affectedRows() == 0)
+            if (!AddDocument(user_id, document_id))
             {
                 logger->Error("Database error: Error inserting a document");
                 SendError(k500InternalServerError, "Error inserting a document", callback);
                 return;
             }
-
-            auto row = result[0];
-            document_id = row["document_id"].as<std::string>();
 
             db->execSqlSync("update user_sessions set document_id=$1 where session_id=$2", document_id, user_session);
         }
@@ -236,7 +232,7 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
     std::string user_id = session->get<std::string>("user_id");
     if (user_id.empty())
         user_id = "-1";
-    int document_id = -1;
+    std::string document_id = "-1";
 
     ClearDbTurnOff t; //skip the clear db circles
 
@@ -251,7 +247,7 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
         }
 
         auto row = result[0];
-        document_id = row["document_id"].as<int>();
+        document_id = row["document_id"].as<std::string>();
     }
     catch (const orm::DrogonDbException& e)
     {
@@ -266,42 +262,32 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
         //update whole document
         try
         {
-            if (document_id == -1)
+            if (document_id == "-1")
             {
                 //insert new document
-                orm::Result result = db->execSqlSync("insert into user_documents (user_id, document) values ($1, $2) returning document_id", 
-                    user_id, doc.toStyledString());
-                if (result.affectedRows() == 0)
+                if (!AddDocument(user_id, document_id))
                 {
                     logger->Error("Database error: Error inserting a document");
                     SendError(k500InternalServerError, "Error inserting a document", callback);
                     return;
                 }
-
-                auto row = result[0];
-                document_id = row["document_id"].as<int>();
             }
             else
             {
                 orm::Result result = db->execSqlSync("update user_documents set document=$1 where document_id=$2", doc.toStyledString(), document_id);
                 if (result.affectedRows() == 0)
                 {
-                    result = db->execSqlSync("insert into user_documents (user_id, document) values ($1, $2) returning document_id", 
-                        user_id, doc.toStyledString());
-                    if (result.affectedRows() == 0)
+                    if (!AddDocument(user_id, document_id))
                     {
                         logger->Error("Database error: Error inserting a document");
                         SendError(k500InternalServerError, "Error inserting a document", callback);
                         return;
                     }
-
-                    auto row = result[0];
-                    document_id = row["document_id"].as<int>();
                 }
             }
 
             db->execSqlSync("update user_sessions set document_id=$1 where session_id=$2", document_id, user_session);
-            SendOk(callback, std::to_string(document_id));
+            SendOk(callback, document_id);
         }
         catch (const orm::DrogonDbException& e)
         {
@@ -314,7 +300,7 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
     //update a part of the document
     try
     {
-        if (document_id == -1)
+        if (document_id == "-1")
         {
             logger->Error("Wrong document id for session_id={}", user_session);
             SendError(k400BadRequest, "Wrong document id", callback);
