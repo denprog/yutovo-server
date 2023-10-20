@@ -20,6 +20,7 @@ public:
     
 protected:
     void SendOk(std::function<void (const HttpResponsePtr &)>& callback);
+    void SendOk(std::function<void (const HttpResponsePtr &)>& callback, const std::string& document_id);
     void SendOkTokens(std::function<void (const HttpResponsePtr &)>& callback, const std::string& login, const std::string& access_uuid, 
         const std::string& refresh_uuid, const std::string& user_session, trantor::Date access_expires, trantor::Date refresh_expires, 
         trantor::Date session_expires);
@@ -33,7 +34,10 @@ protected:
     
     bool ParseId(const std::string& id_str, std::vector<int>& id);
 
+    void SetDocumentCookie(const std::string& document_id, HttpResponsePtr resp);
+
 protected:
+    int session_expires = 0; //session without user, in seconds, after last using
     std::string public_key, private_key;
     int access_token_expires = 60 * 2; //seconds
     int refresh_token_expires = 60 * 60 * 24; //seconds

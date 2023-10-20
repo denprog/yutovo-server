@@ -24,7 +24,7 @@ TEST_F(SessionTest, session1)
     ASSERT_TRUE(r->getStatusCode() == k302Found) << r->getStatusCode();
 
     std::string location = r->getHeader("location");
-    ASSERT_TRUE(location.find("/session/") != std::string::npos);
+    ASSERT_TRUE(location.find("/document/") != std::string::npos) << location;
 
     req = HttpRequest::newHttpRequest();
     req->setMethod(drogon::Get);
@@ -75,7 +75,7 @@ TEST_F(SessionTest, session2)
         ASSERT_TRUE(r->getStatusCode() == k302Found) << r->getStatusCode();
 
         std::string location = r->getHeader("location");
-        ASSERT_TRUE(location.find("/session/" + session_cookie.value()) != std::string::npos);
+        ASSERT_TRUE(location.find("/document/") != std::string::npos) << location;
 
         req = HttpRequest::newHttpRequest();
         req->setMethod(drogon::Get);
@@ -91,7 +91,7 @@ TEST_F(SessionTest, session2)
 //Create a session without login and later access it by its url
 TEST_F(SessionTest, session3)
 {
-    drogon::Cookie session_cookie;
+    drogon::Cookie document_cookie;
     {
         auto client = HttpClient::newHttpClient("http://localhost:9001");
         client->enableCookies(true);
@@ -105,9 +105,8 @@ TEST_F(SessionTest, session3)
         HttpResponsePtr& r = resp.second;
         ASSERT_TRUE(res == ReqResult::Ok) << res;
         ASSERT_TRUE(r->getStatusCode() == k302Found) << r->getStatusCode();
-        auto c = r->getCookie("user_session");
-        ASSERT_TRUE(c.value() != "");
-        session_cookie = c;
+        document_cookie = r->getCookie("document_id");
+        ASSERT_TRUE(document_cookie.value() != "");
     }
 
     {
@@ -117,7 +116,7 @@ TEST_F(SessionTest, session3)
 
         auto req = HttpRequest::newHttpRequest();
         req->setMethod(drogon::Get);
-        req->setPath("/session/" + session_cookie.value());
+        req->setPath("/document/" + document_cookie.value());
 
         auto resp = client->sendRequest(req);
         ReqResult& res = resp.first;
@@ -149,17 +148,7 @@ TEST_F(SessionTest, session4)
 
     Register(client, "User1", "user1@mail.com", "11");
 
-    Json::Value body;
-    body["login"] = "User1";
-    body["password"] = "11";
-    req = HttpRequest::newHttpJsonRequest(body);
-    req->setMethod(drogon::Post);
-    req->setPath("/auth/login");
-
-    resp = client->sendRequest(req);
-    res = resp.first;
-    r = resp.second;
-    ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
+    Login(client, "User1", "11", r);
     std::string access_token = r->getHeader("access_token");
     c = r->getCookie("user_session");
     ASSERT_TRUE(c.value() == session_cookie.value());

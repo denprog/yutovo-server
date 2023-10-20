@@ -28,6 +28,9 @@ ControllerBase::ControllerBase()
     ss.str("");
     ss << public_key_file.rdbuf();
     public_key = ss.str();
+
+    const Json::Value& v = app().getCustomConfig();
+    session_expires = v.get("session_expire_timeout", 3600).asInt();
 }
 
 void ControllerBase::SendOk(std::function<void (const HttpResponsePtr &)>& callback)
@@ -35,6 +38,15 @@ void ControllerBase::SendOk(std::function<void (const HttpResponsePtr &)>& callb
     auto resp = HttpResponse::newHttpResponse();
     resp->setStatusCode(k200OK);
     resp->setContentTypeCode(CT_TEXT_PLAIN);
+    callback(resp);
+}
+
+void ControllerBase::SendOk(std::function<void (const HttpResponsePtr &)>& callback, const std::string& document_id)
+{
+    auto resp = HttpResponse::newHttpResponse();
+    resp->setStatusCode(k200OK);
+    resp->setContentTypeCode(CT_TEXT_PLAIN);
+    SetDocumentCookie(document_id, resp);
     callback(resp);
 }
 
@@ -167,5 +179,14 @@ bool ControllerBase::ParseId(const std::string& id_str, std::vector<int>& id)
         }
     }
     return true;
+}
+
+void ControllerBase::SetDocumentCookie(const std::string& document_id, HttpResponsePtr resp)
+{
+    drogon::Cookie document_cookie("document_id", document_id);
+    document_cookie.setHttpOnly(true);
+    document_cookie.setPath("/");
+    document_cookie.setExpiresDate(trantor::Date::now().after(session_expires));
+    resp->addCookie(document_cookie);
 }
 }

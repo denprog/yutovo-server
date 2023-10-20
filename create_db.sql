@@ -17,8 +17,6 @@ CREATE TABLE IF NOT EXISTS user_sessions
     user_id int default -1,
     create_time timestamp with time zone not null default now(),
     expire_time bigint not null,
-    shared boolean default false,
-    public boolean default true,
     document_id int default -1
 );
 
@@ -37,6 +35,8 @@ CREATE TABLE IF NOT EXISTS user_documents
     name text,
     create_time timestamp with time zone not null default now(),
     change_time timestamp with time zone not null default now(),
+    shared boolean default false,
+    public boolean default true,
     document jsonb
 );
 

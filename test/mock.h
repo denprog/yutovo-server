@@ -20,6 +20,9 @@ struct TestBase
     
     void Register(HttpClientPtr client, std::string login, std::string email, std::string password);
     void UnRegister(HttpClientPtr client, std::string login, std::string& access_token);
+
+    void Login(HttpClientPtr client, std::string login, std::string password, HttpResponsePtr& r);
+    void Login(HttpClientPtr client, std::string login, std::string password, std::string& access_token);
 };
 
 struct AuthTest : public testing::Test, TestBase
