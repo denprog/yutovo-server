@@ -14,7 +14,7 @@ SessionController::SessionController()
 {
 }
 
-void SessionController::Root(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
+void SessionController::Root(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, std::string param)
 {
     auto p = req->path();
     logger->Info("Request root: path={}", p);
@@ -22,20 +22,35 @@ void SessionController::Root(const HttpRequestPtr& req, std::function<void (cons
     if (req->path() == "/")
     {
         orm::DbClientPtr db = app().getDbClient();
-        std::string user_session = req->getCookie("user_session");
+        std::string session_id = req->getCookie("session_id");
+        SessionPtr session = req->session();
+        std::string user_id = session->get<std::string>("user_id");
+
         try
         {
             ClearDbTurnOff t;
 
-            if (!user_session.empty())
+            if (!session_id.empty())
             {
                 //find user session
-                orm::Result result = db->execSqlSync("select document_id from user_sessions where session_id=$1", user_session);
+                orm::Result result = db->execSqlSync("select document_id from user_sessions where session_id=$1", session_id);
                 if (result.size() > 0)
                 {
-                    //redirect to the document
+                    session->insert("session_id", session_id);
+
                     auto row = result[0];
                     std::string document_id = row["document_id"].as<std::string>();
+
+                    if (user_id.empty() || document_id == "-1")
+                    {
+                        std::string r = HttpAppFramework::instance().getDocumentRoot();
+                        auto resp = HttpResponse::newFileResponse(r + "/index.html");
+                        callback(resp);
+                        return;
+                    }
+
+                    //redirect to the document
+                    session->insert("document_id", document_id);
                     auto resp = HttpResponse::newRedirectionResponse("/document/" + document_id);
 
                     SetDocumentCookie(document_id, resp);
@@ -45,33 +60,42 @@ void SessionController::Root(const HttpRequestPtr& req, std::function<void (cons
                 }
             }
 
-            //create new document and session
-            std::string document_id;
-            if (!AddDocument("-1", document_id))
+            std::string document_id = "-1";
+            if (!user_id.empty())
             {
-                logger->Error("Database error: Error inserting a document");
-                SendError(k500InternalServerError, "Error inserting a document", callback);
-                return;
+                //create new document and session for a registered user
+                if (!AddDocument("-1", document_id))
+                {
+                    logger->Error("Database error: Error inserting a document");
+                    SendError(k500InternalServerError, "Error inserting a document", callback);
+                    return;
+                }
             }
 
-            user_session = std::string(boost::uuids::to_string(boost::uuids::random_generator()()));
-            trantor::Date session_expires_date = trantor::Date::now().after(session_expires);
-            auto result = db->execSqlSync("insert into user_sessions (session_id, expire_time, document_id) values ($1, $2, $3)", user_session, 
-                session_expires_date.secondsSinceEpoch(), document_id);
-            if (result.affectedRows() == 0)
+            if (!AddSession(document_id, session_id))
             {
                 logger->Error("Database error: Error inserting a session");
                 SendError(k500InternalServerError, "Error inserting a session", callback);
                 return;
             }
 
-            SessionPtr session = req->session();
             session->insert("document_id", document_id);
+            session->insert("session_id", session_id);
 
-            drogon::Cookie session_cookie("user_session", user_session);
-            session_cookie.setHttpOnly(true);
+            drogon::Cookie session_cookie("session_id", session_id);
+            session_cookie.setHttpOnly(false);
             session_cookie.setPath("/");
-            session_cookie.setExpiresDate(session_expires_date);
+            session_cookie.setExpiresDate(trantor::Date::now().after(session_expires));
+
+            if (user_id.empty())
+            {
+                //a non-registered user doesn't have a document in the DB
+                std::string r = HttpAppFramework::instance().getDocumentRoot();
+                auto resp = HttpResponse::newFileResponse(r + "/index.html");
+                resp->addCookie(session_cookie);
+                callback(resp);
+                return;
+            }
 
             //redirect to the document
             auto resp = HttpResponse::newRedirectionResponse("/document/" + document_id);
@@ -89,7 +113,7 @@ void SessionController::Root(const HttpRequestPtr& req, std::function<void (cons
     }
 
     std::string r = HttpAppFramework::instance().getDocumentRoot();
-    auto resp = HttpResponse::newFileResponse(r + p);
+    auto resp = HttpResponse::newFileResponse(r + param);
     callback(resp);
 }
 
@@ -130,6 +154,17 @@ void SessionController::Document(const HttpRequestPtr& req, std::function<void (
 
     if (param.find(".") == std::string::npos)
     {
+        std::string session_id = req->getCookie("session_id");
+        if (session_id.empty())
+        {
+            if (!AddSession(param, session_id))
+            {
+                logger->Error("Database error: Error inserting a session");
+                SendError(k500InternalServerError, "Error inserting a session", callback);
+                return;
+            }
+        }
+        
         orm::DbClientPtr db = app().getDbClient();
         try
         {
@@ -141,6 +176,8 @@ void SessionController::Document(const HttpRequestPtr& req, std::function<void (
                 SendError(k404NotFound, "Document not found", callback);
                 return;
             }
+
+            db->execSqlSync("update user_sessions set document_id=$1 where session_id=$2", param, session_id);
         }
         catch (const orm::DrogonDbException& e)
         {
@@ -151,6 +188,7 @@ void SessionController::Document(const HttpRequestPtr& req, std::function<void (
 
         SessionPtr session = req->session();
         session->insert("document_id", param);
+        session->insert("session_id", session_id);
 
         auto resp = HttpResponse::newFileResponse(r + p);
         SetDocumentCookie(param, resp);

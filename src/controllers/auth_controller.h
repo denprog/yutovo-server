@@ -30,18 +30,6 @@ inline yutovo_server::User fromRequest(const HttpRequest &req)
 
 namespace yutovo_server
 {
-class LoginFilter : public drogon::HttpFilter<LoginFilter>
-{
-public:
-    LoginFilter();
-
-    virtual void doFilter(const HttpRequestPtr& req, FilterCallback&& not_valid_callback, FilterChainCallback&& valid_callback) override;
-
-private:
-    std::string public_key, private_key;
-    Logger* logger = Logger::GetInstance(std::string(std::getenv("YUTOVO_DEPLOY")) + "/log", "server", true, true);
-};
-
 class AuthController : public drogon::HttpController<AuthController>, public ControllerBase
 {
 public:
@@ -69,7 +57,7 @@ public:
 #endif
 
 private:
-    void UpdateSessionTime(const std::string& user_session);
+    void UpdateSessionTime(const std::string& session_id);
 
 private:
     int session_expires = 0;

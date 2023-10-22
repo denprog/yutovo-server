@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS user_sessions
     user_id int default -1,
     create_time timestamp with time zone not null default now(),
     expire_time bigint not null,
-    document_id int default -1
+    document_id int default -1 --current document for this session
 );
 
 CREATE TABLE IF NOT EXISTS refresh_sessions
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS refresh_sessions
 CREATE TABLE IF NOT EXISTS user_documents
 (
     document_id serial PRIMARY KEY,
-    user_id int default -1,
+    user_id int not null, --onwer of the document
     name text,
     create_time timestamp with time zone not null default now(),
     change_time timestamp with time zone not null default now(),

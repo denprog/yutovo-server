@@ -21,113 +21,13 @@ TEST_F(SessionTest, session1)
     ReqResult& res = resp.first;
     HttpResponsePtr& r = resp.second;
     ASSERT_TRUE(res == ReqResult::Ok) << res;
-    ASSERT_TRUE(r->getStatusCode() == k302Found) << r->getStatusCode();
-
-    std::string location = r->getHeader("location");
-    ASSERT_TRUE(location.find("/document/") != std::string::npos) << location;
-
-    req = HttpRequest::newHttpRequest();
-    req->setMethod(drogon::Get);
-    req->setPath(location);
-    resp = client->sendRequest(req);
-    res = resp.first;
-    r = resp.second;
-    ASSERT_TRUE(res == ReqResult::Ok) << res;
     ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
-}
-
-//Create a session without login and later access it by cookie
-TEST_F(SessionTest, session2)
-{
-    drogon::Cookie session_cookie;
-    {
-        auto client = HttpClient::newHttpClient("http://localhost:9001");
-        client->enableCookies(true);
-
-        auto req = HttpRequest::newHttpRequest();
-        req->setMethod(drogon::Get);
-        req->setPath("/");
-
-        auto resp = client->sendRequest(req);
-        ReqResult& res = resp.first;
-        HttpResponsePtr& r = resp.second;
-        ASSERT_TRUE(res == ReqResult::Ok) << res;
-        ASSERT_TRUE(r->getStatusCode() == k302Found) << r->getStatusCode();
-        auto c = r->getCookie("user_session");
-        ASSERT_TRUE(c.value() != "");
-        session_cookie = c;
-    }
-
-    {
-        //access by the saved cookie
-        auto client = HttpClient::newHttpClient("http://localhost:9001");
-        client->enableCookies(true);
-        client->addCookie(session_cookie);
-
-        auto req = HttpRequest::newHttpRequest();
-        req->setMethod(drogon::Get);
-        req->setPath("/");
-
-        auto resp = client->sendRequest(req);
-        ReqResult& res = resp.first;
-        HttpResponsePtr& r = resp.second;
-        ASSERT_TRUE(res == ReqResult::Ok) << res;
-        ASSERT_TRUE(r->getStatusCode() == k302Found) << r->getStatusCode();
-
-        std::string location = r->getHeader("location");
-        ASSERT_TRUE(location.find("/document/") != std::string::npos) << location;
-
-        req = HttpRequest::newHttpRequest();
-        req->setMethod(drogon::Get);
-        req->setPath(location);
-        resp = client->sendRequest(req);
-        res = resp.first;
-        r = resp.second;
-        ASSERT_TRUE(res == ReqResult::Ok) << res;
-        ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
-    }
-}
-
-//Create a session without login and later access it by its url
-TEST_F(SessionTest, session3)
-{
-    drogon::Cookie document_cookie;
-    {
-        auto client = HttpClient::newHttpClient("http://localhost:9001");
-        client->enableCookies(true);
-
-        auto req = HttpRequest::newHttpRequest();
-        req->setMethod(drogon::Get);
-        req->setPath("/");
-
-        auto resp = client->sendRequest(req);
-        ReqResult& res = resp.first;
-        HttpResponsePtr& r = resp.second;
-        ASSERT_TRUE(res == ReqResult::Ok) << res;
-        ASSERT_TRUE(r->getStatusCode() == k302Found) << r->getStatusCode();
-        document_cookie = r->getCookie("document_id");
-        ASSERT_TRUE(document_cookie.value() != "");
-    }
-
-    {
-        //access by the session url
-        auto client = HttpClient::newHttpClient("http://localhost:9001");
-        client->enableCookies(true);
-
-        auto req = HttpRequest::newHttpRequest();
-        req->setMethod(drogon::Get);
-        req->setPath("/document/" + document_cookie.value());
-
-        auto resp = client->sendRequest(req);
-        ReqResult& res = resp.first;
-        HttpResponsePtr& r = resp.second;
-        ASSERT_TRUE(res == ReqResult::Ok) << res;
-        ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
-    }
+    std::string location = r->getHeader("location");
+    ASSERT_TRUE(location == "") << location;
 }
 
 //Create a session without login and later log into it
-TEST_F(SessionTest, session4)
+TEST_F(SessionTest, session2)
 {
     auto client = HttpClient::newHttpClient("http://localhost:9001");
     client->enableCookies(true);
@@ -140,8 +40,8 @@ TEST_F(SessionTest, session4)
     ReqResult& res = resp.first;
     HttpResponsePtr& r = resp.second;
     ASSERT_TRUE(res == ReqResult::Ok) << res;
-    ASSERT_TRUE(r->getStatusCode() == k302Found) << r->getStatusCode();
-    auto c = r->getCookie("user_session");
+    ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
+    auto c = r->getCookie("session_id");
     ASSERT_TRUE(c.value() != "");
 
     drogon::Cookie session_cookie = c;
@@ -150,7 +50,7 @@ TEST_F(SessionTest, session4)
 
     Login(client, "User1", "11", r);
     std::string access_token = r->getHeader("access_token");
-    c = r->getCookie("user_session");
+    c = r->getCookie("session_id");
     ASSERT_TRUE(c.value() == session_cookie.value());
 
     orm::DbClientPtr db = app().getDbClient();

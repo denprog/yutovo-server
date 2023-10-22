@@ -9,6 +9,71 @@
 namespace yutovo_server
 {
 
+//LoginFilter
+
+LoginFilter::LoginFilter()
+{
+    std::ifstream key_file("server_key");
+    if (!key_file.is_open())
+        throw std::system_error(ENOENT, std::generic_category(), "Key file not open");
+    
+    std::stringstream ss;
+    ss << key_file.rdbuf();
+    private_key = ss.str();
+}
+
+void LoginFilter::doFilter(const HttpRequestPtr& req, FilterCallback&& not_valid_callback, FilterChainCallback&& valid_callback)
+{
+    SessionPtr session = req->session();
+    std::string access_token = req->getHeader("access_token");
+    HttpResponsePtr resp;
+
+    try
+    {
+        auto decoded = jwt::decode(access_token);
+        auto login = decoded.get_payload_claim("login").to_json().to_str();
+        if (login != session->get<std::string>("login"))
+        {
+            logger->Error("Unanuthorized: {}", login);
+            auto resp = HttpResponse::newHttpResponse();
+            resp->setStatusCode(k401Unauthorized);
+            not_valid_callback(resp);
+            return;
+        }
+
+        auto verifier = jwt::verify().allow_algorithm(jwt::algorithm::rs256("", private_key, "", "")).with_issuer("auth0");
+        verifier.verify(decoded);
+        valid_callback();
+        return;
+    }
+    catch (std::invalid_argument& ex)
+    {
+        logger->Error("Wrong access token: {}", ex.what());
+        resp = HttpResponse::newHttpResponse();
+        resp->setStatusCode(k400BadRequest);
+    }
+    catch (jwt::error::claim_not_present_exception& ex)
+    {
+        logger->Error("Wrong access token: {}", ex.what());
+        resp = HttpResponse::newHttpResponse();
+        resp->setStatusCode(k400BadRequest);
+    }
+    catch (jwt::token_verification_exception& ex)
+    {
+        logger->Error("Wrong access token: {}", ex.what());
+        resp = HttpResponse::newHttpResponse();
+        resp->setStatusCode(k403Forbidden);
+    }
+    catch (...)
+    {
+        logger->Error("Wrong access token");
+        resp = HttpResponse::newHttpResponse();
+        resp->setStatusCode(k405MethodNotAllowed);
+    }
+
+    not_valid_callback(resp);
+}
+
 //ControllerBase
 
 ControllerBase::ControllerBase()
@@ -51,7 +116,7 @@ void ControllerBase::SendOk(std::function<void (const HttpResponsePtr &)>& callb
 }
 
 void ControllerBase::SendOkTokens(std::function<void (const HttpResponsePtr &)>& callback, const std::string& login, const std::string& access_uuid, 
-    const std::string& refresh_uuid, const std::string& user_session, trantor::Date access_expires, trantor::Date refresh_expires, 
+    const std::string& refresh_uuid, const std::string& session_id, trantor::Date access_expires, trantor::Date refresh_expires, 
     trantor::Date session_expires)
 {
     auto access_token = jwt::create().
@@ -84,9 +149,9 @@ void ControllerBase::SendOkTokens(std::function<void (const HttpResponsePtr &)>&
     refresh_cookie.setExpiresDate(refresh_expires);
     resp->addCookie(refresh_cookie);
 
-    if (!user_session.empty())
+    if (!session_id.empty())
     {
-        drogon::Cookie session_cookie("user_session", user_session);
+        drogon::Cookie session_cookie("session_id", session_id);
         session_cookie.setHttpOnly(true);
         session_cookie.setPath("/");
         session_cookie.setExpiresDate(session_expires);
@@ -188,6 +253,18 @@ void ControllerBase::SetDocumentCookie(const std::string& document_id, HttpRespo
     document_cookie.setPath("/");
     document_cookie.setExpiresDate(trantor::Date::now().after(session_expires));
     resp->addCookie(document_cookie);
+}
+
+bool ControllerBase::AddSession(const std::string& document_id, std::string& session_id)
+{
+    session_id = std::string(boost::uuids::to_string(boost::uuids::random_generator()()));
+    orm::DbClientPtr db = app().getDbClient();
+    trantor::Date session_expires_date = trantor::Date::now().after(session_expires);
+    auto result = db->execSqlSync("insert into user_sessions (session_id, expire_time, document_id) values ($1, $2, $3)", session_id, 
+        session_expires_date.secondsSinceEpoch(), document_id);
+    if (result.affectedRows() == 0)
+        return false;
+    return true;
 }
 
 bool ControllerBase::AddDocument(const std::string& user_id, std::string& document_id)

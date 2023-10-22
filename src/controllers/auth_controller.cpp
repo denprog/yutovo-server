@@ -10,65 +10,6 @@
 namespace yutovo_server
 {
 
-//LoginFilter
-
-LoginFilter::LoginFilter()
-{
-    std::ifstream key_file("server_key");
-    if (!key_file.is_open())
-        throw std::system_error(ENOENT, std::generic_category(), "Key file not open");
-    
-    std::stringstream ss;
-    ss << key_file.rdbuf();
-    private_key = ss.str();
-}
-
-void LoginFilter::doFilter(const HttpRequestPtr& req, FilterCallback&& not_valid_callback, FilterChainCallback&& valid_callback)
-{
-    orm::DbClientPtr db = app().getDbClient();
-    SessionPtr session = req->session();
-    std::string access_token = req->getHeader("access_token");
-
-    try
-    {
-        auto decoded = jwt::decode(access_token);
-        auto login = decoded.get_payload_claim("login").to_json().to_str();
-        if (login != session->get<std::string>("login"))
-        {
-            auto resp = HttpResponse::newHttpResponse();
-            resp->setStatusCode(k401Unauthorized);
-            not_valid_callback(resp);
-            return;
-        }
-
-        auto verifier = jwt::verify().allow_algorithm(jwt::algorithm::rs256("", private_key, "", "")).with_issuer("auth0");
-        verifier.verify(decoded);
-    }
-    catch (std::invalid_argument& ex)
-    {
-        auto resp = HttpResponse::newHttpResponse();
-        resp->setStatusCode(k400BadRequest);
-        not_valid_callback(resp);
-        return;
-    }
-    catch (jwt::error::claim_not_present_exception& ex)
-    {
-        auto resp = HttpResponse::newHttpResponse();
-        resp->setStatusCode(k400BadRequest);
-        not_valid_callback(resp);
-        return;
-    }
-    catch (jwt::token_verification_exception& ex)
-    {
-        auto resp = HttpResponse::newHttpResponse();
-        resp->setStatusCode(k403Forbidden);
-        not_valid_callback(resp);
-        return;
-    }
-
-    valid_callback();
-}
-
 //AuthController
 
 AuthController::AuthController()
@@ -134,7 +75,7 @@ void AuthController::UnRegister(const HttpRequestPtr& req, std::function<void (c
             return;
         }
         db->execSqlSync("delete from user_sessions where user_id=$1", user_id);
-        session->insert("user_id", "");
+        session->erase("user_id");
         SendOk(callback);
     }
     catch (const orm::DrogonDbException& e)
@@ -178,26 +119,35 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
             user_id, refresh_uuid, refresh_expires.secondsSinceEpoch());
         session->insert("user_id", user_id);
 
-        std::string user_session = req->getCookie("user_session");
+        std::string session_id = session->get<std::string>("session_id");
         auto session_expires_date = trantor::Date::now().after(session_expires);
-        if (!user_session.empty())
+        if (!session_id.empty())
         {
-            int document_id = -1;
-            result = db->execSqlSync("select document_id from user_sessions where session_id=$1", user_session);
+            std::string document_id = "-1";
+            result = db->execSqlSync("select document_id from user_sessions where session_id=$1", session_id);
             if (result.size() > 0)
             {
                 auto row = result[0];
-                document_id = row["document_id"].as<int>();
+                document_id = row["document_id"].as<std::string>();
+            }
+            else
+            {
+                if (!AddDocument(user_id, document_id))
+                {
+                    logger->Error("Database error: Error inserting a document");
+                    SendError(k500InternalServerError, "Error inserting a document", callback);
+                    return;
+                }
             }
 
             //if a user has many logins, a session may have another login
-            db->execSqlSync("delete from user_sessions where session_id=$1", user_session);
+            db->execSqlSync("delete from user_sessions where session_id=$1", session_id);
             //the user session starts to have an owner
             db->execSqlSync("insert into user_sessions (session_id, user_id, expire_time, document_id) values ($1, $2, $3, $4)", 
-                user_session, user_id, session_expires_date.secondsSinceEpoch(), document_id);
+                session_id, user_id, session_expires_date.secondsSinceEpoch(), document_id);
         }
 
-        SendOkTokens(callback, login, access_uuid, refresh_uuid, user_session, access_expires, refresh_expires, session_expires_date);
+        SendOkTokens(callback, login, access_uuid, refresh_uuid, session_id, access_expires, refresh_expires, session_expires_date);
     }
     catch (const orm::DrogonDbException& e)
     {
@@ -280,12 +230,12 @@ void AuthController::RefreshToken(const HttpRequestPtr& req, std::function<void 
         session->insert("login", login);
         session->insert("user_id", user_id);
 
-        std::string user_session = req->getCookie("user_session");
-        if (!user_session.empty())
-            UpdateSessionTime(user_session);
+        std::string session_id = req->getCookie("session_id");
+        if (!session_id.empty())
+            UpdateSessionTime(session_id);
 
         auto session_expires_date = trantor::Date::now().after(session_expires);
-        SendOkTokens(callback, login, access_uuid, refresh_uuid, user_session, access_expires, refresh_expires, session_expires_date);
+        SendOkTokens(callback, login, access_uuid, refresh_uuid, session_id, access_expires, refresh_expires, session_expires_date);
     }
     catch (const orm::DrogonDbException& e)
     {
@@ -303,11 +253,11 @@ void AuthController::SetParams(const HttpRequestPtr& req, std::function<void (co
 }
 #endif
 
-void AuthController::UpdateSessionTime(const std::string& user_session)
+void AuthController::UpdateSessionTime(const std::string& session_id)
 {
     orm::DbClientPtr db = app().getDbClient();
     trantor::Date session_expires_date = trantor::Date::now().after(session_expires);
-    db->execSqlSync("update user_sessions set expire_time=$1 where session_id=$2", session_expires_date.secondsSinceEpoch(), user_session);
+    db->execSqlSync("update user_sessions set expire_time=$1 where session_id=$2", session_expires_date.secondsSinceEpoch(), session_id);
 }
 
 }

@@ -149,8 +149,15 @@ void ServiceController::NewDocument(const HttpRequestPtr& req, std::function<voi
 {
     logger->Info("NewDocument request");
 
-    std::string user_session = req->getCookie("user_session");
-    if (user_session.empty())
+    auto json = req->getJsonObject();
+    if (!json)
+    {
+        SendError(k400BadRequest, "Json not found in the request", callback);
+        return;
+    }
+
+    std::string session_id = req->getCookie("session_id");
+    if (session_id.empty())
     {
         SendError(k400BadRequest, "Wrong request", callback);
         return;
@@ -182,7 +189,20 @@ void ServiceController::NewDocument(const HttpRequestPtr& req, std::function<voi
                 return;
             }
 
-            db->execSqlSync("update user_sessions set document_id=$1 where session_id=$2", document_id, user_session);
+            Json::Value text;
+            Json::Value& doc = *json;
+            if (doc.isObject() && doc.isMember("text"))
+            {
+                orm::Result result = db->execSqlSync("update user_documents set document=$1 where document_id=$2", doc.toStyledString(), document_id);
+                if (result.affectedRows() == 0)
+                {
+                    logger->Error("Database error: Error inserting a document");
+                    SendError(k500InternalServerError, "Error inserting a document", callback);
+                    return;
+                }
+            }
+
+            db->execSqlSync("update user_sessions set document_id=$1 where session_id=$2", document_id, session_id);
         }
   
         SendOk(callback, document_id);
@@ -212,14 +232,6 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
     }
 
     Json::Value& text = doc["text"];
-
-    std::string user_session = req->getCookie("user_session");
-    if (user_session.empty())
-    {
-        SendError(k400BadRequest, "Wrong request", callback);
-        return;
-    }
-
     orm::DbClientPtr db = app().getDbClient();
 
     if (!text.isMember("id") || text["id"].asString().empty())
@@ -230,6 +242,7 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
 
     SessionPtr session = req->session();
     std::string user_id = session->get<std::string>("user_id");
+    std::string session_id = session->get<std::string>("session_id");
     if (user_id.empty())
         user_id = "-1";
     std::string document_id = "-1";
@@ -238,16 +251,35 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
 
     try
     {
-        orm::Result result = db->execSqlSync("select document_id from user_sessions where session_id=$1", user_session);
+        orm::Result result = db->execSqlSync("select document_id from user_sessions where session_id=$1", session_id);
         if (result.size() == 0)
         {
-            logger->Error("Database error: session not found");
-            SendError(k500InternalServerError, "Session not found", callback);
+            logger->Error("Database error: document not found");
+            SendError(k500InternalServerError, "Document not found", callback);
             return;
         }
 
         auto row = result[0];
         document_id = row["document_id"].as<std::string>();
+
+        if (document_id != "-1")
+        {
+            result = db->execSqlSync("select user_id, shared from user_documents where document_id=$1", document_id);
+            if (result.size() == 0)
+            {
+                logger->Error("Database error: document not found");
+                SendError(k500InternalServerError, "Document not found", callback);
+                return;
+            }
+
+            auto row = result[0];
+            if (row["user_id"].as<std::string>() != user_id && !row["shared"].as<bool>())
+            {
+                //saving this foreign document is prohibited
+                SendError(k403Forbidden, "Document saving is prohibited", callback);
+                return;
+            }
+        }
     }
     catch (const orm::DrogonDbException& e)
     {
@@ -272,21 +304,19 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
                     return;
                 }
             }
-            else
+
+            orm::Result result = db->execSqlSync("update user_documents set document=$1 where document_id=$2", doc.toStyledString(), document_id);
+            if (result.affectedRows() == 0)
             {
-                orm::Result result = db->execSqlSync("update user_documents set document=$1 where document_id=$2", doc.toStyledString(), document_id);
-                if (result.affectedRows() == 0)
+                if (!AddDocument(user_id, document_id))
                 {
-                    if (!AddDocument(user_id, document_id))
-                    {
-                        logger->Error("Database error: Error inserting a document");
-                        SendError(k500InternalServerError, "Error inserting a document", callback);
-                        return;
-                    }
+                    logger->Error("Database error: Error inserting a document");
+                    SendError(k500InternalServerError, "Error inserting a document", callback);
+                    return;
                 }
             }
 
-            db->execSqlSync("update user_sessions set document_id=$1 where session_id=$2", document_id, user_session);
+            db->execSqlSync("update user_sessions set document_id=$1 where session_id=$2", document_id, session_id);
             SendOk(callback, document_id);
         }
         catch (const orm::DrogonDbException& e)
@@ -302,7 +332,7 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
     {
         if (document_id == "-1")
         {
-            logger->Error("Wrong document id for session_id={}", user_session);
+            logger->Error("Wrong document id for session_id={}", session_id);
             SendError(k400BadRequest, "Wrong document id", callback);
             return;
         }
@@ -322,7 +352,7 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
 
         orm::Result result = db->execSqlSync("update user_documents set document=jsonb_set(document," + path + 
             ",jsonb '" + text.toStyledString() + "') where document_id=$1", document_id);
-        result = db->execSqlSync("update user_sessions set document_id=$1 where session_id=$2", document_id, user_session);
+        result = db->execSqlSync("update user_sessions set document_id=$1 where session_id=$2", document_id, session_id);
         SendOk(callback);
     }
     catch (const orm::DrogonDbException& e)
@@ -335,6 +365,7 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
 void ServiceController::LoadDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
     logger->Info("LoadDocument request");
+
     auto json = req->getJsonObject();
     if (!json)
     {
@@ -356,22 +387,34 @@ void ServiceController::LoadDocument(const HttpRequestPtr& req, std::function<vo
     ClearDbTurnOff t; //skip the clear db circles for a while
 
     orm::DbClientPtr db = app().getDbClient();
+    SessionPtr session = req->session();
 
     try
     {
+        //check this user can load this document
+        orm::Result result = db->execSqlSync("select user_id, public from user_documents where document_id=$1", document_id);
+        if (result.size() == 0)
+        {
+            SendError(k400BadRequest, "No such document", callback);
+            return;
+        }
+
+        auto row = result[0];
+        if (row["user_id"].as<std::string>() != session->get<std::string>("user_id"))
+        {
+            if (!row["public"].as<bool>())
+            {
+                SendError(k403Forbidden, "This document is not public", callback);
+                return;
+            }
+        }
+
         if (id.empty())
         {
             //get the whole document
-            orm::Result result = db->execSqlSync("select document from user_documents where document_id=$1", document_id);
-            if (result.size() == 0)
-            {
-                SendError(k400BadRequest, "No such document", callback);
-                return;
-            }
-
+            result = db->execSqlSync("select document from user_documents where document_id=$1", document_id);
             auto row = result[0];
-            std::string json = row["document"].as<std::string>();
-            SendJson(callback, json);
+            SendJson(callback, row["document"].as<std::string>());
         }
         else
         {
@@ -387,7 +430,7 @@ void ServiceController::LoadDocument(const HttpRequestPtr& req, std::function<vo
             for (size_t i = 1; i < _id.size(); ++i)
                 path += "->'elements'->" + std::to_string(_id[i]);
 
-            orm::Result result = db->execSqlSync("select document->" + path + " as document from user_documents where document_id=$1", document_id);
+            result = db->execSqlSync("select document->" + path + " as document from user_documents where document_id=$1", document_id);
             if (result.size() == 0)
             {
                 SendError(k400BadRequest, "No such session", callback);
@@ -395,8 +438,7 @@ void ServiceController::LoadDocument(const HttpRequestPtr& req, std::function<vo
             }
 
             auto row = result[0];
-            std::string json = row["document"].as<std::string>();
-            SendJson(callback, json);
+            SendJson(callback, row["document"].as<std::string>());
         }
     }
     catch (const orm::DrogonDbException& e)

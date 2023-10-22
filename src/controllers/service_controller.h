@@ -17,8 +17,8 @@ public:
     ADD_METHOD_TO(ServiceController::GetTasks, "/service/get-tasks", Get);
     ADD_METHOD_TO(ServiceController::LoadTask, "/service/load-task", Post); //load from file
     ADD_METHOD_TO(ServiceController::ListIdentifiers, "/service/list-identifiers", Post);
-    ADD_METHOD_TO(ServiceController::NewDocument, "/service/new-document", Post); //create a document in the DB or replace an old one with an empty one
-    ADD_METHOD_TO(ServiceController::SaveDocument, "/service/save-document", Post); //save to the DB
+    ADD_METHOD_TO(ServiceController::NewDocument, "/service/new-document", Post, "yutovo_server::LoginFilter"); //create a document in the DB or replace with an empty one
+    ADD_METHOD_TO(ServiceController::SaveDocument, "/service/save-document", Post, "yutovo_server::LoginFilter"); //save to the DB
     ADD_METHOD_TO(ServiceController::LoadDocument, "/service/load-document", Post); //load from the DB
     METHOD_LIST_END
 

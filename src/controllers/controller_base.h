@@ -13,6 +13,18 @@ namespace yutovo_server
 
 namespace fs = std::filesystem;
 
+class LoginFilter : public drogon::HttpFilter<LoginFilter>
+{
+public:
+    LoginFilter();
+
+    virtual void doFilter(const HttpRequestPtr& req, FilterCallback&& not_valid_callback, FilterChainCallback&& valid_callback) override;
+
+private:
+    std::string public_key, private_key;
+    Logger* logger = Logger::GetInstance(std::string(std::getenv("YUTOVO_DEPLOY")) + "/log", "server", true, true);
+};
+
 class ControllerBase
 {
 public:
@@ -22,7 +34,7 @@ protected:
     void SendOk(std::function<void (const HttpResponsePtr &)>& callback);
     void SendOk(std::function<void (const HttpResponsePtr &)>& callback, const std::string& document_id);
     void SendOkTokens(std::function<void (const HttpResponsePtr &)>& callback, const std::string& login, const std::string& access_uuid, 
-        const std::string& refresh_uuid, const std::string& user_session, trantor::Date access_expires, trantor::Date refresh_expires, 
+        const std::string& refresh_uuid, const std::string& session_id, trantor::Date access_expires, trantor::Date refresh_expires, 
         trantor::Date session_expires);
     void SendJson(std::function<void (const HttpResponsePtr &)>& callback, const Json::Value& json);
     void SendJson(std::function<void (const HttpResponsePtr &)>& callback, const std::string& json);
@@ -36,6 +48,7 @@ protected:
 
     void SetDocumentCookie(const std::string& document_id, HttpResponsePtr resp);
 
+    bool AddSession(const std::string& document_id, std::string& session_id);
     bool AddDocument(const std::string& user_id, std::string& document_id);
 
 protected:
