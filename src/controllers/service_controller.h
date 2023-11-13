@@ -14,7 +14,7 @@ public:
     ServiceController();
 
     METHOD_LIST_BEGIN
-    ADD_METHOD_TO(ServiceController::GetTasks, "/service/get-tasks", Get);
+    ADD_METHOD_TO(ServiceController::GetTasks, "/service/get-tasks", Post); //get list of tasks for a language
     ADD_METHOD_TO(ServiceController::LoadTask, "/service/load-task", Post); //load from file
     ADD_METHOD_TO(ServiceController::ListIdentifiers, "/service/list-identifiers", Post);
     ADD_METHOD_TO(ServiceController::NewDocument, "/service/new-document", Post, "yutovo_server::LoginFilter"); //create a document in the DB or replace with an empty one

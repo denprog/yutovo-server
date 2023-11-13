@@ -171,7 +171,7 @@ void ControllerBase::SendJson(std::function<void (const HttpResponsePtr &)>& cal
 
 void ControllerBase::SendJson(std::function<void (const HttpResponsePtr &)>& callback, const std::string& json)
 {
-    Json::Value root;   
+    Json::Value root;
     Json::Reader reader;
     if (!reader.parse(json.c_str(), root))
     {

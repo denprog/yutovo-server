@@ -47,6 +47,11 @@ void ServiceController::GetTasks(const HttpRequestPtr& req, std::function<void (
 {
     logger->Info("GetTasks request");
 
+    auto json = req->getJsonObject();
+    std::string language = "en";
+    if (json && json->isObject() && json->isMember("language") && (*json)["language"].isString())
+        language = (*json)["language"].asString();
+
     std::function<void (const fs::path& path, Json::Value& json)> get_files = 
         [&](const fs::path& path, Json::Value& json)
         {
@@ -78,7 +83,7 @@ void ServiceController::GetTasks(const HttpRequestPtr& req, std::function<void (
         };
     
     Json::Value root;
-    get_files(fs::path(tasks_path), root);
+    get_files(fs::path(tasks_path + "/" + language), root);
 
     SendJson(callback, root);
 }
@@ -86,15 +91,26 @@ void ServiceController::GetTasks(const HttpRequestPtr& req, std::function<void (
 void ServiceController::LoadTask(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
     auto json = req->getJsonObject();
-    if (!json)
+    if (!json || !json->isObject())
     {
         SendError(k400BadRequest, "Json not found in the request", callback);
         return;
     }
 
-    auto task = (*json)["task"].asString();
-    logger->Info("LoadTask request task={}", task);
-    task = tasks_path + task + ".yut";
+    std::string language = "en";
+    if (json->isMember("language") && (*json)["language"].isString())
+        language = (*json)["language"].asString();
+
+    std::string task;
+    if (!json->isMember("task") || !(*json)["task"].isString())
+    {
+        SendError(k400BadRequest, "Wrong request", callback);
+        return;
+    }
+    task = (*json)["task"].asString();
+    
+    logger->Info("LoadTask request task={}", "/" + language + task);
+    task = tasks_path + language + task + ".yut";
     fs::path path;
 
     //check if the path is inside tasks_path
