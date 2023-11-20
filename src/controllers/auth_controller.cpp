@@ -119,20 +119,21 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
             user_id, refresh_uuid, refresh_expires.secondsSinceEpoch());
         session->insert("user_id", user_id);
 
-        std::string session_id = session->get<std::string>("session_id");
+        std::string document_id = "-1";
+        std::string name;
+        std::string session_id = req->getCookie("session_id");
         auto session_expires_date = trantor::Date::now().after(session_expires);
         if (!session_id.empty())
         {
-            std::string document_id = "-1";
             result = db->execSqlSync("select document_id from user_sessions where session_id=$1", session_id);
             if (result.size() > 0)
             {
                 auto row = result[0];
                 document_id = row["document_id"].as<std::string>();
             }
-            else
+            if (document_id == "-1")
             {
-                if (!AddDocument(user_id, document_id))
+                if (!AddDocument(user_id, document_id, name))
                 {
                     logger->Error("Database error: Error inserting a document");
                     SendError(k500InternalServerError, "Error inserting a document", callback);
@@ -147,7 +148,8 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
                 session_id, user_id, session_expires_date.secondsSinceEpoch(), document_id);
         }
 
-        SendOkTokens(callback, login, access_uuid, refresh_uuid, session_id, access_expires, refresh_expires, session_expires_date);
+        SendOkTokens(callback, login, access_uuid, refresh_uuid, session_id, access_expires, refresh_expires, session_expires_date, 
+            document_id, name);
     }
     catch (const orm::DrogonDbException& e)
     {
@@ -233,6 +235,9 @@ void AuthController::RefreshToken(const HttpRequestPtr& req, std::function<void 
         std::string session_id = req->getCookie("session_id");
         if (!session_id.empty())
             UpdateSessionTime(session_id);
+
+        SessionPtr session = req->session();
+        session->insert("session_id", session_id);
 
         auto session_expires_date = trantor::Date::now().after(session_expires);
         SendOkTokens(callback, login, access_uuid, refresh_uuid, session_id, access_expires, refresh_expires, session_expires_date);

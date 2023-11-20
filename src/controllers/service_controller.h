@@ -20,6 +20,10 @@ public:
     ADD_METHOD_TO(ServiceController::NewDocument, "/service/new-document", Post, "yutovo_server::LoginFilter"); //create a document in the DB or replace with an empty one
     ADD_METHOD_TO(ServiceController::SaveDocument, "/service/save-document", Post, "yutovo_server::LoginFilter"); //save to the DB
     ADD_METHOD_TO(ServiceController::LoadDocument, "/service/load-document", Post); //load from the DB
+    ADD_METHOD_TO(ServiceController::DeleteDocument, "/service/delete-document", Post, "yutovo_server::LoginFilter"); //delete a document from the DB
+    ADD_METHOD_TO(ServiceController::ListDocuments, "/service/list-documents", Post, "yutovo_server::LoginFilter"); //list user documents
+    ADD_METHOD_TO(ServiceController::GetDocumentName, "/service/get-document-name", Post); //get name of a user document
+    ADD_METHOD_TO(ServiceController::RenameDocument, "/service/rename-document", Post, "yutovo_server::LoginFilter"); //rename a user document
     METHOD_LIST_END
 
     void GetTasks(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
@@ -28,6 +32,10 @@ public:
     void NewDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
     void SaveDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
     void LoadDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
+    void DeleteDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
+    void ListDocuments(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
+    void GetDocumentName(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
+    void RenameDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
 
 private:
     std::string tasks_path;

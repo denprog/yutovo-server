@@ -53,7 +53,7 @@ void SessionController::Root(const HttpRequestPtr& req, std::function<void (cons
                     session->insert("document_id", document_id);
                     auto resp = HttpResponse::newRedirectionResponse("/document/" + document_id);
 
-                    SetDocumentCookie(document_id, resp);
+                    //SetDocumentCookie(document_id, resp);
 
                     callback(resp);
                     return;
@@ -61,10 +61,11 @@ void SessionController::Root(const HttpRequestPtr& req, std::function<void (cons
             }
 
             std::string document_id = "-1";
+            std::string name;
             if (!user_id.empty())
             {
                 //create new document and session for a registered user
-                if (!AddDocument("-1", document_id))
+                if (!AddDocument("-1", document_id, name))
                 {
                     logger->Error("Database error: Error inserting a document");
                     SendError(k500InternalServerError, "Error inserting a document", callback);
@@ -100,7 +101,7 @@ void SessionController::Root(const HttpRequestPtr& req, std::function<void (cons
             //redirect to the document
             auto resp = HttpResponse::newRedirectionResponse("/document/" + document_id);
             resp->addCookie(session_cookie);
-            SetDocumentCookie(document_id, resp);
+            //SetDocumentCookie(document_id, resp);
             callback(resp);
             return;
         }
@@ -191,7 +192,7 @@ void SessionController::Document(const HttpRequestPtr& req, std::function<void (
         session->insert("session_id", session_id);
 
         auto resp = HttpResponse::newFileResponse(r + p);
-        SetDocumentCookie(param, resp);
+        //SetDocumentCookie(param, resp);
         callback(resp);
         return;
     }

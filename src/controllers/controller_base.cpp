@@ -108,16 +108,28 @@ void ControllerBase::SendOk(std::function<void (const HttpResponsePtr &)>& callb
 
 void ControllerBase::SendOk(std::function<void (const HttpResponsePtr &)>& callback, const std::string& document_id)
 {
-    auto resp = HttpResponse::newHttpResponse();
+    Json::Value r;
+    r["document_id"] = document_id;
+    auto resp = HttpResponse::newHttpJsonResponse(r);
     resp->setStatusCode(k200OK);
-    resp->setContentTypeCode(CT_TEXT_PLAIN);
-    SetDocumentCookie(document_id, resp);
+    //SetDocumentCookie(document_id, resp);
+    callback(resp);
+}
+
+void ControllerBase::SendOk(std::function<void (const HttpResponsePtr &)>& callback, const std::string& document_id, const std::string& name)
+{
+    Json::Value r;
+    r["document_id"] = document_id;
+    r["name"] = name;
+    auto resp = HttpResponse::newHttpJsonResponse(r);
+    resp->setStatusCode(k200OK);
+    //SetDocumentCookie(document_id, resp);
     callback(resp);
 }
 
 void ControllerBase::SendOkTokens(std::function<void (const HttpResponsePtr &)>& callback, const std::string& login, const std::string& access_uuid, 
     const std::string& refresh_uuid, const std::string& session_id, trantor::Date access_expires, trantor::Date refresh_expires, 
-    trantor::Date session_expires)
+    trantor::Date session_expires, const std::string document_id, const std::string name)
 {
     auto access_token = jwt::create().
         set_issuer("auth0").
@@ -139,9 +151,11 @@ void ControllerBase::SendOkTokens(std::function<void (const HttpResponsePtr &)>&
         set_payload_claim("login", jwt::claim(login)).
         sign(jwt::algorithm::rs256(public_key, private_key, "", ""));
 
-    auto resp = HttpResponse::newHttpResponse();
+    Json::Value r;
+    r["document_id"] = document_id;
+    r["name"] = name;
+    HttpResponsePtr resp = HttpResponse::newHttpJsonResponse(r);
     resp->setStatusCode(k200OK);
-    resp->setContentTypeCode(CT_TEXT_PLAIN);
 
     drogon::Cookie refresh_cookie("refresh_token", refresh_token);
     refresh_cookie.setHttpOnly(false);
@@ -157,6 +171,9 @@ void ControllerBase::SendOkTokens(std::function<void (const HttpResponsePtr &)>&
         session_cookie.setExpiresDate(session_expires);
         resp->addCookie(session_cookie);
     }
+
+    // if (!document_id.empty())
+    //     SetDocumentCookie(document_id, resp);
 
     resp->addHeader("access_token", access_token);
     callback(resp);
@@ -195,6 +212,7 @@ void ControllerBase::SendError(const HttpStatusCode status_code, const char* des
     auto resp = HttpResponse::newHttpJsonResponse(r);
     resp->setStatusCode(status_code);
     callback(resp);
+    logger->Error("{}: {}", status_code, description);
 }
 
 bool ControllerBase::ParseRefreshToken(const std::string& refresh_token, std::string& refresh_uuid, std::string& login, 
@@ -246,14 +264,14 @@ bool ControllerBase::ParseId(const std::string& id_str, std::vector<int>& id)
     return true;
 }
 
-void ControllerBase::SetDocumentCookie(const std::string& document_id, HttpResponsePtr resp)
-{
-    drogon::Cookie document_cookie("document_id", document_id);
-    document_cookie.setHttpOnly(false);
-    document_cookie.setPath("/");
-    document_cookie.setExpiresDate(trantor::Date::now().after(session_expires));
-    resp->addCookie(document_cookie);
-}
+// void ControllerBase::SetDocumentCookie(const std::string& document_id, HttpResponsePtr resp)
+// {
+//     drogon::Cookie document_cookie("document_id", document_id);
+//     document_cookie.setHttpOnly(false);
+//     document_cookie.setPath("/");
+//     document_cookie.setExpiresDate(trantor::Date::now().after(session_expires));
+//     resp->addCookie(document_cookie);
+// }
 
 bool ControllerBase::AddSession(const std::string& document_id, std::string& session_id)
 {
@@ -267,11 +285,35 @@ bool ControllerBase::AddSession(const std::string& document_id, std::string& ses
     return true;
 }
 
-bool ControllerBase::AddDocument(const std::string& user_id, std::string& document_id)
+bool ControllerBase::AddDocument(const std::string& user_id, std::string& document_id, std::string& name)
 {
+    if (name.empty())
+    {
+        //create a unique name
+        int num = 0;
+        orm::DbClientPtr db = app().getDbClient();
+        orm::Result result = db->execSqlSync("select name from user_documents where user_id=$1 and (lower(name) LIKE 'document_%')", user_id);
+        for (int i = 0; i < result.size(); ++i)
+        {
+            auto row = result[i];
+            std::string n = row["name"].as<std::string>();
+            n = n.substr(9);
+            try
+            {
+                int num_ = std::stoi(n);
+                if (num_ > num)
+                    num = num_;
+            }
+            catch (std::exception& ex)
+            {
+            }
+        }
+        name = "document_" + std::to_string(num + 1);
+    }
+
     orm::DbClientPtr db = app().getDbClient();
-    orm::Result result = db->execSqlSync("insert into user_documents (user_id, document) values ($1, $2) returning document_id", 
-        user_id, "{\"text\":{\"id\":\"0\",\"type\":1,\"elements\":[{\"id\":\"0,0\",\"type\":2,\
+    orm::Result result = db->execSqlSync("insert into user_documents (user_id, name, document) values ($1, $2, $3) returning document_id", 
+        user_id, name, "{\"text\":{\"id\":\"0\",\"type\":1,\"elements\":[{\"id\":\"0,0\",\"type\":2,\
         \"elements\":[{\"id\":\"0,0,0\",\"type\":3,\"elements\":[{\"id\":\"0,0,0,0\",\"type\":4,\"elements\":\"\"}]}]}]}}");
     if (result.affectedRows() == 0)
         return false;

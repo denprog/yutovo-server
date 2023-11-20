@@ -29,7 +29,7 @@ TEST_F(AuthTest, register1)
     std::string access_token = r->getHeader("access_token");
     ASSERT_TRUE(res == ReqResult::Ok) << res;
     ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
-    ASSERT_TRUE(r->getContentType() == CT_TEXT_PLAIN) << r->getContentType();
+    ASSERT_TRUE(r->getContentType() == CT_APPLICATION_JSON) << r->getContentType();
     ASSERT_TRUE(r->getCookie("refresh_token").cookieString() != "") << r->getCookie("refresh_token").cookieString();
     ASSERT_TRUE(access_token != "") << access_token;
 
@@ -61,7 +61,7 @@ TEST_F(AuthTest, register2)
     std::string access_token1 = r->getHeader("access_token");
     ASSERT_TRUE(res == ReqResult::Ok) << res;
     ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
-    ASSERT_TRUE(r->getContentType() == CT_TEXT_PLAIN) << r->getContentType();
+    ASSERT_TRUE(r->getContentType() == CT_APPLICATION_JSON) << r->getContentType();
     ASSERT_TRUE(r->getCookie("refresh_token").cookieString() != "") << r->getCookie("refresh_token").cookieString();
     ASSERT_TRUE(access_token1 != "") << access_token1;
 
@@ -78,7 +78,7 @@ TEST_F(AuthTest, register2)
     std::string access_token2 = r->getHeader("access_token");
     ASSERT_TRUE(res == ReqResult::Ok) << res;
     ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
-    ASSERT_TRUE(r->getContentType() == CT_TEXT_PLAIN) << r->getContentType();
+    ASSERT_TRUE(r->getContentType() == CT_APPLICATION_JSON) << r->getContentType();
     ASSERT_TRUE(r->getCookie("refresh_token").cookieString() != "") << r->getCookie("refresh_token").cookieString();
     ASSERT_TRUE(access_token2 != "") << access_token2;
 
@@ -127,7 +127,7 @@ TEST_F(AuthTest, login1)
     const Cookie refresh_token = r->getCookie("refresh_token");
     ASSERT_TRUE(res == ReqResult::Ok) << res;
     ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
-    ASSERT_TRUE(r->getContentType() == CT_TEXT_PLAIN) << r->getContentType();
+    ASSERT_TRUE(r->getContentType() == CT_APPLICATION_JSON) << r->getContentType();
     ASSERT_TRUE(refresh_token.cookieString() != "") << refresh_token.cookieString();
     ASSERT_TRUE(access_token != "") << access_token;
 
@@ -158,7 +158,7 @@ TEST_F(AuthTest, login1)
     r = resp.second;
     ASSERT_TRUE(res == ReqResult::Ok) << res;
     ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
-    ASSERT_TRUE(r->getContentType() == CT_TEXT_PLAIN) << r->getContentType();
+    ASSERT_TRUE(r->getContentType() == CT_APPLICATION_JSON) << r->getContentType();
 
     UnRegister(client, "User1", access_token);
 }
@@ -203,7 +203,7 @@ TEST_F(AuthTest, login2)
     access_token = r->getHeader("access_token");
     ASSERT_TRUE(res == ReqResult::Ok) << res;
     ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
-    ASSERT_TRUE(r->getContentType() == CT_TEXT_PLAIN) << r->getContentType();
+    ASSERT_TRUE(r->getContentType() == CT_APPLICATION_JSON) << r->getContentType();
     ASSERT_TRUE(r->getCookie("refresh_token").cookieString() != "") << r->getCookie("refresh_token").cookieString();
     ASSERT_TRUE(access_token != "") << access_token;
 
@@ -250,7 +250,7 @@ TEST_F(AuthTest, login3)
     access_token = r->getHeader("access_token");
     ASSERT_TRUE(res == ReqResult::Ok) << res;
     ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
-    ASSERT_TRUE(r->getContentType() == CT_TEXT_PLAIN) << r->getContentType();
+    ASSERT_TRUE(r->getContentType() == CT_APPLICATION_JSON) << r->getContentType();
     ASSERT_TRUE(r->getCookie("refresh_token").cookieString() != "") << r->getCookie("refresh_token").cookieString();
     ASSERT_TRUE(access_token != "") << access_token;
 
