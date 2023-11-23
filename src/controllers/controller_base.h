@@ -54,6 +54,9 @@ protected:
     bool AddSession(const std::string& document_id, std::string& session_id);
     bool AddDocument(const std::string& user_id, std::string& document_id, std::string& name);
 
+private:
+    void LogJson(const Json::Value& value);
+
 protected:
     int session_expires = 0; //session without user, in seconds, after last using
     std::string public_key, private_key;

@@ -112,6 +112,7 @@ void ControllerBase::SendOk(std::function<void (const HttpResponsePtr &)>& callb
     r["document_id"] = document_id;
     auto resp = HttpResponse::newHttpJsonResponse(r);
     resp->setStatusCode(k200OK);
+    LogJson(r);
     //SetDocumentCookie(document_id, resp);
     callback(resp);
 }
@@ -123,6 +124,7 @@ void ControllerBase::SendOk(std::function<void (const HttpResponsePtr &)>& callb
     r["name"] = name;
     auto resp = HttpResponse::newHttpJsonResponse(r);
     resp->setStatusCode(k200OK);
+    LogJson(r);
     //SetDocumentCookie(document_id, resp);
     callback(resp);
 }
@@ -321,5 +323,12 @@ bool ControllerBase::AddDocument(const std::string& user_id, std::string& docume
     auto row = result[0];
     document_id = row["document_id"].as<std::string>();
     return true;
+}
+
+void ControllerBase::LogJson(const Json::Value& value)
+{
+    Json::FastWriter fastWriter;
+    std::string output = fastWriter.write(value);
+    logger->Info("{}", output);
 }
 }

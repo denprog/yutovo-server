@@ -263,10 +263,15 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
 
     SessionPtr session = req->session();
     std::string user_id = session->get<std::string>("user_id");
-    std::string session_id = session->get<std::string>("session_id");
     if (user_id.empty())
         user_id = "-1";
     std::string document_id = "-1";
+    std::string session_id = req->getCookie("session_id");
+    if (session_id.empty())
+    {
+        SendError(k400BadRequest, "Wrong request", callback);
+        return;
+    }
 
     ClearDbTurnOff t; //skip the clear db circles
 
@@ -396,14 +401,13 @@ void ServiceController::LoadDocument(const HttpRequestPtr& req, std::function<vo
     }
 
     SessionPtr session = req->session();
-    std::string document_id = session->get<std::string>("document_id");
-    if (document_id.empty())
-    {
-        if (json->isObject() && json->isMember("document_id") && ((*json)["document_id"].isInt() || (*json)["document_id"].isString()))
-            document_id = (*json)["document_id"].asString();
-        else
-            document_id = req->getCookie("document_id");
-    }
+    std::string document_id;
+    if (json->isObject() && json->isMember("document_id") && ((*json)["document_id"].isInt() || (*json)["document_id"].isString()))
+        document_id = (*json)["document_id"].asString();
+    if (document_id.empty() || document_id == "-1")
+        document_id = req->getCookie("document_id");
+    if (document_id.empty() || document_id == "-1")
+        session->get<std::string>("document_id");
     if (document_id.empty())
     {
         SendError(k400BadRequest, "Wrong request", callback);
