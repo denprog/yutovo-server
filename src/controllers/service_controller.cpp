@@ -185,6 +185,7 @@ void ServiceController::NewDocument(const HttpRequestPtr& req, std::function<voi
     if (user_id.empty())
         user_id = "-1";
     std::string document_id = session->get<std::string>("document_id");
+    logger->Info("document_id={}", document_id);
 
     ClearDbTurnOff t; //skip the clear db circles for a while
 

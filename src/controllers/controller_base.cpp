@@ -266,17 +266,19 @@ bool ControllerBase::ParseId(const std::string& id_str, std::vector<int>& id)
     return true;
 }
 
-// void ControllerBase::SetDocumentCookie(const std::string& document_id, HttpResponsePtr resp)
-// {
-//     drogon::Cookie document_cookie("document_id", document_id);
-//     document_cookie.setHttpOnly(false);
-//     document_cookie.setPath("/");
-//     document_cookie.setExpiresDate(trantor::Date::now().after(session_expires));
-//     resp->addCookie(document_cookie);
-// }
+void ControllerBase::SetDocumentCookie(const std::string& document_id, HttpResponsePtr resp)
+{
+    logger->Info("SetDocumentCookie document_id={}", document_id);
+    drogon::Cookie document_cookie("document_id", document_id);
+    document_cookie.setHttpOnly(false);
+    document_cookie.setPath("/");
+    document_cookie.setExpiresDate(trantor::Date::now().after(session_expires));
+    resp->addCookie(document_cookie);
+}
 
 bool ControllerBase::AddSession(const std::string& document_id, std::string& session_id)
 {
+    logger->Info("AddSession document_id={}, session_id={}", document_id, session_id);
     session_id = std::string(boost::uuids::to_string(boost::uuids::random_generator()()));
     orm::DbClientPtr db = app().getDbClient();
     trantor::Date session_expires_date = trantor::Date::now().after(session_expires);
@@ -322,6 +324,7 @@ bool ControllerBase::AddDocument(const std::string& user_id, std::string& docume
 
     auto row = result[0];
     document_id = row["document_id"].as<std::string>();
+    logger->Info("Document added document_id={}, name={}", document_id, name);
     return true;
 }
 

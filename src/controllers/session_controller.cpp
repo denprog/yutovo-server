@@ -192,7 +192,7 @@ void SessionController::Document(const HttpRequestPtr& req, std::function<void (
         session->insert("session_id", session_id);
 
         auto resp = HttpResponse::newFileResponse(r + p);
-        //SetDocumentCookie(param, resp);
+        SetDocumentCookie(param, resp);
         callback(resp);
         return;
     }
