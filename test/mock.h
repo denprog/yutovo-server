@@ -22,12 +22,11 @@ struct TestBase
     void UnRegister(HttpClientPtr client, std::string login, std::string& access_token);
 
     void Login(HttpClientPtr client, std::string login, std::string password, HttpResponsePtr& r);
-    //void Login(HttpClientPtr client, std::string login, std::string password, std::string& access_token, std::string& document_id);
     void Login(HttpClientPtr client, std::string login, std::string password, std::string& access_token, std::string& document_id, std::string& name);
 
     void NewDocument(HttpClientPtr client, const std::string& access_token, std::string& document_id);
     void SaveDocument(HttpClientPtr client, const std::string file_name, const std::string& access_token, std::string& document_id);
-    void LoadDocument(HttpClientPtr client, const std::string& access_token, const std::string document_id);
+    void LoadDocument(HttpClientPtr client, const std::string& access_token, const std::string document_id, std::shared_ptr<Json::Value>& document);
     void DeleteDocument(HttpClientPtr client, const std::string& access_token, const std::string document_id = "");
     void RenameDocument(HttpClientPtr client, const std::string& access_token, const std::string& document_id, const std::string& name);
     void GetDocumentName(HttpClientPtr client, const std::string& document_id, std::string& name);

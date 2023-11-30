@@ -390,6 +390,102 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
     }
 }
 
+void ServiceController::SaveAsDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
+{
+    logger->Info("SaveAsDocument request");
+
+    auto json = req->getJsonObject();
+    if (!json || !json->isObject())
+    {
+        SendError(k400BadRequest, "Json not found in the request", callback);
+        return;
+    }
+
+    Json::Value& doc = *json;
+    std::string document_id;
+    if (json->isMember("document_id") && ((*json)["document_id"].isInt() || (*json)["document_id"].isString()))
+        document_id = (*json)["document_id"].asString();
+    if (document_id.empty() || document_id == "-1")
+    {
+        SendError(k400BadRequest, "document_id field not found in the request", callback);
+        return;
+    }
+
+    std::string name;
+    if (json->isMember("name") || (*json)["name"].isString())
+        name = (*json)["name"].asString();
+    if (name.empty())
+    {
+        logger->Error("Empty name field");
+        SendError(k400BadRequest, "name field not found in the request", callback);
+        return;
+    }
+
+    logger->Info("Name: {}", name);
+
+    SessionPtr session = req->session();
+    std::string user_id = session->get<std::string>("user_id");
+    if (user_id.empty())
+    {
+        SendError(k400BadRequest, "Wrong user_id", callback);
+        return;
+    }
+
+    orm::DbClientPtr db = app().getDbClient();
+    ClearDbTurnOff t; //skip the clear db circles
+
+    try
+    {
+        orm::Result result = db->execSqlSync("select user_id, document from user_documents where document_id=$1", document_id);
+        if (result.size() == 0)
+        {
+            logger->Error("Database error: document not found");
+            SendError(k500InternalServerError, "Document not found", callback);
+            return;
+        }
+
+        auto row = result[0];
+        if (row["user_id"].as<std::string>() != user_id) //check the owner
+        {
+            //saving this foreign document is prohibited
+            SendError(k403Forbidden, "Document saving is prohibited", callback);
+            return;
+        }
+
+        result = db->execSqlSync("select 1 from user_documents where user_id=$1 and name=$2", user_id, name); //check the document name is unique
+        if (result.size() > 0)
+        {
+            logger->Error("Database error: document with such name already exists");
+            SendError(k409Conflict, "Document with such name already exists", callback);
+            return;
+        }
+
+        auto doc = row["document"].as<std::string>();
+
+        if (!AddDocument(user_id, document_id, name))
+        {
+            logger->Error("Database error: Error inserting a document");
+            SendError(k500InternalServerError, "Error inserting a document", callback);
+            return;
+        }
+
+        result = db->execSqlSync("update user_documents set document=$1 where document_id=$2", doc, document_id);
+        if (result.affectedRows() == 0)
+        {
+            logger->Error("Database error: Error inserting a document");
+            SendError(k500InternalServerError, "Error inserting a document", callback);
+            return;
+        }
+
+        SendOk(callback, document_id);
+    }
+    catch (const orm::DrogonDbException& e)
+    {
+        logger->Error("Database error: {}", e.base().what());
+        SendError(k500InternalServerError, e.base().what(), callback);
+    }
+}
+
 void ServiceController::LoadDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
     logger->Info("LoadDocument request");

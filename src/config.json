@@ -297,7 +297,7 @@
     //custom_config: custom configuration for users. This object can be get by the app().getCustomConfig() method. 
     "custom_config": 
     {
-        "session_expire_timeout": 3600,
+        "session_expire_timeout": 86400,
         "user_session_expire_timeout": 86400,
         "clear_db_timeout": 10,
         "tasks_path": "/home/denis/programs/Math/yutovo/yutovo_server/tasks/",

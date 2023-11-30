@@ -297,7 +297,6 @@ TEST_F(ServiceTest, document4)
 
         Login(client, "User1", "11", access_token, document_id, name);
 
-        //SaveDocument(client, "../tests/files11.yut", access_token, document_id);
         std::ifstream f("../tests/files11.yut");
         f >> save_body;
         req = HttpRequest::newHttpJsonRequest(save_body);
@@ -310,10 +309,6 @@ TEST_F(ServiceTest, document4)
         ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
         const auto json = r->jsonObject();
         document_id = (*json)["document_id"].asString();
-        // SessionPtr session = req->session();
-        // c = r->getCookie("document_id");
-        // document_id = c.value();
-        // ASSERT_TRUE(document_id != "");
     }
 
     auto client = HttpClient::newHttpClient("http://localhost:9001");
@@ -365,9 +360,6 @@ TEST_F(ServiceTest, document5)
     r = resp.second;
     ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
     SessionPtr session = req->session();
-    // auto c = r->getCookie("document_id");
-    // std::string document_id = c.value();
-    // ASSERT_TRUE(document_id != "");
 
     req = HttpRequest::newHttpRequest();
     req->setMethod(drogon::Get);
@@ -380,17 +372,6 @@ TEST_F(ServiceTest, document5)
 
     std::string new_document_id;
     NewDocument(client, access_token, new_document_id);
-    // req = HttpRequest::newHttpJsonRequest("{}");
-    // req->setMethod(drogon::Post);
-    // req->setPath("/service/new-document");
-    // req->addHeader("access_token", access_token);
-    // resp = client->sendRequest(req, 10);
-    // res = resp.first;
-    // r = resp.second;
-    // ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
-    // c = r->getCookie("document_id");
-    // std::string new_document_id = c.value();
-    // ASSERT_TRUE(document_id != new_document_id);
 
     //switch to the last document
     req = HttpRequest::newHttpRequest();
@@ -402,7 +383,6 @@ TEST_F(ServiceTest, document5)
     res = resp.first;
     r = resp.second;
     ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
-    //ASSERT_TRUE(document_id == r->getCookie("document_id").value());
 
     //load the last document
     req = HttpRequest::newHttpJsonRequest("{}");
@@ -487,10 +467,6 @@ TEST_F(ServiceTest, document6)
         res = resp.first;
         r = resp.second;
         ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
-        // SessionPtr session = req->session();
-        // c = r->getCookie("document_id");
-        // document_id = c.value();
-        // ASSERT_TRUE(document_id != "");
     }
 
     {
@@ -565,9 +541,6 @@ TEST_F(ServiceTest, document7)
     r = resp.second;
     ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
     SessionPtr session = req->session();
-    // auto c = r->getCookie("document_id");
-    // std::string document_id = c.value();
-    // ASSERT_TRUE(document_id != "");
 
     req = HttpRequest::newHttpJsonRequest("{}");
     req->setMethod(drogon::Post);
@@ -659,7 +632,8 @@ TEST_F(ServiceTest, document9)
     r = resp.second;
     ASSERT_TRUE(r->getStatusCode() == k404NotFound) << r->getStatusCode();
 
-    LoadDocument(client, access_token, document1_id);
+    std::shared_ptr<Json::Value> doc;
+    LoadDocument(client, access_token, document1_id, doc);
 
     UnRegister(client, "User1", access_token);
 }
@@ -688,8 +662,9 @@ TEST_F(ServiceTest, document10)
     NewDocument(client, access_token, document2_id);
     SaveDocument(client, "../tests/plus6_1.yut", access_token, document2_id);
 
-    LoadDocument(client, access_token, document1_id);
-    LoadDocument(client, access_token, document2_id);
+    std::shared_ptr<Json::Value> doc;
+    LoadDocument(client, access_token, document1_id, doc);
+    LoadDocument(client, access_token, document2_id, doc);
 
     UnRegister(client, "User1", access_token);
 }
@@ -722,7 +697,7 @@ TEST_F(ServiceTest, document11)
     UnRegister(client, "User1", access_token);
 }
 
-//Create aempty documents
+//Create an empty documents
 TEST_F(ServiceTest, document12)
 {
     auto client = HttpClient::newHttpClient("http://localhost:9001");
@@ -743,8 +718,6 @@ TEST_F(ServiceTest, document12)
     Login(client, "User1", "11", access_token, document_id, name);
     ASSERT_TRUE(name == "document_1") << name;
 
-    // auto c = r->getCookie("document_id");
-    // std::string document_id = c.value();
     GetDocumentName(client, document_id, name);
     ASSERT_TRUE(name == "document_1") << name;
 
@@ -752,6 +725,67 @@ TEST_F(ServiceTest, document12)
 
     GetDocumentName(client, document_id, name);
     ASSERT_TRUE(name == "document_2") << name;
+
+    UnRegister(client, "User1", access_token);
+}
+
+//Save document with another name
+TEST_F(ServiceTest, document13)
+{
+    auto client = HttpClient::newHttpClient("http://localhost:9001");
+    client->enableCookies(true);
+
+    Register(client, "User1", "user1@mail.com", "11");
+
+    auto req = HttpRequest::newHttpRequest();
+    req->setMethod(drogon::Get);
+    req->setPath("/");
+    auto resp = client->sendRequest(req);
+    ReqResult& res = resp.first;
+    HttpResponsePtr& r = resp.second;
+
+    std::string access_token, document_id, name;
+    Login(client, "User1", "11", access_token, document_id, name);
+
+    Json::Value save_body;
+    std::ifstream f("../tests/files11.yut");
+    f >> save_body;
+
+    std::string document1_id, document2_id;
+    SaveDocument(client, "../tests/files11.yut", access_token, document1_id);
+
+    Json::Value body;
+    body["document_id"] = document1_id;
+    body["name"] = "new_name";
+    req = HttpRequest::newHttpJsonRequest(body);
+    req->setMethod(drogon::Post);
+    req->setPath("/service/save-as-document");
+    req->addHeader("access_token", access_token);
+    resp = client->sendRequest(req, 10);
+    r = resp.second;
+    ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
+    ASSERT_TRUE(r->getContentType() == CT_APPLICATION_JSON) << r->getContentType();
+    const auto json = r->jsonObject();
+    document2_id = (*json)["document_id"].asString();
+    ASSERT_TRUE(document1_id != document2_id);
+
+    GetDocumentName(client, document2_id, name);
+    ASSERT_TRUE(name == "new_name") << name;
+
+    std::shared_ptr<Json::Value> doc1, doc2;
+    LoadDocument(client, access_token, document2_id, doc2);
+    LoadDocument(client, access_token, document1_id, doc1);
+
+    ASSERT_TRUE(save_body == *doc1);
+    ASSERT_TRUE(save_body == *doc2);
+
+    req = HttpRequest::newHttpJsonRequest(body);
+    req->setMethod(drogon::Post);
+    req->setPath("/service/save-as-document");
+    req->addHeader("access_token", access_token);
+    resp = client->sendRequest(req, 10);
+    r = resp.second;
+    ASSERT_TRUE(r->getStatusCode() == k409Conflict) << r->getStatusCode();
 
     UnRegister(client, "User1", access_token);
 }

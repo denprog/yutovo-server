@@ -67,14 +67,6 @@ void TestBase::Login(HttpClientPtr client, std::string login, std::string passwo
     ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
 }
 
-// void TestBase::Login(HttpClientPtr client, std::string login, std::string password, std::string& access_token, std::string& document_id)
-// {
-//     HttpResponsePtr r;
-//     Login(client, login, password, r);
-//     access_token = r->getHeader("access_token");
-//     const auto json = r->jsonObject();
-// }
-
 void TestBase::Login(HttpClientPtr client, std::string login, std::string password, std::string& access_token, std::string& document_id, std::string& name)
 {
     HttpResponsePtr r;
@@ -114,13 +106,9 @@ void TestBase::SaveDocument(HttpClientPtr client, const std::string file_name, c
     ASSERT_TRUE(r->getContentType() == CT_APPLICATION_JSON) << r->getContentType();
     const auto json = r->jsonObject();
     document_id = (*json)["document_id"].asString();
-    //SessionPtr session = req->session();
-    // auto c = r->getCookie("document_id");
-    // document_id = c.value();
-    // ASSERT_TRUE(document_id != "");
 }
 
-void TestBase::LoadDocument(HttpClientPtr client, const std::string& access_token, const std::string document_id)
+void TestBase::LoadDocument(HttpClientPtr client, const std::string& access_token, const std::string document_id, std::shared_ptr<Json::Value>& document)
 {
     Json::Value v;
     Json::Reader reader;
@@ -131,6 +119,7 @@ void TestBase::LoadDocument(HttpClientPtr client, const std::string& access_toke
     auto resp = client->sendRequest(req, 10);
     auto r = resp.second;
     ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
+    document = r->jsonObject();
 }
 
 void TestBase::DeleteDocument(HttpClientPtr client, const std::string& access_token, const std::string document_id)

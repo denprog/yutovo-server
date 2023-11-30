@@ -95,7 +95,7 @@ ControllerBase::ControllerBase()
     public_key = ss.str();
 
     const Json::Value& v = app().getCustomConfig();
-    session_expires = v.get("session_expire_timeout", 3600).asInt();
+    session_expires = v.get("session_expire_timeout", 86400).asInt();
 }
 
 void ControllerBase::SendOk(std::function<void (const HttpResponsePtr &)>& callback)
