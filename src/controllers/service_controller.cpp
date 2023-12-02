@@ -104,7 +104,7 @@ void ServiceController::LoadTask(const HttpRequestPtr& req, std::function<void (
     std::string task;
     if (!json->isMember("task") || !(*json)["task"].isString())
     {
-        SendError(k400BadRequest, "Wrong request", callback);
+        SendError(k400BadRequest, "Wrong request: empty task", callback);
         return;
     }
     task = (*json)["task"].asString();
@@ -175,7 +175,7 @@ void ServiceController::NewDocument(const HttpRequestPtr& req, std::function<voi
     std::string session_id = req->getCookie("session_id");
     if (session_id.empty())
     {
-        SendError(k400BadRequest, "Wrong request", callback);
+        SendError(k400BadRequest, "Wrong request: empty session_id", callback);
         return;
     }
 
@@ -258,7 +258,7 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
 
     if (!text.isMember("id") || text["id"].asString().empty())
     {
-        SendError(k400BadRequest, "Wrong request", callback);
+        SendError(k400BadRequest, "Wrong request: empty id", callback);
         return;
     }
 
@@ -270,7 +270,7 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
     std::string session_id = req->getCookie("session_id");
     if (session_id.empty())
     {
-        SendError(k400BadRequest, "Wrong request", callback);
+        SendError(k400BadRequest, "Wrong request: empty session_id", callback);
         return;
     }
 
@@ -507,7 +507,7 @@ void ServiceController::LoadDocument(const HttpRequestPtr& req, std::function<vo
         session->get<std::string>("document_id");
     if (document_id.empty())
     {
-        SendError(k400BadRequest, "Wrong request", callback);
+        SendError(k400BadRequest, "Wrong request: empty document_id", callback);
         return;
     }
 
@@ -602,7 +602,7 @@ void ServiceController::DeleteDocument(const HttpRequestPtr& req, std::function<
         document_id = req->getCookie("document_id");
     if (document_id.empty())
     {
-        SendError(k400BadRequest, "Wrong request", callback);
+        SendError(k400BadRequest, "Wrong request: empty document_id", callback);
         return;
     }
 
@@ -688,7 +688,7 @@ void ServiceController::GetDocumentName(const HttpRequestPtr& req, std::function
         document_id = req->getCookie("document_id"); //this request is for current document
     if (document_id.empty())
     {
-        SendError(k400BadRequest, "Wrong request", callback);
+        SendError(k400BadRequest, "Wrong request: empty document_id", callback);
         return;
     }
 
@@ -747,7 +747,7 @@ void ServiceController::RenameDocument(const HttpRequestPtr& req, std::function<
         document_id = req->getCookie("document_id"); //this request is for current document
     if (document_id.empty())
     {
-        SendError(k400BadRequest, "Wrong request", callback);
+        SendError(k400BadRequest, "Wrong request: empty document_id", callback);
         return;
     }
 
@@ -756,7 +756,7 @@ void ServiceController::RenameDocument(const HttpRequestPtr& req, std::function<
         name = (*json)["name"].asString();
     if (name.empty())
     {
-        SendError(k400BadRequest, "Wrong request", callback);
+        SendError(k400BadRequest, "Wrong request: empty name", callback);
         return;
     }
 

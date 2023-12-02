@@ -25,6 +25,7 @@ void SessionController::Root(const HttpRequestPtr& req, std::function<void (cons
         std::string session_id = req->getCookie("session_id");
         SessionPtr session = req->session();
         std::string user_id = session->get<std::string>("user_id");
+        logger->Info("session_id={}", session_id);
 
         try
         {
@@ -83,24 +84,21 @@ void SessionController::Root(const HttpRequestPtr& req, std::function<void (cons
             session->insert("document_id", document_id);
             session->insert("session_id", session_id);
 
-            drogon::Cookie session_cookie("session_id", session_id);
-            session_cookie.setHttpOnly(false);
-            session_cookie.setPath("/");
-            session_cookie.setExpiresDate(trantor::Date::now().after(session_expires));
 
             if (user_id.empty())
             {
                 //a non-registered user doesn't have a document in the DB
                 std::string r = HttpAppFramework::instance().getDocumentRoot();
                 auto resp = HttpResponse::newFileResponse(r + "/index.html");
-                resp->addCookie(session_cookie);
+                SetSessionCookie(session_id, resp);
                 callback(resp);
                 return;
             }
 
             //redirect to the document
+            logger->Info("Redirect {}", "/document/" + document_id);
             auto resp = HttpResponse::newRedirectionResponse("/document/" + document_id);
-            resp->addCookie(session_cookie);
+            SetSessionCookie(session_id, resp);
             //SetDocumentCookie(document_id, resp);
             callback(resp);
             return;

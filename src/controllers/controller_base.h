@@ -49,6 +49,7 @@ protected:
     
     bool ParseId(const std::string& id_str, std::vector<int>& id);
 
+    void SetSessionCookie(const std::string& session_id, HttpResponsePtr resp);
     void SetDocumentCookie(const std::string& document_id, HttpResponsePtr resp);
 
     bool AddSession(const std::string& document_id, std::string& session_id);

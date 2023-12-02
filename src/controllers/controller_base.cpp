@@ -24,6 +24,7 @@ LoginFilter::LoginFilter()
 
 void LoginFilter::doFilter(const HttpRequestPtr& req, FilterCallback&& not_valid_callback, FilterChainCallback&& valid_callback)
 {
+    logger->Info("doFilter {}", req->path());
     SessionPtr session = req->session();
     std::string access_token = req->getHeader("access_token");
     HttpResponsePtr resp;
@@ -266,6 +267,15 @@ bool ControllerBase::ParseId(const std::string& id_str, std::vector<int>& id)
     return true;
 }
 
+void ControllerBase::SetSessionCookie(const std::string& session_id, HttpResponsePtr resp)
+{
+    drogon::Cookie session_cookie("session_id", session_id);
+    session_cookie.setHttpOnly(false);
+    session_cookie.setPath("/");
+    session_cookie.setExpiresDate(trantor::Date::now().after(session_expires));
+    resp->addCookie(session_cookie);
+}
+
 void ControllerBase::SetDocumentCookie(const std::string& document_id, HttpResponsePtr resp)
 {
     logger->Info("SetDocumentCookie document_id={}", document_id);
@@ -278,8 +288,8 @@ void ControllerBase::SetDocumentCookie(const std::string& document_id, HttpRespo
 
 bool ControllerBase::AddSession(const std::string& document_id, std::string& session_id)
 {
-    logger->Info("AddSession document_id={}, session_id={}", document_id, session_id);
     session_id = std::string(boost::uuids::to_string(boost::uuids::random_generator()()));
+    logger->Info("AddSession document_id={}, session_id={}", document_id, session_id);
     orm::DbClientPtr db = app().getDbClient();
     trantor::Date session_expires_date = trantor::Date::now().after(session_expires);
     auto result = db->execSqlSync("insert into user_sessions (session_id, expire_time, document_id) values ($1, $2, $3)", session_id, 
