@@ -84,7 +84,6 @@ void SessionController::Root(const HttpRequestPtr& req, std::function<void (cons
             session->insert("document_id", document_id);
             session->insert("session_id", session_id);
 
-
             if (user_id.empty())
             {
                 //a non-registered user doesn't have a document in the DB

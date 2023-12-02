@@ -112,15 +112,20 @@ TEST_F(AuthTest, login1)
 
     Register(client, "User1", "user1@mail.com", "11");
 
+    auto req = HttpRequest::newHttpRequest();
+    req->setMethod(drogon::Get);
+    req->setPath("/");
+    auto resp = client->sendRequest(req);
+
     //login
     Json::Value body;
     body["login"] = "User1";
     body["password"] = "11";
-    auto req = HttpRequest::newHttpJsonRequest(body);
+    req = HttpRequest::newHttpJsonRequest(body);
     req->setMethod(drogon::Post);
     req->setPath("/auth/login");
 
-    auto resp = client->sendRequest(req);
+    resp = client->sendRequest(req);
     ReqResult& res = resp.first;
     HttpResponsePtr& r = resp.second;
     std::string access_token = r->getHeader("access_token");
@@ -138,6 +143,7 @@ TEST_F(AuthTest, login1)
     req->setPath("/auth/logout");
     req->addHeader("access_token", access_token);
     client->addCookie(refresh_token);
+    auto c = r->getCookie("session_id");
 
     resp = client->sendRequest(req);
     res = resp.first;
@@ -145,6 +151,13 @@ TEST_F(AuthTest, login1)
     ASSERT_TRUE(res == ReqResult::Ok) << res;
     ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
     ASSERT_TRUE(r->getContentType() == CT_TEXT_PLAIN) << r->getContentType();
+
+    orm::DbClientPtr db = app().getDbClient();
+    orm::Result result = db->execSqlSync("select user_id from user_sessions where session_id=$1", c.value());
+    ASSERT_TRUE(result.size() != 0);
+    auto row = result[0];
+    auto user_id = row["user_id"].as<int>();
+    ASSERT_TRUE(user_id == -1);
 
     //login back for unregister
     body["login"] = "User1";

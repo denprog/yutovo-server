@@ -165,6 +165,7 @@ void AuthController::Logout(const HttpRequestPtr& req, std::function<void (const
     SessionPtr session = req->session();
     std::string user_id = session->get<std::string>("user_id");
     std::string refresh_token = req->getCookie("refresh_token");
+    std::string session_id = session->get<std::string>("session_id");
 
     std::string refresh_uuid;
     if (!ParseRefreshToken(refresh_token, refresh_uuid, login, callback))
@@ -175,7 +176,8 @@ void AuthController::Logout(const HttpRequestPtr& req, std::function<void (const
 
     try
     {
-        orm::Result result = db->execSqlSync("delete from refresh_sessions where user_id=$1 and refresh_uuid=$2", user_id, refresh_uuid);
+        orm::Result result = db->execSqlSync("update user_sessions set user_id=-1 where session_id=$1", session_id);
+        result = db->execSqlSync("delete from refresh_sessions where user_id=$1 and refresh_uuid=$2", user_id, refresh_uuid);
         if (result.affectedRows() > 0)
             SendOk(callback);
         else
