@@ -270,6 +270,28 @@ TEST_F(AuthTest, login3)
     UnRegister(client, "User1", access_token);
 }
 
+//Login, logout, login, logout
+TEST_F(AuthTest, login4)
+{
+    auto client = HttpClient::newHttpClient("http://localhost:9001");
+    client->enableCookies(true);
+
+    Register(client, "User1", "user1@mail.com", "11");
+
+    Locate(client, "/");
+
+    std::string access_token, document_id, name;
+    Login(client, "User1", "11", access_token, document_id, name);
+    Logout(client, "User1", access_token);
+
+    Login(client, "User1", "11", access_token, document_id, name);
+    Logout(client, "User1", access_token);
+
+    Login(client, "User1", "11", access_token, document_id, name);
+
+    UnRegister(client, "User1", access_token);
+}
+
 //Refresh session
 TEST_F(AuthTest, refresh_session1)
 {

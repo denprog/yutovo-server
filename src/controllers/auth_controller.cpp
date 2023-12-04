@@ -65,6 +65,11 @@ void AuthController::UnRegister(const HttpRequestPtr& req, std::function<void (c
     logger->Info("UnRegister request: login={}", login);
     orm::DbClientPtr db = app().getDbClient();
     std::string user_id = session->get<std::string>("user_id");
+    if (user_id.empty() || user_id == "-1")
+    {
+        SendError(k400BadRequest, "User not found", callback);
+        return;
+    }
 
     try
     {
@@ -188,7 +193,7 @@ void AuthController::Logout(const HttpRequestPtr& req, std::function<void (const
             SendOk(callback);
         else
             SendError(k401Unauthorized, "Login or password are incorrect", callback);
-        session->clear();
+        session->erase("user_id");
     }
     catch (const orm::DrogonDbException& e)
     {
