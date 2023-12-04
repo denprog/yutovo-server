@@ -52,6 +52,14 @@ void TestBase::UnRegister(HttpClientPtr client, std::string login, std::string& 
     ASSERT_TRUE(r->getContentType() == CT_TEXT_PLAIN) << r->getContentType();
 }
 
+void TestBase::Locate(HttpClientPtr client, const std::string& path)
+{
+    auto req = HttpRequest::newHttpRequest();
+    req->setMethod(drogon::Get);
+    req->setPath(path);
+    client->sendRequest(req);
+}
+
 void TestBase::Login(HttpClientPtr client, std::string login, std::string password, HttpResponsePtr& r)
 {
     Json::Value login_body;
@@ -76,6 +84,21 @@ void TestBase::Login(HttpClientPtr client, std::string login, std::string passwo
     const auto json = r->jsonObject();
     document_id = (*json)["document_id"].asString();
     name = (*json)["name"].asString();
+}
+
+void TestBase::Logout(HttpClientPtr client, const std::string& login, const std::string& access_token)
+{
+    Json::Value login_body;
+    login_body["login"] = login;
+    auto req = HttpRequest::newHttpJsonRequest(login_body);
+    req->setMethod(drogon::Post);
+    req->setPath("/auth/logout");
+    req->addHeader("access_token", access_token);
+    auto resp = client->sendRequest(req, 10);
+    ReqResult& res = resp.first;
+    HttpResponsePtr& r = resp.second;
+    ASSERT_TRUE(res == ReqResult::Ok) << res;
+    ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
 }
 
 void TestBase::NewDocument(HttpClientPtr client, const std::string& access_token, std::string& document_id)

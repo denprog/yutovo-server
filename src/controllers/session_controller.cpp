@@ -65,13 +65,19 @@ void SessionController::Root(const HttpRequestPtr& req, std::function<void (cons
             std::string name;
             if (!user_id.empty())
             {
-                //create new document and session for a registered user
-                if (!AddDocument("-1", document_id, name))
+                int d = GetFirstEmptyDocument(user_id);
+                if (d == -1)
                 {
-                    logger->Error("Database error: Error inserting a document");
-                    SendError(k500InternalServerError, "Error inserting a document", callback);
-                    return;
+                    //create new document and session for a registered user
+                    if (!AddDocument("-1", document_id, name))
+                    {
+                        logger->Error("Database error: Error inserting a document");
+                        SendError(k500InternalServerError, "Error inserting a document", callback);
+                        return;
+                    }
                 }
+                else
+                    document_id = std::to_string(d);
             }
 
             if (!AddSession(document_id, session_id))

@@ -327,8 +327,7 @@ bool ControllerBase::AddDocument(const std::string& user_id, std::string& docume
 
     orm::DbClientPtr db = app().getDbClient();
     orm::Result result = db->execSqlSync("insert into user_documents (user_id, name, document) values ($1, $2, $3) returning document_id", 
-        user_id, name, "{\"text\":{\"id\":\"0\",\"type\":1,\"elements\":[{\"id\":\"0,0\",\"type\":2,\
-        \"elements\":[{\"id\":\"0,0,0\",\"type\":3,\"elements\":[{\"id\":\"0,0,0,0\",\"type\":4,\"elements\":\"\"}]}]}]}}");
+        user_id, name, empty_document);
     if (result.affectedRows() == 0)
         return false;
 
@@ -336,6 +335,35 @@ bool ControllerBase::AddDocument(const std::string& user_id, std::string& docume
     document_id = row["document_id"].as<std::string>();
     logger->Info("Document added document_id={}, name={}", document_id, name);
     return true;
+}
+
+int ControllerBase::GetFirstEmptyDocument(const std::string& user_id)
+{
+    Json::Value doc;
+    Json::Reader reader;
+    orm::DbClientPtr db = app().getDbClient();
+    orm::Result result = db->execSqlSync("select document_id, document from user_documents where user_id=$1", user_id);
+    for (int i = 0; i < result.size(); ++i)
+    {
+        auto row = result[i];
+        auto d = row["document"].as<std::string>();
+        if (!reader.parse(d, doc))
+            continue;
+        if (!doc.isObject() || !doc.isMember("text"))
+            continue;
+        Json::Value& text = doc["text"];
+        try
+        {
+            auto& el = text["elements"][0]["elements"][0]["elements"][0];
+            if (el["elements"] = "")
+                return (int)row["document_id"].as<int>();
+        }
+        catch (Json::Exception& ex)
+        {
+            continue;
+        }
+    }
+    return -1;
 }
 
 void ControllerBase::LogJson(const Json::Value& value)

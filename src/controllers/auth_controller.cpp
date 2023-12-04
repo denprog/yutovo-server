@@ -133,12 +133,18 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
             }
             if (document_id == "-1")
             {
-                if (!AddDocument(user_id, document_id, name))
+                int d = GetFirstEmptyDocument(user_id);
+                if (d == -1)
                 {
-                    logger->Error("Database error: Error inserting a document");
-                    SendError(k500InternalServerError, "Error inserting a document", callback);
-                    return;
+                    if (!AddDocument(user_id, document_id, name))
+                    {
+                        logger->Error("Database error: Error inserting a document");
+                        SendError(k500InternalServerError, "Error inserting a document", callback);
+                        return;
+                    }
                 }
+                else
+                    document_id = std::to_string(d);
             }
 
             //if a user has many logins, a session may have another login

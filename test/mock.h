@@ -21,8 +21,11 @@ struct TestBase
     void Register(HttpClientPtr client, std::string login, std::string email, std::string password);
     void UnRegister(HttpClientPtr client, std::string login, std::string& access_token);
 
+    void Locate(HttpClientPtr client, const std::string& path);
+
     void Login(HttpClientPtr client, std::string login, std::string password, HttpResponsePtr& r);
     void Login(HttpClientPtr client, std::string login, std::string password, std::string& access_token, std::string& document_id, std::string& name);
+    void Logout(HttpClientPtr client, const std::string& login, const std::string& access_token);
 
     void NewDocument(HttpClientPtr client, const std::string& access_token, std::string& document_id);
     void SaveDocument(HttpClientPtr client, const std::string file_name, const std::string& access_token, std::string& document_id);

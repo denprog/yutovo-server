@@ -577,7 +577,6 @@ TEST_F(ServiceTest, document8)
     std::string access_token, document_id, name;
     Login(client, "User1", "11", access_token, document_id, name);
 
-    //std::string document_id;
     SaveDocument(client, "../tests/files11.yut", access_token, document_id);
 
     client->addCookie("document_id", document_id);
@@ -788,6 +787,43 @@ TEST_F(ServiceTest, document13)
     ASSERT_TRUE(r->getStatusCode() == k409Conflict) << r->getStatusCode();
 
     UnRegister(client, "User1", access_token);
+}
+
+//Load first empty document of a user
+TEST_F(ServiceTest, document14)
+{
+    std::string document1_id;
+    {
+        auto client = HttpClient::newHttpClient("http://localhost:9001");
+        client->enableCookies(true);
+
+        Register(client, "User1", "user1@mail.com", "11");
+
+        Locate(client, "/");
+
+        std::string access_token, name;
+        Login(client, "User1", "11", access_token, document1_id, name);
+
+        std::string document2_id;
+        NewDocument(client, access_token, document2_id);
+        SaveDocument(client, "../tests/files11.yut", access_token, document2_id);
+
+        Logout(client, "User1", access_token);
+    }
+
+    {
+        auto client = HttpClient::newHttpClient("http://localhost:9001");
+        client->enableCookies(true);
+
+        Locate(client, "/");
+
+        std::string access_token, document3_id, name;
+        Login(client, "User1", "11", access_token, document3_id, name);
+
+        ASSERT_TRUE(document3_id == document1_id) << document3_id;
+
+        UnRegister(client, "User1", access_token);
+    }
 }
 
 }
