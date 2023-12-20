@@ -177,7 +177,11 @@ void SessionController::Document(const HttpRequestPtr& req, std::function<void (
             if (result.size() == 0)
             {
                 logger->Error("Document not found: {}", param);
-                SendError(k404NotFound, "Document not found", callback);
+                std::string r = HttpAppFramework::instance().getDocumentRoot();
+                auto resp = HttpResponse::newFileResponse(r + "/index.html");
+                SetDocumentCookie(param, resp);
+                resp->setStatusCode(k404NotFound);
+                callback(resp);
                 return;
             }
 
