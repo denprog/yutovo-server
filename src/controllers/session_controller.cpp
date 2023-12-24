@@ -208,4 +208,52 @@ void SessionController::Document(const HttpRequestPtr& req, std::function<void (
     callback(resp);
 }
 
+void SessionController::Task(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, std::string param)
+{
+    auto p = req->path();
+    logger->Info("Request task: path={}", p);
+    std::string r = HttpAppFramework::instance().getDocumentRoot();
+    HttpAppFramework& inst = HttpAppFramework::instance();
+    p = inst.getHomePage();
+
+    if (param.find(".") == std::string::npos)
+    {
+        std::string session_id = req->getCookie("session_id");
+        if (session_id.empty())
+        {
+            if (!AddSession(param, session_id))
+            {
+                logger->Error("Database error: Error inserting a session");
+                SendError(k500InternalServerError, "Error inserting a session", callback);
+                return;
+            }
+        }
+        
+        std::replace(param.begin(), param.end(), '\\', '/');
+        fs::path path = fs::path(tasks_path + param + ".yut");
+        if (!fs::exists(path))
+        {
+            logger->Error("Task not found: {}", param);
+            std::string r = HttpAppFramework::instance().getDocumentRoot();
+            auto resp = HttpResponse::newFileResponse(r + "/index.html");
+            SetDocumentCookie(param, resp);
+            resp->setStatusCode(k404NotFound);
+            callback(resp);
+            return;
+        }
+
+        SessionPtr session = req->session();
+        //session->insert("document_id", param);
+        session->insert("session_id", session_id);
+
+        auto resp = HttpResponse::newFileResponse(r + p);
+        //SetDocumentCookie(param, resp);
+        callback(resp);
+        return;
+    }
+
+    auto resp = HttpResponse::newFileResponse(r + param);
+    callback(resp);
+}
+
 }

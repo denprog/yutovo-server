@@ -13,9 +13,6 @@ using namespace std::chrono_literals;
 ServiceController::ServiceController()
 {
     const Json::Value& v = app().getCustomConfig();
-    tasks_path = v.get("tasks_path", "").asString();
-    if (tasks_path.empty())
-        throw std::system_error(ENOTDIR, std::generic_category(), "Tasks path not defined");
     std::string solver_address = v.get("solver_address", "").asString();
     if (solver_address.empty())
         throw std::system_error(ENOTDIR, std::generic_category(), "Solver address not defined");
@@ -122,14 +119,14 @@ void ServiceController::LoadTask(const HttpRequestPtr& req, std::function<void (
             SendError(k404NotFound, "Path not found", callback);
             return;
         }
+
+        SendFile(callback, path);
     }
     catch (const std::exception& ex)
     {
         SendError(k404NotFound, "Path not found", callback);
         return;
     }
-    
-    SendFile(callback, path);
 }
 
 void ServiceController::ListIdentifiers(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)

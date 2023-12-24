@@ -40,7 +40,6 @@ public:
     void RenameDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
 
 private:
-    std::string tasks_path;
     WebSocketClientPtr solver_client;
     std::string solver_response;
     const int solver_timeout = 5;

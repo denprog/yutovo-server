@@ -19,6 +19,7 @@ public:
     ADD_METHOD_TO(SessionController::Icons, "/icons/{1}", Get);
     ADD_METHOD_TO(SessionController::Images, "/images/{1}", Get);
     ADD_METHOD_TO(SessionController::Document, "/document/{1}", Get);
+    ADD_METHOD_TO(SessionController::Task, "/task/{1}", Get);
     METHOD_LIST_END
 
     void Root(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, std::string param);
@@ -26,6 +27,7 @@ public:
     void Icons(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, std::string param);
     void Images(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, std::string param);
     void Document(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, std::string param);
+    void Task(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, std::string param);
 };
 }
 
