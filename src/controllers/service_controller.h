@@ -16,6 +16,7 @@ public:
     METHOD_LIST_BEGIN
     ADD_METHOD_TO(ServiceController::GetTasks, "/service/get-tasks", Post); //get list of tasks for a language
     ADD_METHOD_TO(ServiceController::LoadTask, "/service/load-task", Post); //load from file
+    ADD_METHOD_TO(ServiceController::SaveTask, "/service/save-task", Post, "yutovo_server::LoginFilter"); //save to the DB
     ADD_METHOD_TO(ServiceController::ListIdentifiers, "/service/list-identifiers", Post);
     ADD_METHOD_TO(ServiceController::NewDocument, "/service/new-document", Post, "yutovo_server::LoginFilter"); //create a document in the DB or replace with an empty one
     ADD_METHOD_TO(ServiceController::SaveDocument, "/service/save-document", Post, "yutovo_server::LoginFilter"); //save to the DB
@@ -29,6 +30,7 @@ public:
 
     void GetTasks(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
     void LoadTask(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
+    void SaveTask(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
     void ListIdentifiers(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
     void NewDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
     void SaveDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);

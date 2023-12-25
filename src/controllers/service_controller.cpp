@@ -1,6 +1,7 @@
 #include "service_controller.h"
 #include "../logic/clear_db.h"
 #include <functional>
+#include <fstream>
 
 namespace yutovo_server
 {
@@ -125,7 +126,102 @@ void ServiceController::LoadTask(const HttpRequestPtr& req, std::function<void (
     catch (const std::exception& ex)
     {
         SendError(k404NotFound, "Path not found", callback);
+    }
+}
+
+void ServiceController::SaveTask(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
+{
+    auto json = req->getJsonObject();
+    if (!json || !json->isObject())
+    {
+        SendError(k400BadRequest, "Json not found in the request", callback);
         return;
+    }
+
+    std::string language = "en";
+    if (json->isMember("language") && (*json)["language"].isString())
+        language = (*json)["language"].asString();
+
+    std::string task;
+    if (!json->isMember("task") || !(*json)["task"].isString())
+    {
+        SendError(k400BadRequest, "Wrong request: empty task", callback);
+        return;
+    }
+    task = (*json)["task"].asString();
+    size_t p = task.find_last_of("/");
+    if (p == std::string::npos || p >= task.length())
+    {
+        SendError(k400BadRequest, "Wrong task name", callback);
+        return;
+    }
+    
+    std::string name = task.substr(p + 1);
+    orm::DbClientPtr db = app().getDbClient();
+    SessionPtr session = req->session();
+    std::string user_id = session->get<std::string>("user_id");
+    if (user_id.empty())
+        user_id = "-1";
+    std::string session_id = req->getCookie("session_id");
+    if (session_id.empty())
+    {
+        SendError(k400BadRequest, "Wrong request: empty session_id", callback);
+        return;
+    }
+
+    std::string document_id;
+
+    logger->Info("task={}", task);
+
+    ClearDbTurnOff t; //skip the clear db circles
+
+    try
+    {
+        if (!AddDocument(user_id, document_id, name))
+        {
+            logger->Error("Database error: Error inserting a document");
+            SendError(k500InternalServerError, "Error inserting a document", callback);
+            return;
+        }
+
+        task = tasks_path + language + task + ".yut";
+        fs::path path;
+        Json::Value doc;
+
+        //check if the path is inside tasks_path
+        try
+        {
+            path = fs::canonical(fs::path(task));
+            if (!std::string(path.c_str()).starts_with(tasks_path))
+            {
+                SendError(k404NotFound, "Path not found", callback);
+                return;
+            }
+
+            std::ifstream f(path.string().c_str());
+            f >> doc;
+        }
+        catch (const std::exception& ex)
+        {
+            SendError(k404NotFound, "Path not found", callback);
+            return;
+        }
+
+        orm::Result result = db->execSqlSync("update user_documents set document=$1 where document_id=$2", doc.toStyledString(), document_id);
+        if (result.affectedRows() == 0)
+        {
+            logger->Error("Database error: Error inserting a document");
+            SendError(k500InternalServerError, "Error inserting a document", callback);
+            return;
+        }
+
+        db->execSqlSync("update user_sessions set document_id=$1 where session_id=$2", document_id, session_id);
+        SendOk(callback, document_id, name);
+    }
+    catch (const orm::DrogonDbException& e)
+    {
+        logger->Error("Database error: {}", e.base().what());
+        SendError(k500InternalServerError, e.base().what(), callback);
     }
 }
 
@@ -270,8 +366,6 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
         SendError(k400BadRequest, "Wrong request: empty session_id", callback);
         return;
     }
-
-    ClearDbTurnOff t; //skip the clear db circles
 
     try
     {
@@ -607,7 +701,12 @@ void ServiceController::DeleteDocument(const HttpRequestPtr& req, std::function<
 
     SessionPtr session = req->session();
     std::string user_id = session->get<std::string>("user_id");
-    std::string session_id = session->get<std::string>("session_id");
+    std::string session_id = req->getCookie("session_id");
+    if (session_id.empty())
+    {
+        SendError(k400BadRequest, "Wrong request: empty session_id", callback);
+        return;
+    }
 
     ClearDbTurnOff t; //skip the clear db circles
 

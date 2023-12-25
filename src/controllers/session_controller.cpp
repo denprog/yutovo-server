@@ -243,11 +243,9 @@ void SessionController::Task(const HttpRequestPtr& req, std::function<void (cons
         }
 
         SessionPtr session = req->session();
-        //session->insert("document_id", param);
         session->insert("session_id", session_id);
 
         auto resp = HttpResponse::newFileResponse(r + p);
-        //SetDocumentCookie(param, resp);
         callback(resp);
         return;
     }
