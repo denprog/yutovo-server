@@ -93,8 +93,18 @@ void AuthController::UnRegister(const HttpRequestPtr& req, std::function<void (c
 void AuthController::Login(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
     auto json = req->getJsonObject();
+    if (!json || !json->isObject())
+    {
+        SendError(k400BadRequest, "Json not found in the request", callback);
+        return;
+    }
+
     auto login = (*json)["login"].asString();
     auto password = (*json)["password"].asString();
+    bool load_last = true;
+    if (json->isMember("load_last") && (*json)["load_last"].isBool())
+        load_last = (*json)["load_last"].asBool();
+
     logger->Info("Login request: name={}, password={}", login, password);
     orm::DbClientPtr db = app().getDbClient();
 
@@ -127,14 +137,19 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
         std::string document_id = "-1";
         std::string name;
         std::string session_id = req->getCookie("session_id");
+        if (session_id.empty())
+            session_id = session->get<std::string>("session_id");
         auto session_expires_date = trantor::Date::now().after(session_expires);
         if (!session_id.empty())
         {
-            result = db->execSqlSync("select document_id from user_sessions where session_id=$1", session_id);
-            if (result.size() > 0)
+            if (load_last)
             {
-                auto row = result[0];
-                document_id = row["document_id"].as<std::string>();
+                result = db->execSqlSync("select document_id from user_sessions where session_id=$1", session_id);
+                if (result.size() > 0)
+                {
+                    auto row = result[0];
+                    document_id = row["document_id"].as<std::string>();
+                }
             }
             if (document_id == "-1")
             {
