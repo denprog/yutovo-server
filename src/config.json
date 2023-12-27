@@ -1,26 +1,15 @@
-/* This is a JSON format configuration file
- */
 {
     //ssl:The global SSL settings. "key" and "cert" are the path to the SSL key and certificate. While
     //    "conf" is an array of 1 or 2-element tuples that supplies file style options for `SSL_CONF_cmd`.
     "ssl": {
-        "cert": "../keys/yutovo_server",
-        "key": "../keys/yutovo_server",
+        "cert": "../keys/yutovo_server_cert.pem",
+        "key": "../keys/yutovo_server_key.pem",
         "conf": [
             ["Options", "-SessionTicket"], 
             ["Options", "Compression"]
         ]
     },
-    /*
     "listeners": [
-        {
-            //address: Ip address,0.0.0.0 by default
-            "address": "0.0.0.0",
-            //port: Port number
-            "port": 80,
-            //https: If true, use https for security,false by default
-            "https": false
-        },
         {
             "address": "0.0.0.0",
             "port": 443,
@@ -32,10 +21,10 @@
             //use_old_tls: enable the TLS1.0/1.1, false by default
             "use_old_tls": false,
             "ssl_conf": [
-                //["MinProtocol", "TLSv1.3"]
+                ["MinProtocol", "TLSv1.3"]
             ]
         }
-    ],*/
+    ],
     "db_clients": [
         {
             //name: Name of the client,'default' by default
