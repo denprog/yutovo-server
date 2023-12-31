@@ -13,7 +13,7 @@ namespace yutovo_server
 
 LoginFilter::LoginFilter()
 {
-    std::ifstream key_file("yutovo_server_key.pem");
+    std::ifstream key_file("yutovo_server.key");
     if (!key_file.is_open())
         throw std::system_error(ENOENT, std::generic_category(), "Key file not open");
     
@@ -79,7 +79,7 @@ void LoginFilter::doFilter(const HttpRequestPtr& req, FilterCallback&& not_valid
 
 ControllerBase::ControllerBase()
 {
-    std::ifstream key_file("yutovo_server_key.pem");
+    std::ifstream key_file("yutovo_server.key");
     if (!key_file.is_open())
         throw std::system_error(ENOENT, std::generic_category(), "Pirvate key file not open");
     
@@ -87,7 +87,7 @@ ControllerBase::ControllerBase()
     ss << key_file.rdbuf();
     private_key = ss.str();
 
-    std::ifstream public_key_file("yutovo_server_key.pub");
+    std::ifstream public_key_file("yutovo_server.pub");
     if (!public_key_file.is_open())
         throw std::system_error(ENOENT, std::generic_category(), "Public key file not open");
     
