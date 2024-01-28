@@ -2,8 +2,8 @@
     //ssl:The global SSL settings. "key" and "cert" are the path to the SSL key and certificate. While
     //    "conf" is an array of 1 or 2-element tuples that supplies file style options for `SSL_CONF_cmd`.
     "ssl": {
-        "cert": "../keys/yutovo_server.crt",
-        "key": "../keys/yutovo_server.key",
+        "cert": "../keys/yutovo_service.crt",
+        "key": "../keys/yutovo_service.key",
         "conf": [
             ["Options", "-SessionTicket"], 
             ["Options", "Compression"]
@@ -12,8 +12,8 @@
     "listeners": [
         {
             "address": "0.0.0.0",
-            "port": 443,
-            "https": true,
+            "port": 9001,
+            "https": false,
             //cert,key: Cert file path and key file path, empty by default,
             //if empty, use the global setting
             "cert": "",
@@ -290,6 +290,6 @@
         "user_session_expire_timeout": 86400,
         "clear_db_timeout": 10,
         "tasks_path": "/home/denis/programs/Math/yutovo/yutovo_server/tasks/",
-        "solver_address": "wss://127.0.0.1:8010"
+        "solver_address": "wss://yutovo.ru:8010"
     }
 }
