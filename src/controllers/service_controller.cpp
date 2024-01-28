@@ -227,7 +227,7 @@ void ServiceController::SaveTask(const HttpRequestPtr& req, std::function<void (
 
 void ServiceController::ListIdentifiers(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
-    if (!solver_client)
+    if (!solver_client || !solver_client->getConnection())
     {
         SendError(k500InternalServerError, "Solver socket not open", callback);
         return;
