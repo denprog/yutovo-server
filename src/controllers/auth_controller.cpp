@@ -60,6 +60,18 @@ void AuthController::Register(const HttpRequestPtr& req, std::function<void (con
 void AuthController::UnRegister(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
     auto json = req->getJsonObject();
+    if (!json || !json->isObject())
+    {
+        SendError(k400BadRequest, "Json not found in the request", callback);
+        return;
+    }
+
+    if (!json->isMember("login") || !(*json)["login"].isString())
+    {
+        SendError(k400BadRequest, "Wrong json in the request", callback);
+        return;
+    }
+
     auto login = (*json)["login"].asString();
     SessionPtr session = req->session();
     logger->Info("UnRegister request: login={}", login);
@@ -96,6 +108,12 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
     if (!json || !json->isObject())
     {
         SendError(k400BadRequest, "Json not found in the request", callback);
+        return;
+    }
+
+    if (!json->isMember("login") || !(*json)["login"].isString() || !json->isMember("password") || !(*json)["password"].isString())
+    {
+        SendError(k400BadRequest, "Wrong json in the request", callback);
         return;
     }
 
@@ -187,12 +205,24 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
 void AuthController::Logout(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
     auto json = req->getJsonObject();
-    auto login = (*json)["login"].asString();
+    if (!json || !json->isObject())
+    {
+        SendError(k400BadRequest, "Json not found in the request", callback);
+        return;
+    }
+
     SessionPtr session = req->session();
     std::string user_id = session->get<std::string>("user_id");
     std::string refresh_token = req->getCookie("refresh_token");
     std::string session_id = session->get<std::string>("session_id");
 
+    if (!json->isMember("login") || !(*json)["login"].isString())
+    {
+        SendError(k400BadRequest, "Wrong json in the request", callback);
+        return;
+    }
+
+    auto login = (*json)["login"].asString();
     std::string refresh_uuid;
     if (!ParseRefreshToken(refresh_token, refresh_uuid, login, callback))
         return;

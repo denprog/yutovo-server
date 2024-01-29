@@ -22,8 +22,14 @@ template <>
 inline yutovo_server::User fromRequest(const HttpRequest &req)
 {
     auto json = req.getJsonObject();
-    if (!json)
+    if (!json || !json->isObject())
         return yutovo_server::User{"", "", ""};
+    if (!json->isMember("login") || !(*json)["login"].isString() || !json->isMember("email") || !(*json)["email"].isString() || 
+        !json->isMember("password") || !(*json)["password"].isString())
+    {
+        return yutovo_server::User{"", "", ""};
+    }
+
     return yutovo_server::User{(*json)["login"].asString(), (*json)["email"].asString(), (*json)["password"].asString()};
 }
 }
