@@ -9,22 +9,22 @@
             ["Options", "Compression"]
         ]
     },
-    "listeners": [
-        {
-            "address": "0.0.0.0",
-            "port": 9001,
-            "https": false,
-            //cert,key: Cert file path and key file path, empty by default,
-            //if empty, use the global setting
-            "cert": "",
-            "key": "",
-            //use_old_tls: enable the TLS1.0/1.1, false by default
-            "use_old_tls": false,
-            "ssl_conf": [
-                ["MinProtocol", "TLSv1.3"]
-            ]
-        }
-    ],
+    // "listeners": [
+    //     {
+    //         "address": "0.0.0.0",
+    //         "port": 9001,
+    //         "https": false,
+    //         //cert,key: Cert file path and key file path, empty by default,
+    //         //if empty, use the global setting
+    //         "cert": "",
+    //         "key": "",
+    //         //use_old_tls: enable the TLS1.0/1.1, false by default
+    //         "use_old_tls": false,
+    //         "ssl_conf": [
+    //             ["MinProtocol", "TLSv1.3"]
+    //         ]
+    //     }
+    // ],
     "db_clients": [
         {
             //name: Name of the client,'default' by default

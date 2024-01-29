@@ -14,6 +14,8 @@ typedef unsigned int uint;
 extern int argc;
 extern char** argv;
 
+extern std::string address;
+
 struct TestBase
 {
     TestBase();

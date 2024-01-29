@@ -11,7 +11,7 @@ using namespace std::chrono_literals;
 //Get list of tasks
 TEST_F(ServiceTest, tasks1)
 {
-    auto client = HttpClient::newHttpClient("http://localhost:9001");
+    auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
 
     auto req = HttpRequest::newHttpRequest();
@@ -29,7 +29,7 @@ TEST_F(ServiceTest, tasks1)
 //Load a task
 TEST_F(ServiceTest, tasks2)
 {
-    auto client = HttpClient::newHttpClient("http://localhost:9001");
+    auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
 
     Json::Value body;
@@ -49,7 +49,7 @@ TEST_F(ServiceTest, tasks2)
 //Wrong task path
 TEST_F(ServiceTest, tasks3)
 {
-    auto client = HttpClient::newHttpClient("http://localhost:9001");
+    auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
 
     Json::Value body;
@@ -77,7 +77,7 @@ TEST_F(ServiceTest, tasks3)
 //List identifiers from the service
 TEST_F(ServiceTest, service1)
 {
-    auto client = HttpClient::newHttpClient("http://localhost:9001");
+    auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
 
     Json::Value body;
@@ -104,7 +104,7 @@ TEST_F(ServiceTest, service1)
 //Save/load a user document in the DB
 TEST_F(ServiceTest, document1)
 {
-    auto client = HttpClient::newHttpClient("http://localhost:9001");
+    auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
 
     Register(client, "User1", "user1@mail.com", "11");
@@ -159,7 +159,7 @@ TEST_F(ServiceTest, document1)
 //Save/load a part of a user document in the DB
 TEST_F(ServiceTest, document2)
 {
-    auto client = HttpClient::newHttpClient("http://localhost:9001");
+    auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
 
     Register(client, "User1", "user1@mail.com", "11");
@@ -228,7 +228,7 @@ TEST_F(ServiceTest, document2)
 //Run a session, login, error of loading the document
 TEST_F(ServiceTest, document3)
 {
-    auto client = HttpClient::newHttpClient("http://localhost:9001");
+    auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
 
     auto req = HttpRequest::newHttpRequest();
@@ -283,7 +283,7 @@ TEST_F(ServiceTest, document4)
     std::string access_token, document_id, name;
 
     {
-        auto client = HttpClient::newHttpClient("http://localhost:9001");
+        auto client = HttpClient::newHttpClient(address);
         client->enableCookies(true);
 
         Register(client, "User1", "user1@mail.com", "11");
@@ -311,7 +311,7 @@ TEST_F(ServiceTest, document4)
         document_id = (*json)["document_id"].asString();
     }
 
-    auto client = HttpClient::newHttpClient("http://localhost:9001");
+    auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
 
     //load the last document
@@ -331,7 +331,7 @@ TEST_F(ServiceTest, document4)
 //Check new document with login
 TEST_F(ServiceTest, document5)
 {
-    auto client = HttpClient::newHttpClient("http://localhost:9001");
+    auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
 
     Register(client, "User1", "user1@mail.com", "11");
@@ -442,7 +442,7 @@ TEST_F(ServiceTest, document6)
     std::string access_token, document_id, name;
 
     {
-        auto client = HttpClient::newHttpClient("http://localhost:9001");
+        auto client = HttpClient::newHttpClient(address);
         client->enableCookies(true);
 
         Register(client, "User1", "user1@mail.com", "11");
@@ -470,7 +470,7 @@ TEST_F(ServiceTest, document6)
     }
 
     {
-        auto client = HttpClient::newHttpClient("http://localhost:9001");
+        auto client = HttpClient::newHttpClient(address);
         client->enableCookies(true);
 
         Register(client, "User2", "user1@mail.com", "22");
@@ -514,7 +514,7 @@ TEST_F(ServiceTest, document6)
 //List documents of a user
 TEST_F(ServiceTest, document7)
 {
-    auto client = HttpClient::newHttpClient("http://localhost:9001");
+    auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
 
     Register(client, "User1", "user1@mail.com", "11");
@@ -562,7 +562,7 @@ TEST_F(ServiceTest, document7)
 //Delete current document of a user
 TEST_F(ServiceTest, document8)
 {
-    auto client = HttpClient::newHttpClient("http://localhost:9001");
+    auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
 
     Register(client, "User1", "user1@mail.com", "11");
@@ -596,7 +596,7 @@ TEST_F(ServiceTest, document8)
 //Delete a document of a user
 TEST_F(ServiceTest, document9)
 {
-    auto client = HttpClient::newHttpClient("http://localhost:9001");
+    auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
 
     Register(client, "User1", "user1@mail.com", "11");
@@ -640,7 +640,7 @@ TEST_F(ServiceTest, document9)
 //Save and load documents of a user
 TEST_F(ServiceTest, document10)
 {
-    auto client = HttpClient::newHttpClient("http://localhost:9001");
+    auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
 
     Register(client, "User1", "user1@mail.com", "11");
@@ -671,7 +671,7 @@ TEST_F(ServiceTest, document10)
 //Rename a document
 TEST_F(ServiceTest, document11)
 {
-    auto client = HttpClient::newHttpClient("http://localhost:9001");
+    auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
 
     Register(client, "User1", "user1@mail.com", "11");
@@ -699,7 +699,7 @@ TEST_F(ServiceTest, document11)
 //Create an empty documents
 TEST_F(ServiceTest, document12)
 {
-    auto client = HttpClient::newHttpClient("http://localhost:9001");
+    auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
 
     Register(client, "User1", "user1@mail.com", "11");
@@ -731,7 +731,7 @@ TEST_F(ServiceTest, document12)
 //Save document with another name
 TEST_F(ServiceTest, document13)
 {
-    auto client = HttpClient::newHttpClient("http://localhost:9001");
+    auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
 
     Register(client, "User1", "user1@mail.com", "11");
@@ -794,7 +794,7 @@ TEST_F(ServiceTest, document14)
 {
     std::string document1_id;
     {
-        auto client = HttpClient::newHttpClient("http://localhost:9001");
+        auto client = HttpClient::newHttpClient(address);
         client->enableCookies(true);
 
         Register(client, "User1", "user1@mail.com", "11");
@@ -812,7 +812,7 @@ TEST_F(ServiceTest, document14)
     }
 
     {
-        auto client = HttpClient::newHttpClient("http://localhost:9001");
+        auto client = HttpClient::newHttpClient(address);
         client->enableCookies(true);
 
         Locate(client, "/");

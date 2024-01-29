@@ -10,7 +10,7 @@ using namespace std::chrono_literals;
 //Create a session without login by access on "/"
 TEST_F(SessionTest, session1)
 {
-    auto client = HttpClient::newHttpClient("http://localhost:9001");
+    auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
 
     auto req = HttpRequest::newHttpRequest();
@@ -29,7 +29,7 @@ TEST_F(SessionTest, session1)
 //Create a session without login and later log into it
 TEST_F(SessionTest, session2)
 {
-    auto client = HttpClient::newHttpClient("http://localhost:9001");
+    auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
 
     auto req = HttpRequest::newHttpRequest();

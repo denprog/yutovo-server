@@ -7,6 +7,8 @@ namespace yutovo_server_test
 int argc = 0;
 char** argv = nullptr;
 
+std::string address = "https://yutovo.ru";
+
 //TestBase
 
 TestBase::TestBase()

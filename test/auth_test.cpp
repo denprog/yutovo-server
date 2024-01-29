@@ -10,7 +10,7 @@ using namespace std::chrono_literals;
 //Register, login and delete a user
 TEST_F(AuthTest, register1)
 {
-    auto client = HttpClient::newHttpClient("http://localhost:9001");
+    auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
 
     Register(client, "User1", "user1@mail.com", "11");
@@ -39,9 +39,9 @@ TEST_F(AuthTest, register1)
 //Register, login and delete a two users
 TEST_F(AuthTest, register2)
 {
-    auto client1 = HttpClient::newHttpClient("http://localhost:9001");
+    auto client1 = HttpClient::newHttpClient(address);
     client1->enableCookies(true);
-    auto client2 = HttpClient::newHttpClient("http://localhost:9001");
+    auto client2 = HttpClient::newHttpClient(address);
     client2->enableCookies(true);
 
     Register(client1, "User1", "user1@mail.com", "11");
@@ -89,7 +89,7 @@ TEST_F(AuthTest, register2)
 //Wrong access token
 TEST_F(AuthTest, register3)
 {
-    auto client = HttpClient::newHttpClient("http://localhost:9001");
+    auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
 
     auto req = HttpRequest::newHttpJsonRequest(Json::Value{});
@@ -107,7 +107,7 @@ TEST_F(AuthTest, register3)
 //Login and logout
 TEST_F(AuthTest, login1)
 {
-    auto client = HttpClient::newHttpClient("http://localhost:9001");
+    auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
 
     Register(client, "User1", "user1@mail.com", "11");
@@ -179,7 +179,7 @@ TEST_F(AuthTest, login1)
 //Wrong login
 TEST_F(AuthTest, login2)
 {
-    auto client = HttpClient::newHttpClient("http://localhost:9001");
+    auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
 
     Register(client, "User1", "user1@mail.com", "11");
@@ -226,7 +226,7 @@ TEST_F(AuthTest, login2)
 //Wrong password
 TEST_F(AuthTest, login3)
 {
-    auto client = HttpClient::newHttpClient("http://localhost:9001");
+    auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
 
     Register(client, "User1", "user1@mail.com", "11");
@@ -273,7 +273,7 @@ TEST_F(AuthTest, login3)
 //Login, logout, login, logout
 TEST_F(AuthTest, login4)
 {
-    auto client = HttpClient::newHttpClient("http://localhost:9001");
+    auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
 
     Register(client, "User1", "user1@mail.com", "11");
@@ -295,7 +295,7 @@ TEST_F(AuthTest, login4)
 //Refresh session
 TEST_F(AuthTest, refresh_session1)
 {
-    auto client = HttpClient::newHttpClient("http://localhost:9001");
+    auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
 
     Register(client, "User1", "user1@mail.com", "11");
@@ -337,7 +337,7 @@ TEST_F(AuthTest, refresh_session1)
 //Check expired session
 TEST_F(AuthTest, refresh_session2)
 {
-    auto client = HttpClient::newHttpClient("http://localhost:9001");
+    auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
 
     //set very short expire time for the tokens
