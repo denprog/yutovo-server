@@ -536,13 +536,7 @@ void ServiceController::SaveAsDocument(const HttpRequestPtr& req, std::function<
         }
 
         auto row = result[0];
-        if (row["user_id"].as<std::string>() != user_id) //check the owner
-        {
-            //saving this foreign document is prohibited
-            SendError(k403Forbidden, "Document saving is prohibited", callback);
-            return;
-        }
-
+        
         result = db->execSqlSync("select 1 from user_documents where user_id=$1 and name=$2", user_id, name); //check the document name is unique
         if (result.size() > 0)
         {
