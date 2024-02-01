@@ -159,7 +159,8 @@ void ControllerBase::SendOkTokens(std::function<void (const HttpResponsePtr &)>&
         sign(jwt::algorithm::rs256(public_key, private_key, "", ""));
 
     Json::Value r;
-    r["document_id"] = document_id;
+    if (document_id != "-1")
+        r["document_id"] = document_id;
     r["name"] = name;
     HttpResponsePtr resp = HttpResponse::newHttpJsonResponse(r);
     resp->setStatusCode(k200OK);
