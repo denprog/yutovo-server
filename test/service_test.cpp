@@ -696,7 +696,7 @@ TEST_F(ServiceTest, document11)
     UnRegister(client, "User1", access_token);
 }
 
-//Create an empty documents
+//Create an empty document
 TEST_F(ServiceTest, document12)
 {
     auto client = HttpClient::newHttpClient(address);

@@ -139,6 +139,7 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
 
         //create a session with refresh and access tokens
         SessionPtr session = req->session();
+        session->erase("login");
         session->insert("login", login);
 
         std::string refresh_uuid(boost::uuids::to_string(boost::uuids::random_generator()()));
@@ -150,13 +151,13 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
         std::string user_id = row["user_id"].as<std::string>();
         result = db->execSqlSync("insert into refresh_sessions (user_id, refresh_uuid, expire_time) values ($1, $2, $3)", 
             user_id, refresh_uuid, refresh_expires.secondsSinceEpoch());
+        session->erase("user_id");
         session->insert("user_id", user_id);
 
         std::string document_id = "-1";
         std::string name;
         std::string session_id = req->getCookie("session_id");
-        if (session_id.empty())
-            session_id = session->get<std::string>("session_id");
+        session->insert("session_id", session_id);
         auto session_expires_date = trantor::Date::now().after(session_expires);
         if (!session_id.empty())
         {
@@ -288,6 +289,7 @@ void AuthController::RefreshToken(const HttpRequestPtr& req, std::function<void 
             user_id, refresh_uuid, refresh_expires.secondsSinceEpoch());
         
         session->insert("login", login);
+        session->erase("user_id");
         session->insert("user_id", user_id);
 
         std::string session_id = req->getCookie("session_id");

@@ -607,6 +607,8 @@ void ServiceController::LoadDocument(const HttpRequestPtr& req, std::function<vo
     std::string id;
     if (json->isObject() && json->isMember("id") && (*json)["id"].isString())
         id = (*json)["id"].asString();
+    
+    auto user_id = session->get<std::string>("user_id");
 
     ClearDbTurnOff t; //skip the clear db circles for a while
 
@@ -623,7 +625,7 @@ void ServiceController::LoadDocument(const HttpRequestPtr& req, std::function<vo
         }
 
         auto row = result[0];
-        if (row["user_id"].as<std::string>() != session->get<std::string>("user_id"))
+        if (row["user_id"].as<std::string>() != user_id)
         {
             if (!row["public"].as<bool>())
             {
@@ -666,7 +668,11 @@ void ServiceController::LoadDocument(const HttpRequestPtr& req, std::function<vo
 
         std::string session_id = req->getCookie("session_id");
         if (!session_id.empty())
+        {
             db->execSqlSync("update user_sessions set document_id=$1 where session_id=$2", document_id, session_id);
+            if (!user_id.empty())
+                db->execSqlSync("update users set document_id=$1 where user_id=$2", document_id, user_id);
+        }
     }
     catch (const orm::DrogonDbException& e)
     {

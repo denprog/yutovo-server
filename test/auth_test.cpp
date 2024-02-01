@@ -292,6 +292,42 @@ TEST_F(AuthTest, login4)
     UnRegister(client, "User1", access_token);
 }
 
+//Login, logout, login, logout, check documents
+TEST_F(AuthTest, login5)
+{
+    auto client = HttpClient::newHttpClient(address);
+    client->enableCookies(true);
+
+    Register(client, "User1", "user1@mail.com", "11");
+    Register(client, "User2", "user2@mail.com", "22");
+
+    Locate(client, "/");
+
+    std::string access_token, document_id, name;
+    Login(client, "User1", "11", access_token, document_id, name);
+    std::string new_document_id;
+    NewDocument(client, access_token, new_document_id);
+    RenameDocument(client, access_token, new_document_id, "new_name_1");
+    Logout(client, "User1", access_token);
+
+    Login(client, "User2", "22", access_token, document_id, name);
+    NewDocument(client, access_token, new_document_id);
+    RenameDocument(client, access_token, new_document_id, "new_name_2");
+    Logout(client, "User2", access_token);
+
+    std::string document_id1, document_id2;
+    Login(client, "User1", "11", access_token, document_id1, name);
+    GetDocumentName(client, document_id, name);
+    ASSERT_TRUE(name == "new_name_1") << name;
+    UnRegister(client, "User1", access_token);
+
+    Login(client, "User2", "22", access_token, document_id2, name);
+    GetDocumentName(client, document_id, name);
+    ASSERT_TRUE(name == "new_name_1") << name;
+    ASSERT_TRUE(document_id1 == document_id2);
+    UnRegister(client, "User2", access_token);
+}
+
 //Refresh session
 TEST_F(AuthTest, refresh_session1)
 {

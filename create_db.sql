@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS users
     name text,
     email text,
     create_time timestamp with time zone,
-    current_session uuid
+    document_id int default -1 --current document for this user
 );
 
 CREATE TABLE IF NOT EXISTS user_sessions

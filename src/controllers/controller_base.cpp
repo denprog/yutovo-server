@@ -35,7 +35,7 @@ void LoginFilter::doFilter(const HttpRequestPtr& req, FilterCallback&& not_valid
         auto login = decoded.get_payload_claim("login").to_json().to_str();
         if (login != session->get<std::string>("login"))
         {
-            logger->Error("Unanuthorized: {}", login);
+            logger->Error("Unauthorized: {}", login);
             auto resp = HttpResponse::newHttpResponse();
             resp->setStatusCode(k401Unauthorized);
             not_valid_callback(resp);
@@ -337,6 +337,7 @@ bool ControllerBase::AddDocument(const std::string& user_id, std::string& docume
 
     auto row = result[0];
     document_id = row["document_id"].as<std::string>();
+    db->execSqlSync("update users set document_id=$1 where user_id=$2", document_id, user_id);
     logger->Info("Document added document_id={}, name={}", document_id, name);
     return true;
 }
