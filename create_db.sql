@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS users
 (
     user_id serial PRIMARY KEY,
     login varchar(20),
-    password varchar(20),
+    password varchar(128),
     name text,
     email text,
     create_time timestamp with time zone,

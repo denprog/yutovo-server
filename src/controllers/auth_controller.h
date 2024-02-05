@@ -64,6 +64,7 @@ public:
 
 private:
     void UpdateSessionTime(const std::string& session_id);
+    std::string GetHash(const std::string& str, const std::string& salt);
 
 private:
     int session_expires = 0;

@@ -6,6 +6,9 @@
 #include <boost/uuid/uuid.hpp>
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid/uuid_io.hpp>
+#include <boost/lexical_cast.hpp>
+#include <functional>
+#include <openssl/md5.h>
 
 namespace yutovo_server
 {
@@ -38,8 +41,13 @@ void AuthController::Register(const HttpRequestPtr& req, std::function<void (con
             return;
         }
 
+        //generate the hash of the password with salt
+        std::string salt(boost::lexical_cast<std::string>(boost::uuids::random_generator()()));
+        salt.erase(std::remove(salt.begin(), salt.end(), '-'), salt.end());
+        std::string hash = GetHash(user.password, salt);
+
         //insert new user
-        result = db->execSqlSync("insert into users (login, password, email) values ($1, $2, $3)", user.login, user.password, user.email);
+        result = db->execSqlSync("insert into users (login, password, email) values ($1, $2, $3)", user.login, salt + hash, user.email);
         if (result.size() == 0)
         {
             SendOk(callback);
@@ -130,8 +138,18 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
     {
         ClearDbTurnOff t; //skip the clear db circles for a while
 
-        orm::Result result = db->execSqlSync("select user_id from users where login=$1 and password=$2", login, password);
+        orm::Result result = db->execSqlSync("select user_id, password from users where login=$1", login);
         if (result.size() == 0)
+        {
+            SendError(k401Unauthorized, "Login or password are incorrect", callback);
+            return;
+        }
+
+        auto row = result[0];
+        std::string hash = row["password"].as<std::string>();
+        std::string salt = hash.substr(0, 32);
+        std::string h = GetHash(password, salt);
+        if (salt + h != hash)
         {
             SendError(k401Unauthorized, "Login or password are incorrect", callback);
             return;
@@ -147,7 +165,6 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
         trantor::Date access_expires = trantor::Date::now().after(access_token_expires);
         trantor::Date refresh_expires = trantor::Date::now().after(refresh_token_expires);
 
-        auto row = result[0];
         std::string user_id = row["user_id"].as<std::string>();
         result = db->execSqlSync("insert into refresh_sessions (user_id, refresh_uuid, expire_time) values ($1, $2, $3)", 
             user_id, refresh_uuid, refresh_expires.secondsSinceEpoch());
@@ -323,6 +340,17 @@ void AuthController::UpdateSessionTime(const std::string& session_id)
     orm::DbClientPtr db = app().getDbClient();
     trantor::Date session_expires_date = trantor::Date::now().after(session_expires);
     db->execSqlSync("update user_sessions set expire_time=$1 where session_id=$2", session_expires_date.secondsSinceEpoch(), session_id);
+}
+
+std::string AuthController::GetHash(const std::string& str, const std::string& salt)
+{
+    unsigned char hash[MD5_DIGEST_LENGTH];
+    std::string s = str + salt;
+    MD5((const unsigned char*)s.c_str(), s.size(), hash);
+    char hash_str[MD5_DIGEST_LENGTH * 2];
+    for(int i = 0; i < MD5_DIGEST_LENGTH; i++)
+        sprintf(&hash_str[i * 2], "%02x", (unsigned int)hash[i]);
+    return std::string(&hash_str[0], MD5_DIGEST_LENGTH * 2);
 }
 
 }
