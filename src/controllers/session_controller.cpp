@@ -17,15 +17,13 @@ SessionController::SessionController()
 void SessionController::Root(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, std::string param)
 {
     auto p = req->path();
-    logger->Info("Request root: path={}", p);
-
+    session_id = req->getCookie("session_id");
+    GetLogger(session_id)->Info("Request root: path={}", p);
     if (req->path() == "/")
     {
         orm::DbClientPtr db = app().getDbClient();
-        std::string session_id = req->getCookie("session_id");
         SessionPtr session = req->session();
         std::string user_id = session->get<std::string>("user_id");
-        logger->Info("session_id={}", session_id);
 
         try
         {
@@ -54,8 +52,6 @@ void SessionController::Root(const HttpRequestPtr& req, std::function<void (cons
                     session->insert("document_id", document_id);
                     auto resp = HttpResponse::newRedirectionResponse("/document/" + document_id);
 
-                    //SetDocumentCookie(document_id, resp);
-
                     callback(resp);
                     return;
                 }
@@ -71,7 +67,7 @@ void SessionController::Root(const HttpRequestPtr& req, std::function<void (cons
                     //create new document and session for a registered user
                     if (!AddDocument("-1", document_id, name))
                     {
-                        logger->Error("Database error: Error inserting a document");
+                        GetLogger(session_id)->Error("Database error: Error inserting a document");
                         SendError(k500InternalServerError, "Error inserting a document", callback);
                         return;
                     }
@@ -82,7 +78,7 @@ void SessionController::Root(const HttpRequestPtr& req, std::function<void (cons
 
             if (!AddSession(document_id, session_id))
             {
-                logger->Error("Database error: Error inserting a session");
+                GetLogger(session_id)->Error("Database error: Error inserting a session");
                 SendError(k500InternalServerError, "Error inserting a session", callback);
                 return;
             }
@@ -101,16 +97,15 @@ void SessionController::Root(const HttpRequestPtr& req, std::function<void (cons
             }
 
             //redirect to the document
-            logger->Info("Redirect {}", "/document/" + document_id);
+            GetLogger(session_id)->Info("Redirect {}", "/document/" + document_id);
             auto resp = HttpResponse::newRedirectionResponse("/document/" + document_id);
             SetSessionCookie(session_id, resp);
-            //SetDocumentCookie(document_id, resp);
             callback(resp);
             return;
         }
         catch (const orm::DrogonDbException& e)
         {
-            logger->Error("Database error: {}", e.base().what());
+            GetLogger(session_id)->Error("Database error: {}", e.base().what());
             SendError(k500InternalServerError, e.base().what(), callback);
             return;
         }
@@ -124,7 +119,9 @@ void SessionController::Root(const HttpRequestPtr& req, std::function<void (cons
 void SessionController::Assets(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, std::string param)
 {
     auto p = req->path();
-    logger->Info("Request assets: path={}", p);
+    session_id = req->getCookie("session_id");
+    GetLogger(session_id)->Info("Request images: path={}", p);
+    GetLogger(session_id)->Info("Request assets: path={}", p);
     std::string r = HttpAppFramework::instance().getDocumentRoot();
     auto resp = HttpResponse::newFileResponse(r + p);
     callback(resp);
@@ -133,7 +130,9 @@ void SessionController::Assets(const HttpRequestPtr& req, std::function<void (co
 void SessionController::Icons(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, std::string param)
 {
     auto p = req->path();
-    logger->Info("Request icons: path={}", p);
+    session_id = req->getCookie("session_id");
+    GetLogger(session_id)->Info("Request images: path={}", p);
+    GetLogger(session_id)->Info("Request icons: path={}", p);
     std::string r = HttpAppFramework::instance().getDocumentRoot();
     auto resp = HttpResponse::newFileResponse(r + p);
     callback(resp);
@@ -142,7 +141,8 @@ void SessionController::Icons(const HttpRequestPtr& req, std::function<void (con
 void SessionController::Images(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, std::string param)
 {
     auto p = req->path();
-    logger->Info("Request images: path={}", p);
+    session_id = req->getCookie("session_id");
+    GetLogger(session_id)->Info("Request images: path={}", p);
     std::string r = HttpAppFramework::instance().getDocumentRoot();
     auto resp = HttpResponse::newFileResponse(r + p);
     callback(resp);
@@ -151,14 +151,14 @@ void SessionController::Images(const HttpRequestPtr& req, std::function<void (co
 void SessionController::Document(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, std::string param)
 {
     auto p = req->path();
-    logger->Info("Request document: path={}", p);
+    session_id = req->getCookie("session_id");
+    GetLogger(session_id)->Info("Request document: path={}", p);
     std::string r = HttpAppFramework::instance().getDocumentRoot();
     HttpAppFramework& inst = HttpAppFramework::instance();
     p = inst.getHomePage();
 
     if (param.find(".") == std::string::npos)
     {
-        std::string session_id = req->getCookie("session_id");
         if (session_id.empty())
         {
             if (!AddSession(param, session_id))
@@ -176,7 +176,7 @@ void SessionController::Document(const HttpRequestPtr& req, std::function<void (
             orm::Result result = db->execSqlSync("select document_id from user_documents where document_id=$1", param);
             if (result.size() == 0)
             {
-                logger->Error("Document not found: {}", param);
+                GetLogger(session_id)->Error("Document not found: {}", param);
                 std::string r = HttpAppFramework::instance().getDocumentRoot();
                 auto resp = HttpResponse::newFileResponse(r + "/index.html");
                 SetDocumentCookie(param, resp);
@@ -189,7 +189,7 @@ void SessionController::Document(const HttpRequestPtr& req, std::function<void (
         }
         catch (const orm::DrogonDbException& e)
         {
-            logger->Error("Database error: {}", e.base().what());
+            GetLogger(session_id)->Error("Database error: {}", e.base().what());
             SendError(k500InternalServerError, e.base().what(), callback);
             return;
         }
@@ -211,19 +211,19 @@ void SessionController::Document(const HttpRequestPtr& req, std::function<void (
 void SessionController::Task(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, std::string param)
 {
     auto p = req->path();
-    logger->Info("Request task: path={}", p);
+    session_id = req->getCookie("session_id");
+    GetLogger(session_id)->Info("Request task: path={}", p);
     std::string r = HttpAppFramework::instance().getDocumentRoot();
     HttpAppFramework& inst = HttpAppFramework::instance();
     p = inst.getHomePage();
 
     if (param.find(".") == std::string::npos)
     {
-        std::string session_id = req->getCookie("session_id");
         if (session_id.empty())
         {
             if (!AddSession(param, session_id))
             {
-                logger->Error("Database error: Error inserting a session");
+                GetLogger(session_id)->Error("Database error: Error inserting a session");
                 SendError(k500InternalServerError, "Error inserting a session", callback);
                 return;
             }
@@ -233,7 +233,7 @@ void SessionController::Task(const HttpRequestPtr& req, std::function<void (cons
         fs::path path = fs::path(tasks_path + param + ".yut");
         if (!fs::exists(path))
         {
-            logger->Error("Task not found: {}", param);
+            GetLogger(session_id)->Error("Task not found: {}", param);
             std::string r = HttpAppFramework::instance().getDocumentRoot();
             auto resp = HttpResponse::newFileResponse(r + "/index.html");
             SetDocumentCookie(param, resp);

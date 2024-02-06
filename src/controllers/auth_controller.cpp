@@ -1,5 +1,6 @@
 #include "auth_controller.h"
 #include "../logic/clear_db.h"
+#include "utils.h"
 #include <jwt-cpp/jwt.h>
 #include <fstream>
 #include <system_error>
@@ -23,7 +24,8 @@ AuthController::AuthController()
 
 void AuthController::Register(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, User&& user)
 {
-    logger->Info("Register request: login={}, email={}, password={}", user.login, user.email, user.password);
+    std::string session_id = req->getCookie("session_id");
+    GetLogger(session_id)->Info("Register request: login={}, email={}, password={}", user.login, user.email, user.password);
     orm::DbClientPtr db = app().getDbClient();
     if (user.login.empty() || user.email.empty() || user.password.empty())
     {
@@ -54,19 +56,20 @@ void AuthController::Register(const HttpRequestPtr& req, std::function<void (con
         }
         else
         {
-            logger->Error("Database error: {}", "Error of insert");
+            GetLogger(req->getCookie("session_id"))->Error("Database error: {}", "Error of insert");
             SendError(k500InternalServerError, "Error of insert", callback);
         }
     } 
     catch (const orm::DrogonDbException& e)
     {
-        logger->Error("Database error: {}", e.base().what());
+        GetLogger(req->getCookie("session_id"))->Error("Database error: {}", e.base().what());
         SendError(k500InternalServerError, e.base().what(), callback);
     }
 }
 
 void AuthController::UnRegister(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
+    std::string session_id = req->getCookie("session_id");
     auto json = req->getJsonObject();
     if (!json || !json->isObject())
     {
@@ -82,7 +85,7 @@ void AuthController::UnRegister(const HttpRequestPtr& req, std::function<void (c
 
     auto login = (*json)["login"].asString();
     SessionPtr session = req->session();
-    logger->Info("UnRegister request: login={}", login);
+    GetLogger(session_id)->Info("UnRegister request: login={}", login);
     orm::DbClientPtr db = app().getDbClient();
     std::string user_id = session->get<std::string>("user_id");
     if (user_id.empty() || user_id == "-1")
@@ -105,13 +108,14 @@ void AuthController::UnRegister(const HttpRequestPtr& req, std::function<void (c
     }
     catch (const orm::DrogonDbException& e)
     {
-        logger->Error("Database error: {}", e.base().what());
+        GetLogger(session_id)->Error("Database error: {}", e.base().what());
         SendError(k500InternalServerError, e.base().what(), callback);
     }
 }
 
 void AuthController::Login(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
+    session_id = req->getCookie("session_id");
     auto json = req->getJsonObject();
     if (!json || !json->isObject())
     {
@@ -174,7 +178,6 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
 
         std::string document_id = "-1";
         std::string name;
-        std::string session_id = req->getCookie("session_id");
         session->insert("session_id", session_id);
         auto session_expires_date = trantor::Date::now().after(session_expires);
         if (!session_id.empty())
@@ -195,7 +198,7 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
                 {
                     if (!AddDocument(user_id, document_id, name))
                     {
-                        logger->Error("Database error: Error inserting a document");
+                        GetLogger(session_id)->Error("Database error: Error inserting a document");
                         SendError(k500InternalServerError, "Error inserting a document", callback);
                         return;
                     }
@@ -216,7 +219,7 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
     }
     catch (const orm::DrogonDbException& e)
     {
-        logger->Error("Database error: {}", e.base().what());
+        GetLogger(req->getCookie("session_id"))->Error("Database error: {}", e.base().what());
         SendError(k500InternalServerError, e.base().what(), callback);
     }
 
@@ -248,7 +251,7 @@ void AuthController::Logout(const HttpRequestPtr& req, std::function<void (const
     if (!ParseRefreshToken(refresh_token, refresh_uuid, login, callback))
         return;
 
-    logger->Info("Logout request: login={}", login);
+    GetLogger(session_id)->Info("Logout request: login={}", login);
     orm::DbClientPtr db = app().getDbClient();
 
     try
@@ -263,7 +266,7 @@ void AuthController::Logout(const HttpRequestPtr& req, std::function<void (const
     }
     catch (const orm::DrogonDbException& e)
     {
-        logger->Error("Database error: {}", e.base().what());
+        GetLogger(session_id)->Error("Database error: {}", e.base().what());
         SendError(k500InternalServerError, e.base().what(), callback);
     }
 
@@ -272,6 +275,7 @@ void AuthController::Logout(const HttpRequestPtr& req, std::function<void (const
 
 void AuthController::RefreshToken(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
+    std::string session_id = req->getCookie("session_id");
     std::string refresh_token = req->getCookie("refresh_token");
     orm::DbClientPtr db = app().getDbClient();
     SessionPtr session = req->session();
@@ -283,7 +287,7 @@ void AuthController::RefreshToken(const HttpRequestPtr& req, std::function<void 
         if (!ParseRefreshToken(refresh_token, refresh_uuid, login, callback))
             return;
 
-        logger->Info("RefreshToken request: login={}, refresh_uuid={}", login, refresh_uuid);
+        GetLogger(session_id)->Info("RefreshToken request: login={}, refresh_uuid={}", login, refresh_uuid);
 
         orm::Result result = db->execSqlSync("select user_id from users where login=$1", login);
         if (result.size() == 0)
@@ -326,7 +330,7 @@ void AuthController::RefreshToken(const HttpRequestPtr& req, std::function<void 
     }
     catch (const orm::DrogonDbException& e)
     {
-        logger->Error("Database error: {}", e.base().what());
+        GetLogger(session_id)->Error("Database error: {}", e.base().what());
         SendError(k500InternalServerError, e.base().what(), callback);
     }
 }

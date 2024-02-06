@@ -16,6 +16,7 @@ find_package(Boost 1.81.0 REQUIRED PATHS ${INSTALL_PATH}/lib/cmake/)
 
 add_executable(${PROJECT_NAME}
     main.cpp
+    utils.cpp
     logic/clear_db.cpp
 )
 

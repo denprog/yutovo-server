@@ -24,8 +24,11 @@ LoginFilter::LoginFilter()
 
 void LoginFilter::doFilter(const HttpRequestPtr& req, FilterCallback&& not_valid_callback, FilterChainCallback&& valid_callback)
 {
-    logger->Info("doFilter {}", req->path());
+    std::string session_id = req->getCookie("session_id");
     SessionPtr session = req->session();
+    if (session_id.empty())
+        session_id = session->get<std::string>("session_id");
+    GetLogger(session_id)->Info("doFilter {}", req->path());
     std::string access_token = req->getHeader("access_token");
     HttpResponsePtr resp;
 
@@ -35,7 +38,7 @@ void LoginFilter::doFilter(const HttpRequestPtr& req, FilterCallback&& not_valid
         auto login = decoded.get_payload_claim("login").to_json().to_str();
         if (login != session->get<std::string>("login"))
         {
-            logger->Error("Unauthorized: {}", login);
+            GetLogger(session_id)->Error("Unauthorized: {}", login);
             auto resp = HttpResponse::newHttpResponse();
             resp->setStatusCode(k401Unauthorized);
             not_valid_callback(resp);
@@ -49,25 +52,25 @@ void LoginFilter::doFilter(const HttpRequestPtr& req, FilterCallback&& not_valid
     }
     catch (std::invalid_argument& ex)
     {
-        logger->Error("Wrong access token: {}", ex.what());
+        GetLogger(session_id)->Error("Wrong access token: {}", ex.what());
         resp = HttpResponse::newHttpResponse();
         resp->setStatusCode(k400BadRequest);
     }
     catch (jwt::error::claim_not_present_exception& ex)
     {
-        logger->Error("Wrong access token: {}", ex.what());
+        GetLogger(session_id)->Error("Wrong access token: {}", ex.what());
         resp = HttpResponse::newHttpResponse();
         resp->setStatusCode(k400BadRequest);
     }
     catch (jwt::token_verification_exception& ex)
     {
-        logger->Error("Wrong access token: {}", ex.what());
+        GetLogger(session_id)->Error("Wrong access token: {}", ex.what());
         resp = HttpResponse::newHttpResponse();
         resp->setStatusCode(k403Forbidden);
     }
     catch (...)
     {
-        logger->Error("Wrong access token");
+        GetLogger(session_id)->Error("Wrong access token");
         resp = HttpResponse::newHttpResponse();
         resp->setStatusCode(k405MethodNotAllowed);
     }
@@ -118,7 +121,6 @@ void ControllerBase::SendOk(std::function<void (const HttpResponsePtr &)>& callb
     auto resp = HttpResponse::newHttpJsonResponse(r);
     resp->setStatusCode(k200OK);
     LogJson(r);
-    //SetDocumentCookie(document_id, resp);
     callback(resp);
 }
 
@@ -130,7 +132,6 @@ void ControllerBase::SendOk(std::function<void (const HttpResponsePtr &)>& callb
     auto resp = HttpResponse::newHttpJsonResponse(r);
     resp->setStatusCode(k200OK);
     LogJson(r);
-    //SetDocumentCookie(document_id, resp);
     callback(resp);
 }
 
@@ -180,9 +181,6 @@ void ControllerBase::SendOkTokens(std::function<void (const HttpResponsePtr &)>&
         resp->addCookie(session_cookie);
     }
 
-    // if (!document_id.empty())
-    //     SetDocumentCookie(document_id, resp);
-
     resp->addHeader("access_token", access_token);
     callback(resp);
 }
@@ -220,7 +218,7 @@ void ControllerBase::SendError(const HttpStatusCode status_code, const char* des
     auto resp = HttpResponse::newHttpJsonResponse(r);
     resp->setStatusCode(status_code);
     callback(resp);
-    logger->Error("{}: {}", status_code, description);
+    GetLogger(session_id)->Error("{}: {}", status_code, description);
 }
 
 bool ControllerBase::ParseRefreshToken(const std::string& refresh_token, std::string& refresh_uuid, std::string& login, 
@@ -283,7 +281,7 @@ void ControllerBase::SetSessionCookie(const std::string& session_id, HttpRespons
 
 void ControllerBase::SetDocumentCookie(const std::string& document_id, HttpResponsePtr resp)
 {
-    logger->Info("SetDocumentCookie document_id={}", document_id);
+    GetLogger(session_id)->Info("SetDocumentCookie document_id={}", document_id);
     drogon::Cookie document_cookie("document_id", document_id);
     document_cookie.setHttpOnly(false);
     document_cookie.setPath("/");
@@ -291,10 +289,12 @@ void ControllerBase::SetDocumentCookie(const std::string& document_id, HttpRespo
     resp->addCookie(document_cookie);
 }
 
-bool ControllerBase::AddSession(const std::string& document_id, std::string& session_id)
+bool ControllerBase::AddSession(const std::string& document_id, std::string& _session_id)
 {
-    session_id = std::string(boost::uuids::to_string(boost::uuids::random_generator()()));
-    logger->Info("AddSession document_id={}, session_id={}", document_id, session_id);
+    _session_id = std::string(boost::uuids::to_string(boost::uuids::random_generator()()));
+    GetLogger("")->Info("AddSession document_id={}, session_id={}", document_id, session_id);
+    session_id = _session_id;
+
     orm::DbClientPtr db = app().getDbClient();
     trantor::Date session_expires_date = trantor::Date::now().after(session_expires);
     auto result = db->execSqlSync("insert into user_sessions (session_id, expire_time, document_id) values ($1, $2, $3)", session_id, 
@@ -339,7 +339,7 @@ bool ControllerBase::AddDocument(const std::string& user_id, std::string& docume
     auto row = result[0];
     document_id = row["document_id"].as<std::string>();
     db->execSqlSync("update users set document_id=$1 where user_id=$2", document_id, user_id);
-    logger->Info("Document added document_id={}, name={}", document_id, name);
+    GetLogger(session_id)->Info("Document added document_id={}, name={}", document_id, name);
     return true;
 }
 
@@ -376,6 +376,9 @@ void ControllerBase::LogJson(const Json::Value& value)
 {
     Json::FastWriter fastWriter;
     std::string output = fastWriter.write(value);
-    logger->Info("{}", output);
+    if (!output.empty() && output[output.size() - 1] == '\n')
+        output.pop_back();
+    GetLogger(session_id)->Info("{}", output);
 }
+
 }
