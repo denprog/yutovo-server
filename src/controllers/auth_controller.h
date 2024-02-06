@@ -68,6 +68,8 @@ private:
 
 private:
     int session_expires = 0;
+
+    Logger* auth_logger = Logger::GetInstance(std::string(std::getenv("YUTOVO_DEPLOY")) + "/log/yutovo_server/auth", "server", true, true);
 };
 }
 

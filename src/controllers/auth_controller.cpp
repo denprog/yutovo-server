@@ -134,6 +134,7 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
     logger->Info("Login request: name={}, password={}", login, password);
     orm::DbClientPtr db = app().getDbClient();
 
+    std::string user_id;
     try
     {
         ClearDbTurnOff t; //skip the clear db circles for a while
@@ -165,7 +166,7 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
         trantor::Date access_expires = trantor::Date::now().after(access_token_expires);
         trantor::Date refresh_expires = trantor::Date::now().after(refresh_token_expires);
 
-        std::string user_id = row["user_id"].as<std::string>();
+        user_id = row["user_id"].as<std::string>();
         result = db->execSqlSync("insert into refresh_sessions (user_id, refresh_uuid, expire_time) values ($1, $2, $3)", 
             user_id, refresh_uuid, refresh_expires.secondsSinceEpoch());
         session->erase("user_id");
@@ -218,6 +219,8 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
         logger->Error("Database error: {}", e.base().what());
         SendError(k500InternalServerError, e.base().what(), callback);
     }
+
+    auth_logger->Info("Login: login={}, user_id={}", login, user_id);
 }
 
 void AuthController::Logout(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
@@ -263,6 +266,8 @@ void AuthController::Logout(const HttpRequestPtr& req, std::function<void (const
         logger->Error("Database error: {}", e.base().what());
         SendError(k500InternalServerError, e.base().what(), callback);
     }
+
+    auth_logger->Info("Logout: login={}, user_id={}", login, user_id);
 }
 
 void AuthController::RefreshToken(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)

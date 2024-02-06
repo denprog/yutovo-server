@@ -66,7 +66,7 @@ protected:
     int access_token_expires = 60 * 2; //seconds
     int refresh_token_expires = 60 * 60 * 24; //seconds
 
-    Logger* logger = Logger::GetInstance(std::string(std::getenv("YUTOVO_DEPLOY")) + "/log", "server", true, true);
+    Logger* logger = Logger::GetInstance(std::string(std::getenv("YUTOVO_DEPLOY")) + "/log/yutovo_server/sessions", "server", true, true);
 
     inline static const std::string empty_document = "{\"text\":{\"id\":\"0\",\"type\":1,\"elements\":[{\"id\":\"0,0\",\"type\":2,\
         \"elements\":[{\"id\":\"0,0,0\",\"type\":3,\"elements\":[{\"id\":\"0,0,0,0\",\"type\":4,\"elements\":\"\"}]}]}]}}";
