@@ -280,14 +280,14 @@ TEST_F(AuthTest, login4)
 
     Locate(client, "/");
 
-    std::string access_token, document_id, name;
-    Login(client, "User1", "11", access_token, document_id, name);
+    std::string access_token, document_id, name, language;
+    Login(client, "User1", "11", access_token, document_id, name, language);
     Logout(client, "User1", access_token);
 
-    Login(client, "User1", "11", access_token, document_id, name);
+    Login(client, "User1", "11", access_token, document_id, name, language);
     Logout(client, "User1", access_token);
 
-    Login(client, "User1", "11", access_token, document_id, name);
+    Login(client, "User1", "11", access_token, document_id, name, language);
 
     UnRegister(client, "User1", access_token);
 }
@@ -303,25 +303,25 @@ TEST_F(AuthTest, login5)
 
     Locate(client, "/");
 
-    std::string access_token, document_id, name;
-    Login(client, "User1", "11", access_token, document_id, name);
+    std::string access_token, document_id, name, language;
+    Login(client, "User1", "11", access_token, document_id, name, language);
     std::string new_document_id;
     NewDocument(client, access_token, new_document_id);
     RenameDocument(client, access_token, new_document_id, "new_name_1");
     Logout(client, "User1", access_token);
 
-    Login(client, "User2", "22", access_token, document_id, name);
+    Login(client, "User2", "22", access_token, document_id, name, language);
     NewDocument(client, access_token, new_document_id);
     RenameDocument(client, access_token, new_document_id, "new_name_2");
     Logout(client, "User2", access_token);
 
     std::string document_id1, document_id2;
-    Login(client, "User1", "11", access_token, document_id1, name);
+    Login(client, "User1", "11", access_token, document_id1, name, language);
     GetDocumentName(client, document_id, name);
     ASSERT_TRUE(name == "new_name_1") << name;
     UnRegister(client, "User1", access_token);
 
-    Login(client, "User2", "22", access_token, document_id2, name);
+    Login(client, "User2", "22", access_token, document_id2, name, language);
     GetDocumentName(client, document_id, name);
     ASSERT_TRUE(name == "new_name_1") << name;
     ASSERT_TRUE(document_id1 == document_id2);
@@ -436,6 +436,48 @@ TEST_F(AuthTest, refresh_session2)
     r = resp.second;
     access_token = r->getHeader("access_token");
     ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
+
+    UnRegister(client, "User1", access_token);
+}
+
+//Set language
+TEST_F(AuthTest, set_language1)
+{
+    auto client = HttpClient::newHttpClient(address);
+    client->enableCookies(true);
+
+    Locate(client, "/");
+
+    Register(client, "User1", "user1@mail.com", "11");
+
+    std::string access_token, document_id, name, language;
+    Login(client, "User1", "11", access_token, document_id, name, language);
+
+    Json::Value body;
+    body["language"] = "ru_RU";
+    auto req = HttpRequest::newHttpJsonRequest(body);
+    req->setMethod(drogon::Post);
+    req->setPath("/auth/set-language");
+    req->addHeader("access_token", access_token);
+    auto resp = client->sendRequest(req);
+    auto r = resp.second;
+    ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
+
+    Logout(client, "User1", access_token);
+    Login(client, "User1", "11", access_token, document_id, name, language);
+    ASSERT_TRUE(language == "ru_RU") << language;
+
+    Json::Value v;
+    req = HttpRequest::newHttpJsonRequest(v);
+    req->setMethod(drogon::Post);
+    req->setPath("/auth/get-language");
+    req->addHeader("access_token", access_token);
+    resp = client->sendRequest(req);
+    r = resp.second;
+    ASSERT_TRUE(r->getContentType() == CT_APPLICATION_JSON) << r->getContentType();
+    const auto json = r->jsonObject();
+    language = (*json)["language"].asString();
+    ASSERT_TRUE(language == "ru_RU") << language;
 
     UnRegister(client, "User1", access_token);
 }

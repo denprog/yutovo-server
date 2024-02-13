@@ -47,6 +47,8 @@ public:
     ADD_METHOD_TO(AuthController::Login, "/auth/login", Post);
     ADD_METHOD_TO(AuthController::Logout, "/auth/logout", Post, "yutovo_server::LoginFilter");
     ADD_METHOD_TO(AuthController::RefreshToken, "/auth/refresh-token", Post);
+    ADD_METHOD_TO(AuthController::SetLanguage, "/auth/set-language", Post, "yutovo_server::LoginFilter");
+    ADD_METHOD_TO(AuthController::GetLanguage, "/auth/get-language", Post, "yutovo_server::LoginFilter");
 #ifdef TEST
     ADD_METHOD_TO(AuthController::SetParams, "/auth/set-params", Post);
 #endif
@@ -57,6 +59,8 @@ public:
     void Login(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
     void Logout(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
     void RefreshToken(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
+    void SetLanguage(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
+    void GetLanguage(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
 
 #ifdef TEST
     void SetParams(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);

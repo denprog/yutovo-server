@@ -77,7 +77,8 @@ void TestBase::Login(HttpClientPtr client, std::string login, std::string passwo
     ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
 }
 
-void TestBase::Login(HttpClientPtr client, std::string login, std::string password, std::string& access_token, std::string& document_id, std::string& name)
+void TestBase::Login(HttpClientPtr client, std::string login, std::string password, std::string& access_token, std::string& document_id, std::string& name, 
+    std::string& language)
 {
     HttpResponsePtr r;
     Login(client, login, password, r);
@@ -86,6 +87,7 @@ void TestBase::Login(HttpClientPtr client, std::string login, std::string passwo
     const auto json = r->jsonObject();
     document_id = (*json)["document_id"].asString();
     name = (*json)["name"].asString();
+    language = (*json)["language"].asString();
 }
 
 void TestBase::Logout(HttpClientPtr client, const std::string& login, const std::string& access_token)

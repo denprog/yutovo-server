@@ -137,7 +137,7 @@ void ControllerBase::SendOk(std::function<void (const HttpResponsePtr &)>& callb
 
 void ControllerBase::SendOkTokens(std::function<void (const HttpResponsePtr &)>& callback, const std::string& login, const std::string& access_uuid, 
     const std::string& refresh_uuid, const std::string& session_id, trantor::Date access_expires, trantor::Date refresh_expires, 
-    trantor::Date session_expires, const std::string document_id, const std::string name)
+    trantor::Date session_expires, const std::string document_id, const std::string name, const std::string language)
 {
     auto access_token = jwt::create().
         set_issuer("auth0").
@@ -163,6 +163,7 @@ void ControllerBase::SendOkTokens(std::function<void (const HttpResponsePtr &)>&
     if (document_id != "-1")
         r["document_id"] = document_id;
     r["name"] = name;
+    r["language"] = language;
     HttpResponsePtr resp = HttpResponse::newHttpJsonResponse(r);
     resp->setStatusCode(k200OK);
 

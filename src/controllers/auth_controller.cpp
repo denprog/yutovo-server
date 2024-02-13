@@ -143,7 +143,7 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
     {
         ClearDbTurnOff t; //skip the clear db circles for a while
 
-        orm::Result result = db->execSqlSync("select user_id, password from users where login=$1", login);
+        orm::Result result = db->execSqlSync("select user_id, password, language from users where login=$1", login);
         if (result.size() == 0)
         {
             SendError(k401Unauthorized, "Login or password are incorrect", callback);
@@ -214,8 +214,10 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
                 session_id, user_id, session_expires_date.secondsSinceEpoch(), document_id);
         }
 
+        std::string language = row["language"].as<std::string>();
+
         SendOkTokens(callback, login, access_uuid, refresh_uuid, session_id, access_expires, refresh_expires, session_expires_date, 
-            document_id, name);
+            document_id, name, language);
     }
     catch (const orm::DrogonDbException& e)
     {
@@ -327,6 +329,79 @@ void AuthController::RefreshToken(const HttpRequestPtr& req, std::function<void 
 
         auto session_expires_date = trantor::Date::now().after(session_expires);
         SendOkTokens(callback, login, access_uuid, refresh_uuid, session_id, access_expires, refresh_expires, session_expires_date);
+    }
+    catch (const orm::DrogonDbException& e)
+    {
+        GetLogger(session_id)->Error("Database error: {}", e.base().what());
+        SendError(k500InternalServerError, e.base().what(), callback);
+    }
+}
+
+void AuthController::SetLanguage(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
+{
+    auto json = req->getJsonObject();
+    if (!json || !json->isObject())
+    {
+        SendError(k400BadRequest, "Json not found in the request", callback);
+        return;
+    }
+
+    std::string session_id = req->getCookie("session_id");
+    SessionPtr session = req->session();
+    std::string user_id = session->get<std::string>("user_id");
+
+    if (!json->isMember("language") || !(*json)["language"].isString())
+    {
+        SendError(k400BadRequest, "Wrong json in the request", callback);
+        return;
+    }
+
+    auto language = (*json)["language"].asString();
+
+    GetLogger(session_id)->Info("Set language request: user_id={}, language={}", user_id, language);
+    orm::DbClientPtr db = app().getDbClient();
+
+    try
+    {
+        orm::Result result = db->execSqlSync("update users set language=$1 where user_id=$2", language, user_id);
+        if (result.affectedRows() > 0)
+            SendOk(callback);
+        else
+            SendError(k401Unauthorized, "Login or password are incorrect", callback);
+    }
+    catch (const orm::DrogonDbException& e)
+    {
+        GetLogger(session_id)->Error("Database error: {}", e.base().what());
+        SendError(k500InternalServerError, e.base().what(), callback);
+    }
+}
+
+void AuthController::GetLanguage(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
+{
+    SessionPtr session = req->session();
+    std::string user_id = session->get<std::string>("user_id");
+    std::string session_id = req->getCookie("session_id");
+
+    GetLogger(session_id)->Info("Get language request: user_id={}", user_id);
+    orm::DbClientPtr db = app().getDbClient();
+
+    try
+    {
+        ClearDbTurnOff t; //skip the clear db circles for a while
+
+        orm::Result result = db->execSqlSync("select language from users where user_id=$1", user_id);
+        if (result.size() == 0)
+        {
+            SendError(k401Unauthorized, "Login or password are incorrect", callback);
+            return;
+        }
+
+        auto row = result[0];
+        auto language = row["language"].as<std::string>();
+
+        Json::Value v(Json::objectValue);
+        v["language"] = language;
+        SendJson(callback, v);
     }
     catch (const orm::DrogonDbException& e)
     {

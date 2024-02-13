@@ -121,8 +121,8 @@ TEST_F(ServiceTest, document1)
     auto session_cookie = r->getCookie("session_id");
     ASSERT_TRUE(session_cookie.value() != "");
 
-    std::string access_token, document_id, name;
-    Login(client, "User1", "11", access_token, document_id, name);
+    std::string access_token, document_id, name, language;
+    Login(client, "User1", "11", access_token, document_id, name, language);
 
     resp = client->sendRequest(req);
     r = resp.second;
@@ -176,8 +176,8 @@ TEST_F(ServiceTest, document2)
     auto session_cookie = r->getCookie("session_id");
     ASSERT_TRUE(session_cookie.value() != "");
 
-    std::string access_token, document_id, name;
-    Login(client, "User1", "11", access_token, document_id, name);
+    std::string access_token, document_id, name, language;
+    Login(client, "User1", "11", access_token, document_id, name, language);
 
     std::ifstream f("../tests/files11.yut");
 
@@ -258,8 +258,8 @@ TEST_F(ServiceTest, document3)
 
     Register(client, "User1", "user1@mail.com", "11");
 
-    std::string access_token, document_id, name;
-    Login(client, "User1", "11", access_token, document_id, name);
+    std::string access_token, document_id, name, language;
+    Login(client, "User1", "11", access_token, document_id, name, language);
 
     resp = client->sendRequest(req);
     r = resp.second;
@@ -280,7 +280,7 @@ TEST_F(ServiceTest, document3)
 TEST_F(ServiceTest, document4)
 {
     Json::Value save_body;
-    std::string access_token, document_id, name;
+    std::string access_token, document_id, name, language;
 
     {
         auto client = HttpClient::newHttpClient(address);
@@ -295,7 +295,7 @@ TEST_F(ServiceTest, document4)
         ReqResult& res = resp.first;
         HttpResponsePtr& r = resp.second;
 
-        Login(client, "User1", "11", access_token, document_id, name);
+        Login(client, "User1", "11", access_token, document_id, name, language);
 
         std::ifstream f("../tests/files11.yut");
         f >> save_body;
@@ -344,8 +344,8 @@ TEST_F(ServiceTest, document5)
     HttpResponsePtr& r = resp.second;
     auto session_id = r->getCookie("session_id");
 
-    std::string access_token, document_id, name;
-    Login(client, "User1", "11", access_token, document_id, name);
+    std::string access_token, document_id, name, language;
+    Login(client, "User1", "11", access_token, document_id, name, language);
 
     std::ifstream f("../tests/files11.yut");
 
@@ -439,7 +439,7 @@ TEST_F(ServiceTest, document6)
 {
     Json::Value save_body;
     Cookie c;
-    std::string access_token, document_id, name;
+    std::string access_token, document_id, name, language;
 
     {
         auto client = HttpClient::newHttpClient(address);
@@ -454,7 +454,7 @@ TEST_F(ServiceTest, document6)
         ReqResult& res = resp.first;
         HttpResponsePtr& r = resp.second;
 
-        Login(client, "User1", "11", access_token, document_id, name);
+        Login(client, "User1", "11", access_token, document_id, name, language);
 
         std::ifstream f("../tests/files11.yut");
 
@@ -483,7 +483,7 @@ TEST_F(ServiceTest, document6)
         HttpResponsePtr& r = resp.second;
 
         std::string document2_id;
-        Login(client, "User2", "22", access_token, document2_id, name);
+        Login(client, "User2", "22", access_token, document2_id, name, language);
 
         //load the foreing document
         req = HttpRequest::newHttpJsonRequest("{}");
@@ -526,8 +526,8 @@ TEST_F(ServiceTest, document7)
     ReqResult& res = resp.first;
     HttpResponsePtr& r = resp.second;
 
-    std::string access_token, document_id, name;
-    Login(client, "User1", "11", access_token, document_id, name);
+    std::string access_token, document_id, name, language;
+    Login(client, "User1", "11", access_token, document_id, name, language);
 
     Json::Value save_body;
     std::ifstream f("../tests/files11.yut");
@@ -574,8 +574,8 @@ TEST_F(ServiceTest, document8)
     ReqResult& res = resp.first;
     HttpResponsePtr& r = resp.second;
 
-    std::string access_token, document_id, name;
-    Login(client, "User1", "11", access_token, document_id, name);
+    std::string access_token, document_id, name, language;
+    Login(client, "User1", "11", access_token, document_id, name, language);
 
     SaveDocument(client, "../tests/files11.yut", access_token, document_id);
 
@@ -608,8 +608,8 @@ TEST_F(ServiceTest, document9)
     ReqResult& res = resp.first;
     HttpResponsePtr& r = resp.second;
 
-    std::string access_token, document_id, name;
-    Login(client, "User1", "11", access_token, document_id, name);
+    std::string access_token, document_id, name, language;
+    Login(client, "User1", "11", access_token, document_id, name, language);
 
     std::string document1_id, document2_id;
     SaveDocument(client, "../tests/files11.yut", access_token, document1_id);
@@ -652,8 +652,8 @@ TEST_F(ServiceTest, document10)
     ReqResult& res = resp.first;
     HttpResponsePtr& r = resp.second;
 
-    std::string access_token, document_id, name;
-    Login(client, "User1", "11", access_token, document_id, name);
+    std::string access_token, document_id, name, language;
+    Login(client, "User1", "11", access_token, document_id, name, language);
 
     std::string document1_id, document2_id;
     SaveDocument(client, "../tests/files11.yut", access_token, document1_id);
@@ -684,8 +684,8 @@ TEST_F(ServiceTest, document11)
     HttpResponsePtr& r = resp.second;
 
     std::string access_token;
-    std::string document_id, name;
-    Login(client, "User1", "11", access_token, document_id, name);
+    std::string document_id, name, language;
+    Login(client, "User1", "11", access_token, document_id, name, language);
     ASSERT_TRUE(name == "document_1") << name;
 
     RenameDocument(client, access_token, document_id, "new_name");
@@ -711,10 +711,8 @@ TEST_F(ServiceTest, document12)
     ReqResult& res = resp.first;
     HttpResponsePtr& r = resp.second;
 
-    std::string access_token;
-    std::string name;
-    std::string document_id;
-    Login(client, "User1", "11", access_token, document_id, name);
+    std::string access_token, name, document_id, language;
+    Login(client, "User1", "11", access_token, document_id, name, language);
     ASSERT_TRUE(name == "document_1") << name;
 
     GetDocumentName(client, document_id, name);
@@ -743,8 +741,8 @@ TEST_F(ServiceTest, document13)
     ReqResult& res = resp.first;
     HttpResponsePtr& r = resp.second;
 
-    std::string access_token, document_id, name;
-    Login(client, "User1", "11", access_token, document_id, name);
+    std::string access_token, document_id, name, language;
+    Login(client, "User1", "11", access_token, document_id, name, language);
 
     Json::Value save_body;
     std::ifstream f("../tests/files11.yut");
@@ -801,8 +799,8 @@ TEST_F(ServiceTest, document14)
 
         Locate(client, "/");
 
-        std::string access_token, name;
-        Login(client, "User1", "11", access_token, document1_id, name);
+        std::string access_token, name, language;
+        Login(client, "User1", "11", access_token, document1_id, name, language);
 
         std::string document2_id;
         NewDocument(client, access_token, document2_id);
@@ -817,8 +815,8 @@ TEST_F(ServiceTest, document14)
 
         Locate(client, "/");
 
-        std::string access_token, document3_id, name;
-        Login(client, "User1", "11", access_token, document3_id, name);
+        std::string access_token, document3_id, name, language;
+        Login(client, "User1", "11", access_token, document3_id, name, language);
 
         ASSERT_TRUE(document3_id == document1_id) << document3_id;
 

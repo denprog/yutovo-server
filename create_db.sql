@@ -8,7 +8,8 @@ CREATE TABLE IF NOT EXISTS users
     name text,
     email text,
     create_time timestamp with time zone,
-    document_id int default -1 --current document for this user
+    document_id int default -1, --current document for this user
+    language varchar(10)
 );
 
 CREATE TABLE IF NOT EXISTS user_sessions
