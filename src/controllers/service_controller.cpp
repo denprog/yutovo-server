@@ -318,6 +318,18 @@ void ServiceController::NewDocument(const HttpRequestPtr& req, std::function<voi
                 }
             }
 
+            if (json->isObject() && json->isMember("json"))
+            {
+                orm::Result result = db->execSqlSync("update user_documents set document=$1 where document_id=$2", 
+                    (*json)["json"].isString() ? (*json)["json"].asString() : (*json)["json"].toStyledString(), document_id);
+                if (result.affectedRows() == 0)
+                {
+                    GetLogger(session_id)->Error("Database error: Error inserting a document");
+                    SendError(k500InternalServerError, "Error inserting a document", callback);
+                    return;
+                }
+            }
+
             db->execSqlSync("update user_sessions set document_id=$1 where session_id=$2", document_id, session_id);
 
             SendOk(callback, document_id, name);
