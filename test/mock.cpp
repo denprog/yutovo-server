@@ -37,6 +37,25 @@ void TestBase::Register(HttpClientPtr client, std::string login, std::string ema
     ASSERT_TRUE(r->getContentType() == CT_TEXT_PLAIN) << r->getContentType();
 }
 
+void TestBase::Register(HttpClientPtr client, std::string login, std::string email, std::string password, std::string name)
+{
+    Json::Value body;
+    body["login"] = login;
+    body["email"] = email;
+    body["password"] = password;
+    body["name"] = name;
+    auto req = HttpRequest::newHttpJsonRequest(body);
+    req->setMethod(drogon::Post);
+    req->setPath("/auth/register");
+
+    auto resp = client->sendRequest(req);
+    ReqResult& res = resp.first;
+    HttpResponsePtr& r = resp.second;
+    ASSERT_TRUE(res == ReqResult::Ok) << res;
+    ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
+    ASSERT_TRUE(r->getContentType() == CT_TEXT_PLAIN) << r->getContentType();
+}
+
 void TestBase::UnRegister(HttpClientPtr client, std::string login, std::string& access_token)
 {
     Json::Value body;

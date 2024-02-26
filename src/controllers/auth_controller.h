@@ -13,6 +13,7 @@ struct User
     std::string login;
     std::string email;
     std::string password;
+    std::string name;
 };
 }
 
@@ -29,8 +30,11 @@ inline yutovo_server::User fromRequest(const HttpRequest &req)
     {
         return yutovo_server::User{"", "", ""};
     }
+    std::string name;
+    if (json->isMember("name") && (*json)["name"].isString())
+        name = (*json)["name"].asString();
 
-    return yutovo_server::User{(*json)["login"].asString(), (*json)["email"].asString(), (*json)["password"].asString()};
+    return yutovo_server::User{(*json)["login"].asString(), (*json)["email"].asString(), (*json)["password"].asString(), name};
 }
 }
 

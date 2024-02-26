@@ -104,6 +104,27 @@ TEST_F(AuthTest, register3)
     ASSERT_TRUE(r->getStatusCode() == k400BadRequest) << r->getStatusCode();
 }
 
+//Register with a name
+TEST_F(AuthTest, register4)
+{
+    auto client = HttpClient::newHttpClient(address);
+    client->enableCookies(true);
+
+    Register(client, "User1", "user1@mail.com", "11", "user_name");
+
+    orm::DbClientPtr db = app().getDbClient();
+    orm::Result result = db->execSqlSync("select name from users where login='User1'");
+    ASSERT_TRUE(result.size() != 0);
+    auto row = result[0];
+    auto name = row["name"].as<std::string>();
+    ASSERT_TRUE(name == "user_name");
+
+    std::string access_token, document_id, language;
+    Login(client, "User1", "11", access_token, document_id, name, language);
+
+    UnRegister(client, "User1", access_token);
+}
+
 //Login and logout
 TEST_F(AuthTest, login1)
 {

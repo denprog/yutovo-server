@@ -21,6 +21,7 @@ struct TestBase
     TestBase();
     
     void Register(HttpClientPtr client, std::string login, std::string email, std::string password);
+    void Register(HttpClientPtr client, std::string login, std::string email, std::string password, std::string name);
     void UnRegister(HttpClientPtr client, std::string login, std::string& access_token);
 
     void Locate(HttpClientPtr client, const std::string& path);

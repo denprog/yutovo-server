@@ -25,7 +25,7 @@ AuthController::AuthController()
 void AuthController::Register(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, User&& user)
 {
     std::string session_id = req->getCookie("session_id");
-    GetLogger(session_id)->Info("Register request: login={}, email={}, password={}", user.login, user.email, user.password);
+    GetLogger(session_id)->Info("Register request: login={}, email={}, password={}, name={}", user.login, user.email, user.password, user.name);
     orm::DbClientPtr db = app().getDbClient();
     if (user.login.empty() || user.email.empty() || user.password.empty())
     {
@@ -49,7 +49,7 @@ void AuthController::Register(const HttpRequestPtr& req, std::function<void (con
         std::string hash = GetHash(user.password, salt);
 
         //insert new user
-        result = db->execSqlSync("insert into users (login, password, email) values ($1, $2, $3)", user.login, salt + hash, user.email);
+        result = db->execSqlSync("insert into users (login, password, email, name) values ($1, $2, $3, $4)", user.login, salt + hash, user.email, user.name);
         if (result.size() == 0)
         {
             SendOk(callback);
