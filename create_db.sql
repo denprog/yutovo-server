@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS users
     password varchar(128),
     name text,
     email text,
-    create_time timestamp with time zone,
+    create_time timestamp with time zone not null default now(),
     document_id int default -1, --current document for this user
     language varchar(10)
 );
