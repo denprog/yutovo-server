@@ -95,10 +95,8 @@ TEST_F(ServiceTest, service1)
     ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
     ASSERT_TRUE(r->getContentType() == CT_APPLICATION_JSON) << r->getContentType();
     const auto json = r->jsonObject();
-    ASSERT_TRUE((*json)["builtin_functions"].isArray());
-    ASSERT_TRUE((*json)["user_functions"].isArray());
-    ASSERT_TRUE((*json)["builtin_functions"].isArray());
-    ASSERT_TRUE((*json)["user_variables"].isArray());
+    ASSERT_TRUE((*json)["Functions"].isArray());
+    ASSERT_TRUE((*json)["Variables"].isArray());
 }
 
 //Save/load a user document in the DB
