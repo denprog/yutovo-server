@@ -135,7 +135,7 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
     if (json->isMember("load_last") && (*json)["load_last"].isBool())
         load_last = (*json)["load_last"].asBool();
 
-    logger->Info("Login request: name={}, password={}", login, password);
+    logger->Info("Login request: login={}, load_last={}", login, load_last);
     orm::DbClientPtr db = app().getDbClient();
 
     std::string user_id;
