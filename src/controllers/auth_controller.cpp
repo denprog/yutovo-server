@@ -143,7 +143,7 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
     {
         ClearDbTurnOff t; //skip the clear db circles for a while
 
-        orm::Result result = db->execSqlSync("select user_id, password, language from users where login=$1", login);
+        orm::Result result = db->execSqlSync("select user_id, password, language, plan_id from users where login=$1", login);
         if (result.size() == 0)
         {
             SendError(k401Unauthorized, "Login or password are incorrect", callback);
@@ -215,6 +215,15 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
         }
 
         std::string language = row["language"].as<std::string>();
+
+        int plan_id = row["plan_id"].as<int>();
+        result = db->execSqlSync("select max_files from user_plans where plan_id=$1", plan_id);
+        if (result.size() == 0)
+        {
+            SendError(k500InternalServerError, "User plan is incorrect", callback);
+            return;
+        }
+        session->insert("max_files", result[0]["max_files"].as<int>());
 
         SendOkTokens(callback, login, access_uuid, refresh_uuid, session_id, access_expires, refresh_expires, session_expires_date, 
             document_id, name, language);

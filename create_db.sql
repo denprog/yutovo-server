@@ -9,7 +9,8 @@ CREATE TABLE IF NOT EXISTS users
     email text,
     create_time timestamp with time zone not null default now(),
     document_id int default -1, --current document for this user
-    language varchar(10)
+    language varchar(10),
+    plan_id int not null default 1
 );
 
 CREATE TABLE IF NOT EXISTS user_sessions
@@ -47,3 +48,12 @@ CREATE TABLE IF NOT EXISTS user_logins
     login_time timestamp with time zone,
     logout_time timestamp with time zone
 );
+
+CREATE TABLE IF NOT EXISTS user_plans
+(
+    plan_id serial PRIMARY KEY,
+    max_files int not null,
+    max_solving_time int not null --in seconds
+);
+
+INSERT INTO user_plans (plan_id, max_files, max_solving_time) VALUES (1, 10, 10)

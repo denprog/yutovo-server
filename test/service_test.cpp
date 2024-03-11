@@ -824,4 +824,30 @@ TEST_F(ServiceTest, document14)
     }
 }
 
+//Check max files count
+TEST_F(ServiceTest, document15)
+{
+    auto client = HttpClient::newHttpClient(address);
+    client->enableCookies(true);
+    Register(client, "User1", "user1@mail.com", "11");
+
+    Locate(client, "/");
+
+    std::string access_token, document_id, name, language;
+    Login(client, "User1", "11", access_token, document_id, name, language);
+
+    for (int i = 0; i < 9; ++i)
+        NewDocument(client, access_token, document_id);
+
+    auto req = HttpRequest::newHttpJsonRequest("{}");
+    req->setMethod(drogon::Post);
+    req->setPath("/service/new-document");
+    req->addHeader("access_token", access_token);
+    auto resp = client->sendRequest(req, 10);
+    auto r = resp.second;
+    ASSERT_TRUE(r->getStatusCode() == k403Forbidden) << r->getStatusCode();
+
+    UnRegister(client, "User1", access_token);
+}
+
 }

@@ -293,6 +293,23 @@ void ServiceController::NewDocument(const HttpRequestPtr& req, std::function<voi
         }
         else
         {
+            //check count of files
+            int max_files = session->get<int>("max_files");
+            orm::Result result = db->execSqlSync("select count(*) from user_documents where user_id=$1", user_id);
+            if (result.affectedRows() == 0)
+            {
+                GetLogger(session_id)->Error("Database error: Error getting count of documents");
+                SendError(k500InternalServerError, "Error inserting a document", callback);
+                return;
+            }
+
+            if (result[0]["count"].as<int>() >= max_files)
+            {
+                GetLogger(session_id)->Error("Max files count exceed");
+                SendError(k403Forbidden, "Wrong request: max files count exceed", callback);
+                return;
+            }
+
             std::string name;
             if (json->isObject() && json->isMember("name") && (*json)["name"].isString())
                 name = (*json)["name"].asString();
@@ -309,7 +326,7 @@ void ServiceController::NewDocument(const HttpRequestPtr& req, std::function<voi
             Json::Value& doc = *json;
             if (doc.isObject() && doc.isMember("text"))
             {
-                orm::Result result = db->execSqlSync("update user_documents set document=$1 where document_id=$2", doc.toStyledString(), document_id);
+                result = db->execSqlSync("update user_documents set document=$1 where document_id=$2", doc.toStyledString(), document_id);
                 if (result.affectedRows() == 0)
                 {
                     GetLogger(session_id)->Error("Database error: Error inserting a document");
