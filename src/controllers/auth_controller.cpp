@@ -143,7 +143,7 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
     {
         ClearDbTurnOff t; //skip the clear db circles for a while
 
-        orm::Result result = db->execSqlSync("select user_id, password, language, plan_id from users where login=$1", login);
+        orm::Result result = db->execSqlSync("select user_id, password, language from users where login=$1", login);
         if (result.size() == 0)
         {
             SendError(k401Unauthorized, "Login or password are incorrect", callback);
@@ -216,14 +216,16 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
 
         std::string language = row["language"].as<std::string>();
 
-        int plan_id = row["plan_id"].as<int>();
-        result = db->execSqlSync("select max_files from user_plans where plan_id=$1", plan_id);
+        result = db->execSqlSync("select max_files, max_solving_time, max_file_size from user_plans where plan_id=(select plan_id from users where user_id=$1)", user_id);
         if (result.size() == 0)
         {
             SendError(k500InternalServerError, "User plan is incorrect", callback);
             return;
         }
-        session->insert("max_files", result[0]["max_files"].as<int>());
+        auto r = result[0];
+        session->insert("max_solving_time", r["max_solving_time"].as<int>());
+        session->insert("max_file_size", r["max_file_size"].as<int>() * 1024);
+        session->insert("max_files", r["max_files"].as<int>());
 
         SendOkTokens(callback, login, access_uuid, refresh_uuid, session_id, access_expires, refresh_expires, session_expires_date, 
             document_id, name, language);
@@ -333,7 +335,21 @@ void AuthController::RefreshToken(const HttpRequestPtr& req, std::function<void 
         if (!session_id.empty())
             UpdateSessionTime(session_id);
 
-        SessionPtr session = req->session();
+        if (user_id != "-1" && session->get<int>("max_file_size") == 0)
+        {
+            result = db->execSqlSync("select max_files, max_solving_time, max_file_size from user_plans where plan_id=(select plan_id from users where user_id=$1)", user_id);
+            if (result.size() == 0)
+            {
+                GetLogger(session_id)->Error("Database error: user plan not found");
+                SendError(k500InternalServerError, "User plan not found", callback);
+                return;
+            }
+            auto row = result[0];
+            session->insert("max_solving_time", row["max_solving_time"].as<int>());
+            session->insert("max_file_size", row["max_file_size"].as<int>() * 1024);
+            session->insert("max_files", row["max_files"].as<int>());
+        }
+
         session->insert("session_id", session_id);
 
         auto session_expires_date = trantor::Date::now().after(session_expires);

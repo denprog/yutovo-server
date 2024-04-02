@@ -848,4 +848,29 @@ TEST_F(ServiceTest, document15)
     UnRegister(client, "User1", access_token);
 }
 
+//Check max file size
+TEST_F(ServiceTest, document16)
+{
+    auto client = HttpClient::newHttpClient(address);
+    client->enableCookies(true);
+
+    Locate(client, "/");
+
+    std::string access_token, document_id, name, language;
+    Login(client, "test1", "11", access_token, document_id, name, language);
+
+    Json::Value save_body;
+    std::ifstream f("../tests/file_size_limit.yut");
+    f >> save_body;
+    auto req = HttpRequest::newHttpJsonRequest(save_body);
+    req->setMethod(drogon::Post);
+    req->setPath("/service/save-document");
+    req->addHeader("access_token", access_token);
+    auto resp = client->sendRequest(req, 10);
+    auto r = resp.second;
+    ASSERT_TRUE(r->getStatusCode() == k400BadRequest) << r->getStatusCode();
+
+    Logout(client, "test1", access_token);
+}
+
 }

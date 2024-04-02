@@ -396,6 +396,8 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
     if (user_id.empty())
         user_id = "-1";
     std::string document_id = "-1";
+    int max_file_size = session->get<int>("max_file_size");
+    int document_size = 0;
 
     try
     {
@@ -412,7 +414,7 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
 
         if (document_id != "-1")
         {
-            result = db->execSqlSync("select user_id, shared from user_documents where document_id=$1", document_id);
+            result = db->execSqlSync("select user_id, shared, pg_column_size(document) from user_documents where document_id=$1", document_id);
             if (result.size() == 0)
             {
                 GetLogger(session_id)->Error("Database error: document not found");
@@ -427,6 +429,7 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
                 SendError(k403Forbidden, "Document saving is prohibited", callback);
                 return;
             }
+            document_size = row["pg_column_size"].as<int>();
         }
     }
     catch (const orm::DrogonDbException& e)
@@ -442,6 +445,14 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
         //update whole document
         try
         {
+            auto document = doc.toStyledString();
+            if (document.size() > max_file_size)
+            {
+                GetLogger(session_id)->Error("Document size is more then limit");
+                SendError(k400BadRequest, "Document size is more then limit", callback);
+                return;
+            }
+
             std::string name;
             if (document_id == "-1")
             {
@@ -454,7 +465,7 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
                 }
             }
 
-            orm::Result result = db->execSqlSync("update user_documents set document=$1 where document_id=$2", doc.toStyledString(), document_id);
+            orm::Result result = db->execSqlSync("update user_documents set document=$1 where document_id=$2", document, document_id);
             if (result.affectedRows() == 0)
             {
                 if (!AddDocument(user_id, document_id, name))
@@ -499,8 +510,19 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
             path += ",\"elements\"," + std::to_string(_id[i]);
         path += "}'";
 
+        auto document = text.toStyledString();
+        auto s = document.size();
+
+        //firstly check the size
+        if (document_size + document.size() > max_file_size)
+        {
+            GetLogger(session_id)->Error("Document size is more then limit");
+            SendError(k400BadRequest, "Document size is more then limit", callback);
+            return;
+        }
+
         orm::Result result = db->execSqlSync("update user_documents set document=jsonb_set(document," + path + 
-            ",jsonb '" + text.toStyledString() + "') where document_id=$1", document_id);
+            ",jsonb '" + document + "') where document_id=$1", document_id);
         result = db->execSqlSync("update user_sessions set document_id=$1 where session_id=$2", document_id, session_id);
         SendOk(callback);
     }
