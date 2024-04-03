@@ -306,7 +306,7 @@ void ServiceController::NewDocument(const HttpRequestPtr& req, std::function<voi
             if (result[0]["count"].as<int>() >= max_files)
             {
                 GetLogger(session_id)->Error("Max files count exceed");
-                SendError(k403Forbidden, "Wrong request: max files count exceed", callback);
+                SendError(k403Forbidden, "Max files count exceed", callback);
                 return;
             }
 
