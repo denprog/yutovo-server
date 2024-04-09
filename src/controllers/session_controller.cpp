@@ -254,4 +254,14 @@ void SessionController::Task(const HttpRequestPtr& req, std::function<void (cons
     callback(resp);
 }
 
+void SessionController::Downloads(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, std::string param)
+{
+    auto p = req->path();
+    session_id = req->getCookie("session_id");
+    GetLogger(session_id)->Info("Request downloads: path={}", p);
+    std::string r = HttpAppFramework::instance().getDocumentRoot();
+    auto resp = HttpResponse::newFileResponse(r + p);
+    callback(resp);
+}
+
 }
