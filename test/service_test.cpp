@@ -873,4 +873,89 @@ TEST_F(ServiceTest, document16)
     Logout(client, "test1", access_token);
 }
 
+//Set/get settings
+TEST_F(ServiceTest, document17)
+{
+    drogon::orm::DbClientPtr db = drogon::app().getDbClient();
+    db->execSqlSync("update users set settings='{}'::jsonb where login='test1'");
+
+    auto client = HttpClient::newHttpClient(address);
+    client->enableCookies(true);
+
+    Locate(client, "/");
+
+    std::string access_token, document_id, name, language, settings;
+    Login(client, "test1", "11", access_token, document_id, name, language, settings);
+
+    Json::Value doc;
+    Json::Reader reader;
+    reader.parse(settings, doc);
+    doc["with_border"] = true;
+
+    Json::Value body;
+    body["settings"] = doc.toStyledString();
+
+    auto req = HttpRequest::newHttpJsonRequest(body);
+    req->setMethod(drogon::Post);
+    req->setPath("/service/set-settings");
+    req->addHeader("access_token", access_token);
+    auto resp = client->sendRequest(req, 10);
+    auto r = resp.second;
+    ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
+
+    Json::Value body2;
+    Json::Value doc2;
+    doc2["real_result"]["precision"] = 10;
+    body2["config"] = doc2.toStyledString();
+
+    req = HttpRequest::newHttpJsonRequest(body2);
+    req->setMethod(drogon::Post);
+    req->setPath("/service/set-settings");
+    req->addHeader("access_token", access_token);
+    resp = client->sendRequest(req, 10);
+    r = resp.second;
+    ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
+
+    Logout(client, "test1", access_token);
+
+    std::string config2;
+    Login(client, "test1", "11", access_token, document_id, name, language, config2);
+
+    Json::Value doc3;
+    reader.parse(config2, doc3);
+    ASSERT_TRUE(doc3["with_border"] == true) << doc3["with_border"];
+    ASSERT_TRUE(doc3["real_result"]["precision"] == 10) << doc3["real_result"]["precision"];
+
+    doc2["real_result"]["precision"] = 20;
+    body2["config"] = doc2.toStyledString();
+    req = HttpRequest::newHttpJsonRequest(body2);
+    req->setMethod(drogon::Post);
+    req->setPath("/service/set-settings");
+    req->addHeader("access_token", access_token);
+    resp = client->sendRequest(req, 10);
+    r = resp.second;
+    ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
+
+    Logout(client, "test1", access_token);
+
+    Login(client, "test1", "11", access_token, document_id, name, language, config2);
+
+    reader.parse(config2, doc3);
+    ASSERT_TRUE(doc3["with_border"] == true);
+    ASSERT_TRUE(doc3["real_result"]["precision"] == 20);
+
+    Json::Value v;
+    req = HttpRequest::newHttpJsonRequest(v);
+    req->setMethod(drogon::Post);
+    req->setPath("/service/get-settings");
+    req->addHeader("access_token", access_token);
+    resp = client->sendRequest(req);
+    r = resp.second;
+    ASSERT_TRUE(r->getContentType() == CT_APPLICATION_JSON) << r->getContentType();
+    const auto json = r->jsonObject();
+    ASSERT_TRUE((*json)["real_result"]["precision"] == 20) << json;
+
+    Logout(client, "test1", access_token);
+}
+
 }

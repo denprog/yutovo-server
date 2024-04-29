@@ -143,7 +143,7 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
     {
         ClearDbTurnOff t; //skip the clear db circles for a while
 
-        orm::Result result = db->execSqlSync("select user_id, password, language from users where login=$1", login);
+        orm::Result result = db->execSqlSync("select user_id, password, language, settings from users where login=$1", login);
         if (result.size() == 0)
         {
             SendError(k401Unauthorized, "Login or password are incorrect", callback);
@@ -215,6 +215,7 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
         }
 
         std::string language = row["language"].as<std::string>();
+        std::string settings = row["settings"].as<std::string>();
 
         result = db->execSqlSync("select max_files, max_solving_time, max_file_size from user_plans where plan_id=(select plan_id from users where user_id=$1)", user_id);
         if (result.size() == 0)
@@ -228,7 +229,7 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
         session->insert("max_files", r["max_files"].as<int>());
 
         SendOkTokens(callback, login, access_uuid, refresh_uuid, session_id, access_expires, refresh_expires, session_expires_date, 
-            document_id, name, language);
+            document_id, name, language, settings);
     }
     catch (const orm::DrogonDbException& e)
     {

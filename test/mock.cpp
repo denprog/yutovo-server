@@ -109,6 +109,20 @@ void TestBase::Login(HttpClientPtr client, std::string login, std::string passwo
     language = (*json)["language"].asString();
 }
 
+void TestBase::Login(HttpClientPtr client, std::string login, std::string password, std::string& access_token, std::string& document_id, std::string& name, 
+    std::string& language, std::string& settings)
+{
+    HttpResponsePtr r;
+    Login(client, login, password, r);
+    access_token = r->getHeader("access_token");
+    ASSERT_TRUE(r->getContentType() == CT_APPLICATION_JSON) << r->getContentType();
+    const auto json = r->jsonObject();
+    document_id = (*json)["document_id"].asString();
+    name = (*json)["name"].asString();
+    language = (*json)["language"].asString();
+    settings = (*json)["settings"].asString();
+}
+
 void TestBase::Logout(HttpClientPtr client, const std::string& login, const std::string& access_token)
 {
     Json::Value login_body;

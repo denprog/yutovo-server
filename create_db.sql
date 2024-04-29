@@ -10,7 +10,8 @@ CREATE TABLE IF NOT EXISTS users
     create_time timestamp with time zone not null default now(),
     document_id int default -1, --current document for this user
     language varchar(10),
-    plan_id int not null default 1
+    plan_id int not null default 1,
+    settings jsonb
 );
 
 CREATE TABLE IF NOT EXISTS user_sessions

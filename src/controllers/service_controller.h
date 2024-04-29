@@ -26,6 +26,8 @@ public:
     ADD_METHOD_TO(ServiceController::ListDocuments, "/service/list-documents", Post, "yutovo_server::LoginFilter"); //list user documents
     ADD_METHOD_TO(ServiceController::GetDocumentName, "/service/get-document-name", Post); //get name of a user document
     ADD_METHOD_TO(ServiceController::RenameDocument, "/service/rename-document", Post, "yutovo_server::LoginFilter"); //rename a user document
+    ADD_METHOD_TO(ServiceController::SetSettings, "/service/set-settings", Post, "yutovo_server::LoginFilter"); //set user config
+    ADD_METHOD_TO(ServiceController::GetSettings, "/service/get-settings", Post, "yutovo_server::LoginFilter"); //get user config
     METHOD_LIST_END
 
     void GetTasks(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
@@ -40,6 +42,8 @@ public:
     void ListDocuments(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
     void GetDocumentName(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
     void RenameDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
+    void SetSettings(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
+    void GetSettings(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
 
 private:
     WebSocketClientPtr solver_client;

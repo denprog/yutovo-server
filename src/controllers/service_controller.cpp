@@ -938,4 +938,141 @@ void ServiceController::RenameDocument(const HttpRequestPtr& req, std::function<
     }
 }
 
+void ServiceController::SetSettings(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
+{
+    session_id = req->getCookie("session_id");
+    GetLogger(session_id)->Info("SetSettings request");
+
+    auto json = req->getJsonObject();
+    if (!json || !json->isObject())
+    {
+        SendError(k400BadRequest, "Json not found in the request", callback);
+        return;
+    }
+
+    orm::DbClientPtr db = app().getDbClient();
+    SessionPtr session = req->session();
+    std::string user_id = session->get<std::string>("user_id");
+    if (user_id.empty())
+    {
+        GetLogger(session_id)->Error("Empty user_id");
+        SendError(k500InternalServerError, "Empty user_id", callback);
+        return;
+    }
+
+    std::string settings;
+    if (json->isMember("settings") && (*json)["settings"].isString())
+        settings = (*json)["settings"].asString();
+    if (settings.empty())
+    {
+        SendError(k400BadRequest, "Wrong request: empty settings", callback);
+        return;
+    }
+
+    Json::Reader reader;
+    Json::Value settings_val;
+    if (!reader.parse(settings, settings_val))
+    {
+        GetLogger(session_id)->Error("Database error: Error updating settings");
+        SendError(k500InternalServerError, "Error updating settings", callback);
+        return;
+    }
+
+    try
+    {
+        //update the existing json, load it, change and save
+        orm::Result result = db->execSqlSync("select settings from users where user_id=$1", user_id);
+        if (result.affectedRows() == 0)
+        {
+            GetLogger(session_id)->Error("Database error: Error updating settings");
+            SendError(k500InternalServerError, "Error updating settings", callback);
+            return;
+        }
+
+        Json::Value s_val;
+        auto row = result[0];
+        std::string s = row["settings"].as<std::string>();
+        if (s.empty())
+        {
+            s_val = settings_val;
+        }
+        else
+        {
+            if (!reader.parse(s, s_val))
+            {
+                GetLogger(session_id)->Error("Database error: Error updating settings");
+                SendError(k500InternalServerError, "Error updating settings", callback);
+                return;
+            }
+
+            std::function<void (Json::Value&, Json::Value&)> merge =
+                [&](Json::Value& a, Json::Value& b)
+                {
+                    if (!a.isObject() || !b.isObject())
+                        return;
+                    for (const auto& key : b.getMemberNames())
+                    {
+                        if (a[key].isObject())
+                            merge(a[key], b[key]);
+                        else
+                            a[key] = b[key];
+                    }
+                };
+            
+            merge(s_val, settings_val);
+        }
+
+        result = db->execSqlSync("update users set settings=$1 where user_id=$2", s_val.toStyledString(), user_id);
+        if (result.affectedRows() == 0)
+        {
+            GetLogger(session_id)->Error("Database error: Error updating settings");
+            SendError(k500InternalServerError, "Error updating settings", callback);
+            return;
+        }
+
+        SendOk(callback);
+    }
+    catch (const orm::DrogonDbException& e)
+    {
+        GetLogger(session_id)->Error("Database error: {}", e.base().what());
+        SendError(k500InternalServerError, e.base().what(), callback);
+    }
+}
+
+void ServiceController::GetSettings(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
+{
+    session_id = req->getCookie("session_id");
+    GetLogger(session_id)->Info("GetSettings request");
+
+    orm::DbClientPtr db = app().getDbClient();
+    SessionPtr session = req->session();
+    std::string user_id = session->get<std::string>("user_id");
+    if (user_id.empty())
+    {
+        GetLogger(session_id)->Error("Empty user_id");
+        SendError(k500InternalServerError, "Empty user_id", callback);
+        return;
+    }
+
+    try
+    {
+        //update the existing json, load it, change and save
+        orm::Result result = db->execSqlSync("select settings from users where user_id=$1", user_id);
+        if (result.affectedRows() == 0)
+        {
+            GetLogger(session_id)->Error("Database error: Error updating settings");
+            SendError(k500InternalServerError, "Error updating settings", callback);
+            return;
+        }
+
+        auto row = result[0];
+        SendJson(callback, row["settings"].as<std::string>());
+    }
+    catch (const orm::DrogonDbException& e)
+    {
+        GetLogger(session_id)->Error("Database error: {}", e.base().what());
+        SendError(k500InternalServerError, e.base().what(), callback);
+    }
+}
+
 };
