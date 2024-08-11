@@ -1,6 +1,6 @@
 {
     "config": {
-        "language": 1,
+        "language": 2,
         "code_block_border_color": -16776961,
         "numbers_color": -16776961,
         "variables_color": -43649,
@@ -70,7 +70,7 @@
     },
     "string_formats": [
         {
-            "id": "67b55872-2c69-42d2-915c-48d6d4755b25",
+            "id": "4419a18f-7686-4c26-a128-4c165d761ca6",
             "family": "Arial",
             "size": 14,
             "bold": false,
@@ -82,7 +82,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "4781fcc5-e99b-4cfc-beba-81be57a5cf59",
+            "id": "ebc602b2-2c33-4dfe-a691-6215447eb0be",
             "family": "Arial",
             "size": 30,
             "bold": true,
@@ -94,7 +94,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "1f82651d-925b-41f3-b3da-04f97d97d404",
+            "id": "2c7eebb2-e50b-4035-a1f2-32e62a3f88c5",
             "family": "Arial",
             "size": 26,
             "bold": true,
@@ -106,7 +106,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "a99670b3-1a11-425f-b57b-f529ce278922",
+            "id": "74234c3e-2b30-43d6-87aa-709629677dec",
             "family": "Arial",
             "size": 22,
             "bold": true,
@@ -118,7 +118,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "1db4fe67-00b4-4856-badc-332ffc0af347",
+            "id": "aa72ddb5-617c-40ef-bf0d-6b3512fa2439",
             "family": "Courier New",
             "size": 12,
             "bold": false,
@@ -130,7 +130,79 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "13e75b1c-0b68-4bf7-8dda-740f4d992729",
+            "id": "412ad86f-6cc9-474b-ad62-f22ed3d8fc1b",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "d656bc75-bcf7-409c-b7fb-d0155193f93f",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "2b4299bb-2161-4df9-82c8-3518ddeb168e",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "250fa2ae-2f3e-4a8a-9383-42ecd2d435d4",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "fc47e679-ea82-4169-939c-0e139bc3e459",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "adbf0849-10f8-476f-9689-776e5bea286a",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "871fc9da-f1c3-444a-805b-4c3016511cf2",
             "family": "Courier New",
             "size": 14,
             "bold": false,
@@ -297,7 +369,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "67b55872-2c69-42d2-915c-48d6d4755b25"
+            "default_string_format": "4419a18f-7686-4c26-a128-4c165d761ca6"
         },
         {
             "name": "Header 1",
@@ -309,7 +381,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "4781fcc5-e99b-4cfc-beba-81be57a5cf59"
+            "default_string_format": "ebc602b2-2c33-4dfe-a691-6215447eb0be"
         },
         {
             "name": "Header 2",
@@ -321,7 +393,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "1f82651d-925b-41f3-b3da-04f97d97d404"
+            "default_string_format": "2c7eebb2-e50b-4035-a1f2-32e62a3f88c5"
         },
         {
             "name": "Header 3",
@@ -333,7 +405,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "a99670b3-1a11-425f-b57b-f529ce278922"
+            "default_string_format": "74234c3e-2b30-43d6-87aa-709629677dec"
         },
         {
             "name": "Monospace",
@@ -345,7 +417,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "1db4fe67-00b4-4856-badc-332ffc0af347"
+            "default_string_format": "aa72ddb5-617c-40ef-bf0d-6b3512fa2439"
         },
         {
             "name": "Code",
@@ -357,7 +429,7 @@
             "indent_first_line": 0,
             "spacing_before": 2,
             "spacing_after": 2,
-            "default_string_format": "13e75b1c-0b68-4bf7-8dda-740f4d992729"
+            "default_string_format": "412ad86f-6cc9-474b-ad62-f22ed3d8fc1b"
         }
     ],
     "text": {
@@ -375,8 +447,8 @@
                             {
                                 "id": "0,0,0,0",
                                 "type": 4,
-                                "elements": "Newton's second law of motion",
-                                "format_id": "307d1b2a-e872-446f-8d8d-b56882de0915"
+                                "elements": "Второй закон Ньютона",
+                                "format_id": "d656bc75-bcf7-409c-b7fb-d0155193f93f"
                             }
                         ]
                     }
@@ -415,8 +487,8 @@
                                                                     {
                                                                         "id": "0,1,0,0,0,0,0,0,0",
                                                                         "type": 8,
-                                                                        "elements": "mass",
-                                                                        "format_id": "54ba223d-f29d-47a6-931a-5a581c339554",
+                                                                        "elements": "масса",
+                                                                        "format_id": "871fc9da-f1c3-444a-805b-4c3016511cf2",
                                                                         "can_merge": true
                                                                     }
                                                                 ]
@@ -440,8 +512,8 @@
                                                                     {
                                                                         "id": "0,1,0,0,0,0,0,2,1",
                                                                         "type": 8,
-                                                                        "elements": "kg",
-                                                                        "format_id": "54ba223d-f29d-47a6-931a-5a581c339554",
+                                                                        "elements": "кг",
+                                                                        "format_id": "871fc9da-f1c3-444a-805b-4c3016511cf2",
                                                                         "can_merge": false
                                                                     }
                                                                 ]
@@ -552,7 +624,7 @@
                                                                                                         "id": "0,1,0,0,1,0,0,2,1,2,0,2,0",
                                                                                                         "type": 8,
                                                                                                         "elements": "2",
-                                                                                                        "format_id": "1db4fe67-00b4-4856-badc-332ffc0af347",
+                                                                                                        "format_id": "aa72ddb5-617c-40ef-bf0d-6b3512fa2439",
                                                                                                         "can_merge": true
                                                                                                     }
                                                                                                 ]
@@ -586,7 +658,7 @@
         ]
     },
     "caret": {
-        "id": "0,1,0,1,0,0,2,2"
+        "id": "0,1,1"
     },
     "selection": []
 }
