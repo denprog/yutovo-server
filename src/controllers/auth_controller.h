@@ -46,6 +46,7 @@ public:
     AuthController();
 
     METHOD_LIST_BEGIN
+    ADD_METHOD_TO(AuthController::GetCaptcha, "/auth/get-captcha", Post);
     ADD_METHOD_TO(AuthController::Register, "/auth/register", Post);
     ADD_METHOD_TO(AuthController::UnRegister, "/auth/unregister", Post, "yutovo_server::LoginFilter");
     ADD_METHOD_TO(AuthController::Login, "/auth/login", Post);
@@ -58,6 +59,7 @@ public:
 #endif
     METHOD_LIST_END
 
+    void GetCaptcha(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
     void Register(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, User&& user);
     void UnRegister(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
     void Login(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);

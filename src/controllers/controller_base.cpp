@@ -213,6 +213,39 @@ void ControllerBase::SendFile(std::function<void (const HttpResponsePtr &)>& cal
     callback(resp);
 }
 
+void ControllerBase::SendCaptcha(std::function<void (const HttpResponsePtr &)>& callback, const cimg_library::CImg<unsigned char>& image)
+{
+    unsigned buf_size = 1024 * 1024;
+    std::unique_ptr<JOCTET> buffer(new JOCTET[buf_size]);
+    image.save_jpeg_buffer(buffer.get(), buf_size, 60);
+
+    //convert the picture to base64
+    std::string image_base64;
+    int val = 0, valb = -6;
+    unsigned char* buf = buffer.get();
+    for (size_t i = 0; i < buf_size; ++i)
+    {
+        unsigned char c = buf[i];
+        val = (val << 8) + c;
+        valb += 8;
+        while (valb >= 0)
+        {
+            image_base64.push_back(base[(val >> valb) & 0x3F]);
+            valb -= 6;
+        }
+    }
+    if (valb > -6)
+        image_base64.push_back(base[((val << 8) >> (valb + 8)) & 0x3F]);
+    while (image_base64.size() % 4)
+        image_base64.push_back('=');
+
+    Json::Value r;
+    r["captcha"] = image_base64;
+    auto resp = HttpResponse::newHttpJsonResponse(r);
+    resp->setStatusCode(k200OK);
+    callback(resp);
+}
+
 void ControllerBase::SendError(const HttpStatusCode status_code, const char* description, std::function<void (const HttpResponsePtr &)>& callback)
 {
     Json::Value r;

@@ -37,6 +37,8 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     ssl
     yutovo_logger
     Drogon::Drogon
+    X11
+    jpeg
 )
 
 target_sources(${PROJECT_NAME} PRIVATE

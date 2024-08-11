@@ -3,6 +3,10 @@
 
 #include <drogon/HttpController.h>
 #include <filesystem>
+#include <jpeglib.h>
+#include <jerror.h>
+#define cimg_plugin "plugins/jpeg_buffer.h"
+#include <CImg.h>
 #include "utils.h"
 
 using namespace drogon;
@@ -43,6 +47,7 @@ protected:
     void SendJson(std::function<void (const HttpResponsePtr &)>& callback, const Json::Value& json);
     void SendJson(std::function<void (const HttpResponsePtr &)>& callback, const std::string& json);
     void SendFile(std::function<void (const HttpResponsePtr &)>& callback, const fs::path& path);
+    void SendCaptcha(std::function<void (const HttpResponsePtr &)>& callback, const cimg_library::CImg<unsigned char>& image);
     void SendError(const HttpStatusCode status_code, const char* description, std::function<void (const HttpResponsePtr &)>& callback);
 
     bool ParseRefreshToken(const std::string& refresh_token, std::string& refresh_uuid, std::string& login, 
@@ -70,6 +75,7 @@ protected:
     inline static const std::string empty_document = "{\"text\":{\"id\":\"0\",\"type\":1,\"elements\":[{\"id\":\"0,0\",\"type\":2,\
         \"elements\":[{\"id\":\"0,0,0\",\"type\":3,\"elements\":[{\"id\":\"0,0,0,0\",\"type\":4,\"elements\":\"\"}]}]}]}}";
     std::string tasks_path;
+    inline static const std::string base = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
     std::string session_id;
 };
