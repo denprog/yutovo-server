@@ -6,7 +6,7 @@ steps:
   - name: build
     image: ubuntu:22.04
     commands:
-      - DEBIAN_FRONTEND=noninteractive
+      - export DEBIAN_FRONTEND=noninteractive
       - apt update && apt install -y build-essential cmake pkg-config libssl-dev libjsoncpp-dev uuid-dev zlib1g-dev libpq-dev libsqlite3-dev libbrotli-dev libgtest-dev libgmock-dev libjpeg-turbo8-dev cimg-dev
       - export YUTOVO_DEPLOY=/home/denis/programs/Math/yutovo/deploy
       - mkdir build && cd build
