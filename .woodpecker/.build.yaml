@@ -6,7 +6,7 @@ steps:
   - name: build
     image: ubuntu:22.04
     commands:
-      - apt update && apt install -y build-essential cmake pkg-config libssl-dev libjsoncpp-dev
+      - apt update && apt install -y build-essential cmake pkg-config libssl-dev libjsoncpp-dev uuid-dev
       - export YUTOVO_DEPLOY=/home/denis/programs/Math/yutovo/deploy
       - mkdir build && cd build
       - cmake -DCMAKE_BUILD_TYPE=Debug ..
