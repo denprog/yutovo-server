@@ -11,11 +11,32 @@ int main(int argc, char *argv[])
     Logger* logger = Logger::GetInstance(std::string(std::getenv("YUTOVO_DEPLOY")) + "/log", "server", true, true);
     logger->Info("Yutovo server start");
 
+    std::string document_root;
+    for (size_t i = 1; i < argc; ++i)
+    {
+        std::string arg = argv[i];
+        if ((arg == "-d") || (arg == "--document-root"))
+        {
+            if (i + 1 < argc)
+                document_root = argv[++i];
+            else
+            {
+                logger->Critical("--document_root option requires one argument");
+                return 1;
+            }
+        }
+    }
+
+    if (!document_root.empty())
+        logger->Info("Document root={}", document_root);
+
     {
         std::thread app_thread = std::thread(
             [&]()
             {
                 drogon::app().addListener("0.0.0.0", 9001).loadConfigFile("config.json");
+                if (!document_root.empty())
+                    drogon::app().setDocumentRoot(document_root);
                 drogon::app().enableSession();
                 drogon::app().run();
             });
