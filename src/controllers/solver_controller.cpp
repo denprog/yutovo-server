@@ -1,4 +1,4 @@
-#include "service_controller.h"
+#include "solver_controller.h"
 #include "../logic/clear_db.h"
 #include <functional>
 #include <fstream>
@@ -9,10 +9,11 @@ namespace yutovo_server
 namespace fs = std::filesystem;
 using namespace std::chrono_literals;
 
-//ServiceController
+//SolverController
 
-ServiceController::ServiceController()
+SolverController::SolverController()
 {
+#ifdef REMOTE_SOLVER
     const Json::Value& v = app().getCustomConfig();
     std::string solver_address = v.get("solver_address", "").asString();
     if (solver_address.empty())
@@ -33,15 +34,16 @@ ServiceController::ServiceController()
         {
             if (r != ReqResult::Ok)
             {
-                GetLogger("")->Error("ServiceController not connected to Solver");
+                GetLogger("")->Error("SolverController not connected to Solver");
                 return;
             }
-            GetLogger("")->Info("ServiceController connected to Solver");
+            GetLogger("")->Info("SolverController connected to Solver");
             solver_client->getConnection()->setPingMessage("", 2s);
         });
+#endif
 }
 
-void ServiceController::GetTasks(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
+void SolverController::GetTasks(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
     session_id = req->getCookie("session_id");
     GetLogger(session_id)->Info("GetTasks request");
@@ -87,7 +89,7 @@ void ServiceController::GetTasks(const HttpRequestPtr& req, std::function<void (
     SendJson(callback, root);
 }
 
-void ServiceController::LoadTask(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
+void SolverController::LoadTask(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
     session_id = req->getCookie("session_id");
     auto json = req->getJsonObject();
@@ -131,7 +133,7 @@ void ServiceController::LoadTask(const HttpRequestPtr& req, std::function<void (
     }
 }
 
-void ServiceController::SaveTask(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
+void SolverController::SaveTask(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
     session_id = req->getCookie("session_id");
     auto json = req->getJsonObject();
@@ -227,7 +229,8 @@ void ServiceController::SaveTask(const HttpRequestPtr& req, std::function<void (
     }
 }
 
-void ServiceController::ListIdentifiers(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
+#ifdef REMOTE_SOLVER
+void SolverController::ListIdentifiers(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
     if (!solver_client || !solver_client->getConnection())
     {
@@ -255,8 +258,9 @@ void ServiceController::ListIdentifiers(const HttpRequestPtr& req, std::function
     
     SendJson(callback, solver_response);
 }
+#endif
 
-void ServiceController::NewDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
+void SolverController::NewDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
     session_id = req->getCookie("session_id");
     GetLogger(session_id)->Info("NewDocument request");
@@ -359,7 +363,7 @@ void ServiceController::NewDocument(const HttpRequestPtr& req, std::function<voi
     }
 }
 
-void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
+void SolverController::SaveDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
     session_id = req->getCookie("session_id");
     GetLogger(session_id)->Info("SaveDocument request");
@@ -533,7 +537,7 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
     }
 }
 
-void ServiceController::SaveAsDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
+void SolverController::SaveAsDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
     session_id = req->getCookie("session_id");
     GetLogger(session_id)->Info("SaveAsDocument request");
@@ -624,7 +628,7 @@ void ServiceController::SaveAsDocument(const HttpRequestPtr& req, std::function<
     }
 }
 
-void ServiceController::LoadDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
+void SolverController::LoadDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
     session_id = req->getCookie("session_id");
     GetLogger(session_id)->Info("LoadDocument request");
@@ -728,7 +732,7 @@ void ServiceController::LoadDocument(const HttpRequestPtr& req, std::function<vo
     }
 }
 
-void ServiceController::DeleteDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
+void SolverController::DeleteDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
     session_id = req->getCookie("session_id");
     GetLogger(session_id)->Info("DeleteDocument request");
@@ -786,7 +790,7 @@ void ServiceController::DeleteDocument(const HttpRequestPtr& req, std::function<
     }
 }
 
-void ServiceController::ListDocuments(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
+void SolverController::ListDocuments(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
     session_id = req->getCookie("session_id");
     GetLogger(session_id)->Info("ListDocuments request");
@@ -820,7 +824,7 @@ void ServiceController::ListDocuments(const HttpRequestPtr& req, std::function<v
     }
 }
 
-void ServiceController::GetDocumentName(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
+void SolverController::GetDocumentName(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
     session_id = req->getCookie("session_id");
     GetLogger(session_id)->Info("GetDocumentName request");
@@ -880,7 +884,7 @@ void ServiceController::GetDocumentName(const HttpRequestPtr& req, std::function
     }
 }
 
-void ServiceController::RenameDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
+void SolverController::RenameDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
     session_id = req->getCookie("session_id");
     GetLogger(session_id)->Info("RenameDocument request");
@@ -938,7 +942,7 @@ void ServiceController::RenameDocument(const HttpRequestPtr& req, std::function<
     }
 }
 
-void ServiceController::SetSettings(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
+void SolverController::SetSettings(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
     session_id = req->getCookie("session_id");
     GetLogger(session_id)->Info("SetSettings request");
@@ -1039,7 +1043,7 @@ void ServiceController::SetSettings(const HttpRequestPtr& req, std::function<voi
     }
 }
 
-void ServiceController::GetSettings(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
+void SolverController::GetSettings(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
     session_id = req->getCookie("session_id");
     GetLogger(session_id)->Info("GetSettings request");
