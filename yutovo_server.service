@@ -1,0 +1,14 @@
+[Unit]
+Description=Yutovo server
+DefaultDependencies=no
+After=network.target
+
+[Service]
+WorkingDirectory=/opt/yutovo
+Environment="YUTOVO_DEPLOY=/opt/yutovo"
+ExecStart=/opt/yutovo/yutovo_server -d /opt/yutovo/spa/
+Restart=always
+RestartSec=1
+
+[Install]
+WantedBy=multi-user.target
