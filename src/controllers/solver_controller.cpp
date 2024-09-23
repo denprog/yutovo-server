@@ -56,29 +56,36 @@ void SolverController::GetTasks(const HttpRequestPtr& req, std::function<void (c
     std::function<void (const fs::path& path, Json::Value& json)> get_files = 
         [&](const fs::path& path, Json::Value& json)
         {
+            std::set<fs::path> sorted_dirs;
+            std::set<fs::path> sorted_files;
             for (const auto& entry : fs::directory_iterator(path))
             {
                 if (entry.is_directory())
-                {
-                    Json::Value e;
-                    auto s = entry.path().string();
-                    json[entry.path().stem().string()] = e;
-                    auto& d = json[entry.path().stem().string()];
-                    get_files(entry.path(), d);
-                }
+                    sorted_dirs.insert(entry.path());
                 else if (entry.is_regular_file())
+                    sorted_files.insert(entry.path());
+            }
+
+            for (const auto& entry : sorted_dirs)
+            {
+                Json::Value e;
+                auto s = entry.string();
+                json[entry.stem().string()] = e;
+                auto& d = json[entry.stem().string()];
+                get_files(entry, d);
+            }
+            for (const auto& entry : sorted_files)
+            {
+                if (json.isMember("files"))
                 {
-                    if (json.isMember("files"))
-                    {
-                        Json::Value& files = json["files"];
-                        files.append(entry.path().stem().c_str());
-                    }
-                    else
-                    {
-                        Json::Value files(Json::arrayValue);
-                        files.append(entry.path().stem().c_str());
-                        json["files"] = files;
-                    }
+                    Json::Value& files = json["files"];
+                    files.append(entry.stem().c_str());
+                }
+                else
+                {
+                    Json::Value files(Json::arrayValue);
+                    files.append(entry.stem().c_str());
+                    json["files"] = files;
                 }
             }
         };
