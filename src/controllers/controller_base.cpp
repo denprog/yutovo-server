@@ -200,7 +200,7 @@ void ControllerBase::SendJson(std::function<void (const HttpResponsePtr &)>& cal
     Json::Reader reader;
     if (!reader.parse(json.c_str(), root))
     {
-        SendError(k500InternalServerError, "Solver response error", callback);
+        SendError(k500InternalServerError, "Json error", callback);
         return;
     }
     SendJson(callback, root);

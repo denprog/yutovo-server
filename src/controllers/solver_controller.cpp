@@ -1077,7 +1077,10 @@ void SolverController::GetSettings(const HttpRequestPtr& req, std::function<void
         }
 
         auto row = result[0];
-        SendJson(callback, row["settings"].as<std::string>());
+        auto settings = row["settings"].as<std::string>();
+        if (settings.empty())
+            settings = "{}";
+        SendJson(callback, settings);
     }
     catch (const orm::DrogonDbException& e)
     {
