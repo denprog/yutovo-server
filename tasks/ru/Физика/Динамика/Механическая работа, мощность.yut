@@ -70,7 +70,7 @@
     },
     "string_formats": [
         {
-            "id": "32a6acc4-9555-4655-8ed4-0d2c893c5489",
+            "id": "c80a0e9a-bf1c-4a4b-8f26-60545ffe21af",
             "family": "Arial",
             "size": 14,
             "bold": false,
@@ -82,7 +82,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "0fcc9d5a-2db2-4809-a186-6be4f27ca863",
+            "id": "a410fef1-314c-4dd3-a902-680cf7b131ab",
             "family": "Arial",
             "size": 30,
             "bold": true,
@@ -94,7 +94,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "cffab529-13b5-45a7-8277-f5cac834924c",
+            "id": "10707c8e-57c4-4d6c-80f8-ace308b43bfd",
             "family": "Arial",
             "size": 26,
             "bold": true,
@@ -106,7 +106,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "621223fb-c65d-4c52-8977-5bb40f8e0238",
+            "id": "0e8616cd-022f-45a4-ab78-54af8289555d",
             "family": "Arial",
             "size": 22,
             "bold": true,
@@ -118,7 +118,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "61fe50d3-eb6a-488d-ac67-5c9bed9014dc",
+            "id": "329416cc-1bf1-43fe-b96d-5bcd118d6db7",
             "family": "Courier New",
             "size": 12,
             "bold": false,
@@ -130,7 +130,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "44100735-2cd1-4b7d-bc16-28baca8bb4ea",
+            "id": "45d59b33-a2f6-4521-ac59-ae35337d2d17",
             "family": "Courier New",
             "size": 14,
             "bold": false,
@@ -142,7 +142,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "6234c482-6379-47ef-affb-fa46b9657629",
+            "id": "62206bfd-d961-494e-9196-9fa226bedddc",
             "family": "Arial",
             "size": 14,
             "bold": false,
@@ -154,7 +154,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "2520326b-0799-49aa-bcdc-b06fb3d41dfc",
+            "id": "7ab7e915-1ba8-443f-817b-85074b7c6f4f",
             "family": "Arial",
             "size": 30,
             "bold": true,
@@ -166,7 +166,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "02d9b376-827c-42cf-879f-ddbb1cc5b707",
+            "id": "e737b8ca-5e76-4743-a2ce-56b71c19bf26",
             "family": "Arial",
             "size": 26,
             "bold": true,
@@ -178,7 +178,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "b0fb67d4-9339-46ab-ae36-ab0fad85415e",
+            "id": "229bbb72-7d6b-4a9b-b203-2463fe64be29",
             "family": "Arial",
             "size": 22,
             "bold": true,
@@ -190,7 +190,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "cc26adf6-21f4-4413-bc27-64f8c5340c53",
+            "id": "abbdb1b9-2459-450e-a44d-c45d15db3a3f",
             "family": "Courier New",
             "size": 12,
             "bold": false,
@@ -202,7 +202,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "74bd0a99-a56b-490b-8ea7-a0c6e1f9a8ac",
+            "id": "6ddaa7a4-69c5-456e-9863-96c722a283fe",
             "family": "Courier New",
             "size": 14,
             "bold": false,
@@ -214,7 +214,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "4419a18f-7686-4c26-a128-4c165d761ca6",
+            "id": "faf7cc77-5664-4f1f-9ff1-51007e934d31",
             "family": "Arial",
             "size": 14,
             "bold": false,
@@ -226,7 +226,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "ebc602b2-2c33-4dfe-a691-6215447eb0be",
+            "id": "526e01f2-be4f-4ae6-8cbe-fedf0afafdf2",
             "family": "Arial",
             "size": 30,
             "bold": true,
@@ -238,7 +238,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "2c7eebb2-e50b-4035-a1f2-32e62a3f88c5",
+            "id": "1d6149c1-6b86-4ecd-8207-43e9c976bc51",
             "family": "Arial",
             "size": 26,
             "bold": true,
@@ -250,7 +250,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "74234c3e-2b30-43d6-87aa-709629677dec",
+            "id": "b8a87dd5-cd27-4405-b801-7ee00062b8e8",
             "family": "Arial",
             "size": 22,
             "bold": true,
@@ -262,7 +262,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "aa72ddb5-617c-40ef-bf0d-6b3512fa2439",
+            "id": "c94d2dc2-752d-4c57-9a21-8f9e138a2024",
             "family": "Courier New",
             "size": 12,
             "bold": false,
@@ -274,7 +274,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "412ad86f-6cc9-474b-ad62-f22ed3d8fc1b",
+            "id": "4760d70e-e254-4e2b-a59a-2e67121655c8",
             "family": "Courier New",
             "size": 14,
             "bold": false,
@@ -286,7 +286,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "d656bc75-bcf7-409c-b7fb-d0155193f93f",
+            "id": "6b0ef09c-a8d4-4cbf-b5fc-573e1f22fd51",
             "family": "Arial",
             "size": 14,
             "bold": false,
@@ -298,7 +298,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "2b4299bb-2161-4df9-82c8-3518ddeb168e",
+            "id": "8c32acbe-5e1c-4453-847c-3a858ef1738c",
             "family": "Arial",
             "size": 30,
             "bold": true,
@@ -310,7 +310,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "250fa2ae-2f3e-4a8a-9383-42ecd2d435d4",
+            "id": "ee29196d-c845-4720-8914-e4d626648263",
             "family": "Arial",
             "size": 26,
             "bold": true,
@@ -322,7 +322,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "fc47e679-ea82-4169-939c-0e139bc3e459",
+            "id": "01e41c50-f8b7-4a1f-92b4-3ed478c117eb",
             "family": "Arial",
             "size": 22,
             "bold": true,
@@ -334,7 +334,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "adbf0849-10f8-476f-9689-776e5bea286a",
+            "id": "d40f2847-7533-4aaf-a23e-a062070068bb",
             "family": "Courier New",
             "size": 12,
             "bold": false,
@@ -346,7 +346,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "871fc9da-f1c3-444a-805b-4c3016511cf2",
+            "id": "cc7eec61-ac01-4210-a82e-4547ec80810a",
             "family": "Courier New",
             "size": 14,
             "bold": false,
@@ -358,7 +358,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "307d1b2a-e872-446f-8d8d-b56882de0915",
+            "id": "1b2d039a-70b0-482b-8d9b-bc0728a8295c",
             "family": "Arial",
             "size": 14,
             "bold": false,
@@ -370,7 +370,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "57c4556e-955c-4607-9d02-cea2a5ba37d7",
+            "id": "9bb7e66f-470d-47a1-88d1-f582f901a91f",
             "family": "Arial",
             "size": 30,
             "bold": true,
@@ -382,7 +382,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "9ee1a4d9-2b0f-4745-863a-9679b2d2ecf0",
+            "id": "68cf9ecd-732f-4267-879e-d53c2ea24141",
             "family": "Arial",
             "size": 26,
             "bold": true,
@@ -394,7 +394,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "27e57713-d139-4122-9df4-ce552b4ee475",
+            "id": "d0575889-b2d0-45f9-9d45-c5c7d40c45ad",
             "family": "Arial",
             "size": 22,
             "bold": true,
@@ -406,7 +406,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "71713dc7-1688-433a-b43f-23ab0874b12b",
+            "id": "dbe74943-26ca-4046-8203-c316d65a471e",
             "family": "Courier New",
             "size": 12,
             "bold": false,
@@ -418,7 +418,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "54ba223d-f29d-47a6-931a-5a581c339554",
+            "id": "7a116775-21a4-455b-adb5-83bb9089f8d9",
             "family": "Courier New",
             "size": 14,
             "bold": false,
@@ -430,79 +430,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "e9fe76c1-fdcb-41b4-a64c-b5d5e84eff91",
-            "family": "Arial",
-            "size": 14,
-            "bold": false,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "d7dbac2d-be4a-4895-b0a2-57ec557622a9",
-            "family": "Arial",
-            "size": 30,
-            "bold": true,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "0d8fb519-1505-4eb1-a282-bd7623c09a6f",
-            "family": "Arial",
-            "size": 26,
-            "bold": true,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "f3b45b0f-dd34-4758-9fd8-02ab0c0b2cb5",
-            "family": "Arial",
-            "size": 22,
-            "bold": true,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "511ee5e7-6e85-4e76-bb43-3423611c5c6a",
-            "family": "Courier New",
-            "size": 12,
-            "bold": false,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "89c69148-d1bc-4384-b009-7b752eab898c",
-            "family": "Courier New",
-            "size": 14,
-            "bold": false,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "49670f2a-7d5f-4925-b0ea-cd11dac30ccc",
+            "id": "2e6d35fa-d6de-407f-83d8-e93a23e6089c",
             "family": "Arial",
             "size": 20,
             "bold": false,
@@ -525,7 +453,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "32a6acc4-9555-4655-8ed4-0d2c893c5489"
+            "default_string_format": "c80a0e9a-bf1c-4a4b-8f26-60545ffe21af"
         },
         {
             "name": "Header 1",
@@ -537,7 +465,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "0fcc9d5a-2db2-4809-a186-6be4f27ca863"
+            "default_string_format": "a410fef1-314c-4dd3-a902-680cf7b131ab"
         },
         {
             "name": "Header 2",
@@ -549,7 +477,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "cffab529-13b5-45a7-8277-f5cac834924c"
+            "default_string_format": "10707c8e-57c4-4d6c-80f8-ace308b43bfd"
         },
         {
             "name": "Header 3",
@@ -561,7 +489,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "621223fb-c65d-4c52-8977-5bb40f8e0238"
+            "default_string_format": "0e8616cd-022f-45a4-ab78-54af8289555d"
         },
         {
             "name": "Monospace",
@@ -573,7 +501,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "61fe50d3-eb6a-488d-ac67-5c9bed9014dc"
+            "default_string_format": "329416cc-1bf1-43fe-b96d-5bcd118d6db7"
         },
         {
             "name": "Code",
@@ -585,7 +513,7 @@
             "indent_first_line": 0,
             "spacing_before": 2,
             "spacing_after": 2,
-            "default_string_format": "44100735-2cd1-4b7d-bc16-28baca8bb4ea"
+            "default_string_format": "45d59b33-a2f6-4521-ac59-ae35337d2d17"
         }
     ],
     "text": {
@@ -603,8 +531,8 @@
                             {
                                 "id": "0,0,0,0",
                                 "type": 4,
-                                "elements": "Дано: ",
-                                "format_id": "6234c482-6379-47ef-affb-fa46b9657629"
+                                "elements": "Данные: ",
+                                "format_id": "1b2d039a-70b0-482b-8d9b-bc0728a8295c"
                             },
                             {
                                 "id": "0,0,0,1",
@@ -630,7 +558,7 @@
                                                                         "id": "0,0,0,1,0,0,0,0,0",
                                                                         "type": 8,
                                                                         "elements": "F",
-                                                                        "format_id": "74bd0a99-a56b-490b-8ea7-a0c6e1f9a8ac",
+                                                                        "format_id": "7a116775-21a4-455b-adb5-83bb9089f8d9",
                                                                         "can_merge": true
                                                                     }
                                                                 ]
@@ -648,14 +576,14 @@
                                                                         "id": "0,0,0,1,0,0,0,2,0",
                                                                         "type": 8,
                                                                         "elements": "1",
-                                                                        "format_id": "74bd0a99-a56b-490b-8ea7-a0c6e1f9a8ac",
+                                                                        "format_id": "7a116775-21a4-455b-adb5-83bb9089f8d9",
                                                                         "can_merge": true
                                                                     },
                                                                     {
                                                                         "id": "0,0,0,1,0,0,0,2,1",
                                                                         "type": 8,
                                                                         "elements": "Н",
-                                                                        "format_id": "74bd0a99-a56b-490b-8ea7-a0c6e1f9a8ac",
+                                                                        "format_id": "7a116775-21a4-455b-adb5-83bb9089f8d9",
                                                                         "can_merge": false
                                                                     }
                                                                 ]
@@ -688,8 +616,8 @@
                                                                     {
                                                                         "id": "0,0,0,1,1,0,0,0,0",
                                                                         "type": 8,
-                                                                        "elements": "r",
-                                                                        "format_id": "74bd0a99-a56b-490b-8ea7-a0c6e1f9a8ac",
+                                                                        "elements": "S",
+                                                                        "format_id": "7a116775-21a4-455b-adb5-83bb9089f8d9",
                                                                         "can_merge": true
                                                                     }
                                                                 ]
@@ -707,14 +635,14 @@
                                                                         "id": "0,0,0,1,1,0,0,2,0",
                                                                         "type": 8,
                                                                         "elements": "1",
-                                                                        "format_id": "74bd0a99-a56b-490b-8ea7-a0c6e1f9a8ac",
+                                                                        "format_id": "7a116775-21a4-455b-adb5-83bb9089f8d9",
                                                                         "can_merge": true
                                                                     },
                                                                     {
                                                                         "id": "0,0,0,1,1,0,0,2,1",
                                                                         "type": 8,
                                                                         "elements": "м",
-                                                                        "format_id": "74bd0a99-a56b-490b-8ea7-a0c6e1f9a8ac",
+                                                                        "format_id": "7a116775-21a4-455b-adb5-83bb9089f8d9",
                                                                         "can_merge": false
                                                                     }
                                                                 ]
@@ -748,7 +676,7 @@
                                                                         "id": "0,0,0,1,2,0,0,0,0",
                                                                         "type": 8,
                                                                         "elements": "α",
-                                                                        "format_id": "74bd0a99-a56b-490b-8ea7-a0c6e1f9a8ac",
+                                                                        "format_id": "7a116775-21a4-455b-adb5-83bb9089f8d9",
                                                                         "can_merge": true
                                                                     }
                                                                 ]
@@ -765,16 +693,9 @@
                                                                     {
                                                                         "id": "0,0,0,1,2,0,0,2,0",
                                                                         "type": 8,
-                                                                        "elements": "1",
-                                                                        "format_id": "74bd0a99-a56b-490b-8ea7-a0c6e1f9a8ac",
+                                                                        "elements": "0",
+                                                                        "format_id": "7a116775-21a4-455b-adb5-83bb9089f8d9",
                                                                         "can_merge": true
-                                                                    },
-                                                                    {
-                                                                        "id": "0,0,0,1,2,0,0,2,1",
-                                                                        "type": 8,
-                                                                        "elements": "рад",
-                                                                        "format_id": "74bd0a99-a56b-490b-8ea7-a0c6e1f9a8ac",
-                                                                        "can_merge": false
                                                                     }
                                                                 ]
                                                             }
@@ -807,8 +728,8 @@
                             {
                                 "id": "0,1,0,0",
                                 "type": 4,
-                                "elements": "Момент силы относительно точки: ",
-                                "format_id": "6234c482-6379-47ef-affb-fa46b9657629"
+                                "elements": "Работа: ",
+                                "format_id": "1b2d039a-70b0-482b-8d9b-bc0728a8295c"
                             },
                             {
                                 "id": "0,1,0,1",
@@ -833,8 +754,8 @@
                                                                     {
                                                                         "id": "0,1,0,1,0,0,0,0,0",
                                                                         "type": 8,
-                                                                        "elements": "M",
-                                                                        "format_id": "74bd0a99-a56b-490b-8ea7-a0c6e1f9a8ac",
+                                                                        "elements": "A",
+                                                                        "format_id": "7a116775-21a4-455b-adb5-83bb9089f8d9",
                                                                         "can_merge": true
                                                                     }
                                                                 ]
@@ -852,7 +773,7 @@
                                                                         "id": "0,1,0,1,0,0,0,2,0",
                                                                         "type": 8,
                                                                         "elements": "F",
-                                                                        "format_id": "74bd0a99-a56b-490b-8ea7-a0c6e1f9a8ac",
+                                                                        "format_id": "7a116775-21a4-455b-adb5-83bb9089f8d9",
                                                                         "can_merge": true
                                                                     },
                                                                     {
@@ -868,6 +789,21 @@
                                                                                 "id": "0,1,0,1,0,0,0,2,1,1",
                                                                                 "type": 10,
                                                                                 "elements": []
+                                                                            },
+                                                                            {
+                                                                                "id": "0,1,0,1,0,0,0,2,1,2",
+                                                                                "type": 10,
+                                                                                "elements": []
+                                                                            },
+                                                                            {
+                                                                                "id": "0,1,0,1,0,0,0,2,1,3",
+                                                                                "type": 10,
+                                                                                "elements": []
+                                                                            },
+                                                                            {
+                                                                                "id": "0,1,0,1,0,0,0,2,1,4",
+                                                                                "type": 10,
+                                                                                "elements": []
                                                                             }
                                                                         ],
                                                                         "symbol": "·"
@@ -875,9 +811,9 @@
                                                                     {
                                                                         "id": "0,1,0,1,0,0,0,2,2",
                                                                         "type": 8,
-                                                                        "elements": "r",
-                                                                        "format_id": "74bd0a99-a56b-490b-8ea7-a0c6e1f9a8ac",
-                                                                        "can_merge": false
+                                                                        "elements": "S",
+                                                                        "format_id": "7a116775-21a4-455b-adb5-83bb9089f8d9",
+                                                                        "can_merge": true
                                                                     },
                                                                     {
                                                                         "id": "0,1,0,1,0,0,0,2,3",
@@ -892,6 +828,21 @@
                                                                                 "id": "0,1,0,1,0,0,0,2,3,1",
                                                                                 "type": 10,
                                                                                 "elements": []
+                                                                            },
+                                                                            {
+                                                                                "id": "0,1,0,1,0,0,0,2,3,2",
+                                                                                "type": 10,
+                                                                                "elements": []
+                                                                            },
+                                                                            {
+                                                                                "id": "0,1,0,1,0,0,0,2,3,3",
+                                                                                "type": 10,
+                                                                                "elements": []
+                                                                            },
+                                                                            {
+                                                                                "id": "0,1,0,1,0,0,0,2,3,4",
+                                                                                "type": 10,
+                                                                                "elements": []
                                                                             }
                                                                         ],
                                                                         "symbol": "·"
@@ -899,8 +850,8 @@
                                                                     {
                                                                         "id": "0,1,0,1,0,0,0,2,4",
                                                                         "type": 8,
-                                                                        "elements": "sin",
-                                                                        "format_id": "74bd0a99-a56b-490b-8ea7-a0c6e1f9a8ac",
+                                                                        "elements": "cos",
+                                                                        "format_id": "7a116775-21a4-455b-adb5-83bb9089f8d9",
                                                                         "can_merge": true
                                                                     },
                                                                     {
@@ -916,6 +867,21 @@
                                                                                 "id": "0,1,0,1,0,0,0,2,5,1",
                                                                                 "type": 10,
                                                                                 "elements": []
+                                                                            },
+                                                                            {
+                                                                                "id": "0,1,0,1,0,0,0,2,5,2",
+                                                                                "type": 10,
+                                                                                "elements": []
+                                                                            },
+                                                                            {
+                                                                                "id": "0,1,0,1,0,0,0,2,5,3",
+                                                                                "type": 10,
+                                                                                "elements": []
+                                                                            },
+                                                                            {
+                                                                                "id": "0,1,0,1,0,0,0,2,5,4",
+                                                                                "type": 10,
+                                                                                "elements": []
                                                                             }
                                                                         ],
                                                                         "symbol": "("
@@ -924,7 +890,7 @@
                                                                         "id": "0,1,0,1,0,0,0,2,6",
                                                                         "type": 8,
                                                                         "elements": "α",
-                                                                        "format_id": "74bd0a99-a56b-490b-8ea7-a0c6e1f9a8ac",
+                                                                        "format_id": "7a116775-21a4-455b-adb5-83bb9089f8d9",
                                                                         "can_merge": true
                                                                     },
                                                                     {
@@ -938,6 +904,21 @@
                                                                             },
                                                                             {
                                                                                 "id": "0,1,0,1,0,0,0,2,7,1",
+                                                                                "type": 10,
+                                                                                "elements": []
+                                                                            },
+                                                                            {
+                                                                                "id": "0,1,0,1,0,0,0,2,7,2",
+                                                                                "type": 10,
+                                                                                "elements": []
+                                                                            },
+                                                                            {
+                                                                                "id": "0,1,0,1,0,0,0,2,7,3",
+                                                                                "type": 10,
+                                                                                "elements": []
+                                                                            },
+                                                                            {
+                                                                                "id": "0,1,0,1,0,0,0,2,7,4",
                                                                                 "type": 10,
                                                                                 "elements": []
                                                                             }
@@ -974,8 +955,8 @@
                                                                     {
                                                                         "id": "0,1,0,1,1,0,0,0,0",
                                                                         "type": 8,
-                                                                        "elements": "M",
-                                                                        "format_id": "74bd0a99-a56b-490b-8ea7-a0c6e1f9a8ac",
+                                                                        "elements": "A",
+                                                                        "format_id": "7a116775-21a4-455b-adb5-83bb9089f8d9",
                                                                         "can_merge": true
                                                                     }
                                                                 ]
@@ -1056,8 +1037,8 @@
                             {
                                 "id": "0,2,0,0",
                                 "type": 4,
-                                "elements": "Момент силы относительно оси: ",
-                                "format_id": "6234c482-6379-47ef-affb-fa46b9657629"
+                                "elements": "Мощность: ",
+                                "format_id": "1b2d039a-70b0-482b-8d9b-bc0728a8295c"
                             },
                             {
                                 "id": "0,2,0,1",
@@ -1082,8 +1063,8 @@
                                                                     {
                                                                         "id": "0,2,0,1,0,0,0,0,0",
                                                                         "type": 8,
-                                                                        "elements": "M",
-                                                                        "format_id": "74bd0a99-a56b-490b-8ea7-a0c6e1f9a8ac",
+                                                                        "elements": "t",
+                                                                        "format_id": "7a116775-21a4-455b-adb5-83bb9089f8d9",
                                                                         "can_merge": true
                                                                     }
                                                                 ]
@@ -1100,38 +1081,9 @@
                                                                     {
                                                                         "id": "0,2,0,1,0,0,0,2,0",
                                                                         "type": 8,
-                                                                        "elements": "F",
-                                                                        "format_id": "74bd0a99-a56b-490b-8ea7-a0c6e1f9a8ac",
+                                                                        "elements": "1с",
+                                                                        "format_id": "7a116775-21a4-455b-adb5-83bb9089f8d9",
                                                                         "can_merge": true
-                                                                    },
-                                                                    {
-                                                                        "id": "0,2,0,1,0,0,0,2,1",
-                                                                        "type": 13,
-                                                                        "elements": [
-                                                                            {
-                                                                                "id": "0,2,0,1,0,0,0,2,1,0",
-                                                                                "type": 10,
-                                                                                "elements": []
-                                                                            },
-                                                                            {
-                                                                                "id": "0,2,0,1,0,0,0,2,1,1",
-                                                                                "type": 10,
-                                                                                "elements": []
-                                                                            },
-                                                                            {
-                                                                                "id": "0,2,0,1,0,0,0,2,1,2",
-                                                                                "type": 10,
-                                                                                "elements": []
-                                                                            }
-                                                                        ],
-                                                                        "symbol": "·"
-                                                                    },
-                                                                    {
-                                                                        "id": "0,2,0,1,0,0,0,2,2",
-                                                                        "type": 8,
-                                                                        "elements": "r",
-                                                                        "format_id": "74bd0a99-a56b-490b-8ea7-a0c6e1f9a8ac",
-                                                                        "can_merge": false
                                                                     }
                                                                 ]
                                                             }
@@ -1154,7 +1106,7 @@
                                                 "elements": [
                                                     {
                                                         "id": "0,2,0,1,1,0,0",
-                                                        "type": 18,
+                                                        "type": 27,
                                                         "elements": [
                                                             {
                                                                 "id": "0,2,0,1,1,0,0,0",
@@ -1163,8 +1115,8 @@
                                                                     {
                                                                         "id": "0,2,0,1,1,0,0,0,0",
                                                                         "type": 8,
-                                                                        "elements": "M",
-                                                                        "format_id": "74bd0a99-a56b-490b-8ea7-a0c6e1f9a8ac",
+                                                                        "elements": "N",
+                                                                        "format_id": "7a116775-21a4-455b-adb5-83bb9089f8d9",
                                                                         "can_merge": true
                                                                     }
                                                                 ]
@@ -1180,6 +1132,88 @@
                                                                 "elements": [
                                                                     {
                                                                         "id": "0,2,0,1,1,0,0,2,0",
+                                                                        "type": 14,
+                                                                        "elements": [
+                                                                            {
+                                                                                "id": "0,2,0,1,1,0,0,2,0,0",
+                                                                                "type": 7,
+                                                                                "elements": [
+                                                                                    {
+                                                                                        "id": "0,2,0,1,1,0,0,2,0,0,0",
+                                                                                        "type": 8,
+                                                                                        "elements": "A",
+                                                                                        "format_id": "7a116775-21a4-455b-adb5-83bb9089f8d9",
+                                                                                        "can_merge": true
+                                                                                    }
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                "id": "0,2,0,1,1,0,0,2,0,1",
+                                                                                "type": 10,
+                                                                                "elements": []
+                                                                            },
+                                                                            {
+                                                                                "id": "0,2,0,1,1,0,0,2,0,2",
+                                                                                "type": 7,
+                                                                                "elements": [
+                                                                                    {
+                                                                                        "id": "0,2,0,1,1,0,0,2,0,2,0",
+                                                                                        "type": 8,
+                                                                                        "elements": "t",
+                                                                                        "format_id": "7a116775-21a4-455b-adb5-83bb9089f8d9",
+                                                                                        "can_merge": true
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ],
+                                                        "auto_solve": true
+                                                    }
+                                                ]
+                                            }
+                                        ],
+                                        "format_name": "Code",
+                                        "format_alignment": 0
+                                    },
+                                    {
+                                        "id": "0,2,0,1,2",
+                                        "type": 6,
+                                        "elements": [
+                                            {
+                                                "id": "0,2,0,1,2,0",
+                                                "type": 7,
+                                                "elements": [
+                                                    {
+                                                        "id": "0,2,0,1,2,0,0",
+                                                        "type": 18,
+                                                        "elements": [
+                                                            {
+                                                                "id": "0,2,0,1,2,0,0,0",
+                                                                "type": 7,
+                                                                "elements": [
+                                                                    {
+                                                                        "id": "0,2,0,1,2,0,0,0,0",
+                                                                        "type": 8,
+                                                                        "elements": "N",
+                                                                        "format_id": "cc7eec61-ac01-4210-a82e-4547ec80810a",
+                                                                        "can_merge": true
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "id": "0,2,0,1,2,0,0,1",
+                                                                "type": 10,
+                                                                "elements": []
+                                                            },
+                                                            {
+                                                                "id": "0,2,0,1,2,0,0,2",
+                                                                "type": 7,
+                                                                "elements": [
+                                                                    {
+                                                                        "id": "0,2,0,1,2,0,0,2,0",
                                                                         "type": 25,
                                                                         "elements": [],
                                                                         "result_auto_advance": true,
@@ -1227,26 +1261,6 @@
                                     }
                                 ],
                                 "code_id": 1
-                            }
-                        ]
-                    }
-                ],
-                "format_name": "Text body",
-                "format_alignment": 0
-            },
-            {
-                "id": "0,3",
-                "type": 2,
-                "elements": [
-                    {
-                        "id": "0,3,0",
-                        "type": 3,
-                        "elements": [
-                            {
-                                "id": "0,3,0,0",
-                                "type": 4,
-                                "elements": "",
-                                "format_id": "32a6acc4-9555-4655-8ed4-0d2c893c5489"
                             }
                         ]
                     }
