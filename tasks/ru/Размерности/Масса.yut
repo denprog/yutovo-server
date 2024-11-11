@@ -70,6 +70,78 @@
     },
     "string_formats": [
         {
+            "id": "4212cdd8-ce04-429f-a7bf-326b9755c3dd",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "37ee2f22-d2fd-4bfa-9c75-c625d4ebf01b",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "41c9cb6d-8e93-4cde-bfe5-86843c8f0821",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "51740fb1-a4ca-4192-a660-94846d250d68",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "ecb82fc6-d832-4666-96f9-a42bb5d69d23",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "30cd1af8-8ece-4bfc-8fe2-b59fe42cf035",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
             "id": "a22dc239-af27-465c-93a1-9ce1e7306ebd",
             "family": "Arial",
             "size": 14,
@@ -297,7 +369,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "a22dc239-af27-465c-93a1-9ce1e7306ebd"
+            "default_string_format": "4212cdd8-ce04-429f-a7bf-326b9755c3dd"
         },
         {
             "name": "Header 1",
@@ -309,7 +381,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "499cf7e9-da75-425a-9ab3-d6271bb135ed"
+            "default_string_format": "37ee2f22-d2fd-4bfa-9c75-c625d4ebf01b"
         },
         {
             "name": "Header 2",
@@ -321,7 +393,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "9acb046c-520e-4e4f-93bf-9ca05a477a12"
+            "default_string_format": "41c9cb6d-8e93-4cde-bfe5-86843c8f0821"
         },
         {
             "name": "Header 3",
@@ -333,7 +405,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "a2a081c0-0020-42b5-9900-2c6cbef14c6d"
+            "default_string_format": "51740fb1-a4ca-4192-a660-94846d250d68"
         },
         {
             "name": "Monospace",
@@ -345,7 +417,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "f4cc682f-7fd0-46c9-a1d9-9e37e17abac3"
+            "default_string_format": "ecb82fc6-d832-4666-96f9-a42bb5d69d23"
         },
         {
             "name": "Code",
@@ -357,7 +429,7 @@
             "indent_first_line": 0,
             "spacing_before": 2,
             "spacing_after": 2,
-            "default_string_format": "0808ff6b-42d8-4620-98aa-3f81b681c88d"
+            "default_string_format": "30cd1af8-8ece-4bfc-8fe2-b59fe42cf035"
         }
     ],
     "text": {
@@ -375,7 +447,7 @@
                             {
                                 "id": "0,0,0,0",
                                 "type": 4,
-                                "elements": "Для перевода размерности отредактируйте выражение и выберите нужную размерность в ",
+                                "elements": "Для перевода размерности отредактируйте выражение и выберите нужную размерность ",
                                 "format_id": "b5a9f903-b431-43c5-942d-cf47b5adc6c4"
                             }
                         ]
@@ -387,7 +459,7 @@
                             {
                                 "id": "0,0,1,0",
                                 "type": 4,
-                                "elements": "контексном меню результата:",
+                                "elements": "в контексном меню результата:",
                                 "format_id": "b5a9f903-b431-43c5-942d-cf47b5adc6c4"
                             }
                         ]
@@ -427,7 +499,7 @@
                                                                     {
                                                                         "id": "0,1,0,0,0,0,0,0,0",
                                                                         "type": 8,
-                                                                        "elements": "12",
+                                                                        "elements": "1",
                                                                         "format_id": "00240c87-11cd-4efe-a368-5c47bf5ab21c",
                                                                         "can_merge": true
                                                                     },
@@ -563,7 +635,7 @@
                                                                     {
                                                                         "id": "0,3,0,0,0,0,0,0,1",
                                                                         "type": 8,
-                                                                        "elements": "г",
+                                                                        "elements": "мкг",
                                                                         "format_id": "00240c87-11cd-4efe-a368-5c47bf5ab21c",
                                                                         "can_merge": false
                                                                     }
@@ -653,7 +725,7 @@
                                                                     {
                                                                         "id": "0,3,0,0,1,0,0,0,1",
                                                                         "type": 8,
-                                                                        "elements": "мкг",
+                                                                        "elements": "мг",
                                                                         "format_id": "00240c87-11cd-4efe-a368-5c47bf5ab21c",
                                                                         "can_merge": false
                                                                     }
@@ -743,7 +815,7 @@
                                                                     {
                                                                         "id": "0,3,0,0,2,0,0,0,1",
                                                                         "type": 8,
-                                                                        "elements": "мг",
+                                                                        "elements": "г",
                                                                         "format_id": "00240c87-11cd-4efe-a368-5c47bf5ab21c",
                                                                         "can_merge": false
                                                                     }
@@ -997,7 +1069,7 @@
         ]
     },
     "caret": {
-        "id": "0,0,0,31"
+        "id": "0,0,0,0"
     },
     "selection": []
 }

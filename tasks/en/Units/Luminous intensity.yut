@@ -1,6 +1,6 @@
 {
     "config": {
-        "language": 2,
+        "language": 1,
         "code_block_border_color": -16776961,
         "numbers_color": -16776961,
         "variables_color": -43649,
@@ -70,7 +70,7 @@
     },
     "string_formats": [
         {
-            "id": "52f3d2b3-27c5-4f2b-adf0-7d35773df017",
+            "id": "5ec50831-3e1e-46d8-ba08-10574fa9ea37",
             "family": "Arial",
             "size": 14,
             "bold": false,
@@ -82,7 +82,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "0126b74d-1e12-471c-a5ae-fe39f6891626",
+            "id": "7c1f6412-f400-4302-8f77-9c79bb6f4c7f",
             "family": "Arial",
             "size": 30,
             "bold": true,
@@ -94,7 +94,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "41161a12-7ba6-4627-bee7-06cbd995c5dc",
+            "id": "7fa0e444-b9d6-4b39-9d1b-865be289d10c",
             "family": "Arial",
             "size": 26,
             "bold": true,
@@ -106,7 +106,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "561586fd-ce1d-4249-9547-08687ee91294",
+            "id": "ce1decdc-5c39-4d41-86ca-d392d0201e20",
             "family": "Arial",
             "size": 22,
             "bold": true,
@@ -118,7 +118,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "d3844959-c641-426e-96ba-353cf302c337",
+            "id": "59f6c42f-35cf-4c7d-86f4-b12403b0a1a1",
             "family": "Courier New",
             "size": 12,
             "bold": false,
@@ -130,7 +130,151 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "cf9986bb-4e67-45d7-b301-4d100196a39d",
+            "id": "4a533a32-3cde-4af6-a98b-bdc5523f80b3",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "ea4097e9-8cee-43f6-8fa7-f1c4f39341cf",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "7f4ed9a9-8ac1-4358-8622-48ee5c1fa853",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "4ce3050a-557c-493f-8ec0-1257648c9566",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "fdad072f-711e-4332-85ea-ae4d8839200f",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "d15ab114-e19d-45d3-b376-40eec321a79a",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "03f4d8eb-37fc-4f62-b73a-edca80cf2574",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "0d1e2698-414f-420d-b9df-f8a87bc3fff0",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "a62aa777-2709-4d59-9002-28beaf9b6be6",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "9c4151a2-83d7-497b-a231-49b26a859f46",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "1b2051ed-437d-4e50-9e43-a1e63730348e",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "821498a6-5558-4aeb-85d3-4570db034c22",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "078032ff-05f1-4041-bc43-6d13986e608b",
             "family": "Courier New",
             "size": 14,
             "bold": false,
@@ -428,6 +572,798 @@
             "text_color": 4278190080,
             "text_bg_color": 4294967295,
             "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "bea18495-75ac-4de0-8ec0-139926e49a05",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "c71ac5dd-5e04-49d7-b66d-2ab060f43d58",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "f57b8ff6-8fff-4e1e-b5b6-8adc568dac6c",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "3281992c-d160-4859-b6a1-9c7bc0e7ba47",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "7d6ebe40-d1f4-46a0-8e72-2b2c9a7838ea",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "409aba6a-335c-4a87-92a2-5a28cf2ebc5b",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "9dcaa514-0b5e-428a-9a18-04059bc9dc1f",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "40da9e31-c5dc-47b9-9d26-de87780a521e",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "f430f4c7-9c9b-4215-8789-719b5350a9bc",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "fc5f6b1d-84b1-47c1-b2cd-961ba02e2aa2",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "5f1949d6-3e68-4801-8e70-d7f9baf855b4",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "07203048-bf97-4980-bd0f-8414b13b63fb",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "16188553-43fd-42af-b5fc-d25c002c49c8",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "b6551213-515b-4b09-970b-17bf93a4bc7e",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "c820b76a-1ba7-4e56-b7d8-fac243e8bc4d",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "d66b694a-fa50-48a5-89e1-6f67db1b035a",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "557d4fb8-9bf3-4662-93ab-c810d4be5d82",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "0c70eaf6-aece-4a64-a644-5522a4fd9579",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "9e708844-b531-4034-9144-f19bab7e7121",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "6b4aba33-3808-459b-b53c-b445f90306b9",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "6b0f7ad4-5075-4ece-aabc-6e2f5d846813",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "9d7a0569-215e-47d6-9182-ae5ace664312",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "f4345fe7-1dc9-4fbb-b26b-f3e53dfbf657",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "a13626c8-3c15-4161-b429-682e9fa16d74",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "f279e0d6-7a99-4918-89b7-c04b8b3df490",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "24ba8452-f636-43cc-8058-ca14473d30e0",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "1c191c32-4541-4333-a351-53aa205feae7",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "721ce70a-89c5-40cd-aea1-d6d4f8649098",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "d322dcdc-5f57-409d-b7c8-9f9b6b37ea67",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "20369c54-2e0a-4ff5-aaab-0aa84c317b2e",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "44518e58-a2a3-459b-8acf-f9508289da7d",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "f4e88bd4-2282-40d1-b700-e4f5a59749ec",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "7b3ec56f-3fcc-496f-ab94-3a160efdce06",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "c6a796fb-560e-4e9a-ad17-3fdf16b1fac8",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "edc21a6b-df2d-45af-b6fa-025ff9562543",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "28914f21-0097-481f-b79d-40393a4b75bb",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "f9339c38-7ee1-4e3a-99c5-44526c24d48b",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "18dfa798-19b3-4623-a3d9-6a72e619d027",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "35988033-d492-4ca9-bfac-6cbfb665b364",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "f1e49fb7-ad01-4fcc-8352-70d5c66e6481",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "73355c89-b0e5-4ecc-9ceb-8fb643048d51",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "8c0e2022-f15c-4de1-b427-8e19ec4f924c",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "ef9229d4-f1d5-4a5a-91d9-e5312715f3c2",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "c17f7f0c-7330-4f32-b28d-ca7159b1555c",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "4c52e677-3215-4f49-ad32-8cc84e3fe1b5",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "d18b09a8-57ac-4ca4-a128-82c50e6ea255",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "5b121e0a-f3ec-4cca-9d19-ac495352646d",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "80a5401c-b3f1-459b-87df-acd8e2bb5006",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "5bf5497b-8048-40f7-80ea-d4362e12e154",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "8c2ceca7-774c-4585-b4a9-ded4a9e96563",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "52fe5cd1-9e39-470a-a008-f7abe7eeeced",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "87a9b676-5bac-4ef6-b590-96b92d28fa17",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "732ed3e8-0be9-46c7-bb2c-71831908b777",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "47547039-2ffe-46c5-8618-b472da46a284",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "a2a60293-2f5d-4954-8c15-a8c6d774ba1c",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "57795b2c-786d-4067-a0ee-4054825bb31e",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "2d8ae2cf-434b-409f-80ed-948894b4f2f4",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "fde49038-d01d-4e47-9ff8-ed37a6bad5ed",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "72d18ab5-2d9b-4d1a-a192-af166775e164",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "1794c790-666a-400b-8cf9-487561457b67",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "96a5b652-f4c8-4fa8-8306-3fc5a8a0cc80",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "9537e280-c102-43cb-a1f1-2c4cd081e7ff",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "325a81a4-893a-44a7-be08-b7843a9d8901",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "3f3853d5-7556-4df7-9b2d-caf80601128a",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "129c5a9d-5872-4120-98af-558781acb291",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "ad17f191-f8da-4b5d-83a7-3eae7bffd87c",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
         }
     ],
     "paragraph_formats": [
@@ -441,7 +1377,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "52f3d2b3-27c5-4f2b-adf0-7d35773df017"
+            "default_string_format": "5ec50831-3e1e-46d8-ba08-10574fa9ea37"
         },
         {
             "name": "Header 1",
@@ -453,7 +1389,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "0126b74d-1e12-471c-a5ae-fe39f6891626"
+            "default_string_format": "7c1f6412-f400-4302-8f77-9c79bb6f4c7f"
         },
         {
             "name": "Header 2",
@@ -465,7 +1401,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "41161a12-7ba6-4627-bee7-06cbd995c5dc"
+            "default_string_format": "7fa0e444-b9d6-4b39-9d1b-865be289d10c"
         },
         {
             "name": "Header 3",
@@ -477,7 +1413,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "561586fd-ce1d-4249-9547-08687ee91294"
+            "default_string_format": "ce1decdc-5c39-4d41-86ca-d392d0201e20"
         },
         {
             "name": "Monospace",
@@ -489,7 +1425,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "d3844959-c641-426e-96ba-353cf302c337"
+            "default_string_format": "59f6c42f-35cf-4c7d-86f4-b12403b0a1a1"
         },
         {
             "name": "Code",
@@ -501,7 +1437,7 @@
             "indent_first_line": 0,
             "spacing_before": 2,
             "spacing_after": 2,
-            "default_string_format": "cf9986bb-4e67-45d7-b301-4d100196a39d"
+            "default_string_format": "4a533a32-3cde-4af6-a98b-bdc5523f80b3"
         }
     ],
     "text": {
@@ -519,20 +1455,8 @@
                             {
                                 "id": "0,0,0,0",
                                 "type": 4,
-                                "elements": "Для перевода размерности отредактируйте выражение и выберите нужную размерность ",
-                                "format_id": "b5a9f903-b431-43c5-942d-cf47b5adc6c4"
-                            }
-                        ]
-                    },
-                    {
-                        "id": "0,0,1",
-                        "type": 3,
-                        "elements": [
-                            {
-                                "id": "0,0,1,0",
-                                "type": 4,
-                                "elements": "в контексном меню результата:",
-                                "format_id": "b5a9f903-b431-43c5-942d-cf47b5adc6c4"
+                                "elements": "To convert a unit, edit the expression and select the desired unit in the result context menu:",
+                                "format_id": "a2a60293-2f5d-4954-8c15-a8c6d774ba1c"
                             }
                         ]
                     }
@@ -578,8 +1502,8 @@
                                                                     {
                                                                         "id": "0,1,0,0,0,0,0,0,1",
                                                                         "type": 8,
-                                                                        "elements": "Дж",
-                                                                        "format_id": "c4dfa2e2-ba41-4a21-acb9-72177f88aa02",
+                                                                        "elements": "cd",
+                                                                        "format_id": "4a533a32-3cde-4af6-a98b-bdc5523f80b3",
                                                                         "can_merge": false
                                                                     }
                                                                 ]
@@ -660,8 +1584,8 @@
                             {
                                 "id": "0,2,0,0",
                                 "type": 4,
-                                "elements": "Встроенные размерности энергии:",
-                                "format_id": "b5a9f903-b431-43c5-942d-cf47b5adc6c4"
+                                "elements": "Built-in units of luminous intensity:",
+                                "format_id": "a2a60293-2f5d-4954-8c15-a8c6d774ba1c"
                             }
                         ]
                     }
@@ -701,14 +1625,14 @@
                                                                         "id": "0,3,0,0,0,0,0,0,0",
                                                                         "type": 8,
                                                                         "elements": "1",
-                                                                        "format_id": "a1562d86-f05e-4c97-8398-2d39f0c83e08",
+                                                                        "format_id": "00240c87-11cd-4efe-a368-5c47bf5ab21c",
                                                                         "can_merge": true
                                                                     },
                                                                     {
                                                                         "id": "0,3,0,0,0,0,0,0,1",
                                                                         "type": 8,
-                                                                        "elements": "мкДж",
-                                                                        "format_id": "c4dfa2e2-ba41-4a21-acb9-72177f88aa02",
+                                                                        "elements": "mccd",
+                                                                        "format_id": "4a533a32-3cde-4af6-a98b-bdc5523f80b3",
                                                                         "can_merge": false
                                                                     }
                                                                 ]
@@ -738,8 +1662,7 @@
                                                                             "exp": 10,
                                                                             "default_angle_measure": 0,
                                                                             "result_angle_measure": 0,
-                                                                            "show_angle_measure": true,
-                                                                            "unit": "(Дж)"
+                                                                            "show_angle_measure": true
                                                                         },
                                                                         "integer_config": {
                                                                             "result_notation": 2,
@@ -747,8 +1670,7 @@
                                                                             "show_notation": true
                                                                         },
                                                                         "rational_config": {
-                                                                            "fraction_form": 1,
-                                                                            "unit": "(Дж)"
+                                                                            "fraction_form": 1
                                                                         },
                                                                         "complex_config": {
                                                                             "precision": 3,
@@ -791,14 +1713,14 @@
                                                                         "id": "0,3,0,0,1,0,0,0,0",
                                                                         "type": 8,
                                                                         "elements": "1",
-                                                                        "format_id": "a1562d86-f05e-4c97-8398-2d39f0c83e08",
+                                                                        "format_id": "00240c87-11cd-4efe-a368-5c47bf5ab21c",
                                                                         "can_merge": true
                                                                     },
                                                                     {
                                                                         "id": "0,3,0,0,1,0,0,0,1",
                                                                         "type": 8,
-                                                                        "elements": "мДж",
-                                                                        "format_id": "00240c87-11cd-4efe-a368-5c47bf5ab21c",
+                                                                        "elements": "mcd",
+                                                                        "format_id": "4a533a32-3cde-4af6-a98b-bdc5523f80b3",
                                                                         "can_merge": false
                                                                     }
                                                                 ]
@@ -828,8 +1750,7 @@
                                                                             "exp": 10,
                                                                             "default_angle_measure": 0,
                                                                             "result_angle_measure": 0,
-                                                                            "show_angle_measure": true,
-                                                                            "unit": "(Дж)"
+                                                                            "show_angle_measure": true
                                                                         },
                                                                         "integer_config": {
                                                                             "result_notation": 2,
@@ -837,8 +1758,7 @@
                                                                             "show_notation": true
                                                                         },
                                                                         "rational_config": {
-                                                                            "fraction_form": 1,
-                                                                            "unit": "(Дж)"
+                                                                            "fraction_form": 1
                                                                         },
                                                                         "complex_config": {
                                                                             "precision": 3,
@@ -881,14 +1801,14 @@
                                                                         "id": "0,3,0,0,2,0,0,0,0",
                                                                         "type": 8,
                                                                         "elements": "1",
-                                                                        "format_id": "a1562d86-f05e-4c97-8398-2d39f0c83e08",
+                                                                        "format_id": "00240c87-11cd-4efe-a368-5c47bf5ab21c",
                                                                         "can_merge": true
                                                                     },
                                                                     {
                                                                         "id": "0,3,0,0,2,0,0,0,1",
                                                                         "type": 8,
-                                                                        "elements": "Дж",
-                                                                        "format_id": "ee9ed511-c7da-437b-8de2-ff7614afef81",
+                                                                        "elements": "cd",
+                                                                        "format_id": "4a533a32-3cde-4af6-a98b-bdc5523f80b3",
                                                                         "can_merge": false
                                                                     }
                                                                 ]
@@ -969,14 +1889,14 @@
                                                                         "id": "0,3,0,0,3,0,0,0,0",
                                                                         "type": 8,
                                                                         "elements": "1",
-                                                                        "format_id": "a1562d86-f05e-4c97-8398-2d39f0c83e08",
+                                                                        "format_id": "00240c87-11cd-4efe-a368-5c47bf5ab21c",
                                                                         "can_merge": true
                                                                     },
                                                                     {
                                                                         "id": "0,3,0,0,3,0,0,0,1",
                                                                         "type": 8,
-                                                                        "elements": "кДж",
-                                                                        "format_id": "00240c87-11cd-4efe-a368-5c47bf5ab21c",
+                                                                        "elements": "kcd",
+                                                                        "format_id": "4a533a32-3cde-4af6-a98b-bdc5523f80b3",
                                                                         "can_merge": false
                                                                     }
                                                                 ]
@@ -1006,8 +1926,7 @@
                                                                             "exp": 10,
                                                                             "default_angle_measure": 0,
                                                                             "result_angle_measure": 0,
-                                                                            "show_angle_measure": true,
-                                                                            "unit": "(Дж)"
+                                                                            "show_angle_measure": true
                                                                         },
                                                                         "integer_config": {
                                                                             "result_notation": 2,
@@ -1015,8 +1934,7 @@
                                                                             "show_notation": true
                                                                         },
                                                                         "rational_config": {
-                                                                            "fraction_form": 1,
-                                                                            "unit": "(Дж)"
+                                                                            "fraction_form": 1
                                                                         },
                                                                         "complex_config": {
                                                                             "precision": 3,
@@ -1059,14 +1977,14 @@
                                                                         "id": "0,3,0,0,4,0,0,0,0",
                                                                         "type": 8,
                                                                         "elements": "1",
-                                                                        "format_id": "a1562d86-f05e-4c97-8398-2d39f0c83e08",
+                                                                        "format_id": "00240c87-11cd-4efe-a368-5c47bf5ab21c",
                                                                         "can_merge": true
                                                                     },
                                                                     {
                                                                         "id": "0,3,0,0,4,0,0,0,1",
                                                                         "type": 8,
-                                                                        "elements": "МДж",
-                                                                        "format_id": "00240c87-11cd-4efe-a368-5c47bf5ab21c",
+                                                                        "elements": "Mcd",
+                                                                        "format_id": "4a533a32-3cde-4af6-a98b-bdc5523f80b3",
                                                                         "can_merge": false
                                                                     }
                                                                 ]
@@ -1096,8 +2014,7 @@
                                                                             "exp": 10,
                                                                             "default_angle_measure": 0,
                                                                             "result_angle_measure": 0,
-                                                                            "show_angle_measure": true,
-                                                                            "unit": "(Дж)"
+                                                                            "show_angle_measure": true
                                                                         },
                                                                         "integer_config": {
                                                                             "result_notation": 2,
@@ -1105,8 +2022,7 @@
                                                                             "show_notation": true
                                                                         },
                                                                         "rational_config": {
-                                                                            "fraction_form": 1,
-                                                                            "unit": "(Дж)"
+                                                                            "fraction_form": 1
                                                                         },
                                                                         "complex_config": {
                                                                             "precision": 3,

@@ -70,6 +70,78 @@
     },
     "string_formats": [
         {
+            "id": "3ffb6c85-777c-43dc-9bef-ab72bcb10f03",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "82f50d9c-8af6-41d2-a813-ebbb43b0b2ae",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "d30efabe-d1b6-45e3-a35d-39921f64e681",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "53b235ff-33a7-403b-804d-8da867893dfc",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "3741ced9-a95e-4660-a086-30b287869c8f",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "f15d91c0-db01-4c24-b88c-be76f0a8f8c3",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
             "id": "f9339c38-7ee1-4e3a-99c5-44526c24d48b",
             "family": "Arial",
             "size": 14,
@@ -297,7 +369,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "f9339c38-7ee1-4e3a-99c5-44526c24d48b"
+            "default_string_format": "3ffb6c85-777c-43dc-9bef-ab72bcb10f03"
         },
         {
             "name": "Header 1",
@@ -309,7 +381,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "18dfa798-19b3-4623-a3d9-6a72e619d027"
+            "default_string_format": "82f50d9c-8af6-41d2-a813-ebbb43b0b2ae"
         },
         {
             "name": "Header 2",
@@ -321,7 +393,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "35988033-d492-4ca9-bfac-6cbfb665b364"
+            "default_string_format": "d30efabe-d1b6-45e3-a35d-39921f64e681"
         },
         {
             "name": "Header 3",
@@ -333,7 +405,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "f1e49fb7-ad01-4fcc-8352-70d5c66e6481"
+            "default_string_format": "53b235ff-33a7-403b-804d-8da867893dfc"
         },
         {
             "name": "Monospace",
@@ -345,7 +417,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "73355c89-b0e5-4ecc-9ceb-8fb643048d51"
+            "default_string_format": "3741ced9-a95e-4660-a086-30b287869c8f"
         },
         {
             "name": "Code",
@@ -357,7 +429,7 @@
             "indent_first_line": 0,
             "spacing_before": 2,
             "spacing_after": 2,
-            "default_string_format": "8c0e2022-f15c-4de1-b427-8e19ec4f924c"
+            "default_string_format": "f15d91c0-db01-4c24-b88c-be76f0a8f8c3"
         }
     ],
     "text": {
@@ -375,7 +447,7 @@
                             {
                                 "id": "0,0,0,0",
                                 "type": 4,
-                                "elements": "Для перевода размерности отредактируйте выражение и выберите нужную размерность в ",
+                                "elements": "Для перевода размерности отредактируйте выражение и выберите нужную размерность ",
                                 "format_id": "b5a9f903-b431-43c5-942d-cf47b5adc6c4"
                             }
                         ]
@@ -387,7 +459,7 @@
                             {
                                 "id": "0,0,1,0",
                                 "type": 4,
-                                "elements": "контексном меню результата:",
+                                "elements": "в контексном меню результата:",
                                 "format_id": "b5a9f903-b431-43c5-942d-cf47b5adc6c4"
                             }
                         ]
@@ -427,7 +499,7 @@
                                                                     {
                                                                         "id": "0,1,0,0,0,0,0,0,0",
                                                                         "type": 8,
-                                                                        "elements": "12",
+                                                                        "elements": "1",
                                                                         "format_id": "00240c87-11cd-4efe-a368-5c47bf5ab21c",
                                                                         "can_merge": true
                                                                     },

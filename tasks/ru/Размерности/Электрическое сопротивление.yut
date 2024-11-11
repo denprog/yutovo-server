@@ -70,6 +70,78 @@
     },
     "string_formats": [
         {
+            "id": "df760403-1376-4990-9e71-abc1e610aba1",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "c8879bf0-8bce-47f4-8fcf-ee04e03879dd",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "3ab69cc2-2f8e-4d4e-83dd-aad93e53aff5",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "640fca7a-61ce-4176-8b2e-67b02bc5511b",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "1b3162c6-ea0e-4845-8e25-2f73171fdb9e",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "525ab533-c517-450b-928e-c22884cd2167",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
             "id": "96a5b652-f4c8-4fa8-8306-3fc5a8a0cc80",
             "family": "Arial",
             "size": 14,
@@ -441,7 +513,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "96a5b652-f4c8-4fa8-8306-3fc5a8a0cc80"
+            "default_string_format": "df760403-1376-4990-9e71-abc1e610aba1"
         },
         {
             "name": "Header 1",
@@ -453,7 +525,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "9537e280-c102-43cb-a1f1-2c4cd081e7ff"
+            "default_string_format": "c8879bf0-8bce-47f4-8fcf-ee04e03879dd"
         },
         {
             "name": "Header 2",
@@ -465,7 +537,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "325a81a4-893a-44a7-be08-b7843a9d8901"
+            "default_string_format": "3ab69cc2-2f8e-4d4e-83dd-aad93e53aff5"
         },
         {
             "name": "Header 3",
@@ -477,7 +549,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "3f3853d5-7556-4df7-9b2d-caf80601128a"
+            "default_string_format": "640fca7a-61ce-4176-8b2e-67b02bc5511b"
         },
         {
             "name": "Monospace",
@@ -489,7 +561,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "129c5a9d-5872-4120-98af-558781acb291"
+            "default_string_format": "1b3162c6-ea0e-4845-8e25-2f73171fdb9e"
         },
         {
             "name": "Code",
@@ -501,7 +573,7 @@
             "indent_first_line": 0,
             "spacing_before": 2,
             "spacing_after": 2,
-            "default_string_format": "ad17f191-f8da-4b5d-83a7-3eae7bffd87c"
+            "default_string_format": "525ab533-c517-450b-928e-c22884cd2167"
         }
     ],
     "text": {
@@ -571,7 +643,7 @@
                                                                     {
                                                                         "id": "0,1,0,0,0,0,0,0,0",
                                                                         "type": 8,
-                                                                        "elements": "12",
+                                                                        "elements": "1",
                                                                         "format_id": "00240c87-11cd-4efe-a368-5c47bf5ab21c",
                                                                         "can_merge": true
                                                                     },

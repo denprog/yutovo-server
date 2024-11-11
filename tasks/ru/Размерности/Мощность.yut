@@ -70,7 +70,7 @@
     },
     "string_formats": [
         {
-            "id": "52f3d2b3-27c5-4f2b-adf0-7d35773df017",
+            "id": "a8ebb4bc-1518-4637-b22d-666ec2d38326",
             "family": "Arial",
             "size": 14,
             "bold": false,
@@ -82,7 +82,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "0126b74d-1e12-471c-a5ae-fe39f6891626",
+            "id": "ec1fceb5-a55b-46b7-b6bc-40b12aba6c38",
             "family": "Arial",
             "size": 30,
             "bold": true,
@@ -94,7 +94,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "41161a12-7ba6-4627-bee7-06cbd995c5dc",
+            "id": "cf71abee-5b95-47ef-9574-9305550609cb",
             "family": "Arial",
             "size": 26,
             "bold": true,
@@ -106,7 +106,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "561586fd-ce1d-4249-9547-08687ee91294",
+            "id": "48edb084-7c81-44e4-b616-5aec60c8315b",
             "family": "Arial",
             "size": 22,
             "bold": true,
@@ -118,7 +118,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "d3844959-c641-426e-96ba-353cf302c337",
+            "id": "bd2ff615-2d86-49fc-b367-88e98e8b6ccb",
             "family": "Courier New",
             "size": 12,
             "bold": false,
@@ -130,7 +130,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "cf9986bb-4e67-45d7-b301-4d100196a39d",
+            "id": "52ec5967-5378-4b35-bc7e-3cd00d66b2b0",
             "family": "Courier New",
             "size": 14,
             "bold": false,
@@ -142,7 +142,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "47057c72-e895-43b3-a964-41358929761c",
+            "id": "cce439c2-5e8e-4ddb-9e62-1713fe303d23",
             "family": "Arial",
             "size": 14,
             "bold": false,
@@ -154,7 +154,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "17a06045-1f05-49f6-8d6a-b0bcab94ecf2",
+            "id": "cbeb79fe-4a70-4333-ad42-6329f07ad7a8",
             "family": "Arial",
             "size": 30,
             "bold": true,
@@ -166,7 +166,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "889772d7-8b03-478a-b8a3-f592c97d266b",
+            "id": "c56a9822-f28f-4e3d-9b49-cde674ef53ec",
             "family": "Arial",
             "size": 26,
             "bold": true,
@@ -178,7 +178,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "cab3831b-3918-452a-8a53-76fbd98feaec",
+            "id": "3c821b7a-e611-4b2c-8435-4572a6958871",
             "family": "Arial",
             "size": 22,
             "bold": true,
@@ -190,7 +190,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "10d03bee-5927-4e0e-9479-69bec71f0a94",
+            "id": "f0fec7ea-c767-49fe-812b-680af0ae2ac5",
             "family": "Courier New",
             "size": 12,
             "bold": false,
@@ -202,79 +202,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "ee9ed511-c7da-437b-8de2-ff7614afef81",
-            "family": "Courier New",
-            "size": 14,
-            "bold": false,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "e74a6a8c-162e-4de3-b40a-8ac7ecbf1dfc",
-            "family": "Arial",
-            "size": 14,
-            "bold": false,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "aa8e4c32-5b01-4509-89c8-e2493fd73850",
-            "family": "Arial",
-            "size": 30,
-            "bold": true,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "eca35b22-1b52-467b-a1a1-b9b805131cc3",
-            "family": "Arial",
-            "size": 26,
-            "bold": true,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "77b4849b-a2a1-458e-bb5b-0bc390854acb",
-            "family": "Arial",
-            "size": 22,
-            "bold": true,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "ce57635a-53bf-4d03-b8b9-eef72f564a08",
-            "family": "Courier New",
-            "size": 12,
-            "bold": false,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "c4dfa2e2-ba41-4a21-acb9-72177f88aa02",
+            "id": "faf6e4e5-14dd-4c6d-b29c-ff45e1f0248b",
             "family": "Courier New",
             "size": 14,
             "bold": false,
@@ -441,7 +369,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "52f3d2b3-27c5-4f2b-adf0-7d35773df017"
+            "default_string_format": "a8ebb4bc-1518-4637-b22d-666ec2d38326"
         },
         {
             "name": "Header 1",
@@ -453,7 +381,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "0126b74d-1e12-471c-a5ae-fe39f6891626"
+            "default_string_format": "ec1fceb5-a55b-46b7-b6bc-40b12aba6c38"
         },
         {
             "name": "Header 2",
@@ -465,7 +393,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "41161a12-7ba6-4627-bee7-06cbd995c5dc"
+            "default_string_format": "cf71abee-5b95-47ef-9574-9305550609cb"
         },
         {
             "name": "Header 3",
@@ -477,7 +405,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "561586fd-ce1d-4249-9547-08687ee91294"
+            "default_string_format": "48edb084-7c81-44e4-b616-5aec60c8315b"
         },
         {
             "name": "Monospace",
@@ -489,7 +417,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "d3844959-c641-426e-96ba-353cf302c337"
+            "default_string_format": "bd2ff615-2d86-49fc-b367-88e98e8b6ccb"
         },
         {
             "name": "Code",
@@ -501,7 +429,7 @@
             "indent_first_line": 0,
             "spacing_before": 2,
             "spacing_after": 2,
-            "default_string_format": "cf9986bb-4e67-45d7-b301-4d100196a39d"
+            "default_string_format": "52ec5967-5378-4b35-bc7e-3cd00d66b2b0"
         }
     ],
     "text": {
@@ -578,8 +506,8 @@
                                                                     {
                                                                         "id": "0,1,0,0,0,0,0,0,1",
                                                                         "type": 8,
-                                                                        "elements": "Дж",
-                                                                        "format_id": "c4dfa2e2-ba41-4a21-acb9-72177f88aa02",
+                                                                        "elements": "Вт",
+                                                                        "format_id": "faf6e4e5-14dd-4c6d-b29c-ff45e1f0248b",
                                                                         "can_merge": false
                                                                     }
                                                                 ]
@@ -660,7 +588,7 @@
                             {
                                 "id": "0,2,0,0",
                                 "type": 4,
-                                "elements": "Встроенные размерности энергии:",
+                                "elements": "Встроенные размерности мощности:",
                                 "format_id": "b5a9f903-b431-43c5-942d-cf47b5adc6c4"
                             }
                         ]
@@ -707,8 +635,8 @@
                                                                     {
                                                                         "id": "0,3,0,0,0,0,0,0,1",
                                                                         "type": 8,
-                                                                        "elements": "мкДж",
-                                                                        "format_id": "c4dfa2e2-ba41-4a21-acb9-72177f88aa02",
+                                                                        "elements": "мкВт",
+                                                                        "format_id": "00240c87-11cd-4efe-a368-5c47bf5ab21c",
                                                                         "can_merge": false
                                                                     }
                                                                 ]
@@ -739,7 +667,7 @@
                                                                             "default_angle_measure": 0,
                                                                             "result_angle_measure": 0,
                                                                             "show_angle_measure": true,
-                                                                            "unit": "(Дж)"
+                                                                            "unit": "(Вт)"
                                                                         },
                                                                         "integer_config": {
                                                                             "result_notation": 2,
@@ -748,7 +676,7 @@
                                                                         },
                                                                         "rational_config": {
                                                                             "fraction_form": 1,
-                                                                            "unit": "(Дж)"
+                                                                            "unit": "(Вт)"
                                                                         },
                                                                         "complex_config": {
                                                                             "precision": 3,
@@ -797,7 +725,7 @@
                                                                     {
                                                                         "id": "0,3,0,0,1,0,0,0,1",
                                                                         "type": 8,
-                                                                        "elements": "мДж",
+                                                                        "elements": "мВт",
                                                                         "format_id": "00240c87-11cd-4efe-a368-5c47bf5ab21c",
                                                                         "can_merge": false
                                                                     }
@@ -829,7 +757,7 @@
                                                                             "default_angle_measure": 0,
                                                                             "result_angle_measure": 0,
                                                                             "show_angle_measure": true,
-                                                                            "unit": "(Дж)"
+                                                                            "unit": "(Вт)"
                                                                         },
                                                                         "integer_config": {
                                                                             "result_notation": 2,
@@ -838,7 +766,7 @@
                                                                         },
                                                                         "rational_config": {
                                                                             "fraction_form": 1,
-                                                                            "unit": "(Дж)"
+                                                                            "unit": "(Вт)"
                                                                         },
                                                                         "complex_config": {
                                                                             "precision": 3,
@@ -887,8 +815,8 @@
                                                                     {
                                                                         "id": "0,3,0,0,2,0,0,0,1",
                                                                         "type": 8,
-                                                                        "elements": "Дж",
-                                                                        "format_id": "ee9ed511-c7da-437b-8de2-ff7614afef81",
+                                                                        "elements": "Вт",
+                                                                        "format_id": "00240c87-11cd-4efe-a368-5c47bf5ab21c",
                                                                         "can_merge": false
                                                                     }
                                                                 ]
@@ -975,7 +903,7 @@
                                                                     {
                                                                         "id": "0,3,0,0,3,0,0,0,1",
                                                                         "type": 8,
-                                                                        "elements": "кДж",
+                                                                        "elements": "кВт",
                                                                         "format_id": "00240c87-11cd-4efe-a368-5c47bf5ab21c",
                                                                         "can_merge": false
                                                                     }
@@ -1007,7 +935,7 @@
                                                                             "default_angle_measure": 0,
                                                                             "result_angle_measure": 0,
                                                                             "show_angle_measure": true,
-                                                                            "unit": "(Дж)"
+                                                                            "unit": "(Вт)"
                                                                         },
                                                                         "integer_config": {
                                                                             "result_notation": 2,
@@ -1016,7 +944,7 @@
                                                                         },
                                                                         "rational_config": {
                                                                             "fraction_form": 1,
-                                                                            "unit": "(Дж)"
+                                                                            "unit": "(Вт)"
                                                                         },
                                                                         "complex_config": {
                                                                             "precision": 3,
@@ -1065,7 +993,7 @@
                                                                     {
                                                                         "id": "0,3,0,0,4,0,0,0,1",
                                                                         "type": 8,
-                                                                        "elements": "МДж",
+                                                                        "elements": "МВт",
                                                                         "format_id": "00240c87-11cd-4efe-a368-5c47bf5ab21c",
                                                                         "can_merge": false
                                                                     }
@@ -1097,7 +1025,7 @@
                                                                             "default_angle_measure": 0,
                                                                             "result_angle_measure": 0,
                                                                             "show_angle_measure": true,
-                                                                            "unit": "(Дж)"
+                                                                            "unit": "(Вт)"
                                                                         },
                                                                         "integer_config": {
                                                                             "result_notation": 2,
@@ -1106,7 +1034,7 @@
                                                                         },
                                                                         "rational_config": {
                                                                             "fraction_form": 1,
-                                                                            "unit": "(Дж)"
+                                                                            "unit": "(Вт)"
                                                                         },
                                                                         "complex_config": {
                                                                             "precision": 3,
