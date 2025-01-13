@@ -135,12 +135,14 @@ void AuthController::Register(const HttpRequestPtr& req, std::function<void (con
         return;
     }
 
+#ifndef TEST
     auto captcha = (*json)["captcha"].asString();
     if (captcha.empty() || session->get<std::string>("captcha") != captcha)
     {
         SendError(k400BadRequest, "Wrong captcha", callback);
         return;
     }
+#endif
 
     orm::DbClientPtr db = app().getDbClient();
     if (user.login.empty() || user.email.empty() || user.password.empty())
@@ -249,16 +251,18 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
 
     auto login = (*json)["login"].asString();
     auto password = (*json)["password"].asString();
-    auto captcha = (*json)["captcha"].asString();
     bool load_last = true;
     if (json->isMember("load_last") && (*json)["load_last"].isBool())
         load_last = (*json)["load_last"].asBool();
 
+#ifndef TEST
+    auto captcha = (*json)["captcha"].asString();
     if (captcha.empty() || session->get<std::string>("captcha") != captcha)
     {
         SendError(k400BadRequest, "Wrong captcha", callback);
         return;
     }
+#endif
 
     logger->Info("Login request: login={}, load_last={}", login, load_last);
     orm::DbClientPtr db = app().getDbClient();
