@@ -340,13 +340,16 @@ TEST_F(AuthTest, login5)
     Login(client, "User1", "11", access_token, document_id1, name, language);
     GetDocumentName(client, document_id, name);
     ASSERT_TRUE(name == "new_name_1") << name;
-    UnRegister(client, "User1", access_token);
+    Logout(client, "User1", access_token);
 
     Login(client, "User2", "22", access_token, document_id2, name, language);
     GetDocumentName(client, document_id, name);
     ASSERT_TRUE(name == "new_name_1") << name;
     ASSERT_TRUE(document_id1 == document_id2);
     UnRegister(client, "User2", access_token);
+
+    Login(client, "User1", "11", access_token, document_id1, name, language);
+    UnRegister(client, "User1", access_token);
 }
 
 //Refresh session
