@@ -33,7 +33,7 @@ TEST_F(ServiceTest, tasks2)
     client->enableCookies(true);
 
     Json::Value body;
-    body["task"] = "/Physics/Dynamics/Elastic force";
+    body["task"] = "/Physics/Dynamics/Kinetic energy";
     auto req = HttpRequest::newHttpJsonRequest(body);
     req->setMethod(drogon::Post);
     req->setPath("/service/load-task");
@@ -53,7 +53,7 @@ TEST_F(ServiceTest, tasks3)
     client->enableCookies(true);
 
     Json::Value body;
-    body["task"] = "/Physics/Dynamics/../Elastic force";
+    body["task"] = "/Physics/Dynamics/../Kinetic energy";
     auto req = HttpRequest::newHttpJsonRequest(body);
     req->setMethod(drogon::Post);
     req->setPath("/service/load-task");
