@@ -396,8 +396,12 @@ int ControllerBase::GetFirstEmptyDocument(const std::string& user_id)
         try
         {
             auto& el = text["elements"][0]["elements"][0]["elements"][0];
-            if (el["elements"] == "")
+            auto s = el.toStyledString();
+            if (el["elements"] == "" || (el["elements"].size() == 1 && el["elements"][0]["elements"].size() == 1 && 
+                el["elements"][0]["elements"][0]["elements"].size() == 1 && el["elements"][0]["elements"][0]["elements"][0]["elements"] == ""))
+            {
                 return (int)row["document_id"].as<int>();
+            }
         }
         catch (Json::Exception& ex)
         {

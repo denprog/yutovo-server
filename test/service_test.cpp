@@ -74,6 +74,7 @@ TEST_F(ServiceTest, tasks3)
     ASSERT_TRUE(r->getStatusCode() == k404NotFound) << r->getStatusCode();
 }
 
+#ifdef REMOTE_SOLVER
 //List identifiers from the service
 TEST_F(ServiceTest, service1)
 {
@@ -98,6 +99,7 @@ TEST_F(ServiceTest, service1)
     ASSERT_TRUE((*json)["Functions"].isArray());
     ASSERT_TRUE((*json)["Variables"].isArray());
 }
+#endif
 
 //Save/load a user document in the DB
 TEST_F(ServiceTest, document1)
@@ -125,7 +127,7 @@ TEST_F(ServiceTest, document1)
     resp = client->sendRequest(req);
     r = resp.second;
 
-    std::ifstream f("../tests/files11.yut");
+    std::ifstream f("../../tests/files11.yut");
 
     Json::Value save_body;
     f >> save_body;
@@ -177,7 +179,7 @@ TEST_F(ServiceTest, document2)
     std::string access_token, document_id, name, language;
     Login(client, "User1", "11", access_token, document_id, name, language);
 
-    std::ifstream f("../tests/files11.yut");
+    std::ifstream f("../../tests/files11.yut");
 
     Json::Value save_body;
     f >> save_body;
@@ -242,7 +244,7 @@ TEST_F(ServiceTest, document3)
     ASSERT_TRUE(c.value() != "");
     client->addCookie(c);
 
-    std::ifstream f("../tests/files11.yut");
+    std::ifstream f("../../tests/files11.yut");
 
     Json::Value save_body;
     f >> save_body;
@@ -295,7 +297,7 @@ TEST_F(ServiceTest, document4)
 
         Login(client, "User1", "11", access_token, document_id, name, language);
 
-        std::ifstream f("../tests/files11.yut");
+        std::ifstream f("../../tests/files11.yut");
         f >> save_body;
         req = HttpRequest::newHttpJsonRequest(save_body);
         req->setMethod(drogon::Post);
@@ -345,7 +347,7 @@ TEST_F(ServiceTest, document5)
     std::string access_token, document_id, name, language;
     Login(client, "User1", "11", access_token, document_id, name, language);
 
-    std::ifstream f("../tests/files11.yut");
+    std::ifstream f("../../tests/files11.yut");
 
     Json::Value save_body;
     f >> save_body;
@@ -425,8 +427,10 @@ TEST_F(ServiceTest, document5)
     auto load_json_str = r->jsonObject()->toStyledString();
     Json::Value v;
     Json::Reader reader;
-    reader.parse("{\"text\":{\"id\":\"0\",\"type\":1,\"elements\":[{\"id\":\"0,0\",\"type\":2,\
-        \"elements\":[{\"id\":\"0,0,0\",\"type\":3,\"elements\":[{\"id\":\"0,0,0,0\",\"type\":4,\"elements\":\"\"}]}]}]}}", v);
+    reader.parse("{\"caret\" : {\"id\" : \"0,0,0,0,0,0,0\"}, \"selection\" : [], \"text\" : {\"elements\" : [{\"elements\" : [{\"elements\" : \
+        [{\"code_id\" : 1, \"elements\" : [{\"elements\" : [{\"elements\" : [{\"elements\" : \"\", \"id\" : \"0,0,0,0,0,0,0\", \"type\" : 8}], \
+        \"id\" : \"0,0,0,0,0,0\", \"type\" : 7}], \"format_alignment\" : 0, \"format_name\" : \"Code\", \"id\" : \"0,0,0,0,0\", \"type\" : 6}], \
+        \"id\" : \"0,0,0,0\", \"type\" : 5}],	\"id\" : \"0,0,0\",	\"type\" : 3}],	\"id\" : \"0,0\", \"type\" : 2}], \"id\" : \"0\", \"type\" : 1}}", v);
     ASSERT_TRUE(load_json_str == v.toStyledString()) << load_json_str;
 
     UnRegister(client, "User1", access_token);
@@ -454,7 +458,7 @@ TEST_F(ServiceTest, document6)
 
         Login(client, "User1", "11", access_token, document_id, name, language);
 
-        std::ifstream f("../tests/files11.yut");
+        std::ifstream f("../../tests/files11.yut");
 
         f >> save_body;
         req = HttpRequest::newHttpJsonRequest(save_body);
@@ -528,7 +532,7 @@ TEST_F(ServiceTest, document7)
     Login(client, "User1", "11", access_token, document_id, name, language);
 
     Json::Value save_body;
-    std::ifstream f("../tests/files11.yut");
+    std::ifstream f("../../tests/files11.yut");
     f >> save_body;
     req = HttpRequest::newHttpJsonRequest(save_body);
     req->setMethod(drogon::Post);
@@ -575,7 +579,7 @@ TEST_F(ServiceTest, document8)
     std::string access_token, document_id, name, language;
     Login(client, "User1", "11", access_token, document_id, name, language);
 
-    SaveDocument(client, "../tests/files11.yut", access_token, document_id);
+    SaveDocument(client, "../../tests/files11.yut", access_token, document_id);
 
     client->addCookie("document_id", document_id);
     DeleteDocument(client, access_token);
@@ -610,10 +614,10 @@ TEST_F(ServiceTest, document9)
     Login(client, "User1", "11", access_token, document_id, name, language);
 
     std::string document1_id, document2_id;
-    SaveDocument(client, "../tests/files11.yut", access_token, document1_id);
+    SaveDocument(client, "../../tests/files11.yut", access_token, document1_id);
 
     NewDocument(client, access_token, document2_id);
-    SaveDocument(client, "../tests/plus6_1.yut", access_token, document2_id);
+    SaveDocument(client, "../../tests/plus6_1.yut", access_token, document2_id);
 
     DeleteDocument(client, access_token, document2_id);
     ASSERT_TRUE(document1_id != document2_id);
@@ -654,10 +658,10 @@ TEST_F(ServiceTest, document10)
     Login(client, "User1", "11", access_token, document_id, name, language);
 
     std::string document1_id, document2_id;
-    SaveDocument(client, "../tests/files11.yut", access_token, document1_id);
+    SaveDocument(client, "../../tests/files11.yut", access_token, document1_id);
 
     NewDocument(client, access_token, document2_id);
-    SaveDocument(client, "../tests/plus6_1.yut", access_token, document2_id);
+    SaveDocument(client, "../../tests/plus6_1.yut", access_token, document2_id);
 
     std::shared_ptr<Json::Value> doc;
     LoadDocument(client, access_token, document1_id, doc);
@@ -743,11 +747,11 @@ TEST_F(ServiceTest, document13)
     Login(client, "User1", "11", access_token, document_id, name, language);
 
     Json::Value save_body;
-    std::ifstream f("../tests/files11.yut");
+    std::ifstream f("../../tests/files11.yut");
     f >> save_body;
 
     std::string document1_id, document2_id;
-    SaveDocument(client, "../tests/files11.yut", access_token, document1_id);
+    SaveDocument(client, "../../tests/files11.yut", access_token, document1_id);
 
     Json::Value body;
     body["document_id"] = document1_id;
@@ -802,7 +806,7 @@ TEST_F(ServiceTest, document14)
 
         std::string document2_id;
         NewDocument(client, access_token, document2_id);
-        SaveDocument(client, "../tests/files11.yut", access_token, document2_id);
+        SaveDocument(client, "../../tests/files11.yut", access_token, document2_id);
 
         Logout(client, "User1", access_token);
     }
@@ -860,7 +864,7 @@ TEST_F(ServiceTest, document16)
     Login(client, "test1", "11", access_token, document_id, name, language);
 
     Json::Value save_body;
-    std::ifstream f("../tests/file_size_limit.yut");
+    std::ifstream f("../../tests/file_size_limit.yut");
     f >> save_body;
     auto req = HttpRequest::newHttpJsonRequest(save_body);
     req->setMethod(drogon::Post);
@@ -906,7 +910,7 @@ TEST_F(ServiceTest, document17)
     Json::Value body2;
     Json::Value doc2;
     doc2["real_result"]["precision"] = 10;
-    body2["config"] = doc2.toStyledString();
+    body2["settings"] = doc2.toStyledString();
 
     req = HttpRequest::newHttpJsonRequest(body2);
     req->setMethod(drogon::Post);
@@ -927,7 +931,7 @@ TEST_F(ServiceTest, document17)
     ASSERT_TRUE(doc3["real_result"]["precision"] == 10) << doc3["real_result"]["precision"];
 
     doc2["real_result"]["precision"] = 20;
-    body2["config"] = doc2.toStyledString();
+    body2["settings"] = doc2.toStyledString();
     req = HttpRequest::newHttpJsonRequest(body2);
     req->setMethod(drogon::Post);
     req->setPath("/service/set-settings");
