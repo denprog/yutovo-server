@@ -26,7 +26,6 @@ public:
 
 private:
     std::string public_key, private_key;
-    Logger* logger = Logger::GetInstance(std::string(std::getenv("YUTOVO_DEPLOY")) + "/log", "server", true, true);
 };
 
 class ControllerBase

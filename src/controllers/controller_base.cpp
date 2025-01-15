@@ -28,7 +28,7 @@ void LoginFilter::doFilter(const HttpRequestPtr& req, FilterCallback&& not_valid
     SessionPtr session = req->session();
     if (session_id.empty())
         session_id = session->get<std::string>("session_id");
-    GetLogger(session_id)->Info("doFilter {}", req->path());
+    GetLogger(session_id)->Debug("doFilter {}", req->path());
     std::string access_token = req->getHeader("access_token");
     HttpResponsePtr resp;
 

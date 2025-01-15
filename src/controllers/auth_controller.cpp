@@ -27,7 +27,7 @@ AuthController::AuthController()
 void AuthController::GetCaptcha(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
     std::string session_id = req->getCookie("session_id");
-    GetLogger(session_id)->Info("Get captcha request");
+    GetLogger(session_id)->Debug("Get captcha request");
 
     // Generate captcha text (6 char max).
     const char *predef_words[] = {
@@ -119,13 +119,13 @@ void AuthController::GetCaptcha(const HttpRequestPtr& req, std::function<void (c
 
     SendCaptcha(callback, captcha);
 
-    GetLogger(session_id)->Info("Sent captcha: {}", captcha_text);
+    GetLogger(session_id)->Debug("Sent captcha: {}", captcha_text);
 }
 
 void AuthController::Register(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, User&& user)
 {
     std::string session_id = req->getCookie("session_id");
-    GetLogger(session_id)->Info("Register request: login={}, email={}, password={}, name={}", user.login, user.email, user.password, user.name);
+    GetLogger(session_id)->Info("Register request: login={}, email={}, name={}", user.login, user.email, user.name);
 
     SessionPtr session = req->session();
     auto json = req->getJsonObject();
@@ -457,6 +457,7 @@ void AuthController::RefreshToken(const HttpRequestPtr& req, std::function<void 
         result = db->execSqlSync("insert into refresh_sessions (user_id, refresh_uuid, expire_time) values ($1, $2, $3)", 
             user_id, refresh_uuid, refresh_expires.secondsSinceEpoch());
         
+        auto last_login = session->get<std::string>("login");
         session->insert("login", login);
         session->erase("user_id");
         session->insert("user_id", user_id);
@@ -481,6 +482,9 @@ void AuthController::RefreshToken(const HttpRequestPtr& req, std::function<void 
         }
 
         session->insert("session_id", session_id);
+
+        if (last_login != login)
+            auth_logger->Info("Login: login={}, user_id={}", login, user_id);
 
         auto session_expires_date = trantor::Date::now().after(session_expires);
         SendOkTokens(callback, login, access_uuid, refresh_uuid, session_id, access_expires, refresh_expires, session_expires_date);
@@ -513,7 +517,7 @@ void AuthController::SetLanguage(const HttpRequestPtr& req, std::function<void (
 
     auto language = (*json)["language"].asString();
 
-    GetLogger(session_id)->Info("Set language request: user_id={}, language={}", user_id, language);
+    GetLogger(session_id)->Debug("Set language request: user_id={}, language={}", user_id, language);
     orm::DbClientPtr db = app().getDbClient();
 
     try
@@ -537,7 +541,7 @@ void AuthController::GetLanguage(const HttpRequestPtr& req, std::function<void (
     std::string user_id = session->get<std::string>("user_id");
     std::string session_id = req->getCookie("session_id");
 
-    GetLogger(session_id)->Info("Get language request: user_id={}", user_id);
+    GetLogger(session_id)->Debug("Get language request: user_id={}", user_id);
     orm::DbClientPtr db = app().getDbClient();
 
     try
