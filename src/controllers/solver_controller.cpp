@@ -46,7 +46,7 @@ SolverController::SolverController()
 void SolverController::GetTasks(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
     session_id = req->getCookie("session_id");
-    GetLogger(session_id)->Info("GetTasks request");
+    GetLogger(session_id)->Debug("GetTasks request");
 
     auto json = req->getJsonObject();
     std::string language = "en";
@@ -102,6 +102,7 @@ void SolverController::LoadTask(const HttpRequestPtr& req, std::function<void (c
     auto json = req->getJsonObject();
     if (!json || !json->isObject())
     {
+        GetLogger(session_id)->Error("LoadTask error: Json not found in the request");
         SendError(k400BadRequest, "Json not found in the request", callback);
         return;
     }
@@ -113,6 +114,7 @@ void SolverController::LoadTask(const HttpRequestPtr& req, std::function<void (c
     std::string task;
     if (!json->isMember("task") || !(*json)["task"].isString())
     {
+        GetLogger(session_id)->Error("LoadTask error: Wrong request: empty task");
         SendError(k400BadRequest, "Wrong request: empty task", callback);
         return;
     }
@@ -128,6 +130,7 @@ void SolverController::LoadTask(const HttpRequestPtr& req, std::function<void (c
         path = fs::canonical(fs::path(task));
         if (!std::string(path.c_str()).starts_with(tasks_path))
         {
+            GetLogger(session_id)->Error("LoadTask error: Path not found: {}", path.c_str());
             SendError(k404NotFound, "Path not found", callback);
             return;
         }
@@ -136,6 +139,7 @@ void SolverController::LoadTask(const HttpRequestPtr& req, std::function<void (c
     }
     catch (const std::exception& ex)
     {
+        GetLogger(session_id)->Error("LoadTask error: Path not found");
         SendError(k404NotFound, "Path not found", callback);
     }
 }
@@ -146,6 +150,7 @@ void SolverController::SaveTask(const HttpRequestPtr& req, std::function<void (c
     auto json = req->getJsonObject();
     if (!json || !json->isObject())
     {
+        GetLogger(session_id)->Error("SaveTask error: Json not found in the request");
         SendError(k400BadRequest, "Json not found in the request", callback);
         return;
     }
@@ -157,6 +162,7 @@ void SolverController::SaveTask(const HttpRequestPtr& req, std::function<void (c
     std::string task;
     if (!json->isMember("task") || !(*json)["task"].isString())
     {
+        GetLogger(session_id)->Error("SaveTask error: Wrong request: empty task");
         SendError(k400BadRequest, "Wrong request: empty task", callback);
         return;
     }
@@ -164,6 +170,7 @@ void SolverController::SaveTask(const HttpRequestPtr& req, std::function<void (c
     size_t p = task.find_last_of("/");
     if (p == std::string::npos || p >= task.length())
     {
+        GetLogger(session_id)->Error("SaveTask error: Wrong task name");
         SendError(k400BadRequest, "Wrong task name", callback);
         return;
     }
@@ -176,13 +183,14 @@ void SolverController::SaveTask(const HttpRequestPtr& req, std::function<void (c
         user_id = "-1";
     if (session_id.empty())
     {
+        GetLogger(session_id)->Error("SaveTask error: Wrong request: empty session_id");
         SendError(k400BadRequest, "Wrong request: empty session_id", callback);
         return;
     }
 
     std::string document_id;
 
-    GetLogger(session_id)->Info("task={}", task);
+    GetLogger(session_id)->Debug("SaveTask request: task={}", task);
 
     ClearDbTurnOff t; //skip the clear db circles
 
@@ -190,7 +198,7 @@ void SolverController::SaveTask(const HttpRequestPtr& req, std::function<void (c
     {
         if (!AddDocument(user_id, document_id, name))
         {
-            GetLogger(session_id)->Error("Database error: Error inserting a document");
+            GetLogger(session_id)->Error("Database error: Error inserting a document: {}, {}", document_id, name);
             SendError(k500InternalServerError, "Error inserting a document", callback);
             return;
         }
@@ -205,6 +213,7 @@ void SolverController::SaveTask(const HttpRequestPtr& req, std::function<void (c
             path = fs::canonical(fs::path(task));
             if (!std::string(path.c_str()).starts_with(tasks_path))
             {
+                GetLogger(session_id)->Error("SaveTask error: Path not found: {}", path.c_str());
                 SendError(k404NotFound, "Path not found", callback);
                 return;
             }
@@ -241,6 +250,7 @@ void SolverController::ListIdentifiers(const HttpRequestPtr& req, std::function<
 {
     if (!solver_client || !solver_client->getConnection())
     {
+        GetLogger(session_id)->Error("ListIdentifiers error: Solver socket not open");
         SendError(k500InternalServerError, "Solver socket not open", callback);
         return;
     }
@@ -257,6 +267,7 @@ void SolverController::ListIdentifiers(const HttpRequestPtr& req, std::function<
     {
         if (time(nullptr) - now >= solver_timeout)
         {
+            GetLogger(session_id)->Error("ListIdentifiers error: Solver not response");
             SendError(k500InternalServerError, "Solver not response", callback);
             return;
         }
@@ -275,11 +286,13 @@ void SolverController::NewDocument(const HttpRequestPtr& req, std::function<void
     auto json = req->getJsonObject();
     if (!json)
     {
+        GetLogger(session_id)->Error("NewDocument error: Json not found in the request");
         SendError(k400BadRequest, "Json not found in the request", callback);
         return;
     }
     if (session_id.empty())
     {
+        GetLogger(session_id)->Error("NewDocument error: Wrong request: empty session_id");
         SendError(k400BadRequest, "Wrong request: empty session_id", callback);
         return;
     }
@@ -290,7 +303,7 @@ void SolverController::NewDocument(const HttpRequestPtr& req, std::function<void
     if (user_id.empty())
         user_id = "-1";
     std::string document_id = session->get<std::string>("document_id");
-    GetLogger(session_id)->Info("document_id={}", document_id);
+    GetLogger(session_id)->Info("New document: document_id={}", document_id);
 
     ClearDbTurnOff t; //skip the clear db circles for a while
 
@@ -340,7 +353,7 @@ void SolverController::NewDocument(const HttpRequestPtr& req, std::function<void
                 result = db->execSqlSync("update user_documents set document=$1 where document_id=$2", doc.toStyledString(), document_id);
                 if (result.affectedRows() == 0)
                 {
-                    GetLogger(session_id)->Error("Database error: Error inserting a document");
+                    GetLogger(session_id)->Error("Database error: Error inserting a document: document_id={}", document_id);
                     SendError(k500InternalServerError, "Error inserting a document", callback);
                     return;
                 }
@@ -352,7 +365,7 @@ void SolverController::NewDocument(const HttpRequestPtr& req, std::function<void
                     (*json)["json"].isString() ? (*json)["json"].asString() : (*json)["json"].toStyledString(), document_id);
                 if (result.affectedRows() == 0)
                 {
-                    GetLogger(session_id)->Error("Database error: Error inserting a document");
+                    GetLogger(session_id)->Error("Database error: Error inserting a document: document_id={}", document_id);
                     SendError(k500InternalServerError, "Error inserting a document", callback);
                     return;
                 }
@@ -373,15 +386,17 @@ void SolverController::NewDocument(const HttpRequestPtr& req, std::function<void
 void SolverController::SaveDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
     session_id = req->getCookie("session_id");
-    GetLogger(session_id)->Info("SaveDocument request");
+    GetLogger(session_id)->Debug("SaveDocument request");
     auto json = req->getJsonObject();
     if (!json)
     {
+        GetLogger(session_id)->Error("SaveDocument error: Wrong request: Json not found in the request");
         SendError(k400BadRequest, "Json not found in the request", callback);
         return;
     }
     if (session_id.empty())
     {
+        GetLogger(session_id)->Error("SaveDocument error: Wrong request: empty session_id");
         SendError(k400BadRequest, "Wrong request: empty session_id", callback);
         return;
     }
@@ -389,6 +404,7 @@ void SolverController::SaveDocument(const HttpRequestPtr& req, std::function<voi
     Json::Value& doc = *json;
     if (!doc.isObject() || !doc.isMember("text"))
     {
+        GetLogger(session_id)->Error("SaveDocument error: Text field not found in the request");
         SendError(k400BadRequest, "Text field not found in the request", callback);
         return;
     }
@@ -398,6 +414,7 @@ void SolverController::SaveDocument(const HttpRequestPtr& req, std::function<voi
 
     if (!text.isMember("id") || text["id"].asString().empty())
     {
+        GetLogger(session_id)->Error("SaveDocument error: Wrong request: empty id");
         SendError(k400BadRequest, "Wrong request: empty id", callback);
         return;
     }
@@ -437,6 +454,7 @@ void SolverController::SaveDocument(const HttpRequestPtr& req, std::function<voi
             if (row["user_id"].as<std::string>() != user_id && !row["shared"].as<bool>())
             {
                 //saving this foreign document is prohibited
+                GetLogger(session_id)->Error("SaveDocument error: Document saving is prohibited: document_id={}", document_id);
                 SendError(k403Forbidden, "Document saving is prohibited", callback);
                 return;
             }
@@ -547,11 +565,12 @@ void SolverController::SaveDocument(const HttpRequestPtr& req, std::function<voi
 void SolverController::SaveAsDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
     session_id = req->getCookie("session_id");
-    GetLogger(session_id)->Info("SaveAsDocument request");
+    GetLogger(session_id)->Debug("SaveAsDocument request");
 
     auto json = req->getJsonObject();
     if (!json || !json->isObject())
     {
+        GetLogger(session_id)->Error("SaveAsDocument error: Wrong request: Json not found in the request");
         SendError(k400BadRequest, "Json not found in the request", callback);
         return;
     }
@@ -562,6 +581,7 @@ void SolverController::SaveAsDocument(const HttpRequestPtr& req, std::function<v
         document_id = (*json)["document_id"].asString();
     if (document_id.empty() || document_id == "-1")
     {
+        GetLogger(session_id)->Error("SaveAsDocument error: Wrong request: document_id field not found in the request");
         SendError(k400BadRequest, "document_id field not found in the request", callback);
         return;
     }
@@ -576,12 +596,13 @@ void SolverController::SaveAsDocument(const HttpRequestPtr& req, std::function<v
         return;
     }
 
-    GetLogger(session_id)->Info("Name: {}", name);
+    GetLogger(session_id)->Info("Save document: name: {}", name);
 
     SessionPtr session = req->session();
     std::string user_id = session->get<std::string>("user_id");
     if (user_id.empty())
     {
+        GetLogger(session_id)->Error("SaveAsDocument error: Wrong user_id");
         SendError(k400BadRequest, "Wrong user_id", callback);
         return;
     }
@@ -638,11 +659,12 @@ void SolverController::SaveAsDocument(const HttpRequestPtr& req, std::function<v
 void SolverController::LoadDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
     session_id = req->getCookie("session_id");
-    GetLogger(session_id)->Info("LoadDocument request");
+    GetLogger(session_id)->Debug("LoadDocument request");
 
     auto json = req->getJsonObject();
     if (!json)
     {
+        GetLogger(session_id)->Error("LoadDocument error: Wrong request: Json not found in the request");
         SendError(k400BadRequest, "Json not found in the request", callback);
         return;
     }
@@ -657,11 +679,12 @@ void SolverController::LoadDocument(const HttpRequestPtr& req, std::function<voi
         session->get<std::string>("document_id");
     if (document_id.empty())
     {
+        GetLogger(session_id)->Error("LoadDocument error: Wrong request: empty document_id");
         SendError(k400BadRequest, "Wrong request: empty document_id", callback);
         return;
     }
 
-    GetLogger(session_id)->Info("document_id={}", document_id);
+    GetLogger(session_id)->Info("Load document: document_id={}", document_id);
 
     std::string id;
     if (json->isObject() && json->isMember("id") && (*json)["id"].isString())
@@ -679,6 +702,7 @@ void SolverController::LoadDocument(const HttpRequestPtr& req, std::function<voi
         orm::Result result = db->execSqlSync("select user_id, public from user_documents where document_id=$1", document_id);
         if (result.size() == 0)
         {
+            GetLogger(session_id)->Error("LoadDocument error: No such document: document_id={}", document_id);
             SendError(k404NotFound, "No such document", callback);
             return;
         }
@@ -688,6 +712,7 @@ void SolverController::LoadDocument(const HttpRequestPtr& req, std::function<voi
         {
             if (!row["public"].as<bool>())
             {
+                GetLogger(session_id)->Error("LoadDocument error: This document is not public: document_id={}", document_id);
                 SendError(k403Forbidden, "This document is not public", callback);
                 return;
             }
@@ -706,6 +731,7 @@ void SolverController::LoadDocument(const HttpRequestPtr& req, std::function<voi
             std::vector<int> _id;
             if (!ParseId(id, _id))
             {
+                GetLogger(session_id)->Error("LoadDocument error: Wrong Id: document_id={}", document_id);
                 SendError(k400BadRequest, "Wrong Id", callback);
                 return;
             }
@@ -717,6 +743,7 @@ void SolverController::LoadDocument(const HttpRequestPtr& req, std::function<voi
             result = db->execSqlSync("select document->" + path + " as document from user_documents where document_id=$1", document_id);
             if (result.size() == 0)
             {
+                GetLogger(session_id)->Error("LoadDocument error: No such session: document_id={}", document_id);
                 SendError(k400BadRequest, "No such session", callback);
                 return;
             }
@@ -742,11 +769,12 @@ void SolverController::LoadDocument(const HttpRequestPtr& req, std::function<voi
 void SolverController::DeleteDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
     session_id = req->getCookie("session_id");
-    GetLogger(session_id)->Info("DeleteDocument request");
+    GetLogger(session_id)->Debug("DeleteDocument request");
 
     auto json = req->getJsonObject();
     if (!json)
     {
+        GetLogger(session_id)->Error("DeleteDocument error: Wrong request: Json not found in the request");
         SendError(k400BadRequest, "Json not found in the request", callback);
         return;
     }
@@ -758,11 +786,12 @@ void SolverController::DeleteDocument(const HttpRequestPtr& req, std::function<v
         document_id = req->getCookie("document_id");
     if (document_id.empty())
     {
+        GetLogger(session_id)->Error("DeleteDocument error: Wrong request: empty document_id");
         SendError(k400BadRequest, "Wrong request: empty document_id", callback);
         return;
     }
 
-    GetLogger(session_id)->Info("document_id={}", document_id);
+    GetLogger(session_id)->Info("Delete document: document_id={}", document_id);
 
     SessionPtr session = req->session();
     std::string user_id = session->get<std::string>("user_id");
@@ -782,6 +811,7 @@ void SolverController::DeleteDocument(const HttpRequestPtr& req, std::function<v
         orm::Result result = db->execSqlSync("select 1 from user_documents where document_id=$1 and user_id=$2", document_id, user_id);
         if (result.size() == 0)
         {
+            GetLogger(session_id)->Error("DeleteDocument error: Cannot delete document: document_id={}", document_id);
             SendError(k403Forbidden, "Cannot delete document", callback);
             return;
         }
@@ -800,7 +830,7 @@ void SolverController::DeleteDocument(const HttpRequestPtr& req, std::function<v
 void SolverController::ListDocuments(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
     session_id = req->getCookie("session_id");
-    GetLogger(session_id)->Info("ListDocuments request");
+    GetLogger(session_id)->Debug("ListDocuments request");
 
     ClearDbTurnOff t; //skip the clear db circles for a while
 
@@ -834,11 +864,12 @@ void SolverController::ListDocuments(const HttpRequestPtr& req, std::function<vo
 void SolverController::GetDocumentName(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
     session_id = req->getCookie("session_id");
-    GetLogger(session_id)->Info("GetDocumentName request");
+    GetLogger(session_id)->Debug("GetDocumentName request");
 
     auto json = req->getJsonObject();
     if (!json)
     {
+        GetLogger(session_id)->Error("GetDocumentName error: Wrong request: Json not found in the request");
         SendError(k400BadRequest, "Json not found in the request", callback);
         return;
     }
@@ -850,11 +881,12 @@ void SolverController::GetDocumentName(const HttpRequestPtr& req, std::function<
         document_id = req->getCookie("document_id"); //this request is for current document
     if (document_id.empty())
     {
+        GetLogger(session_id)->Error("GetDocumentName error: Wrong request: empty document_id");
         SendError(k400BadRequest, "Wrong request: empty document_id", callback);
         return;
     }
 
-    GetLogger(session_id)->Info("document_id={}", document_id);
+    GetLogger(session_id)->Info("Get document name: document_id={}", document_id);
 
     ClearDbTurnOff t; //skip the clear db circles for a while
 
@@ -866,6 +898,7 @@ void SolverController::GetDocumentName(const HttpRequestPtr& req, std::function<
         orm::Result result = db->execSqlSync("select user_id, name, public from user_documents where document_id=$1", document_id);
         if (result.size() == 0)
         {
+            GetLogger(session_id)->Error("GetDocumentName error: No such document: {}", document_id);
             SendError(k404NotFound, "No such document", callback);
             return;
         }
@@ -875,6 +908,7 @@ void SolverController::GetDocumentName(const HttpRequestPtr& req, std::function<
         {
             if (!row["public"].as<bool>())
             {
+                GetLogger(session_id)->Error("GetDocumentName error: This document is not public: {}", document_id);
                 SendError(k403Forbidden, "This document is not public", callback);
                 return;
             }
@@ -894,11 +928,12 @@ void SolverController::GetDocumentName(const HttpRequestPtr& req, std::function<
 void SolverController::RenameDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
     session_id = req->getCookie("session_id");
-    GetLogger(session_id)->Info("RenameDocument request");
+    GetLogger(session_id)->Debug("RenameDocument request");
 
     auto json = req->getJsonObject();
     if (!json || !json->isObject())
     {
+        GetLogger(session_id)->Error("RenameDocument error: Json not found in the request");
         SendError(k400BadRequest, "Json not found in the request", callback);
         return;
     }
@@ -910,6 +945,7 @@ void SolverController::RenameDocument(const HttpRequestPtr& req, std::function<v
         document_id = req->getCookie("document_id"); //this request is for current document
     if (document_id.empty())
     {
+        GetLogger(session_id)->Error("RenameDocument error: Wrong request: empty document_id");
         SendError(k400BadRequest, "Wrong request: empty document_id", callback);
         return;
     }
@@ -923,7 +959,7 @@ void SolverController::RenameDocument(const HttpRequestPtr& req, std::function<v
         return;
     }
 
-    GetLogger(session_id)->Info("document_id={}", document_id);
+    GetLogger(session_id)->Info("Rename document: document_id={}", document_id);
 
     ClearDbTurnOff t; //skip the clear db circles for a while
 
@@ -952,11 +988,12 @@ void SolverController::RenameDocument(const HttpRequestPtr& req, std::function<v
 void SolverController::SetSettings(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
     session_id = req->getCookie("session_id");
-    GetLogger(session_id)->Info("SetSettings request");
+    GetLogger(session_id)->Debug("SetSettings request");
 
     auto json = req->getJsonObject();
     if (!json || !json->isObject())
     {
+        GetLogger(session_id)->Error("SetSettings error: Json not found in the request");
         SendError(k400BadRequest, "Json not found in the request", callback);
         return;
     }
@@ -966,7 +1003,7 @@ void SolverController::SetSettings(const HttpRequestPtr& req, std::function<void
     std::string user_id = session->get<std::string>("user_id");
     if (user_id.empty())
     {
-        GetLogger(session_id)->Error("Empty user_id");
+        GetLogger(session_id)->Error("SetSettings error: Empty user_id");
         SendError(k500InternalServerError, "Empty user_id", callback);
         return;
     }
@@ -976,6 +1013,7 @@ void SolverController::SetSettings(const HttpRequestPtr& req, std::function<void
         settings = (*json)["settings"].asString();
     if (settings.empty())
     {
+        GetLogger(session_id)->Error("SetSettings error: Wrong request: empty settings");
         SendError(k400BadRequest, "Wrong request: empty settings", callback);
         return;
     }
@@ -1053,14 +1091,14 @@ void SolverController::SetSettings(const HttpRequestPtr& req, std::function<void
 void SolverController::GetSettings(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
     session_id = req->getCookie("session_id");
-    GetLogger(session_id)->Info("GetSettings request");
+    GetLogger(session_id)->Debug("GetSettings request");
 
     orm::DbClientPtr db = app().getDbClient();
     SessionPtr session = req->session();
     std::string user_id = session->get<std::string>("user_id");
     if (user_id.empty())
     {
-        GetLogger(session_id)->Error("Empty user_id");
+        GetLogger(session_id)->Error("GetSettings error: Empty user_id");
         SendError(k500InternalServerError, "Empty user_id", callback);
         return;
     }

@@ -8,7 +8,7 @@ using namespace std::chrono_literals;
 
 int main(int argc, char *argv[])
 {
-    Logger* logger = Logger::GetInstance(std::string(std::getenv("YUTOVO_DEPLOY")) + "/log", "server", true, true);
+    Logger* logger = Logger::GetInstance(std::string(std::getenv("YUTOVO_DEPLOY")) + "/log/yutovo_server/", "server", true, true);
     logger->Info("Yutovo server start");
 
     std::string document_root;

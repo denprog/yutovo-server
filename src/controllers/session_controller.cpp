@@ -18,7 +18,7 @@ void SessionController::Root(const HttpRequestPtr& req, std::function<void (cons
 {
     auto p = req->path();
     session_id = req->getCookie("session_id");
-    GetLogger(session_id)->Info("Request root: path={}", p);
+    GetLogger(session_id)->Debug("Request root: path={}", p);
     if (req->path() == "/")
     {
         orm::DbClientPtr db = app().getDbClient();
@@ -97,7 +97,7 @@ void SessionController::Root(const HttpRequestPtr& req, std::function<void (cons
             }
 
             //redirect to the document
-            GetLogger(session_id)->Info("Redirect {}", "/document/" + document_id);
+            GetLogger(session_id)->Debug("Redirect {}", "/document/" + document_id);
             auto resp = HttpResponse::newRedirectionResponse("/document/" + document_id);
             SetSessionCookie(session_id, resp);
             callback(resp);
@@ -120,8 +120,8 @@ void SessionController::Assets(const HttpRequestPtr& req, std::function<void (co
 {
     auto p = req->path();
     session_id = req->getCookie("session_id");
-    GetLogger(session_id)->Info("Request images: path={}", p);
-    GetLogger(session_id)->Info("Request assets: path={}", p);
+    GetLogger(session_id)->Debug("Request images: path={}", p);
+    GetLogger(session_id)->Debug("Request assets: path={}", p);
     std::string r = HttpAppFramework::instance().getDocumentRoot();
     auto resp = HttpResponse::newFileResponse(r + p);
     callback(resp);
@@ -131,8 +131,8 @@ void SessionController::Icons(const HttpRequestPtr& req, std::function<void (con
 {
     auto p = req->path();
     session_id = req->getCookie("session_id");
-    GetLogger(session_id)->Info("Request images: path={}", p);
-    GetLogger(session_id)->Info("Request icons: path={}", p);
+    GetLogger(session_id)->Debug("Request images: path={}", p);
+    GetLogger(session_id)->Debug("Request icons: path={}", p);
     std::string r = HttpAppFramework::instance().getDocumentRoot();
     auto resp = HttpResponse::newFileResponse(r + p);
     callback(resp);
@@ -142,7 +142,7 @@ void SessionController::Images(const HttpRequestPtr& req, std::function<void (co
 {
     auto p = req->path();
     session_id = req->getCookie("session_id");
-    GetLogger(session_id)->Info("Request images: path={}", p);
+    GetLogger(session_id)->Debug("Request images: path={}", p);
     std::string r = HttpAppFramework::instance().getDocumentRoot();
     auto resp = HttpResponse::newFileResponse(r + p);
     callback(resp);
