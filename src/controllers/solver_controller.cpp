@@ -43,10 +43,10 @@ SolverController::SolverController()
 #endif
 }
 
-void SolverController::GetTasks(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
+void SolverController::GetLibraryDocuments(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
     session_id = req->getCookie("session_id");
-    GetLogger(session_id)->Debug("GetTasks request");
+    GetLogger(session_id)->Debug("GetLibraryDocuments request");
 
     auto json = req->getJsonObject();
     std::string language = "en";
@@ -91,18 +91,18 @@ void SolverController::GetTasks(const HttpRequestPtr& req, std::function<void (c
         };
     
     Json::Value root;
-    get_files(fs::path(tasks_path + "/" + language), root);
+    get_files(fs::path(library_path + "/" + language), root);
 
     SendJson(callback, root);
 }
 
-void SolverController::LoadTask(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
+void SolverController::LoadLibraryDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
     session_id = req->getCookie("session_id");
     auto json = req->getJsonObject();
     if (!json || !json->isObject())
     {
-        GetLogger(session_id)->Error("LoadTask error: Json not found in the request");
+        GetLogger(session_id)->Error("LoadLibraryDocument error: Json not found in the request");
         SendError(k400BadRequest, "Json not found in the request", callback);
         return;
     }
@@ -111,26 +111,26 @@ void SolverController::LoadTask(const HttpRequestPtr& req, std::function<void (c
     if (json->isMember("language") && (*json)["language"].isString())
         language = (*json)["language"].asString();
 
-    std::string task;
-    if (!json->isMember("task") || !(*json)["task"].isString())
+    std::string document;
+    if (!json->isMember("document") || !(*json)["document"].isString())
     {
-        GetLogger(session_id)->Error("LoadTask error: Wrong request: empty task");
-        SendError(k400BadRequest, "Wrong request: empty task", callback);
+        GetLogger(session_id)->Error("LoadLibraryDocument error: Wrong request: empty document");
+        SendError(k400BadRequest, "Wrong request: empty document", callback);
         return;
     }
-    task = (*json)["task"].asString();
+    document = (*json)["document"].asString();
     
-    GetLogger(session_id)->Info("LoadTask request task={}", "/" + language + task);
-    task = tasks_path + language + task + ".yut";
+    GetLogger(session_id)->Info("LoadLibraryDocument request document={}", "/" + language + document);
+    document = library_path + language + document + ".yut";
     fs::path path;
 
-    //check if the path is inside tasks_path
+    //check if the path is inside library_path
     try
     {
-        path = fs::canonical(fs::path(task));
-        if (!std::string(path.c_str()).starts_with(tasks_path))
+        path = fs::canonical(fs::path(document));
+        if (!std::string(path.c_str()).starts_with(library_path))
         {
-            GetLogger(session_id)->Error("LoadTask error: Path not found: {}", path.c_str());
+            GetLogger(session_id)->Error("LoadLibraryDocument error: Path not found: {}", path.c_str());
             SendError(k404NotFound, "Path not found", callback);
             return;
         }
@@ -139,18 +139,18 @@ void SolverController::LoadTask(const HttpRequestPtr& req, std::function<void (c
     }
     catch (const std::exception& ex)
     {
-        GetLogger(session_id)->Error("LoadTask error: Path not found");
+        GetLogger(session_id)->Error("LoadLibraryDocument error: Path not found");
         SendError(k404NotFound, "Path not found", callback);
     }
 }
 
-void SolverController::SaveTask(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
+void SolverController::SaveLibraryDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
     session_id = req->getCookie("session_id");
     auto json = req->getJsonObject();
     if (!json || !json->isObject())
     {
-        GetLogger(session_id)->Error("SaveTask error: Json not found in the request");
+        GetLogger(session_id)->Error("SaveLibraryDocument error: Json not found in the request");
         SendError(k400BadRequest, "Json not found in the request", callback);
         return;
     }
@@ -159,23 +159,23 @@ void SolverController::SaveTask(const HttpRequestPtr& req, std::function<void (c
     if (json->isMember("language") && (*json)["language"].isString())
         language = (*json)["language"].asString();
 
-    std::string task;
-    if (!json->isMember("task") || !(*json)["task"].isString())
+    std::string document;
+    if (!json->isMember("document") || !(*json)["document"].isString())
     {
-        GetLogger(session_id)->Error("SaveTask error: Wrong request: empty task");
-        SendError(k400BadRequest, "Wrong request: empty task", callback);
+        GetLogger(session_id)->Error("SaveLibraryDocument error: Wrong request: empty document");
+        SendError(k400BadRequest, "Wrong request: empty document", callback);
         return;
     }
-    task = (*json)["task"].asString();
-    size_t p = task.find_last_of("/");
-    if (p == std::string::npos || p >= task.length())
+    document = (*json)["document"].asString();
+    size_t p = document.find_last_of("/");
+    if (p == std::string::npos || p >= document.length())
     {
-        GetLogger(session_id)->Error("SaveTask error: Wrong task name");
-        SendError(k400BadRequest, "Wrong task name", callback);
+        GetLogger(session_id)->Error("SaveLibraryDocument error: Wrong document name");
+        SendError(k400BadRequest, "Wrong document name", callback);
         return;
     }
     
-    std::string name = task.substr(p + 1);
+    std::string name = document.substr(p + 1);
     orm::DbClientPtr db = app().getDbClient();
     SessionPtr session = req->session();
     std::string user_id = session->get<std::string>("user_id");
@@ -183,14 +183,14 @@ void SolverController::SaveTask(const HttpRequestPtr& req, std::function<void (c
         user_id = "-1";
     if (session_id.empty())
     {
-        GetLogger(session_id)->Error("SaveTask error: Wrong request: empty session_id");
+        GetLogger(session_id)->Error("SaveLibraryDocument error: Wrong request: empty session_id");
         SendError(k400BadRequest, "Wrong request: empty session_id", callback);
         return;
     }
 
     std::string document_id;
 
-    GetLogger(session_id)->Debug("SaveTask request: task={}", task);
+    GetLogger(session_id)->Debug("SaveLibraryDocument request: document={}", document);
 
     ClearDbTurnOff t; //skip the clear db circles
 
@@ -203,17 +203,17 @@ void SolverController::SaveTask(const HttpRequestPtr& req, std::function<void (c
             return;
         }
 
-        task = tasks_path + language + task + ".yut";
+        document = library_path + language + document + ".yut";
         fs::path path;
         Json::Value doc;
 
-        //check if the path is inside tasks_path
+        //check if the path is inside library_path
         try
         {
-            path = fs::canonical(fs::path(task));
-            if (!std::string(path.c_str()).starts_with(tasks_path))
+            path = fs::canonical(fs::path(document));
+            if (!std::string(path.c_str()).starts_with(library_path))
             {
-                GetLogger(session_id)->Error("SaveTask error: Path not found: {}", path.c_str());
+                GetLogger(session_id)->Error("SaveLibraryDocument error: Path not found: {}", path.c_str());
                 SendError(k404NotFound, "Path not found", callback);
                 return;
             }
@@ -916,6 +916,7 @@ void SolverController::GetDocumentName(const HttpRequestPtr& req, std::function<
 
         Json::Value v(Json::objectValue);
         v["name"] = row["name"].as<std::string>();
+        GetLogger(session_id)->Debug("Document name: name={}", row["name"].as<std::string>());
         SendJson(callback, v);
     }
     catch (const orm::DrogonDbException& e)

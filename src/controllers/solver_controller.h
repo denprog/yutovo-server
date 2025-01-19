@@ -14,9 +14,9 @@ public:
     SolverController();
 
     METHOD_LIST_BEGIN
-    ADD_METHOD_TO(SolverController::GetTasks, "/service/get-tasks", Post); //get list of tasks for a language
-    ADD_METHOD_TO(SolverController::LoadTask, "/service/load-task", Post); //load from file
-    ADD_METHOD_TO(SolverController::SaveTask, "/service/save-task", Post, "yutovo_server::LoginFilter"); //save to the DB
+    ADD_METHOD_TO(SolverController::GetLibraryDocuments, "/service/get-library-documents", Post); //get list of library documents for the language
+    ADD_METHOD_TO(SolverController::LoadLibraryDocument, "/service/load-library-document", Post); //load from file
+    ADD_METHOD_TO(SolverController::SaveLibraryDocument, "/service/save-library-document", Post, "yutovo_server::LoginFilter"); //save to the DB
 #ifdef REMOTE_SOLVER
     ADD_METHOD_TO(SolverController::ListIdentifiers, "/service/list-identifiers", Post);
 #endif
@@ -32,9 +32,9 @@ public:
     ADD_METHOD_TO(SolverController::GetSettings, "/service/get-settings", Post, "yutovo_server::LoginFilter"); //get user config
     METHOD_LIST_END
 
-    void GetTasks(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
-    void LoadTask(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
-    void SaveTask(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
+    void GetLibraryDocuments(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
+    void LoadLibraryDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
+    void SaveLibraryDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
     void ListIdentifiers(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
     void NewDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
     void SaveDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);

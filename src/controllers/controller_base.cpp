@@ -101,9 +101,9 @@ ControllerBase::ControllerBase()
     const Json::Value& v = app().getCustomConfig();
     session_expires = v.get("session_expire_timeout", 86400).asInt();
 
-    tasks_path = v.get("tasks_path", "").asString();
-    if (tasks_path.empty())
-        throw std::system_error(ENOTDIR, std::generic_category(), "Tasks path not defined");
+    library_path = v.get("library_path", "").asString();
+    if (library_path.empty())
+        throw std::system_error(ENOTDIR, std::generic_category(), "Library path not defined");
 }
 
 void ControllerBase::SendOk(std::function<void (const HttpResponsePtr &)>& callback)
