@@ -18,6 +18,7 @@ void SessionController::Root(const HttpRequestPtr& req, std::function<void (cons
 {
     auto p = req->path();
     session_id = req->getCookie("session_id");
+    GetLogger(session_id)->SetLevel((int)trantor::Logger::logLevel());
     GetLogger(session_id)->Debug("Request root: path={}", p);
     if (req->path() == "/")
     {
@@ -148,11 +149,11 @@ void SessionController::Images(const HttpRequestPtr& req, std::function<void (co
     callback(resp);
 }
 
-void SessionController::Document(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, std::string param)
+void SessionController::UserDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, std::string param)
 {
     auto p = req->path();
     session_id = req->getCookie("session_id");
-    GetLogger(session_id)->Info("Request document: path={}", p);
+    GetLogger(session_id)->Info("Request user document: path={}", p);
     std::string r = HttpAppFramework::instance().getDocumentRoot();
     HttpAppFramework& inst = HttpAppFramework::instance();
     p = inst.getHomePage();
@@ -208,11 +209,11 @@ void SessionController::Document(const HttpRequestPtr& req, std::function<void (
     callback(resp);
 }
 
-void SessionController::Task(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, std::string param)
+void SessionController::LibraryDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, std::string param)
 {
     auto p = req->path();
     session_id = req->getCookie("session_id");
-    GetLogger(session_id)->Info("Request task: path={}", p);
+    GetLogger(session_id)->Info("Request library document: path={}", p);
     std::string r = HttpAppFramework::instance().getDocumentRoot();
     HttpAppFramework& inst = HttpAppFramework::instance();
     p = inst.getHomePage();
@@ -230,10 +231,10 @@ void SessionController::Task(const HttpRequestPtr& req, std::function<void (cons
         }
         
         std::replace(param.begin(), param.end(), '\\', '/');
-        fs::path path = fs::path(tasks_path + param + ".yut");
+        fs::path path = fs::path(library_path + param + ".yut");
         if (!fs::exists(path))
         {
-            GetLogger(session_id)->Error("Task not found: {}", param);
+            GetLogger(session_id)->Error("Library document not found: {}", param);
             std::string r = HttpAppFramework::instance().getDocumentRoot();
             auto resp = HttpResponse::newFileResponse(r + "/index.html");
             SetDocumentCookie(param, resp);

@@ -77,7 +77,7 @@ protected:
         \"elements\": \"\"}]}], \"format_name\": \"Code\", \"format_alignment\": 0}], \"code_id\": 1}]}]}]}, \"caret\": {\"id\": \"0,0,0,0,0,0,0\"},\
         \"selection\": []}";
 
-    std::string tasks_path;
+    std::string library_path;
     inline static const std::string base = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
     std::string session_id;

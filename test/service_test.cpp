@@ -8,15 +8,15 @@ namespace yutovo_server_test
 using namespace drogon;
 using namespace std::chrono_literals;
 
-//Get list of tasks
-TEST_F(ServiceTest, tasks1)
+//Get list of library documents
+TEST_F(ServiceTest, library1)
 {
     auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
 
     auto req = HttpRequest::newHttpRequest();
     req->setMethod(drogon::Post);
-    req->setPath("/service/get-tasks");
+    req->setPath("/service/get-library-documents");
 
     auto resp = client->sendRequest(req);
     ReqResult& res = resp.first;
@@ -26,17 +26,17 @@ TEST_F(ServiceTest, tasks1)
     ASSERT_TRUE(r->getContentType() == CT_APPLICATION_JSON) << r->getContentType();
 }
 
-//Load a task
-TEST_F(ServiceTest, tasks2)
+//Load a library document
+TEST_F(ServiceTest, library2)
 {
     auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
 
     Json::Value body;
-    body["task"] = "/Physics/Dynamics/Kinetic energy";
+    body["document"] = "/Physics/Dynamics/Kinetic energy";
     auto req = HttpRequest::newHttpJsonRequest(body);
     req->setMethod(drogon::Post);
-    req->setPath("/service/load-task");
+    req->setPath("/service/load-library-document");
 
     auto resp = client->sendRequest(req);
     ReqResult& res = resp.first;
@@ -46,27 +46,27 @@ TEST_F(ServiceTest, tasks2)
     ASSERT_TRUE(r->getContentType() == CT_APPLICATION_OCTET_STREAM) << r->getContentType();
 }
 
-//Wrong task path
-TEST_F(ServiceTest, tasks3)
+//Wrong library document path
+TEST_F(ServiceTest, library3)
 {
     auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
 
     Json::Value body;
-    body["task"] = "/Physics/Dynamics/../Kinetic energy";
+    body["document"] = "/Physics/Dynamics/../Kinetic energy";
     auto req = HttpRequest::newHttpJsonRequest(body);
     req->setMethod(drogon::Post);
-    req->setPath("/service/load-task");
+    req->setPath("/service/load-library-document");
 
     auto resp = client->sendRequest(req);
     ReqResult& res = resp.first;
     HttpResponsePtr& r = resp.second;
     ASSERT_TRUE(r->getStatusCode() == k404NotFound) << r->getStatusCode();
 
-    body["task"] = "/Physics/Dynamics/../../../CMakeLists.txt";
+    body["document"] = "/Physics/Dynamics/../../../CMakeLists.txt";
     req = HttpRequest::newHttpJsonRequest(body);
     req->setMethod(drogon::Post);
-    req->setPath("/service/load-task");
+    req->setPath("/service/load-library-document");
 
     resp = client->sendRequest(req);
     res = resp.first;

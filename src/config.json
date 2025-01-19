@@ -289,7 +289,7 @@
         "session_expire_timeout": 86400,
         "user_session_expire_timeout": 86400,
         "clear_db_timeout": 10,
-        "tasks_path": "/home/denis/programs/Math/yutovo/yutovo_server/tasks/",
+        "library_path": "/home/denis/programs/Math/yutovo/yutovo_server/library/",
         "solver_address": "wss://yutovo.ru:8010"
     }
 }
