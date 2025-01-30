@@ -324,11 +324,10 @@ void ControllerBase::SetDocumentCookie(const std::string& document_id, HttpRespo
     resp->addCookie(document_cookie);
 }
 
-bool ControllerBase::AddSession(const std::string& document_id, std::string& _session_id)
+bool ControllerBase::AddSession(const std::string& document_id)
 {
-    _session_id = std::string(boost::uuids::to_string(boost::uuids::random_generator()()));
+    session_id = std::string(boost::uuids::to_string(boost::uuids::random_generator()()));
     GetLogger("")->Info("AddSession document_id={}, session_id={}", document_id, session_id);
-    session_id = _session_id;
 
     orm::DbClientPtr db = app().getDbClient();
     trantor::Date session_expires_date = trantor::Date::now().after(session_expires);

@@ -77,7 +77,7 @@ void SessionController::Root(const HttpRequestPtr& req, std::function<void (cons
                     document_id = std::to_string(d);
             }
 
-            if (!AddSession(document_id, session_id))
+            if (!AddSession(document_id))
             {
                 GetLogger(session_id)->Error("Database error: Error inserting a session");
                 SendError(k500InternalServerError, "Error inserting a session", callback);
@@ -162,12 +162,15 @@ void SessionController::UserDocument(const HttpRequestPtr& req, std::function<vo
     {
         if (session_id.empty())
         {
-            if (!AddSession(param, session_id))
+            if (!AddSession(param))
             {
                 logger->Error("Database error: Error inserting a session");
                 SendError(k500InternalServerError, "Error inserting a session", callback);
                 return;
             }
+
+            SessionPtr session = req->session();
+            session->insert("session_id", session_id);
         }
         
         orm::DbClientPtr db = app().getDbClient();
@@ -182,6 +185,7 @@ void SessionController::UserDocument(const HttpRequestPtr& req, std::function<vo
                 auto resp = HttpResponse::newFileResponse(r + "/index.html");
                 SetDocumentCookie(param, resp);
                 resp->setStatusCode(k404NotFound);
+                SetSessionCookie(session_id, resp);
                 callback(resp);
                 return;
             }
@@ -201,6 +205,7 @@ void SessionController::UserDocument(const HttpRequestPtr& req, std::function<vo
 
         auto resp = HttpResponse::newFileResponse(r + p);
         SetDocumentCookie(param, resp);
+        SetSessionCookie(session_id, resp);
         callback(resp);
         return;
     }
@@ -222,12 +227,15 @@ void SessionController::LibraryDocument(const HttpRequestPtr& req, std::function
     {
         if (session_id.empty())
         {
-            if (!AddSession(param, session_id))
+            if (!AddSession(param))
             {
                 GetLogger(session_id)->Error("Database error: Error inserting a session");
                 SendError(k500InternalServerError, "Error inserting a session", callback);
                 return;
             }
+
+            SessionPtr session = req->session();
+            session->insert("session_id", session_id);
         }
         
         std::replace(param.begin(), param.end(), '\\', '/');
@@ -238,6 +246,7 @@ void SessionController::LibraryDocument(const HttpRequestPtr& req, std::function
             std::string r = HttpAppFramework::instance().getDocumentRoot();
             auto resp = HttpResponse::newFileResponse(r + "/index.html");
             SetDocumentCookie(param, resp);
+            SetSessionCookie(session_id, resp);
             resp->setStatusCode(k404NotFound);
             callback(resp);
             return;
@@ -247,6 +256,7 @@ void SessionController::LibraryDocument(const HttpRequestPtr& req, std::function
         session->insert("session_id", session_id);
 
         auto resp = HttpResponse::newFileResponse(r + p);
+        SetSessionCookie(session_id, resp);
         callback(resp);
         return;
     }
