@@ -48,50 +48,116 @@ void ServiceController::GetLibraryDocuments(const HttpRequestPtr& req, std::func
     session_id = req->getCookie("session_id");
     GetLogger(session_id)->Debug("GetLibraryDocuments request");
 
-    auto json = req->getJsonObject();
+    auto json_object = req->getJsonObject();
     std::string language = "en";
-    if (json && json->isObject() && json->isMember("language") && (*json)["language"].isString())
-        language = (*json)["language"].asString();
+    if (json_object && json_object->isObject() && json_object->isMember("language") && (*json_object)["language"].isString())
+        language = (*json_object)["language"].asString();
 
-    std::function<void (const fs::path& path, Json::Value& json)> get_files = 
-        [&](const fs::path& path, Json::Value& json)
+    std::function<void (const fs::path& path, const std::string& name, Json::Value& json)> get_files = 
+        [&](const fs::path& path, const std::string& name, Json::Value& json)
         {
-            std::set<fs::path> sorted_dirs;
-            std::set<fs::path> sorted_files;
+            //if the order file exists, read the files order from it
+            std::vector<std::string> order;
+            if (fs::exists(path / ".order"))
+            {
+                std::string order_file = path / ".order";
+                try
+                {
+                    std::ifstream file(order_file);
+                    if (!file.is_open())
+                    {
+                        GetLogger(session_id)->Error("File not open '{}'", order_file);
+                    }
+                    else
+                    {
+                        std::string line;
+                        while (std::getline(file, line))
+                            order.push_back(line);
+                    }
+                }
+                catch (const std::ios_base::failure& ex)
+                {
+                    GetLogger(session_id)->Error("Error opening file '{}': {}", order_file, ex.what());
+                }
+            }
+
+            std::vector<fs::path> sorted_dirs;
+            std::vector<fs::path> sorted_files;
             for (const auto& entry : fs::directory_iterator(path))
             {
                 if (entry.is_directory())
-                    sorted_dirs.insert(entry.path());
+                {
+                    int pos = -1;
+                    if (!order.empty())
+                    {
+                        auto s = entry.path().filename().c_str();
+                        auto it = std::find(order.begin(), order.end(), entry.path().filename().c_str());
+                        if (it != order.end())
+                            pos = std::distance(order.begin(), it);
+                        if (pos == -1)
+                            sorted_dirs.push_back(entry.path());
+                        else
+                        {
+                            if (pos < sorted_dirs.size())
+                                sorted_dirs.insert(sorted_dirs.begin() + pos, entry.path());
+                            else
+                                sorted_dirs.push_back(entry.path());
+                        }
+                    }
+                    else
+                        sorted_dirs.push_back(entry.path());
+                }
                 else if (entry.is_regular_file())
-                    sorted_files.insert(entry.path());
+                {
+                    if (entry.path().stem() != ".order")
+                    {
+                        int pos = -1;
+                        if (!order.empty())
+                        {
+                            auto it = std::find(order.begin(), order.end(), entry.path().filename().c_str());
+                            if (it != order.end())
+                                pos = std::distance(order.begin(), it);
+                            if (pos == -1)
+                                sorted_files.push_back(entry.path());
+                            else
+                            {
+                                if (pos < sorted_files.size())
+                                    sorted_files.insert(sorted_files.begin() + pos, entry.path());
+                                else
+                                    sorted_files.push_back(entry.path());
+                            }
+                        }
+                        else
+                            sorted_files.push_back(entry.path());
+                    }
+                }
             }
 
+            if (order.empty())
+            {
+                std::sort(sorted_dirs.begin(), sorted_dirs.end());
+                std::sort(sorted_files.begin(), sorted_files.end());
+            }
+
+            json["name"] = name;
+
+            Json::Value dirs(Json::arrayValue);
             for (const auto& entry : sorted_dirs)
             {
-                Json::Value e;
-                auto s = entry.string();
-                json[entry.stem().string()] = e;
-                auto& d = json[entry.stem().string()];
-                get_files(entry, d);
+                Json::Value dir(Json::objectValue);
+                get_files(entry, entry.stem(), dir);
+                dirs.append(dir);
             }
+            json["dirs"] = dirs;
+
+            Json::Value files(Json::arrayValue);
             for (const auto& entry : sorted_files)
-            {
-                if (json.isMember("files"))
-                {
-                    Json::Value& files = json["files"];
-                    files.append(entry.stem().c_str());
-                }
-                else
-                {
-                    Json::Value files(Json::arrayValue);
-                    files.append(entry.stem().c_str());
-                    json["files"] = files;
-                }
-            }
+                files.append(entry.stem().c_str());
+            json["files"] = files;
         };
     
     Json::Value root;
-    get_files(fs::path(library_path + "/" + language), root);
+    get_files(fs::path(library_path + "/" + language), "library", root);
 
     SendJson(callback, root);
 }
