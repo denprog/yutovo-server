@@ -728,7 +728,7 @@ void ServiceController::LoadDocument(const HttpRequestPtr& req, std::function<vo
     GetLogger(session_id)->Debug("LoadDocument request");
 
     auto json = req->getJsonObject();
-    if (!json)
+    if (!json || !json->isObject())
     {
         GetLogger(session_id)->Error("LoadDocument error: Wrong request: Json not found in the request");
         SendError(k400BadRequest, "Json not found in the request", callback);
@@ -924,6 +924,59 @@ void ServiceController::ListDocuments(const HttpRequestPtr& req, std::function<v
     {
         GetLogger(session_id)->Error("Database error: {}", e.base().what());
         SendError(k500InternalServerError, e.base().what(), callback);
+    }
+}
+
+void ServiceController::GetDocumentId(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
+{
+    session_id = req->getCookie("session_id");
+    GetLogger(session_id)->Debug("GetDocumentId request");
+
+    auto json = req->getJsonObject();
+    if (!json || !json->isObject())
+    {
+        GetLogger(session_id)->Error("GetDocumentId error: Wrong request: Json not found in the request");
+        SendError(k400BadRequest, "Json not found in the request", callback);
+        return;
+    }
+
+    ClearDbTurnOff t; //skip the clear db circles for a while
+
+    orm::DbClientPtr db = app().getDbClient();
+
+    std::string document_id;
+    if (!json->isMember("name") || !(*json)["name"].isString())
+    {
+        GetLogger(session_id)->Error("GetDocumentId error: Wrong request: name not found in the request");
+        SendError(k400BadRequest, "Name not found in the request", callback);
+        return;
+    }
+
+    //find document by name
+    std::string name = (*json)["name"].asString();
+    if (!name.empty())
+    {
+        try
+        {
+            orm::Result result = db->execSqlSync("select document_id from user_documents where name=$1", name);
+            if (result.size() == 0)
+            {
+                GetLogger(session_id)->Error("LoadDocument error: No such document: {}", name);
+                SendError(k404NotFound, "No such document", callback);
+                return;
+            }
+    
+            auto row = result[0];
+            Json::Value v(Json::objectValue);
+            v["document_id"] = row["document_id"].as<int>();
+            GetLogger(session_id)->Debug("DocumentId id={}", row["document_id"].as<std::string>());
+            SendJson(callback, v);
+        }
+        catch (const orm::DrogonDbException& e)
+        {
+            GetLogger(session_id)->Error("Database error: {}", e.base().what());
+            SendError(k500InternalServerError, e.base().what(), callback);
+        }
     }
 }
 
