@@ -26,6 +26,7 @@ public:
     ADD_METHOD_TO(ServiceController::LoadDocument, "/service/load-document", Post); //load from the DB
     ADD_METHOD_TO(ServiceController::DeleteDocument, "/service/delete-document", Post, "yutovo_server::LoginFilter"); //delete a document from the DB
     ADD_METHOD_TO(ServiceController::ListDocuments, "/service/list-documents", Post, "yutovo_server::LoginFilter"); //list user documents
+    ADD_METHOD_TO(ServiceController::GetDocumentId, "/service/get-document-id", Post); //get id of a user document
     ADD_METHOD_TO(ServiceController::GetDocumentName, "/service/get-document-name", Post); //get name of a user document
     ADD_METHOD_TO(ServiceController::RenameDocument, "/service/rename-document", Post, "yutovo_server::LoginFilter"); //rename a user document
     ADD_METHOD_TO(ServiceController::SetSettings, "/service/set-settings", Post, "yutovo_server::LoginFilter"); //set user config
@@ -42,6 +43,7 @@ public:
     void LoadDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
     void DeleteDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
     void ListDocuments(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
+    void GetDocumentId(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
     void GetDocumentName(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
     void RenameDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
     void SetSettings(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
