@@ -187,7 +187,9 @@ void ServiceController::LoadLibraryDocument(const HttpRequestPtr& req, std::func
     document = (*json)["document"].asString();
     
     GetLogger(session_id)->Info("LoadLibraryDocument request document={}", "/" + language + document);
-    document = library_path + language + document + ".yut";
+    document = library_path + language + document;
+    if (!document.ends_with(".yut"))
+        document += fs::path(".yut");
     fs::path path;
 
     //check if the path is inside library_path
