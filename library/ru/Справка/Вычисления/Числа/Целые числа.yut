@@ -1,0 +1,2569 @@
+{
+    "config": {
+        "language": 1,
+        "code_block_border_color": -16776961,
+        "numbers_color": -16776961,
+        "variables_color": -16755456,
+        "functions_color": -43776,
+        "units_color": -16755456,
+        "shapes_color": -16777216,
+        "error_marks_color": -65536,
+        "formula_bg_color": -1,
+        "bg_selection_color": -16776961,
+        "real_result": {
+            "precision": 3,
+            "exp": 10,
+            "default_angle_measure": 0,
+            "result_angle_measure": 0,
+            "show_angle_measure": true
+        },
+        "integer_result": {
+            "result_notation": 2,
+            "default_notation": 2,
+            "show_notation": true
+        },
+        "rational_result": {
+            "fraction_form": 0
+        },
+        "complex_result": {
+            "precision": 3,
+            "exp": 10,
+            "default_angle_measure": 0,
+            "result_angle_measure": 0,
+            "show_angle_measure": false,
+            "form": 0,
+            "max_count": 10
+        },
+        "auto_result": {
+            "result_auto_advance": true,
+            "results_order": [
+                1,
+                2,
+                3,
+                4
+            ],
+            "real_config": {
+                "precision": 3,
+                "exp": 10,
+                "default_angle_measure": 0,
+                "result_angle_measure": 0,
+                "show_angle_measure": true
+            },
+            "integer_config": {
+                "result_notation": 2,
+                "default_notation": 2,
+                "show_notation": true
+            },
+            "rational_config": {
+                "fraction_form": 0
+            },
+            "complex_config": {
+                "precision": 3,
+                "exp": 10,
+                "default_angle_measure": 0,
+                "result_angle_measure": 0,
+                "show_angle_measure": false,
+                "form": 0,
+                "max_count": 10
+            }
+        }
+    },
+    "string_formats": [
+        {
+            "id": "104059f6-d4dc-4fec-abf2-6296c4f744a6",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "1215c804-3ad0-463b-b766-1eea0e6835f9",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "41fcbe3c-5c4c-432c-85e5-32f0b28a141d",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "cd39e6f3-5994-42aa-b07b-8849221daccd",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "20285c76-34d5-4ac0-b3e7-0742f831f921",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "3ce7d010-c754-48c2-8313-87a7a9c56b53",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "9758a838-89c0-493c-803c-9bb1e2f2d1cb",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "156f0c57-1d39-4159-8978-b4a9a7dac733",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "22aba4b5-f5eb-447a-be5c-6012c945e529",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "5ce86eef-1710-4732-bc8e-dcea86348ae1",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "8cf76e12-39f2-425f-a814-4fced6e14697",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "cec3457f-3b7e-4a3d-8fa3-3d52cbdd90c1",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "ba89d0c0-820f-4ee2-81d9-e0d55915c40a",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "edc773bf-3b90-4815-a5b7-1b3b1ec9d486",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "1cbaa24b-dcdd-431a-8743-82ac46efbd81",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "079cc72a-de1f-4d70-9a61-ceb64cf5a0bd",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "74ed87c1-3787-40e7-a057-c7d6d8e52caa",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "33a9644c-9018-4ea5-9306-d2f71b8bdd1c",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "f5a9f0e8-fb11-4298-bd06-6722bf23a226",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "d1260011-bec6-41a0-815a-5a7039a7ce15",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "366b8444-c308-4442-b52f-7b811291c2a4",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "e0ad1724-eea6-4526-bab9-d4e7ef01c5a8",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "b6109906-f9fc-475a-ac19-1ada1e449666",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "1c26124d-14da-46e6-a222-0d7d4ec9fea5",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "beff4750-35a5-4e6e-a078-c5b2864a9136",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "463d13af-766a-4cbe-b213-2845e4af379a",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "7675aa7c-f976-43db-bf39-2a47921100ea",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "70d8271c-1b3c-47cc-bf8a-94868894e0b0",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "c89183a7-907e-410a-ac44-d3a02c686c14",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "8929fa56-e41a-4a69-a8d2-bfb8d374f61c",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "aef3f9c9-cbe7-4d9a-9855-1b86c8c7715b",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "50d4df96-c4fc-4b96-977b-0b2cf80ecc72",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "dd33cfb9-1bf4-44bf-b3c2-d89a3be6db3e",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "0426e8bf-0c04-4c3d-9db6-140194db5501",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "353a061d-1945-4c2b-8c24-d5ece4136c4d",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "88d59c35-1ada-4f82-b69b-cc3dbd04bf6a",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "b96755c2-1c77-41d8-af6c-3f8f41e10449",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "d07d1aae-5084-40b0-9538-3705aecab570",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "988e9a24-5710-4e80-bdd0-738613fbfea9",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "7765e79d-997f-4f83-b77a-f7e7085055ee",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "1b6e9dd0-d90c-45cd-a1a9-f4f341b35d59",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "6e74592e-00fc-44ae-b6f4-1ed14cfb7258",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "2be3ec7f-be38-49a8-8b34-a867336e9ed4",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "f0ad1f82-f9ee-44f3-940b-c25fb325195f",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "5dfc0651-228f-45e9-8a7d-9e4962583ce7",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "7440cae7-8b75-46d1-bbf9-800c566f7d90",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "cbce1750-17ba-49cd-8c7a-5c7e5a811054",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "d031df95-b84f-4761-9d53-3414dc066c18",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "0d9a2784-7c12-4485-bbe1-dd715231d611",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "1774a0c0-2e66-4ba3-89cc-c12a6c040248",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "0a09c996-9b97-479e-aa40-e02fbd243cca",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "d1fb0c43-20ea-4ccf-9f88-51ca34fe8273",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "4112ae68-1aae-4780-b4bf-eb8aa4b90aa2",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "b90a1175-6b73-4dee-86a0-68d6fce8981f",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "7d97219a-85ee-4221-b0d3-32349d206ecc",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "0a1b090d-ac70-44ae-9142-d6b8f566aaca",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "f0dc6eef-5e3d-43ce-845e-6b02725ac58e",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "902fd9da-86c7-449d-b789-4424551e36e3",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "c4002ab0-f2b7-415b-b75b-82903dce7084",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "9764bb3d-3df9-4692-b101-0dfd6beaa467",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "ad903e25-982e-4deb-9b61-178be9911337",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "6383fb01-206d-4c96-a3af-afa0394096f5",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "baa914f5-0d7a-4c3a-be4e-fd52666b0212",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "0862bd73-762e-461c-b730-7e4d283d42e2",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "ef590b2b-fd51-43b9-9d86-113faf259c1c",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "0b03d95f-880c-458c-beee-d52315ac5264",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "7f651bd8-9094-431e-94b0-820e07793f88",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "dbcf6cba-7e8d-428c-8490-46972d3fe8f2",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "5d8b0f2f-91aa-461d-8db7-e254f4a9ba17",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "edae6fd4-b0ab-489b-9cc7-77f973511431",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "2ad4878e-4faa-4a8b-a6ca-38aba6b81d6e",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "6d72e982-95bc-44ae-b002-c03c4bb94170",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "9e664d7a-7e52-4cd3-b25e-af162480ccf3",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": true,
+            "strikethrough": false,
+            "text_color": 4278190335,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "d21fb11e-0b29-4302-9a61-b81c2acbdcbe",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "74f390bf-094f-4410-b848-90b77ee5f566",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "459e569f-729f-4d89-83dc-dc7507a06c4c",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "12e6ca0c-2d37-4853-8d96-dcc26b39e8da",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "f4a6fbca-eb2c-4eb0-a15b-72791b73fecc",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "238e3e9d-519f-425f-aed1-d005d0a6492c",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "44418c0a-01d2-4879-8820-5abcbc3a6cf5",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "4b38d36e-e9d6-4cd7-ae21-a2941b4b9547",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "e948de6b-a6ea-4385-832a-b13a952e72c3",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "861206f9-86dc-432c-9bda-0cbe58d2a951",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "42c2c47e-3dee-4651-92f3-8dd612482b0d",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "6dc0d1ee-fc80-4140-b71d-17fd11aafebf",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "ecbeb43b-be18-4b8f-9643-e0667bd1ff72",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "0495e3aa-7616-42cf-84e9-ac402b09f0bf",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "370f0587-dff7-472b-8130-049a27721943",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "fa914c29-aaba-4e82-a4e6-e28a9cf89ddf",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "2d34e459-818b-4487-a1ba-7b6da48430cb",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "221f3e4c-92a4-4377-83ae-23000c6823be",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "f70c513f-7bc4-4914-a2c2-4309827489f8",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "47ce2601-1056-44fc-853c-fcf083dcba62",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "59324bb0-6f4e-40f5-88ea-61739d1233d5",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "9a8029e9-28fb-43b5-a58a-6d48981cde3d",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "3c5eca84-d7c6-4948-b051-81cbea06bbcf",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "1cc0dba7-c4d2-4828-a60d-69da8bab0ae2",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "6083211a-f9ac-495b-8960-278fef5c3a4f",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "6da69185-b020-4137-81fb-293533260721",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "7cb0914f-8261-4fef-8d7c-7186755ab0e8",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "7ede9b94-0692-4bfa-bf8d-629842d2a1a9",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "d1a1ec54-b8dc-4153-a2f7-903ea2ecaf6e",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "a0e43c66-8559-4922-930d-3fcf370ae8b9",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "a5a7ddf9-62d8-423e-a7bd-f74790320d0e",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "7f312f00-67e7-4d9f-a982-b39618d8bc1f",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "014955f8-2a77-4c58-857b-9e168ae64230",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "ae2434be-6fcb-476b-9add-fb06e8540173",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "01b08b7a-646c-4fe7-b053-5815ed937c7e",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "2df3af6f-0b4c-47f1-aaa4-0f8695b475d6",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "e9e2c79c-a8af-4a42-a71e-928afde59bd9",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "5597f214-25d7-495f-b3be-64399fe500be",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "1d548ca5-25e1-4575-9243-526b3a80831b",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "d1ab5230-60e1-4299-a3e7-2d8aec156168",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "4f88348d-da5f-4dfd-bd07-bd4bdb0b604e",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "a3c40803-fa85-4aa1-8261-96088709a247",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "caa297dc-9cf3-4de5-989d-a2e182448085",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "62929bc0-e97a-47bd-a97d-fbb24822a94e",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "1bdba8f0-ac55-4fbc-b43e-a5039f3af049",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "065da342-fde6-47a2-87fa-d076095740f2",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "48bc04b9-692e-4e7b-8b0f-29a8f1ded2d2",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "da7ca043-d574-4208-8e2c-5adeb227313a",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "136734a7-3892-430d-986d-c27d227fbd30",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "2499518d-b75b-4f70-a4a9-77c69312e911",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "74310844-633e-4ca1-b60a-006d8928fc97",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "6a72f6e3-7e46-4728-b6cf-969be41b4330",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "94633829-a11c-4513-9c95-eeddf2f06fae",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "0e4482fb-43a0-4504-aef2-f6dbaf050b8b",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "a0fecd92-4498-4ba7-ab61-2f59452cf576",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "9655a3ed-c4e8-4dca-b0e3-16c24d4f67dd",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "073a31d2-64cc-4a1e-9927-e74ff186729d",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "45e98451-dbcb-41cb-a7f2-6a623f168d2e",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "d8a876c5-b0cb-413f-941a-850012f839cb",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "7a94eef2-7e33-4129-92a7-1dc60e55c0a5",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "833d8f2e-4be9-4fcc-9812-708180b4269d",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "0614fa66-9dbd-4973-ac82-030c46d51770",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "b451d762-71d6-406d-94bb-e6443b3c584c",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "bd4e8bf8-1517-4be4-bf24-f83d20c48828",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "2d41ad67-3dfc-4956-82cc-7cbe08d480f4",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "0445abe4-777c-4a83-b9bb-c70e74febaa8",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "5bbeebd1-e629-451f-b21a-a6afe5fa57fa",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "ad86b01f-c673-48e3-99d6-8ce06cd29e02",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "777563ef-cb3a-47a2-80fc-19f799a4f113",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "3e4a8e44-74f8-4c15-ac0b-e8d3a2f8bf9d",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "10974f42-894a-448c-a4ab-ebcebf4d0390",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "2beb1f9d-0eed-42da-b74b-ccc403493c83",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "b397e8d5-561a-4fe3-87d0-777ae65b392d",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "3f58b378-d284-4749-93f5-f9b87748096a",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "2079f5ec-ef78-452e-9879-326adcb25400",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "d615ec55-f012-4d71-9610-6d4652d05be5",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        }
+    ],
+    "paragraph_formats": [
+        {
+            "name": "Text body",
+            "alignment": 0,
+            "word_wrap": 1,
+            "line_spacing": 5,
+            "indent_before": 10,
+            "indent_after": 10,
+            "indent_first_line": 0,
+            "spacing_before": 10,
+            "spacing_after": 10,
+            "default_string_format": "104059f6-d4dc-4fec-abf2-6296c4f744a6"
+        },
+        {
+            "name": "Header 1",
+            "alignment": 0,
+            "word_wrap": 1,
+            "line_spacing": 5,
+            "indent_before": 10,
+            "indent_after": 10,
+            "indent_first_line": 0,
+            "spacing_before": 10,
+            "spacing_after": 10,
+            "default_string_format": "1215c804-3ad0-463b-b766-1eea0e6835f9"
+        },
+        {
+            "name": "Header 2",
+            "alignment": 0,
+            "word_wrap": 1,
+            "line_spacing": 5,
+            "indent_before": 10,
+            "indent_after": 10,
+            "indent_first_line": 0,
+            "spacing_before": 10,
+            "spacing_after": 10,
+            "default_string_format": "41fcbe3c-5c4c-432c-85e5-32f0b28a141d"
+        },
+        {
+            "name": "Header 3",
+            "alignment": 0,
+            "word_wrap": 1,
+            "line_spacing": 5,
+            "indent_before": 10,
+            "indent_after": 10,
+            "indent_first_line": 0,
+            "spacing_before": 10,
+            "spacing_after": 10,
+            "default_string_format": "cd39e6f3-5994-42aa-b07b-8849221daccd"
+        },
+        {
+            "name": "Header 4",
+            "alignment": 0,
+            "word_wrap": 1,
+            "line_spacing": 5,
+            "indent_before": 10,
+            "indent_after": 10,
+            "indent_first_line": 0,
+            "spacing_before": 10,
+            "spacing_after": 10,
+            "default_string_format": "20285c76-34d5-4ac0-b3e7-0742f831f921"
+        },
+        {
+            "name": "Example",
+            "alignment": 0,
+            "word_wrap": 1,
+            "line_spacing": 5,
+            "indent_before": 10,
+            "indent_after": 10,
+            "indent_first_line": 0,
+            "spacing_before": 10,
+            "spacing_after": 10,
+            "default_string_format": "3ce7d010-c754-48c2-8313-87a7a9c56b53"
+        },
+        {
+            "name": "Monospace",
+            "alignment": 0,
+            "word_wrap": 1,
+            "line_spacing": 5,
+            "indent_before": 10,
+            "indent_after": 10,
+            "indent_first_line": 0,
+            "spacing_before": 10,
+            "spacing_after": 10,
+            "default_string_format": "9758a838-89c0-493c-803c-9bb1e2f2d1cb"
+        },
+        {
+            "name": "Code",
+            "alignment": 0,
+            "word_wrap": 0,
+            "line_spacing": 2,
+            "indent_before": 2,
+            "indent_after": 2,
+            "indent_first_line": 0,
+            "spacing_before": 2,
+            "spacing_after": 2,
+            "default_string_format": "156f0c57-1d39-4159-8978-b4a9a7dac733"
+        }
+    ],
+    "text": {
+        "id": "0",
+        "type": 1,
+        "elements": [
+            {
+                "id": "0,0",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,0,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,0,0,0",
+                                "type": 4,
+                                "elements": "Целые числа вводятся без десятичной точки.",
+                                "format_id": "1b6e9dd0-d90c-45cd-a1a9-f4f341b35d59"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,1",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,1,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,1,0,0",
+                                "type": 4,
+                                "elements": "Поддерживаются четыре системы счисления, которые вводятся следующими символами:",
+                                "format_id": "dd33cfb9-1bf4-44bf-b3c2-d89a3be6db3e"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,2",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,2,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,2,0,0",
+                                "type": 4,
+                                "elements": "• двоичная - цифры \"0\", \"1\";",
+                                "format_id": "dd33cfb9-1bf4-44bf-b3c2-d89a3be6db3e"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,3",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,3,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,3,0,0",
+                                "type": 4,
+                                "elements": "• восьмеричная - цифры \"0\" ... \"7\";",
+                                "format_id": "dd33cfb9-1bf4-44bf-b3c2-d89a3be6db3e"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,4",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,4,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,4,0,0",
+                                "type": 4,
+                                "elements": "• десятичная - цифры \"0\" ... \"9\";",
+                                "format_id": "dd33cfb9-1bf4-44bf-b3c2-d89a3be6db3e"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,5",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,5,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,5,0,0",
+                                "type": 4,
+                                "elements": "• шестнадцатеричная - цифры \"0\" ... \"9\" и буквы \"A\" ... \"F\".",
+                                "format_id": "dd33cfb9-1bf4-44bf-b3c2-d89a3be6db3e"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,6",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,6,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,6,0,0",
+                                "type": 4,
+                                "elements": "Ввести систему счисления можно символом ",
+                                "format_id": "dd33cfb9-1bf4-44bf-b3c2-d89a3be6db3e"
+                            },
+                            {
+                                "id": "0,6,0,1",
+                                "type": 34,
+                                "elements": [],
+                                "image_base64": "iVBORw0KGgoAAAANSUhEUgAAABYAAAAUCAYAAACJfM0wAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAZElEQVQ4jWP8////fwYaACZaGDpqMApgwSbY2NiIIVZfX0+5wQwMDAwODg5w9oEDB0gylIFhKIbxqMFwgDNV4ALoSRFXMsRpML4kBkuK+NRgNZjUzIANjIDIY2AgLoszDrkaBADygBooiiGchQAAAABJRU5ErkJggg=="
+                            },
+                            {
+                                "id": "0,6,0,2",
+                                "type": 4,
+                                "elements": " с одним из обозначений системы счисления (bin, oct, dec, hex).",
+                                "format_id": "dd33cfb9-1bf4-44bf-b3c2-d89a3be6db3e"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,7",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,7,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,7,0,0",
+                                "type": 4,
+                                "elements": "Встроенные операторы:",
+                                "format_id": "4112ae68-1aae-4780-b4bf-eb8aa4b90aa2"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Header 4",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,8",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,8,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,8,0,0",
+                                "type": 34,
+                                "elements": [],
+                                "image_base64": "iVBORw0KGgoAAAANSUhEUgAAABUAAAAUCAYAAABiS3YzAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAaUlEQVQ4jWP8////fwYqAyZqGzhqKAMLjNHY2IghWV9fj1MjPvUsyIIODg5w9oEDBwi6CJd6or3PyMhIrFIahykugOxCGJtQfiFoKMwARkZGgobBwMCmU1KKCBTvE5OMiFHPOFpKjWBDAUb5JKlcNKbvAAAAAElFTkSuQmCC"
+                            },
+                            {
+                                "id": "0,8,0,1",
+                                "type": 4,
+                                "elements": " - сложение и унарный плюс;",
+                                "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,9",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,9,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,9,0,0",
+                                "type": 34,
+                                "elements": [],
+                                "image_base64": "iVBORw0KGgoAAAANSUhEUgAAABUAAAAUCAYAAABiS3YzAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAV0lEQVQ4jWP8////fwYqAyZqGzhqKAMLjNHY2IghWV9fj1MjPvUsyIIODg5w9oEDBwi6CJf6IRimuAAjIyOGGKH8QtBQcjLcEA1TYpIRMeoZR0upEWwoAFCIHqakwSSCAAAAAElFTkSuQmCC"
+                            },
+                            {
+                                "id": "0,9,0,1",
+                                "type": 4,
+                                "elements": " - вычитание и унарный минус;",
+                                "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,10",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,10,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,10,0,0",
+                                "type": 34,
+                                "elements": [],
+                                "image_base64": "iVBORw0KGgoAAAANSUhEUgAAABMAAAAUCAYAAABvVQZ0AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAVUlEQVQ4jWP8////fwYqASZqGTSCDGOBMRobGzEk6+vrMcTwqWNBFnRwcICzDxw4gNMFuNQN3jAjyjBGRkbqGUZsJhm8YYaSNPAlB2LUMY6WGsPIMACGphulkbD7hwAAAABJRU5ErkJggg=="
+                            },
+                            {
+                                "id": "0,10,0,1",
+                                "type": 4,
+                                "elements": " - умножение;",
+                                "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,11",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,11,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,11,0,0",
+                                "type": 34,
+                                "elements": [],
+                                "image_base64": "iVBORw0KGgoAAAANSUhEUgAAABIAAAAUCAYAAACAl21KAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAYUlEQVQ4je2SQQqAQAwDE9mH9WelP+vP6mk9rMsqWqEHcwx0SEMYEYEEbRkQAGijYWa3DlV1DQIAEVlC3P3kpb1WDzTtaNbBlZi1oyMRyUeAnqONxutEXf8gvwPVG2S9jnZo3SKn6IQXuAAAAABJRU5ErkJggg=="
+                            },
+                            {
+                                "id": "0,11,0,1",
+                                "type": 4,
+                                "elements": " - деление.",
+                                "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,12",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,12,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,12,0,0",
+                                "type": 4,
+                                "elements": "Арифметические функции:",
+                                "format_id": "4112ae68-1aae-4780-b4bf-eb8aa4b90aa2"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Header 4",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,13",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,13,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,13,0,0",
+                                "type": 34,
+                                "elements": [],
+                                "image_base64": "iVBORw0KGgoAAAANSUhEUgAAAA8AAAAUCAYAAABSx2cSAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAZUlEQVQ4jdWTUQ7AIAhD67KD9WaEm3Ez9rcFp47MD2P/MLxgSyju7vipM9OkqqEWEQDAkZ1CEiTDWxpuaQq+Pde+gMfbJwwgeDKz0FjXL7in3g/WBbYpHNJurWOkMnNVmwa2Dr4AvU4YpmQLVwYAAAAASUVORK5CYII="
+                            },
+                            {
+                                "id": "0,13,0,1",
+                                "type": 4,
+                                "elements": " - возведение в степень;",
+                                "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,14",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,14,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,14,0,0",
+                                "type": 34,
+                                "elements": [],
+                                "image_base64": "iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAh0lEQVQ4jc3UwQ2AIAwF0P8Ng7EZYTM2qycICkiFmthTMfJoaANFRGAYhyX2CehyQnL6s+Z2XL142qA5EABYN4WkqooYY/MthNCvUIt670ueUip505SMrka3yzvocGxW0SGovUsVuIp1wR0MuI3NG6welYuRB3uGaQ9rKtyNAlo9i/9/D83BE2mGQWM4M9NsAAAAAElFTkSuQmCC"
+                            },
+                            {
+                                "id": "0,14,0,1",
+                                "type": 4,
+                                "elements": " - сумма по индексу;",
+                                "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,15",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,15,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,15,0,0",
+                                "type": 34,
+                                "elements": [],
+                                "image_base64": "iVBORw0KGgoAAAANSUhEUgAAABMAAAAUCAYAAABvVQZ0AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAcklEQVQ4je2UwQ3AIAwD46qDZbOIzdjMfRGhFkQLefCoX1YEJyAxIEkJ0hEFCoedxQAYLh69iMNICoDmhl69C3urlNKjZmZzMBERVXWfc3a/bzd/2HdNjUY9DrVQ/xqrCfBrlmzeM9qrD0+2qn27GQq7AO4wJm0Wsr/jAAAAAElFTkSuQmCC"
+                            },
+                            {
+                                "id": "0,15,0,1",
+                                "type": 4,
+                                "elements": " - произведение по индексу;",
+                                "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,16",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,16,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,16,0,0",
+                                "type": 34,
+                                "elements": [],
+                                "image_base64": "iVBORw0KGgoAAAANSUhEUgAAAA4AAAAUCAYAAAC9BQwsAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAWUlEQVQ4jWP8////fwYyABM5muinkZGRkc42IgMWZE5jYyOGgvr6esIaGRgYGBwcHODsAwcO4LRxkEcH/TUiJ2vqxCMDA/4oQAaMpGQrRkZGuHOHUOCQrREA27oZYqHey78AAAAASUVORK5CYII="
+                            },
+                            {
+                                "id": "0,16,0,1",
+                                "type": 4,
+                                "elements": " - факториал;",
+                                "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,17",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,17,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,17,0,0",
+                                "type": 4,
+                                "elements": "Логические операции:",
+                                "format_id": "366b8444-c308-4442-b52f-7b811291c2a4"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Header 4",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,18",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,18,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,18,0,0",
+                                "type": 4,
+                                "elements": "& - логическое И;",
+                                "format_id": "74ed87c1-3787-40e7-a057-c7d6d8e52caa"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,19",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,19,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,19,0,0",
+                                "type": 4,
+                                "elements": "| - логическое ИЛИ;",
+                                "format_id": "74ed87c1-3787-40e7-a057-c7d6d8e52caa"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,20",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,20,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,20,0,0",
+                                "type": 4,
+                                "elements": "^ - исключающее ИЛИ;",
+                                "format_id": "74ed87c1-3787-40e7-a057-c7d6d8e52caa"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,21",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,21,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,21,0,0",
+                                "type": 4,
+                                "elements": "! - логическое НЕ.",
+                                "format_id": "74ed87c1-3787-40e7-a057-c7d6d8e52caa"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,22",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,22,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,22,0,0",
+                                "type": 4,
+                                "elements": "Другие функции:",
+                                "format_id": "366b8444-c308-4442-b52f-7b811291c2a4"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Header 4",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,23",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,23,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,23,0,0",
+                                "type": 4,
+                                "elements": "\"abs\" - абсолютное значение;",
+                                "format_id": "74ed87c1-3787-40e7-a057-c7d6d8e52caa"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Header 4",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,24",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,24,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,24,0,0",
+                                "type": 4,
+                                "elements": "\"int\" - целая часть;",
+                                "format_id": "74ed87c1-3787-40e7-a057-c7d6d8e52caa"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,25",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,25,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,25,0,0",
+                                "type": 4,
+                                "elements": "\"fract\" - дробная часть;",
+                                "format_id": "74ed87c1-3787-40e7-a057-c7d6d8e52caa"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,26",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,26,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,26,0,0",
+                                "type": 4,
+                                "elements": "\"round\" - округление до ближайшего целого.",
+                                "format_id": "74ed87c1-3787-40e7-a057-c7d6d8e52caa"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            }
+        ]
+    },
+    "caret": {
+        "id": "0,0,0,0"
+    },
+    "selection": []
+}

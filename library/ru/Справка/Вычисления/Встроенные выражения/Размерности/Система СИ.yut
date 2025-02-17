@@ -1,0 +1,4933 @@
+{
+    "config": {
+        "language": 2,
+        "code_block_border_color": -16776961,
+        "numbers_color": -16776961,
+        "variables_color": -16755456,
+        "functions_color": -43776,
+        "units_color": -16755456,
+        "shapes_color": -16777216,
+        "error_marks_color": -65536,
+        "formula_bg_color": -1,
+        "bg_selection_color": -16776961,
+        "real_result": {
+            "precision": 3,
+            "exp": 10,
+            "default_angle_measure": 0,
+            "result_angle_measure": 0,
+            "show_angle_measure": true
+        },
+        "integer_result": {
+            "result_notation": 2,
+            "default_notation": 2,
+            "show_notation": true
+        },
+        "rational_result": {
+            "fraction_form": 0
+        },
+        "complex_result": {
+            "precision": 3,
+            "exp": 10,
+            "default_angle_measure": 0,
+            "result_angle_measure": 0,
+            "show_angle_measure": false,
+            "form": 0,
+            "max_count": 10
+        },
+        "auto_result": {
+            "result_auto_advance": true,
+            "results_order": [
+                1,
+                2,
+                3,
+                4
+            ],
+            "real_config": {
+                "precision": 3,
+                "exp": 10,
+                "default_angle_measure": 0,
+                "result_angle_measure": 0,
+                "show_angle_measure": true
+            },
+            "integer_config": {
+                "result_notation": 2,
+                "default_notation": 2,
+                "show_notation": true
+            },
+            "rational_config": {
+                "fraction_form": 0
+            },
+            "complex_config": {
+                "precision": 3,
+                "exp": 10,
+                "default_angle_measure": 0,
+                "result_angle_measure": 0,
+                "show_angle_measure": false,
+                "form": 0,
+                "max_count": 10
+            }
+        }
+    },
+    "string_formats": [
+        {
+            "id": "253e3335-c46b-45c8-8c15-3c7352baca5a",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "45f2e128-ec8d-40e5-b398-7b42b9149f43",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "793c94c1-9e4c-4a6f-bcaa-3bc49b03241c",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "035087d6-c9ee-41d8-85a7-27ac4b02a365",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "e82d949a-a4d7-43b3-ac8f-98efe852114e",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "17912247-ec78-4ff5-b229-3341af417aab",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "7025e0d1-fbfa-487f-afcd-cdc45d1c6ae7",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "38e141ee-1cbc-455e-8695-04dca3590c41",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "76c67feb-e6fd-414a-a36f-3926bf595ee7",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "2779d796-8f37-424b-8425-84ce181a3d40",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "1cf2fa6e-2d1f-48d7-84cc-00702ac8b5ce",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "4c7369a9-db4b-49fb-9882-9197c86e59ec",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "6777ae47-44cf-4281-84d0-e33c9e095d2d",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "8983b927-6e4e-4a91-b921-4614c9644416",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "cf8ea2e2-b31b-43f7-afd4-6b3f03760cf3",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "002bbd6a-7759-44d4-a1a9-7e24816413ae",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "1d613e02-d441-4c32-b507-886a6bc5c413",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "4966d003-cec7-444e-8355-ee09cef366ae",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "8637e46c-ce9a-4cdb-a194-523b102b5d27",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "ed073e9a-1170-4205-8f6f-6f8f62af6a41",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "06186cb7-ec2a-462c-b770-3fb90998db06",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "f0f35f8e-3616-48c1-a12a-75eda4c29876",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "e64eeab6-894b-4cab-b4d7-524515c6726b",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "ff4e2bcb-21f7-4546-96f8-98c892e5a619",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "b411b958-a069-4292-a1a5-a072cb8a22d8",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "24f6a4c6-c342-4399-9b48-f90b2ea57ff2",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "fe33a4c2-0245-456b-b36c-21440ce54320",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "39d8d686-ea60-41ff-8db5-327402fddad6",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "9ae3f44c-bde2-491d-8c6f-aa49a70ad402",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "88f4781a-ed63-4b04-b9a3-53daab04b859",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "73e4cfa6-8b4e-45a0-a97a-42d1945cc99f",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "2b19ec4f-d6a8-4859-b9b7-97e4a0e122dd",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "33645e91-832e-48e1-869b-1c83699aa5e4",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "5adc8c5b-19c7-4336-8a24-e3aac7da87c8",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "e9456333-9082-49a4-b785-8a4bc458b007",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "2dc73221-6029-45d1-a344-5effdb3d9397",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "6a74e203-1d4b-4658-b60e-4962d5d65530",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "5ee55332-b7cb-46ae-9e8c-8f013d177fb2",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "c190ce8a-a263-489d-a4a5-58943dde59fc",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "2d34e459-818b-4487-a1ba-7b6da48430cb",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "221f3e4c-92a4-4377-83ae-23000c6823be",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "f70c513f-7bc4-4914-a2c2-4309827489f8",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "47ce2601-1056-44fc-853c-fcf083dcba62",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "59324bb0-6f4e-40f5-88ea-61739d1233d5",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "9a8029e9-28fb-43b5-a58a-6d48981cde3d",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "3c5eca84-d7c6-4948-b051-81cbea06bbcf",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "1cc0dba7-c4d2-4828-a60d-69da8bab0ae2",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "6083211a-f9ac-495b-8960-278fef5c3a4f",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "6da69185-b020-4137-81fb-293533260721",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "7cb0914f-8261-4fef-8d7c-7186755ab0e8",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "7ede9b94-0692-4bfa-bf8d-629842d2a1a9",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "d1a1ec54-b8dc-4153-a2f7-903ea2ecaf6e",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "a0e43c66-8559-4922-930d-3fcf370ae8b9",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "a5a7ddf9-62d8-423e-a7bd-f74790320d0e",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "7f312f00-67e7-4d9f-a982-b39618d8bc1f",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "014955f8-2a77-4c58-857b-9e168ae64230",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "ae2434be-6fcb-476b-9add-fb06e8540173",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "01b08b7a-646c-4fe7-b053-5815ed937c7e",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "2df3af6f-0b4c-47f1-aaa4-0f8695b475d6",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "e9e2c79c-a8af-4a42-a71e-928afde59bd9",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "5597f214-25d7-495f-b3be-64399fe500be",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "1d548ca5-25e1-4575-9243-526b3a80831b",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "d1ab5230-60e1-4299-a3e7-2d8aec156168",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "4f88348d-da5f-4dfd-bd07-bd4bdb0b604e",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "a3c40803-fa85-4aa1-8261-96088709a247",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "caa297dc-9cf3-4de5-989d-a2e182448085",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "62929bc0-e97a-47bd-a97d-fbb24822a94e",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "1bdba8f0-ac55-4fbc-b43e-a5039f3af049",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "065da342-fde6-47a2-87fa-d076095740f2",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "48bc04b9-692e-4e7b-8b0f-29a8f1ded2d2",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "da7ca043-d574-4208-8e2c-5adeb227313a",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "136734a7-3892-430d-986d-c27d227fbd30",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "2499518d-b75b-4f70-a4a9-77c69312e911",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "74310844-633e-4ca1-b60a-006d8928fc97",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "6a72f6e3-7e46-4728-b6cf-969be41b4330",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "94633829-a11c-4513-9c95-eeddf2f06fae",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "0e4482fb-43a0-4504-aef2-f6dbaf050b8b",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "a0fecd92-4498-4ba7-ab61-2f59452cf576",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "9655a3ed-c4e8-4dca-b0e3-16c24d4f67dd",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "073a31d2-64cc-4a1e-9927-e74ff186729d",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "45e98451-dbcb-41cb-a7f2-6a623f168d2e",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "d8a876c5-b0cb-413f-941a-850012f839cb",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "7a94eef2-7e33-4129-92a7-1dc60e55c0a5",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "833d8f2e-4be9-4fcc-9812-708180b4269d",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "0614fa66-9dbd-4973-ac82-030c46d51770",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "b451d762-71d6-406d-94bb-e6443b3c584c",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "bd4e8bf8-1517-4be4-bf24-f83d20c48828",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "2d41ad67-3dfc-4956-82cc-7cbe08d480f4",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "0445abe4-777c-4a83-b9bb-c70e74febaa8",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "5bbeebd1-e629-451f-b21a-a6afe5fa57fa",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "ad86b01f-c673-48e3-99d6-8ce06cd29e02",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "777563ef-cb3a-47a2-80fc-19f799a4f113",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "3e4a8e44-74f8-4c15-ac0b-e8d3a2f8bf9d",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "10974f42-894a-448c-a4ab-ebcebf4d0390",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "2beb1f9d-0eed-42da-b74b-ccc403493c83",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "b397e8d5-561a-4fe3-87d0-777ae65b392d",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "3f58b378-d284-4749-93f5-f9b87748096a",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "2079f5ec-ef78-452e-9879-326adcb25400",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "d615ec55-f012-4d71-9610-6d4652d05be5",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "da95fa37-2bb0-430e-96af-fd5e775959e3",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "e72ab624-76cf-43cd-be7a-76bdb9e7c3f9",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "563427ce-7361-4617-b7f1-85c07ddeaecf",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "89e5c00a-0bee-420a-bcee-d1b372086a0b",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "d74c3bb8-6242-45bc-bf2c-94ece0d4238c",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "3bc9e51e-7ec2-492d-a15d-0a3bd91596bf",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "8faba945-d74b-4084-8d09-55a638946f44",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "31c40519-0896-467c-b881-dff964da4c2c",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "8b896384-611f-418a-8490-4497fdef61dd",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "68fe2c54-e2a0-4976-b8f6-b161e68c0f6a",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "b2e54408-036e-40d7-b3c2-3b7e77931369",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "47b6f2cc-32aa-49b2-a3d7-15748cb20aff",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "33cfc2eb-60c3-41ee-b057-cc4146d30707",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "7a54a68a-9028-4ac7-81cb-b8da1ba508ac",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "9fd1692a-1759-4fff-9227-489baacb8629",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "f3da586f-56db-4730-9315-9a59e06c0257",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "0d9a2784-7c12-4485-bbe1-dd715231d611",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "1774a0c0-2e66-4ba3-89cc-c12a6c040248",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "0a09c996-9b97-479e-aa40-e02fbd243cca",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "d1fb0c43-20ea-4ccf-9f88-51ca34fe8273",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "4112ae68-1aae-4780-b4bf-eb8aa4b90aa2",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "b90a1175-6b73-4dee-86a0-68d6fce8981f",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "7d97219a-85ee-4221-b0d3-32349d206ecc",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "0a1b090d-ac70-44ae-9142-d6b8f566aaca",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "f0dc6eef-5e3d-43ce-845e-6b02725ac58e",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "902fd9da-86c7-449d-b789-4424551e36e3",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "c4002ab0-f2b7-415b-b75b-82903dce7084",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "9764bb3d-3df9-4692-b101-0dfd6beaa467",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "ad903e25-982e-4deb-9b61-178be9911337",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "6383fb01-206d-4c96-a3af-afa0394096f5",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "baa914f5-0d7a-4c3a-be4e-fd52666b0212",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "0862bd73-762e-461c-b730-7e4d283d42e2",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "ef590b2b-fd51-43b9-9d86-113faf259c1c",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "0b03d95f-880c-458c-beee-d52315ac5264",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "7f651bd8-9094-431e-94b0-820e07793f88",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "dbcf6cba-7e8d-428c-8490-46972d3fe8f2",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "5d8b0f2f-91aa-461d-8db7-e254f4a9ba17",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "edae6fd4-b0ab-489b-9cc7-77f973511431",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "2ad4878e-4faa-4a8b-a6ca-38aba6b81d6e",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "6d72e982-95bc-44ae-b002-c03c4bb94170",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "9e664d7a-7e52-4cd3-b25e-af162480ccf3",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": true,
+            "strikethrough": false,
+            "text_color": 4278190335,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        }
+    ],
+    "paragraph_formats": [
+        {
+            "name": "Text body",
+            "alignment": 0,
+            "word_wrap": 1,
+            "line_spacing": 5,
+            "indent_before": 10,
+            "indent_after": 10,
+            "indent_first_line": 0,
+            "spacing_before": 10,
+            "spacing_after": 10,
+            "default_string_format": "253e3335-c46b-45c8-8c15-3c7352baca5a"
+        },
+        {
+            "name": "Header 1",
+            "alignment": 0,
+            "word_wrap": 1,
+            "line_spacing": 5,
+            "indent_before": 10,
+            "indent_after": 10,
+            "indent_first_line": 0,
+            "spacing_before": 10,
+            "spacing_after": 10,
+            "default_string_format": "45f2e128-ec8d-40e5-b398-7b42b9149f43"
+        },
+        {
+            "name": "Header 2",
+            "alignment": 0,
+            "word_wrap": 1,
+            "line_spacing": 5,
+            "indent_before": 10,
+            "indent_after": 10,
+            "indent_first_line": 0,
+            "spacing_before": 10,
+            "spacing_after": 10,
+            "default_string_format": "793c94c1-9e4c-4a6f-bcaa-3bc49b03241c"
+        },
+        {
+            "name": "Header 3",
+            "alignment": 0,
+            "word_wrap": 1,
+            "line_spacing": 5,
+            "indent_before": 10,
+            "indent_after": 10,
+            "indent_first_line": 0,
+            "spacing_before": 10,
+            "spacing_after": 10,
+            "default_string_format": "035087d6-c9ee-41d8-85a7-27ac4b02a365"
+        },
+        {
+            "name": "Header 4",
+            "alignment": 0,
+            "word_wrap": 1,
+            "line_spacing": 5,
+            "indent_before": 10,
+            "indent_after": 10,
+            "indent_first_line": 0,
+            "spacing_before": 10,
+            "spacing_after": 10,
+            "default_string_format": "e82d949a-a4d7-43b3-ac8f-98efe852114e"
+        },
+        {
+            "name": "Example",
+            "alignment": 0,
+            "word_wrap": 1,
+            "line_spacing": 5,
+            "indent_before": 10,
+            "indent_after": 10,
+            "indent_first_line": 0,
+            "spacing_before": 10,
+            "spacing_after": 10,
+            "default_string_format": "17912247-ec78-4ff5-b229-3341af417aab"
+        },
+        {
+            "name": "Monospace",
+            "alignment": 0,
+            "word_wrap": 1,
+            "line_spacing": 5,
+            "indent_before": 10,
+            "indent_after": 10,
+            "indent_first_line": 0,
+            "spacing_before": 10,
+            "spacing_after": 10,
+            "default_string_format": "7025e0d1-fbfa-487f-afcd-cdc45d1c6ae7"
+        },
+        {
+            "name": "Code",
+            "alignment": 0,
+            "word_wrap": 0,
+            "line_spacing": 2,
+            "indent_before": 2,
+            "indent_after": 2,
+            "indent_first_line": 0,
+            "spacing_before": 2,
+            "spacing_after": 2,
+            "default_string_format": "38e141ee-1cbc-455e-8695-04dca3590c41"
+        }
+    ],
+    "text": {
+        "id": "0",
+        "type": 1,
+        "elements": [
+            {
+                "id": "0,0",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,0,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,0,0,0",
+                                "type": 4,
+                                "elements": "Расстояние",
+                                "format_id": "6777ae47-44cf-4281-84d0-e33c9e095d2d"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Header 4",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,1",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,1,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,1,0,0",
+                                "type": 4,
+                                "elements": "• м - метр",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,2",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,2,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,2,0,0",
+                                "type": 4,
+                                "elements": "• анг - ангстрем",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,3",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,3,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,3,0,0",
+                                "type": 4,
+                                "elements": "• нм - нанометр",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,4",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,4,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,4,0,0",
+                                "type": 4,
+                                "elements": "• мкм - микрометр",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,5",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,5,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,5,0,0",
+                                "type": 4,
+                                "elements": "• мм - миллиметр",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,6",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,6,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,6,0,0",
+                                "type": 4,
+                                "elements": "• см - сантиметр",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,7",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,7,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,7,0,0",
+                                "type": 4,
+                                "elements": "• дм - дециметр",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,8",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,8,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,8,0,0",
+                                "type": 4,
+                                "elements": "• км - километр",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,9",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,9,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,9,0,0",
+                                "type": 4,
+                                "elements": "Масса",
+                                "format_id": "6777ae47-44cf-4281-84d0-e33c9e095d2d"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Header 4",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,10",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,10,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,10,0,0",
+                                "type": 4,
+                                "elements": "• кг - килограмм \tвстроенная",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,11",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,11,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,11,0,0",
+                                "type": 4,
+                                "elements": "• мкг - микрограмм",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,12",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,12,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,12,0,0",
+                                "type": 4,
+                                "elements": "• мг - миллиграмм",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,13",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,13,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,13,0,0",
+                                "type": 4,
+                                "elements": "• г - грамм",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,14",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,14,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,14,0,0",
+                                "type": 4,
+                                "elements": "• т - тонна",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,15",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,15,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,15,0,0",
+                                "type": 4,
+                                "elements": "Температура",
+                                "format_id": "6777ae47-44cf-4281-84d0-e33c9e095d2d"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Header 4",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,16",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,16,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,16,0,0",
+                                "type": 4,
+                                "elements": "• К - кельвин",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,17",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,17,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,17,0,0",
+                                "type": 4,
+                                "elements": "• °C - цельсий",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,18",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,18,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,18,0,0",
+                                "type": 4,
+                                "elements": "Время",
+                                "format_id": "6777ae47-44cf-4281-84d0-e33c9e095d2d"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Header 4",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,19",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,19,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,19,0,0",
+                                "type": 4,
+                                "elements": "• с - секунда",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,20",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,20,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,20,0,0",
+                                "type": 4,
+                                "elements": "• пс - пикосекунда",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,21",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,21,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,21,0,0",
+                                "type": 4,
+                                "elements": "• нс - наносекунда",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,22",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,22,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,22,0,0",
+                                "type": 4,
+                                "elements": "• мкс - микросекунда",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,23",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,23,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,23,0,0",
+                                "type": 4,
+                                "elements": "• мс - миллисекунда",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,24",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,24,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,24,0,0",
+                                "type": 4,
+                                "elements": "• мин - минута",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,25",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,25,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,25,0,0",
+                                "type": 4,
+                                "elements": "• час - час",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,26",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,26,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,26,0,0",
+                                "type": 4,
+                                "elements": "• сутки - сутки",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,27",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,27,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,27,0,0",
+                                "type": 4,
+                                "elements": "• неделя - неделя",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,28",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,28,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,28,0,0",
+                                "type": 4,
+                                "elements": "Сила тока",
+                                "format_id": "6777ae47-44cf-4281-84d0-e33c9e095d2d"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Header 4",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,29",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,29,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,29,0,0",
+                                "type": 4,
+                                "elements": "• А - ампер",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,30",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,30,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,30,0,0",
+                                "type": 4,
+                                "elements": "• мкА - микроампер",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,31",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,31,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,31,0,0",
+                                "type": 4,
+                                "elements": "• мА - миллиампер",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,32",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,32,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,32,0,0",
+                                "type": 4,
+                                "elements": "• кА - килоампер",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,33",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,33,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,33,0,0",
+                                "type": 4,
+                                "elements": "• МА - мегаампер",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,34",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,34,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,34,0,0",
+                                "type": 4,
+                                "elements": "Сила света",
+                                "format_id": "6777ae47-44cf-4281-84d0-e33c9e095d2d"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Header 4",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,35",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,35,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,35,0,0",
+                                "type": 4,
+                                "elements": "• Кд - кандела",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,36",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,36,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,36,0,0",
+                                "type": 4,
+                                "elements": "• мкКд - микрокандела",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,37",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,37,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,37,0,0",
+                                "type": 4,
+                                "elements": "• мКд - милликандела",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,38",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,38,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,38,0,0",
+                                "type": 4,
+                                "elements": "• кКд - килокандела",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,39",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,39,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,39,0,0",
+                                "type": 4,
+                                "elements": "• МКд - мегакандела",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,40",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,40,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,40,0,0",
+                                "type": 4,
+                                "elements": "Количество вещества",
+                                "format_id": "6777ae47-44cf-4281-84d0-e33c9e095d2d"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,41",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,41,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,41,0,0",
+                                "type": 4,
+                                "elements": "• моль - моль",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,42",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,42,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,42,0,0",
+                                "type": 4,
+                                "elements": "Частота",
+                                "format_id": "6777ae47-44cf-4281-84d0-e33c9e095d2d"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Header 4",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,43",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,43,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,43,0,0",
+                                "type": 4,
+                                "elements": "• Гц - герц",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,44",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,44,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,44,0,0",
+                                "type": 4,
+                                "elements": "• кГц - килогерц",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,45",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,45,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,45,0,0",
+                                "type": 4,
+                                "elements": "• МГц - мегагерц",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,46",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,46,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,46,0,0",
+                                "type": 4,
+                                "elements": "• ГГц - гигагерц",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,47",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,47,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,47,0,0",
+                                "type": 4,
+                                "elements": "Сила",
+                                "format_id": "6777ae47-44cf-4281-84d0-e33c9e095d2d"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Header 4",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,48",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,48,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,48,0,0",
+                                "type": 4,
+                                "elements": "• Н - ньютон",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,49",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,49,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,49,0,0",
+                                "type": 4,
+                                "elements": "• мкН - микроньютон",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,50",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,50,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,50,0,0",
+                                "type": 4,
+                                "elements": "• мН - миллиньютон",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,51",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,51,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,51,0,0",
+                                "type": 4,
+                                "elements": "• кН - килоньютон",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,52",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,52,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,52,0,0",
+                                "type": 4,
+                                "elements": "• МН - меганьютон",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,53",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,53,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,53,0,0",
+                                "type": 4,
+                                "elements": "Энергия",
+                                "format_id": "6777ae47-44cf-4281-84d0-e33c9e095d2d"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Header 4",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,54",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,54,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,54,0,0",
+                                "type": 4,
+                                "elements": "• Дж - джоуль",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,55",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,55,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,55,0,0",
+                                "type": 4,
+                                "elements": "• мкДж - микроджоуль",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,56",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,56,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,56,0,0",
+                                "type": 4,
+                                "elements": "• мДж - миллиджоуль",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,57",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,57,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,57,0,0",
+                                "type": 4,
+                                "elements": "• кДж - килоджоуль",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,58",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,58,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,58,0,0",
+                                "type": 4,
+                                "elements": "• МДж - мегаджоуль",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,59",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,59,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,59,0,0",
+                                "type": 4,
+                                "elements": "Мощность",
+                                "format_id": "6777ae47-44cf-4281-84d0-e33c9e095d2d"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Header 4",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,60",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,60,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,60,0,0",
+                                "type": 4,
+                                "elements": "• Вт - ватт",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,61",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,61,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,61,0,0",
+                                "type": 4,
+                                "elements": "• мкВт - микроватт",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,62",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,62,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,62,0,0",
+                                "type": 4,
+                                "elements": "• мВт - милливатт",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,63",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,63,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,63,0,0",
+                                "type": 4,
+                                "elements": "• кВт - киловатт",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,64",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,64,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,64,0,0",
+                                "type": 4,
+                                "elements": "• МВт - мегаватт",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,65",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,65,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,65,0,0",
+                                "type": 4,
+                                "elements": "Давление",
+                                "format_id": "6777ae47-44cf-4281-84d0-e33c9e095d2d"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Header 4",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,66",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,66,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,66,0,0",
+                                "type": 4,
+                                "elements": "• Па - паскаль",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,67",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,67,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,67,0,0",
+                                "type": 4,
+                                "elements": "• мкПа - микропаскаль",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,68",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,68,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,68,0,0",
+                                "type": 4,
+                                "elements": "• мПа - миллипаскаль",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,69",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,69,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,69,0,0",
+                                "type": 4,
+                                "elements": "• кПа - килопаскаль",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,70",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,70,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,70,0,0",
+                                "type": 4,
+                                "elements": "• МПа - мегапаскаль",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,71",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,71,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,71,0,0",
+                                "type": 4,
+                                "elements": "Световой поток",
+                                "format_id": "6777ae47-44cf-4281-84d0-e33c9e095d2d"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Header 4",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,72",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,72,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,72,0,0",
+                                "type": 4,
+                                "elements": "• лм - люмен",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,73",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,73,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,73,0,0",
+                                "type": 4,
+                                "elements": "• мклм - микролюмен",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,74",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,74,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,74,0,0",
+                                "type": 4,
+                                "elements": "• млм - миллилюмен",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,75",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,75,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,75,0,0",
+                                "type": 4,
+                                "elements": "• клм - килолюмен",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,76",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,76,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,76,0,0",
+                                "type": 4,
+                                "elements": "• Млм - мегалюмен",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,77",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,77,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,77,0,0",
+                                "type": 4,
+                                "elements": "Освещенность",
+                                "format_id": "6777ae47-44cf-4281-84d0-e33c9e095d2d"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Header 4",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,78",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,78,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,78,0,0",
+                                "type": 4,
+                                "elements": "• лк - люкс",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,79",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,79,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,79,0,0",
+                                "type": 4,
+                                "elements": "• мклк - микролюкс",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,80",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,80,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,80,0,0",
+                                "type": 4,
+                                "elements": "• млк - миллилюкс",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,81",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,81,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,81,0,0",
+                                "type": 4,
+                                "elements": "• клк - килолюкс",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,82",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,82,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,82,0,0",
+                                "type": 4,
+                                "elements": "• Млк - мегалюкс",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,83",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,83,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,83,0,0",
+                                "type": 4,
+                                "elements": "Электрический заряд",
+                                "format_id": "6777ae47-44cf-4281-84d0-e33c9e095d2d"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Header 4",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,84",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,84,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,84,0,0",
+                                "type": 4,
+                                "elements": "• Кл - кулон",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,85",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,85,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,85,0,0",
+                                "type": 4,
+                                "elements": "• мкКл - микрокулон",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,86",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,86,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,86,0,0",
+                                "type": 4,
+                                "elements": "• мКл - милликулон",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,87",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,87,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,87,0,0",
+                                "type": 4,
+                                "elements": "• кКл - килокулон",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,88",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,88,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,88,0,0",
+                                "type": 4,
+                                "elements": "• Мкл - мегакулон",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,89",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,89,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,89,0,0",
+                                "type": 4,
+                                "elements": "Разность потенциалов",
+                                "format_id": "6777ae47-44cf-4281-84d0-e33c9e095d2d"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Header 4",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,90",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,90,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,90,0,0",
+                                "type": 4,
+                                "elements": "• В - вольт",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,91",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,91,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,91,0,0",
+                                "type": 4,
+                                "elements": "• мкВ - микровольт",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,92",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,92,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,92,0,0",
+                                "type": 4,
+                                "elements": "• мВ - милливольт",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,93",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,93,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,93,0,0",
+                                "type": 4,
+                                "elements": "• кВ - киловольт",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,94",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,94,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,94,0,0",
+                                "type": 4,
+                                "elements": "• МВ - мегавольт",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,95",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,95,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,95,0,0",
+                                "type": 4,
+                                "elements": "Электрическое сопротивление",
+                                "format_id": "6777ae47-44cf-4281-84d0-e33c9e095d2d"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Header 4",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,96",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,96,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,96,0,0",
+                                "type": 4,
+                                "elements": "• Ом - ом",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,97",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,97,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,97,0,0",
+                                "type": 4,
+                                "elements": "• мкОм - микроом",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,98",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,98,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,98,0,0",
+                                "type": 4,
+                                "elements": "• мОм - миллиом",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,99",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,99,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,99,0,0",
+                                "type": 4,
+                                "elements": "• кОм - килоом",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,100",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,100,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,100,0,0",
+                                "type": 4,
+                                "elements": "• МОм - мегаом",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,101",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,101,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,101,0,0",
+                                "type": 4,
+                                "elements": "Электроёмкость",
+                                "format_id": "6777ae47-44cf-4281-84d0-e33c9e095d2d"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Header 4",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,102",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,102,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,102,0,0",
+                                "type": 4,
+                                "elements": "• Ф - фарад",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,103",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,103,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,103,0,0",
+                                "type": 4,
+                                "elements": "• пФ - пикофарад",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,104",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,104,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,104,0,0",
+                                "type": 4,
+                                "elements": "• нФ - нанофарад",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,105",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,105,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,105,0,0",
+                                "type": 4,
+                                "elements": "• мкФ - микрофарад",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,106",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,106,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,106,0,0",
+                                "type": 4,
+                                "elements": "• мФ - миллифарад",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,107",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,107,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,107,0,0",
+                                "type": 4,
+                                "elements": "Магнитный поток",
+                                "format_id": "6777ae47-44cf-4281-84d0-e33c9e095d2d"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Header 4",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,108",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,108,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,108,0,0",
+                                "type": 4,
+                                "elements": "• Вб - вебер",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,109",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,109,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,109,0,0",
+                                "type": 4,
+                                "elements": "• мкВб - микровебер",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,110",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,110,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,110,0,0",
+                                "type": 4,
+                                "elements": "• мВб - милливебер",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,111",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,111,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,111,0,0",
+                                "type": 4,
+                                "elements": "• кВб - киловебер",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,112",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,112,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,112,0,0",
+                                "type": 4,
+                                "elements": "• МВб - мегавебер",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,113",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,113,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,113,0,0",
+                                "type": 4,
+                                "elements": "Магнитная индукция",
+                                "format_id": "6777ae47-44cf-4281-84d0-e33c9e095d2d"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Header 4",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,114",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,114,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,114,0,0",
+                                "type": 4,
+                                "elements": "• Тл - тесла",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,115",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,115,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,115,0,0",
+                                "type": 4,
+                                "elements": "• мкТл - микротексла",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,116",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,116,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,116,0,0",
+                                "type": 4,
+                                "elements": "• мТл - миллитесла",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,117",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,117,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,117,0,0",
+                                "type": 4,
+                                "elements": "• кТл - килотесла",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,118",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,118,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,118,0,0",
+                                "type": 4,
+                                "elements": "• МТл - мегатесла",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,119",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,119,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,119,0,0",
+                                "type": 4,
+                                "elements": "Индуктивность",
+                                "format_id": "6777ae47-44cf-4281-84d0-e33c9e095d2d"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Header 4",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,120",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,120,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,120,0,0",
+                                "type": 4,
+                                "elements": "• Гн - генри",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,121",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,121,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,121,0,0",
+                                "type": 4,
+                                "elements": "• пГн - пикогенри",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,122",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,122,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,122,0,0",
+                                "type": 4,
+                                "elements": "• нГн - наногенри",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,123",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,123,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,123,0,0",
+                                "type": 4,
+                                "elements": "• мкГн - микрогенри",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,124",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,124,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,124,0,0",
+                                "type": 4,
+                                "elements": "• мГн - миллигенри",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,125",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,125,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,125,0,0",
+                                "type": 4,
+                                "elements": "Электрическая проводимость",
+                                "format_id": "6777ae47-44cf-4281-84d0-e33c9e095d2d"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Header 4",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,126",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,126,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,126,0,0",
+                                "type": 4,
+                                "elements": "• См - сименс",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,127",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,127,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,127,0,0",
+                                "type": 4,
+                                "elements": "• мкСм - микросименс",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,128",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,128,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,128,0,0",
+                                "type": 4,
+                                "elements": "• мСм - миллисименс",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,129",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,129,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,129,0,0",
+                                "type": 4,
+                                "elements": "• кСм - килосименс",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,130",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,130,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,130,0,0",
+                                "type": 4,
+                                "elements": "• МСм - мегасименс",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,131",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,131,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,131,0,0",
+                                "type": 4,
+                                "elements": "Поглощенная доза ионизирующего излучения",
+                                "format_id": "6777ae47-44cf-4281-84d0-e33c9e095d2d"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Header 4",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,132",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,132,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,132,0,0",
+                                "type": 4,
+                                "elements": "• Гр - грэй",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,133",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,133,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,133,0,0",
+                                "type": 4,
+                                "elements": "• мкГр - микрогрэй",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,134",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,134,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,134,0,0",
+                                "type": 4,
+                                "elements": "• мГр - миллигрэй",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,135",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,135,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,135,0,0",
+                                "type": 4,
+                                "elements": "• кГр - килогрэй",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,136",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,136,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,136,0,0",
+                                "type": 4,
+                                "elements": "• МГр - мегагрэй",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,137",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,137,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,137,0,0",
+                                "type": 4,
+                                "elements": "Площадь",
+                                "format_id": "6777ae47-44cf-4281-84d0-e33c9e095d2d"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Header 4",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,138",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,138,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,138,0,0",
+                                "type": 4,
+                                "elements": "• ар - ар",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,139",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,139,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,139,0,0",
+                                "type": 4,
+                                "elements": "• га - гектар",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,140",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,140,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,140,0,0",
+                                "type": 4,
+                                "elements": "Объем",
+                                "format_id": "6777ae47-44cf-4281-84d0-e33c9e095d2d"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Header 4",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,141",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,141,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,141,0,0",
+                                "type": 4,
+                                "elements": "• л - литр",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,142",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,142,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,142,0,0",
+                                "type": 4,
+                                "elements": "• мкл - микролитр",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,143",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,143,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,143,0,0",
+                                "type": 4,
+                                "elements": "• мл - миллилитр",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,144",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,144,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,144,0,0",
+                                "type": 4,
+                                "elements": "• дл - децилитр",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,145",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,145,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,145,0,0",
+                                "type": 4,
+                                "elements": "• дал - декалитр",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,146",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,146,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,146,0,0",
+                                "type": 4,
+                                "elements": "• гл - гектолитр",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,147",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,147,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,147,0,0",
+                                "type": 4,
+                                "elements": "Данные",
+                                "format_id": "6777ae47-44cf-4281-84d0-e33c9e095d2d"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Header 4",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,148",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,148,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,148,0,0",
+                                "type": 4,
+                                "elements": "• байт - байт",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,149",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,149,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,149,0,0",
+                                "type": 4,
+                                "elements": "• кбайт - кбайт",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,150",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,150,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,150,0,0",
+                                "type": 4,
+                                "elements": "• Мбайт - Мбайт",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,151",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,151,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,151,0,0",
+                                "type": 4,
+                                "elements": "• Гбайт - Гбайт",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,152",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,152,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,152,0,0",
+                                "type": 4,
+                                "elements": "• Тбайт - Тбайт",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            }
+        ]
+    },
+    "caret": {
+        "id": "0,0,0,0"
+    },
+    "selection": []
+}
