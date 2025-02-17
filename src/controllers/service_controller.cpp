@@ -99,9 +99,15 @@ void ServiceController::GetLibraryDocuments(const HttpRequestPtr& req, std::func
                         else
                         {
                             if (pos < sorted_dirs.size())
-                                sorted_dirs.insert(sorted_dirs.begin() + pos, entry.path());
+                            {
+                                sorted_dirs[pos] = entry.path();
+                            }
                             else
+                            {
+                                for (int i = sorted_dirs.size(); i < pos; ++i)
+                                    sorted_dirs.push_back(fs::path());
                                 sorted_dirs.push_back(entry.path());
+                            }
                         }
                     }
                     else
@@ -122,9 +128,15 @@ void ServiceController::GetLibraryDocuments(const HttpRequestPtr& req, std::func
                             else
                             {
                                 if (pos < sorted_files.size())
-                                    sorted_files.insert(sorted_files.begin() + pos, entry.path());
+                                {
+                                    sorted_files[pos] = entry.path();
+                                }
                                 else
+                                {
+                                    for (int i = sorted_files.size(); i < pos; ++i)
+                                        sorted_files.push_back(fs::path());
                                     sorted_files.push_back(entry.path());
+                                }
                             }
                         }
                         else
@@ -144,6 +156,8 @@ void ServiceController::GetLibraryDocuments(const HttpRequestPtr& req, std::func
             Json::Value dirs(Json::arrayValue);
             for (const auto& entry : sorted_dirs)
             {
+                if (entry.empty())
+                    continue;
                 Json::Value dir(Json::objectValue);
                 get_files(entry, entry.stem(), dir);
                 dirs.append(dir);
@@ -152,7 +166,11 @@ void ServiceController::GetLibraryDocuments(const HttpRequestPtr& req, std::func
 
             Json::Value files(Json::arrayValue);
             for (const auto& entry : sorted_files)
+            {
+                if (entry.empty())
+                    continue;
                 files.append(entry.stem().c_str());
+            }
             json["files"] = files;
         };
     
