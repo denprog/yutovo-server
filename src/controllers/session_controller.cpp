@@ -223,7 +223,7 @@ void SessionController::LibraryDocument(const HttpRequestPtr& req, std::function
     HttpAppFramework& inst = HttpAppFramework::instance();
     p = inst.getHomePage();
 
-    if (param.find(".") == std::string::npos)
+    if (param.find("..") != std::string::npos || param.find(".") == std::string::npos)
     {
         if (session_id.empty())
         {
@@ -239,7 +239,9 @@ void SessionController::LibraryDocument(const HttpRequestPtr& req, std::function
         }
         
         std::replace(param.begin(), param.end(), '\\', '/');
-        fs::path path = fs::path(library_path + param + ".yut");
+        fs::path path = fs::path(library_path + param);
+        if (!param.ends_with(".yut"))
+            path = fs::path(".yut");
         if (!fs::exists(path))
         {
             GetLogger(session_id)->Error("Library document not found: {}", param);
