@@ -70,6 +70,102 @@
     },
     "string_formats": [
         {
+            "id": "c5c7e36f-e15a-493a-bbdf-5eca3e83a795",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "f7748064-72e4-4ef2-90f5-6128457ee35b",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "4d0b1164-a661-4040-ada2-5fe236be5ca5",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "f9ccf49c-7fd8-44d2-a195-a7385edcb096",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "00729d9b-22f1-4d3f-a9ad-1f5beab48484",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "f72c35ab-3f43-45ea-b519-4682ed4b9e4e",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "e3727952-a973-454f-aed1-7565f2ab888a",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "02e51c65-4fa5-45ca-82de-7576352abca1",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
             "id": "104059f6-d4dc-4fec-abf2-6296c4f744a6",
             "family": "Arial",
             "size": 14,
@@ -1869,7 +1965,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "104059f6-d4dc-4fec-abf2-6296c4f744a6"
+            "default_string_format": "c5c7e36f-e15a-493a-bbdf-5eca3e83a795"
         },
         {
             "name": "Header 1",
@@ -1881,7 +1977,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "1215c804-3ad0-463b-b766-1eea0e6835f9"
+            "default_string_format": "f7748064-72e4-4ef2-90f5-6128457ee35b"
         },
         {
             "name": "Header 2",
@@ -1893,7 +1989,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "41fcbe3c-5c4c-432c-85e5-32f0b28a141d"
+            "default_string_format": "4d0b1164-a661-4040-ada2-5fe236be5ca5"
         },
         {
             "name": "Header 3",
@@ -1905,7 +2001,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "cd39e6f3-5994-42aa-b07b-8849221daccd"
+            "default_string_format": "f9ccf49c-7fd8-44d2-a195-a7385edcb096"
         },
         {
             "name": "Header 4",
@@ -1917,7 +2013,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "20285c76-34d5-4ac0-b3e7-0742f831f921"
+            "default_string_format": "00729d9b-22f1-4d3f-a9ad-1f5beab48484"
         },
         {
             "name": "Example",
@@ -1929,7 +2025,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "3ce7d010-c754-48c2-8313-87a7a9c56b53"
+            "default_string_format": "f72c35ab-3f43-45ea-b519-4682ed4b9e4e"
         },
         {
             "name": "Monospace",
@@ -1941,7 +2037,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "9758a838-89c0-493c-803c-9bb1e2f2d1cb"
+            "default_string_format": "e3727952-a973-454f-aed1-7565f2ab888a"
         },
         {
             "name": "Code",
@@ -1953,7 +2049,7 @@
             "indent_first_line": 0,
             "spacing_before": 2,
             "spacing_after": 2,
-            "default_string_format": "156f0c57-1d39-4159-8978-b4a9a7dac733"
+            "default_string_format": "02e51c65-4fa5-45ca-82de-7576352abca1"
         }
     ],
     "text": {
@@ -2103,7 +2199,19 @@
                             {
                                 "id": "0,6,0,2",
                                 "type": 4,
-                                "elements": " с одним из обозначений системы счисления (bin, oct, dec, hex).",
+                                "elements": " (клавиши [Ctrl+Shift+S]) с одним из обозначений системы счисления ",
+                                "format_id": "dd33cfb9-1bf4-44bf-b3c2-d89a3be6db3e"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "0,6,1",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,6,1,0",
+                                "type": 4,
+                                "elements": "(bin, oct, dec, hex).",
                                 "format_id": "dd33cfb9-1bf4-44bf-b3c2-d89a3be6db3e"
                             }
                         ]
@@ -2490,9 +2598,15 @@
                         "elements": [
                             {
                                 "id": "0,23,0,0",
+                                "type": 34,
+                                "elements": [],
+                                "image_base64": "iVBORw0KGgoAAAANSUhEUgAAABYAAAAUCAYAAACJfM0wAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAZElEQVQ4jWP8////fwYaACZaGDpqMApgwSbY2NiIIVZfX0+5wQwMDAwODg5w9oEDB0gylIFhKIbxqMFwgDNV4ALoSRFXMsRpML4kBkuK+NRgNZjUzIANjIDIY2AgLoszDrkaBADygBooiiGchQAAAABJRU5ErkJggg=="
+                            },
+                            {
+                                "id": "0,23,0,1",
                                 "type": 4,
-                                "elements": "\"abs\" - абсолютное значение;",
-                                "format_id": "74ed87c1-3787-40e7-a057-c7d6d8e52caa"
+                                "elements": " - ввод системы счисления;",
+                                "format_id": "c5c7e36f-e15a-493a-bbdf-5eca3e83a795"
                             }
                         ]
                     }
@@ -2511,13 +2625,13 @@
                             {
                                 "id": "0,24,0,0",
                                 "type": 4,
-                                "elements": "\"int\" - целая часть;",
+                                "elements": "\"abs\" - абсолютное значение;",
                                 "format_id": "74ed87c1-3787-40e7-a057-c7d6d8e52caa"
                             }
                         ]
                     }
                 ],
-                "format_name": "Text body",
+                "format_name": "Header 4",
                 "format_alignment": 0
             },
             {
@@ -2531,7 +2645,7 @@
                             {
                                 "id": "0,25,0,0",
                                 "type": 4,
-                                "elements": "\"fract\" - дробная часть;",
+                                "elements": "\"int\" - целая часть;",
                                 "format_id": "74ed87c1-3787-40e7-a057-c7d6d8e52caa"
                             }
                         ]
@@ -2550,6 +2664,26 @@
                         "elements": [
                             {
                                 "id": "0,26,0,0",
+                                "type": 4,
+                                "elements": "\"fract\" - дробная часть;",
+                                "format_id": "74ed87c1-3787-40e7-a057-c7d6d8e52caa"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,27",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,27,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,27,0,0",
                                 "type": 4,
                                 "elements": "\"round\" - округление до ближайшего целого.",
                                 "format_id": "74ed87c1-3787-40e7-a057-c7d6d8e52caa"

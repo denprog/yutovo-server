@@ -70,6 +70,102 @@
     },
     "string_formats": [
         {
+            "id": "fd44834c-94d9-4321-9601-565582334714",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "8038618d-6bdf-4c69-8e7c-fec4302585ce",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "329f5ff0-7f8f-46fb-8320-637af040c63d",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "9a8d584b-d436-4f67-b70c-81c4050ba29c",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "c6582729-9e5f-4749-aa6c-899b4b7b099a",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "c735632b-ffe2-4c9d-a9b1-71ba6e38435a",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "69ae6aea-65da-4ba4-b754-d88f749352b8",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "58c078b3-b15e-406b-91a3-c645b8cf5835",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
             "id": "ff4e2bcb-21f7-4546-96f8-98c892e5a619",
             "family": "Arial",
             "size": 14,
@@ -993,7 +1089,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "ff4e2bcb-21f7-4546-96f8-98c892e5a619"
+            "default_string_format": "fd44834c-94d9-4321-9601-565582334714"
         },
         {
             "name": "Header 1",
@@ -1005,7 +1101,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "b411b958-a069-4292-a1a5-a072cb8a22d8"
+            "default_string_format": "8038618d-6bdf-4c69-8e7c-fec4302585ce"
         },
         {
             "name": "Header 2",
@@ -1017,7 +1113,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "24f6a4c6-c342-4399-9b48-f90b2ea57ff2"
+            "default_string_format": "329f5ff0-7f8f-46fb-8320-637af040c63d"
         },
         {
             "name": "Header 3",
@@ -1029,7 +1125,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "fe33a4c2-0245-456b-b36c-21440ce54320"
+            "default_string_format": "9a8d584b-d436-4f67-b70c-81c4050ba29c"
         },
         {
             "name": "Header 4",
@@ -1041,7 +1137,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "39d8d686-ea60-41ff-8db5-327402fddad6"
+            "default_string_format": "c6582729-9e5f-4749-aa6c-899b4b7b099a"
         },
         {
             "name": "Example",
@@ -1053,7 +1149,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "9ae3f44c-bde2-491d-8c6f-aa49a70ad402"
+            "default_string_format": "c735632b-ffe2-4c9d-a9b1-71ba6e38435a"
         },
         {
             "name": "Monospace",
@@ -1065,7 +1161,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "88f4781a-ed63-4b04-b9a3-53daab04b859"
+            "default_string_format": "69ae6aea-65da-4ba4-b754-d88f749352b8"
         },
         {
             "name": "Code",
@@ -1077,7 +1173,7 @@
             "indent_first_line": 0,
             "spacing_before": 2,
             "spacing_after": 2,
-            "default_string_format": "73e4cfa6-8b4e-45a0-a97a-42d1945cc99f"
+            "default_string_format": "58c078b3-b15e-406b-91a3-c645b8cf5835"
         }
     ],
     "text": {
@@ -1095,19 +1191,7 @@
                             {
                                 "id": "0,0,0,0",
                                 "type": 4,
-                                "elements": "Эти пользовательские символы названы \"константами\" учитывая их физическое значение. ",
-                                "format_id": "ff4e2bcb-21f7-4546-96f8-98c892e5a619"
-                            }
-                        ]
-                    },
-                    {
-                        "id": "0,0,1",
-                        "type": 3,
-                        "elements": [
-                            {
-                                "id": "0,0,1,0",
-                                "type": 4,
-                                "elements": "Однако, они также могут быть переопределены.",
+                                "elements": "Эти пользовательские символы названы \"константами\" учитывая их физическое значение. Однако, они также могут быть переопределены.",
                                 "format_id": "ff4e2bcb-21f7-4546-96f8-98c892e5a619"
                             }
                         ]
@@ -1339,7 +1423,7 @@
         ]
     },
     "caret": {
-        "id": "0,0,0,0"
+        "id": "0,11,0,36"
     },
     "selection": []
 }

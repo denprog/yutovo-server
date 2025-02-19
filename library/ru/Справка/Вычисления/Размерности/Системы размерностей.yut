@@ -70,6 +70,102 @@
     },
     "string_formats": [
         {
+            "id": "c8be08fb-d116-40a3-aed8-231cb0110039",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "b4f4605c-3fdf-40ea-965c-e361e4189669",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "eb71263b-009b-4ef0-b82b-c233cf3da8ae",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "6962d342-5626-4207-8b39-65a69eca2307",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "d4fbbd99-23d2-49a8-9a81-6a3258411c9d",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "b6d9776f-c085-4c02-8937-977ad9ff184f",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "4343b2b9-cee1-4fd6-81dc-43830b798dce",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "a141dac1-3cf0-4955-aa45-c1ef11c6882b",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
             "id": "4904d2db-326e-431f-9139-3704e1ff9fa0",
             "family": "Arial",
             "size": 14,
@@ -273,7 +369,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "4904d2db-326e-431f-9139-3704e1ff9fa0"
+            "default_string_format": "c8be08fb-d116-40a3-aed8-231cb0110039"
         },
         {
             "name": "Header 1",
@@ -285,7 +381,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "005cd100-7817-49ca-a2c6-3097cd9f74ff"
+            "default_string_format": "b4f4605c-3fdf-40ea-965c-e361e4189669"
         },
         {
             "name": "Header 2",
@@ -297,7 +393,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "2ff86ece-43b2-4dff-8dfa-c902c903fd6f"
+            "default_string_format": "eb71263b-009b-4ef0-b82b-c233cf3da8ae"
         },
         {
             "name": "Header 3",
@@ -309,7 +405,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "c0f1bf6e-4c4c-42e8-9266-2705c8b7d263"
+            "default_string_format": "6962d342-5626-4207-8b39-65a69eca2307"
         },
         {
             "name": "Header 4",
@@ -321,7 +417,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "f6ca0104-48e0-4ef1-b70e-1dd04af5501e"
+            "default_string_format": "d4fbbd99-23d2-49a8-9a81-6a3258411c9d"
         },
         {
             "name": "Example",
@@ -333,7 +429,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "57db5994-8492-4cae-aeb2-6e177a96d704"
+            "default_string_format": "b6d9776f-c085-4c02-8937-977ad9ff184f"
         },
         {
             "name": "Monospace",
@@ -345,7 +441,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "e9a3b9dc-8bf9-4006-b00e-4caa2c4b1ce3"
+            "default_string_format": "4343b2b9-cee1-4fd6-81dc-43830b798dce"
         },
         {
             "name": "Code",
@@ -357,7 +453,7 @@
             "indent_first_line": 0,
             "spacing_before": 2,
             "spacing_after": 2,
-            "default_string_format": "e8d1ac98-e692-4f69-b14d-84351c709b7c"
+            "default_string_format": "a141dac1-3cf0-4955-aa45-c1ef11c6882b"
         }
     ],
     "text": {
@@ -451,7 +547,7 @@
                             {
                                 "id": "0,2,2,0",
                                 "type": 4,
-                                "elements": "индексе при объявлении размерности (клавиши [Ctrl+Shift+3] или кнопка ",
+                                "elements": "индексе при объявлении размерности (клавиши [Ctrl+Shift+S] или кнопка ",
                                 "format_id": "d03b5dd4-ff09-4107-ad58-3a93d147fef2"
                             },
                             {
@@ -530,7 +626,7 @@
                                                                                         "id": "0,3,0,0,0,0,0,0,0,2,0",
                                                                                         "type": 8,
                                                                                         "elements": "system",
-                                                                                        "format_id": "e9a3b9dc-8bf9-4006-b00e-4caa2c4b1ce3",
+                                                                                        "format_id": "4343b2b9-cee1-4fd6-81dc-43830b798dce",
                                                                                         "can_merge": true
                                                                                     }
                                                                                 ]
@@ -715,7 +811,7 @@
                                                                                         "id": "0,6,0,0,0,0,0,0,0,2,0",
                                                                                         "type": 8,
                                                                                         "elements": "eng",
-                                                                                        "format_id": "e9a3b9dc-8bf9-4006-b00e-4caa2c4b1ce3",
+                                                                                        "format_id": "4343b2b9-cee1-4fd6-81dc-43830b798dce",
                                                                                         "can_merge": true
                                                                                     }
                                                                                 ]
@@ -804,7 +900,7 @@
                                                                                         "id": "0,6,0,0,1,0,0,0,0,2,0",
                                                                                         "type": 8,
                                                                                         "elements": "eng",
-                                                                                        "format_id": "e9a3b9dc-8bf9-4006-b00e-4caa2c4b1ce3",
+                                                                                        "format_id": "4343b2b9-cee1-4fd6-81dc-43830b798dce",
                                                                                         "can_merge": true
                                                                                     }
                                                                                 ]
@@ -893,7 +989,7 @@
                                                                                         "id": "0,6,0,0,2,0,0,0,0,2,0",
                                                                                         "type": 8,
                                                                                         "elements": "eng",
-                                                                                        "format_id": "e9a3b9dc-8bf9-4006-b00e-4caa2c4b1ce3",
+                                                                                        "format_id": "4343b2b9-cee1-4fd6-81dc-43830b798dce",
                                                                                         "can_merge": true
                                                                                     }
                                                                                 ]
@@ -978,7 +1074,7 @@
                                                                                         "id": "0,6,0,0,2,0,0,2,1,2,0",
                                                                                         "type": 8,
                                                                                         "elements": "eng",
-                                                                                        "format_id": "e9a3b9dc-8bf9-4006-b00e-4caa2c4b1ce3",
+                                                                                        "format_id": "4343b2b9-cee1-4fd6-81dc-43830b798dce",
                                                                                         "can_merge": true
                                                                                     }
                                                                                 ]
@@ -1102,7 +1198,7 @@
                                                                                         "id": "0,8,0,0,0,0,0,0,1,2,0",
                                                                                         "type": 8,
                                                                                         "elements": "eng",
-                                                                                        "format_id": "e9a3b9dc-8bf9-4006-b00e-4caa2c4b1ce3",
+                                                                                        "format_id": "4343b2b9-cee1-4fd6-81dc-43830b798dce",
                                                                                         "can_merge": true
                                                                                     }
                                                                                 ]
@@ -1220,7 +1316,7 @@
                                                                                         "id": "0,8,0,0,1,0,0,0,1,2,0",
                                                                                         "type": 8,
                                                                                         "elements": "eng",
-                                                                                        "format_id": "e9a3b9dc-8bf9-4006-b00e-4caa2c4b1ce3",
+                                                                                        "format_id": "4343b2b9-cee1-4fd6-81dc-43830b798dce",
                                                                                         "can_merge": true
                                                                                     }
                                                                                 ]
@@ -1238,6 +1334,11 @@
                                                                             },
                                                                             {
                                                                                 "id": "0,8,0,0,1,0,0,0,2,1",
+                                                                                "type": 10,
+                                                                                "elements": []
+                                                                            },
+                                                                            {
+                                                                                "id": "0,8,0,0,1,0,0,0,2,2",
                                                                                 "type": 10,
                                                                                 "elements": []
                                                                             }
@@ -1281,7 +1382,7 @@
                                                                                         "id": "0,8,0,0,1,0,0,0,4,2,0",
                                                                                         "type": 8,
                                                                                         "elements": "eng",
-                                                                                        "format_id": "e9a3b9dc-8bf9-4006-b00e-4caa2c4b1ce3",
+                                                                                        "format_id": "4343b2b9-cee1-4fd6-81dc-43830b798dce",
                                                                                         "can_merge": true
                                                                                     }
                                                                                 ]
@@ -1470,7 +1571,7 @@
                                                                                         "id": "0,10,0,0,0,0,0,0,1,2,0",
                                                                                         "type": 8,
                                                                                         "elements": "eng",
-                                                                                        "format_id": "e9a3b9dc-8bf9-4006-b00e-4caa2c4b1ce3",
+                                                                                        "format_id": "4343b2b9-cee1-4fd6-81dc-43830b798dce",
                                                                                         "can_merge": true
                                                                                     }
                                                                                 ]
@@ -1488,6 +1589,11 @@
                                                                             },
                                                                             {
                                                                                 "id": "0,10,0,0,0,0,0,0,2,1",
+                                                                                "type": 10,
+                                                                                "elements": []
+                                                                            },
+                                                                            {
+                                                                                "id": "0,10,0,0,0,0,0,0,2,2",
                                                                                 "type": 10,
                                                                                 "elements": []
                                                                             }
@@ -1561,7 +1667,7 @@
                                                                                         "id": "0,10,0,0,0,0,0,0,4,2,0",
                                                                                         "type": 8,
                                                                                         "elements": "eng",
-                                                                                        "format_id": "e9a3b9dc-8bf9-4006-b00e-4caa2c4b1ce3",
+                                                                                        "format_id": "4343b2b9-cee1-4fd6-81dc-43830b798dce",
                                                                                         "can_merge": true
                                                                                     }
                                                                                 ]
@@ -1608,7 +1714,7 @@
         ]
     },
     "caret": {
-        "id": "0,2,0,265"
+        "id": "0,0,0,0"
     },
     "selection": []
 }
