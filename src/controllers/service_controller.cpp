@@ -1006,22 +1006,53 @@ void ServiceController::GetDocumentName(const HttpRequestPtr& req, std::function
     GetLogger(session_id)->Debug("GetDocumentName request");
 
     auto json = req->getJsonObject();
-    if (!json)
+    if (!json || !json->isObject())
     {
         GetLogger(session_id)->Error("GetDocumentName error: Wrong request: Json not found in the request");
         SendError(k400BadRequest, "Json not found in the request", callback);
         return;
     }
 
-    std::string document_id;
-    if (json->isObject() && json->isMember("document_id") && ((*json)["document_id"].isInt() || (*json)["document_id"].isString()))
+    std::string document_id, name;
+    if (json->isMember("document_id") && ((*json)["document_id"].isInt() || (*json)["document_id"].isString()))
         document_id = (*json)["document_id"].asString();
+    else if (json->isMember("name") && (*json)["name"].isString())
+        name = (*json)["name"].asString();
     else
         document_id = req->getCookie("document_id"); //this request is for current document
-    if (document_id.empty())
+    if (document_id.empty() && name.empty())
     {
-        GetLogger(session_id)->Error("GetDocumentName error: Wrong request: empty document_id");
-        SendError(k400BadRequest, "Wrong request: empty document_id", callback);
+        GetLogger(session_id)->Error("GetDocumentName error: Wrong request: empty document_id or name");
+        SendError(k400BadRequest, "Wrong request: empty document_id or name", callback);
+        return;
+    }
+
+    if (!name.empty())
+    {
+        std::string lang = "en";
+        if (json->isMember("lang") && (*json)["lang"].isString())
+            lang = (*json)["lang"].asString();
+        std::string document = library_path + lang + name;
+        if (!document.ends_with(".yut"))
+            document += fs::path(".yut");
+
+        GetLogger(session_id)->Info("Get document name: name={}, lang={}", name, lang);
+
+        fs::path path = fs::canonical(fs::path(document));
+        if (!fs::exists(path))
+        {
+            GetLogger(session_id)->Error("GetDocumentName error: No such document: {}", name);
+            SendError(k404NotFound, "No such document", callback);
+            return;
+        }
+
+        std::string p = path.string();
+        p = p.substr(library_path.length() + lang.length());
+
+        Json::Value v(Json::objectValue);
+        v["name"] = p;
+        GetLogger(session_id)->Debug("Document name: name={}", p);
+        SendJson(callback, v);
         return;
     }
 
