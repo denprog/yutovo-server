@@ -41,6 +41,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     Drogon::Drogon
     X11
     jpeg
+    curl
 )
 
 target_sources(${PROJECT_NAME} PRIVATE

@@ -290,6 +290,10 @@
         "user_session_expire_timeout": 86400,
         "clear_db_timeout": 10,
         "library_path": "/home/denis/programs/Math/yutovo/yutovo_server/library/",
-        "solver_address": "wss://yutovo.ru:8010"
+        "solver_address": "wss://yutovo.ru:8010",
+        "email_name": "no-reply@yutovo.ru",
+        "email_password": "OB*ZCUZ*4IBx",
+        "email_ssl_key_path": "../../keys/email_yutovo_service.key",
+        "email_ssl_pub_path": "../../keys/email_yutovo_service.pub"
     }
 }
