@@ -10,6 +10,8 @@
 #include <boost/lexical_cast.hpp>
 #include <functional>
 #include <openssl/md5.h>
+#include <random>
+#include <curl/curl.h>
 
 namespace yutovo_server
 {
@@ -29,45 +31,47 @@ void AuthController::GetCaptcha(const HttpRequestPtr& req, std::function<void (c
     std::string session_id = req->getCookie("session_id");
     GetLogger(session_id)->Debug("Get captcha request");
 
-    // Generate captcha text (6 char max).
-    const char *predef_words[] = {
-        "aarrgh", "abacas", "abacus", "abakas", "abamps", "abased", "abaser", "abases", "abasia", "abated", "abater",
-        "abates", "abatis", "abator", "baobab", "barbal", "barbed", "barbel", "barber", "barbes", "barbet", "barbie",
-        "barbut", "barcas", "barded", "bardes", "bardic", "barege", "cavies", "cavils", "caving", "cavity", "cavort",
-        "cawing", "cayman", "cayuse", "ceased", "ceases", "cebids", "ceboid", "cecity", "cedarn", "dicast", "dicers",
-        "dicier", "dicing", "dicker", "dickey", "dickie", "dicots", "dictum", "didact", "diddle", "diddly", "didies",
-        "didoes", "emails", "embalm", "embank", "embark", "embars", "embays", "embeds", "embers", "emblem", "embody",
-        "emboli", "emboly", "embosk", "emboss", "fluffy", "fluids", "fluish", "fluked", "flukes", "flukey", "flumed",
-        "flumes", "flumps", "flunks", "flunky", "fluors", "flurry", "fluted", "genome", "genoms", "genres", "genros",
-        "gentes", "gentil", "gentle", "gently", "gentry", "geodes", "geodic", "geoids", "gerahs", "gerbil", "hotter",
-        "hottie", "houdah", "hounds", "houris", "hourly", "housed", "housel", "houser", "houses", "hovels", "hovers",
-        "howdah", "howdie", "inland", "inlays", "inlets", "inlier", "inmate", "inmesh", "inmost", "innage", "innate",
-        "inners", "inning", "inpour", "inputs", "inroad", "joypop", "jubbah", "jubhah", "jubile", "judder", "judged",
-        "judger", "judges", "judoka", "jugate", "jugful", "jugged", "juggle", "jugula", "knifer", "knifes", "knight",
-        "knives", "knobby", "knocks", "knolls", "knolly", "knosps", "knotty", "knouts", "knower", "knowns", "knubby",
-        "legate", "legato", "legend", "legers", "legged", "leggin", "legion", "legist", "legits", "legman", "legmen",
-        "legong", "legume", "lehuas", "mammal", "mammas", "mammee", "mammer", "mammet", "mammey", "mammie", "mammon",
-        "mamzer", "manage", "manana", "manats", "manche", "manege", "nihils", "nilgai", "nilgau", "nilled", "nimble",
-        "nimbly", "nimbus", "nimmed", "nimrod", "ninety", "ninjas", "ninons", "ninths", "niobic", "offish", "offkey",
-        "offset", "oftest", "ogdoad", "oghams", "ogival", "ogives", "oglers", "ogling", "ogress", "ogrish", "ogrism",
-        "ohmage", "papaws", "papaya", "papers", "papery", "pappus", "papula", "papule", "papyri", "parade", "paramo",
-        "parang", "paraph", "parcel", "pardah", "quasar", "quatre", "quaver", "qubits", "qubyte", "queans", "queasy",
-        "queazy", "queens", "queers", "quelea", "quells", "quench", "querns", "raised", "raiser", "raises", "raisin",
-        "raitas", "rajahs", "rakees", "rakers", "raking", "rakish", "rallye", "ralphs", "ramada", "ramate", "savory",
-        "savour", "savoys", "sawers", "sawfly", "sawing", "sawlog", "sawney", "sawyer", "saxony", "sayeds", "sayers",
-        "sayest", "sayids", "tondos", "toneme", "toners", "tongas", "tonged", "tonger", "tongue", "tonics", "tonier",
-        "toning", "tonish", "tonlet", "tonner", "tonnes", "uredia", "uredos", "ureide", "uremia", "uremic", "ureter",
-        "uretic", "urgent", "urgers", "urging", "urials", "urinal", "urines", "uropod", "villus", "vimina", "vinals",
-        "vincas", "vineal", "vinery", "vinier", "vinify", "vining", "vinous", "vinyls", "violas", "violet", "violin",
-        "webfed", "weblog", "wechts", "wedded", "wedder", "wedeln", "wedels", "wedged", "wedges", "wedgie", "weeded",
-        "weeder", "weekly", "weened", "xystoi", "xystos", "xystus", "yabber", "yabbie", "yachts", "yacked", "yaffed",
-        "yagers", "yahoos", "yairds", "yakked", "yakker", "yakuza", "zigged", "zigzag", "zillah", "zinced", "zincic",
-        "zincky", "zinebs", "zinged", "zinger", "zinnia", "zipped", "zipper", "zirams", "zircon"};
+    //generate captcha text (6 char max).
+    const char *predef_words[] = 
+        {
+            "aarrgh", "abacas", "abacus", "abakas", "abamps", "abased", "abaser", "abases", "abasia", "abated", "abater",
+            "abates", "abatis", "abator", "baobab", "barbal", "barbed", "barbel", "barber", "barbes", "barbet", "barbie",
+            "barbut", "barcas", "barded", "bardes", "bardic", "barege", "cavies", "cavils", "caving", "cavity", "cavort",
+            "cawing", "cayman", "cayuse", "ceased", "ceases", "cebids", "ceboid", "cecity", "cedarn", "dicast", "dicers",
+            "dicier", "dicing", "dicker", "dickey", "dickie", "dicots", "dictum", "didact", "diddle", "diddly", "didies",
+            "didoes", "emails", "embalm", "embank", "embark", "embars", "embays", "embeds", "embers", "emblem", "embody",
+            "emboli", "emboly", "embosk", "emboss", "fluffy", "fluids", "fluish", "fluked", "flukes", "flukey", "flumed",
+            "flumes", "flumps", "flunks", "flunky", "fluors", "flurry", "fluted", "genome", "genoms", "genres", "genros",
+            "gentes", "gentil", "gentle", "gently", "gentry", "geodes", "geodic", "geoids", "gerahs", "gerbil", "hotter",
+            "hottie", "houdah", "hounds", "houris", "hourly", "housed", "housel", "houser", "houses", "hovels", "hovers",
+            "howdah", "howdie", "inland", "inlays", "inlets", "inlier", "inmate", "inmesh", "inmost", "innage", "innate",
+            "inners", "inning", "inpour", "inputs", "inroad", "joypop", "jubbah", "jubhah", "jubile", "judder", "judged",
+            "judger", "judges", "judoka", "jugate", "jugful", "jugged", "juggle", "jugula", "knifer", "knifes", "knight",
+            "knives", "knobby", "knocks", "knolls", "knolly", "knosps", "knotty", "knouts", "knower", "knowns", "knubby",
+            "legate", "legato", "legend", "legers", "legged", "leggin", "legion", "legist", "legits", "legman", "legmen",
+            "legong", "legume", "lehuas", "mammal", "mammas", "mammee", "mammer", "mammet", "mammey", "mammie", "mammon",
+            "mamzer", "manage", "manana", "manats", "manche", "manege", "nihils", "nilgai", "nilgau", "nilled", "nimble",
+            "nimbly", "nimbus", "nimmed", "nimrod", "ninety", "ninjas", "ninons", "ninths", "niobic", "offish", "offkey",
+            "offset", "oftest", "ogdoad", "oghams", "ogival", "ogives", "oglers", "ogling", "ogress", "ogrish", "ogrism",
+            "ohmage", "papaws", "papaya", "papers", "papery", "pappus", "papula", "papule", "papyri", "parade", "paramo",
+            "parang", "paraph", "parcel", "pardah", "quasar", "quatre", "quaver", "qubits", "qubyte", "queans", "queasy",
+            "queazy", "queens", "queers", "quelea", "quells", "quench", "querns", "raised", "raiser", "raises", "raisin",
+            "raitas", "rajahs", "rakees", "rakers", "raking", "rakish", "rallye", "ralphs", "ramada", "ramate", "savory",
+            "savour", "savoys", "sawers", "sawfly", "sawing", "sawlog", "sawney", "sawyer", "saxony", "sayeds", "sayers",
+            "sayest", "sayids", "tondos", "toneme", "toners", "tongas", "tonged", "tonger", "tongue", "tonics", "tonier",
+            "toning", "tonish", "tonlet", "tonner", "tonnes", "uredia", "uredos", "ureide", "uremia", "uremic", "ureter",
+            "uretic", "urgent", "urgers", "urging", "urials", "urinal", "urines", "uropod", "villus", "vimina", "vinals",
+            "vincas", "vineal", "vinery", "vinier", "vinify", "vining", "vinous", "vinyls", "violas", "violet", "violin",
+            "webfed", "weblog", "wechts", "wedded", "wedder", "wedeln", "wedels", "wedged", "wedges", "wedgie", "weeded",
+            "weeder", "weekly", "weened", "xystoi", "xystos", "xystus", "yabber", "yabbie", "yachts", "yacked", "yaffed",
+            "yagers", "yahoos", "yairds", "yakked", "yakker", "yakuza", "zigged", "zigzag", "zillah", "zinced", "zincic",
+            "zincky", "zinebs", "zinged", "zinger", "zinnia", "zipped", "zipper", "zirams", "zircon"
+        };
+    
     cimg::srand();
     const char *const captcha_text = predef_words[std::rand() % (sizeof(predef_words) / sizeof(char *))];
 
-    // Create captcha image
-    // Write colored and distorted text
+    //create captcha image, write colored and distorted text
     CImg<unsigned char> captcha(256, 64, 1, 3, 0), color(3);
     char letter[2] = {0};
     for (unsigned int k = 0; k < 6; ++k)
@@ -93,7 +97,7 @@ void AuthController::GetCaptcha(const HttpRequestPtr& req, std::function<void (c
         }
     }
 
-    // Add geometric and random noise
+    //add geometric and random noise
     CImg<unsigned char> copy = (+captcha).fill(0);
     for (unsigned int l = 0; l < 3; ++l)
     {
@@ -109,6 +113,7 @@ void AuthController::GetCaptcha(const HttpRequestPtr& req, std::function<void (c
                     (int)(cimg::rand() * captcha.height()), color.data(), 0.6f);
         }
     }
+
     captcha |= copy;
     captcha.noise(10, 2);
     captcha = (+captcha).fill(255) - captcha;
@@ -120,6 +125,80 @@ void AuthController::GetCaptcha(const HttpRequestPtr& req, std::function<void (c
     SendCaptcha(callback, captcha);
 
     GetLogger(session_id)->Debug("Sent captcha: {}", captcha_text);
+}
+
+void AuthController::SendRegisterCode(const HttpRequestPtr &req, std::function<void(const HttpResponsePtr &)> &&callback)
+{
+    SessionPtr session = req->session();
+    auto json = req->getJsonObject();
+    if (!json || !json->isObject())
+    {
+        SendError(k400BadRequest, "Json not found in the request", callback);
+        return;
+    }
+
+    if (!json->isMember("login") || !(*json)["login"].isString() || !json->isMember("email") || !(*json)["email"].isString() ||     
+        !json->isMember("subject") || !(*json)["subject"].isString() || !json->isMember("message") || !(*json)["message"].isString() || 
+        !json->isMember("captcha") || !(*json)["captcha"].isString())
+    {
+        SendError(k400BadRequest, "Wrong json in the request", callback);
+        return;
+    }
+
+    auto login = (*json)["login"].asString();
+    auto email = (*json)["email"].asString();
+    auto subject = (*json)["subject"].asString();
+    auto message = (*json)["message"].asString();
+    auto captcha = (*json)["captcha"].asString();
+    GetLogger(session_id)->Info("SendEmailCode request: login={}, email={}", login, email);
+    if (login.empty() || email.empty() || subject.empty() || message.empty())
+    {
+        SendError(k400BadRequest, "Fields must not be empty", callback);
+        return;
+    }
+
+    if (captcha.empty() || session->get<std::string>("captcha") != captcha)
+    {
+        SendError(k400BadRequest, "Wrong captcha", callback);
+        return;
+    }
+
+    orm::DbClientPtr db = app().getDbClient();
+
+    try
+    {
+        //check if such login or email already exists
+        orm::Result result = db->execSqlSync("select 1 from users where login=$1 or email=$2", login, email);
+        if (result.size() > 0)
+        {
+            SendError(k409Conflict, "Login or e-mail already exists", callback);
+            return;
+        }
+    } 
+    catch (const orm::DrogonDbException& e)
+    {
+        GetLogger(req->getCookie("session_id"))->Error("Database error: {}", e.base().what());
+        SendError(k500InternalServerError, e.base().what(), callback);
+    }
+
+    std::random_device dev;
+    std::mt19937 rng(dev());
+    std::uniform_int_distribution<std::mt19937::result_type> dist6(0, 9);
+    std::string register_code;
+    for (int i = 0; i < 6; ++i)
+        register_code += std::to_string(dist6(rng));
+
+    size_t p = message.find("REGISTER_CODE");
+    if (p != std::string::npos)
+        message.replace(p, strlen("REGISTER_CODE"), register_code);
+    SendEmail("<no-reply@yutovo.ru>", "<dgordenin@gmail.com>", subject, message);
+
+    session->erase("register_code");
+    session->insert("register_code", std::string(register_code));
+
+    GetLogger(session_id)->Debug("Sent email code: {}", register_code);
+
+    SendOk(callback);
 }
 
 void AuthController::Register(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, User&& user)
@@ -135,7 +214,20 @@ void AuthController::Register(const HttpRequestPtr& req, std::function<void (con
         return;
     }
 
+    if (!json->isMember("register_code") || !(*json)["register_code"].isString() || !json->isMember("captcha") || !(*json)["captcha"].isString())
+    {
+        SendError(k400BadRequest, "Wrong json in the request", callback);
+        return;
+    }
+
 #ifndef TEST
+    auto register_code = (*json)["register_code"].asString();
+    if (register_code.empty() || session->get<std::string>("register_code") != register_code)
+    {
+        SendError(k400BadRequest, "Wrong register code", callback);
+        return;
+    }
+
     auto captcha = (*json)["captcha"].asString();
     if (captcha.empty() || session->get<std::string>("captcha") != captcha)
     {
@@ -153,11 +245,11 @@ void AuthController::Register(const HttpRequestPtr& req, std::function<void (con
 
     try
     {
-        //check if such login already exists
-        orm::Result result = db->execSqlSync("select 1 from users where login=$1", user.login);
+        //check if such login or email already exists
+        orm::Result result = db->execSqlSync("select 1 from users where login=$1 or email=$2", user.login, user.email);
         if (result.size() > 0)
         {
-            SendError(k409Conflict, "Login already exists", callback);
+            SendError(k409Conflict, "Login or e-mail already exists", callback);
             return;
         }
 
@@ -594,6 +686,78 @@ std::string AuthController::GetHash(const std::string& str, const std::string& s
     for(int i = 0; i < MD5_DIGEST_LENGTH; i++)
         sprintf(&hash_str[i * 2], "%02x", (unsigned int)hash[i]);
     return std::string(&hash_str[0], MD5_DIGEST_LENGTH * 2);
+}
+
+size_t AuthController::EmailPayload(char *ptr, size_t size, size_t nmemb, void *userp)
+{
+    AuthController* context = (AuthController*)userp;
+    upload_status& upload_context = context->upload_context;
+    size_t room = size * nmemb;
+ 
+    if ((size == 0) || (nmemb == 0) || (size * nmemb < 1))
+        return 0;
+ 
+    const char* t = context->email_message.c_str();
+    const char* data = &t[upload_context.bytes_read];
+    if (data)
+    {
+        size_t len = strlen(data);
+        if (room < len)
+            len = room;
+        memcpy(ptr, data, len);
+        upload_context.bytes_read += len;
+        return len;
+    }
+ 
+    return 0;
+}
+
+bool AuthController::SendEmail(const std::string& from, const std::string& to, const std::string& subject, const std::string& message)
+{
+    CURL* curl = curl_easy_init();
+    if (!curl)
+        return false;
+    const Json::Value& v = app().getCustomConfig();
+    std::string email_name = v.get("email_name", "").asString();
+    std::string email_password = v.get("email_password", "").asString();
+    CURLcode r = curl_easy_setopt(curl, CURLOPT_USERNAME, email_name.c_str());
+    r = curl_easy_setopt(curl, CURLOPT_PASSWORD, email_password.c_str());
+    r = curl_easy_setopt(curl, CURLOPT_URL, "smtp://smtp.beget.com:2525");
+    r = curl_easy_setopt(curl, CURLOPT_USE_SSL, (long)CURLUSESSL_ALL);
+    std::string ssl_key_path = v.get("email_ssl_key_path", "").asString();
+    r = curl_easy_setopt(curl, CURLOPT_SSH_PRIVATE_KEYFILE, ssl_key_path.c_str());
+    std::string ssl_pub_path = v.get("email_ssl_pub_path", "").asString();
+    r = curl_easy_setopt(curl, CURLOPT_SSH_PUBLIC_KEYFILE, ssl_pub_path.c_str());
+    r = curl_easy_setopt(curl, CURLOPT_MAIL_FROM, from.c_str());
+    struct curl_slist* recipients = nullptr;
+    recipients = curl_slist_append(recipients, to.c_str());
+    r = curl_easy_setopt(curl, CURLOPT_MAIL_RCPT, recipients);
+    r = curl_easy_setopt(curl, CURLOPT_READFUNCTION, AuthController::EmailPayload);
+    upload_context = { 0 };
+
+    auto t = std::time(nullptr);
+    auto tm = *std::localtime(&t);
+    std::ostringstream oss;
+    oss << std::put_time(&tm, "%a, %d %b %Y %H:%M:%S %z");
+    auto date = oss.str();
+    std::string message_id(boost::uuids::to_string(boost::uuids::random_generator()()));
+
+    email_message = "Date: " + date + "\r\n"\
+        "To: " + to + "\r\n"\
+        "From: " + from + "\r\n"\
+        "Message-ID: <" + message_id + ">\r\n"\
+        "Subject: " + subject + "\r\n"\
+        "\r\n" + 
+        message + 
+        "\r\n";
+
+    r = curl_easy_setopt(curl, CURLOPT_READDATA, this);
+    r = curl_easy_setopt(curl, CURLOPT_UPLOAD, 1L);
+    r = curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
+    r = curl_easy_perform(curl);
+    curl_slist_free_all(recipients);
+    curl_easy_cleanup(curl);
+    return r == CURLE_OK;
 }
 
 }
