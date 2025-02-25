@@ -1038,7 +1038,18 @@ void ServiceController::GetDocumentName(const HttpRequestPtr& req, std::function
 
         GetLogger(session_id)->Info("Get document name: name={}, lang={}", name, lang);
 
-        fs::path path = fs::canonical(fs::path(document));
+        fs::path path;
+        try
+        {
+            path = fs::canonical(fs::path(document));
+        }
+        catch (const std::exception& ex)
+        {
+            GetLogger(session_id)->Error("GetDocumentName error: Path not found: {}", document);
+            SendError(k404NotFound, "Path not found", callback);
+            return;
+        }
+    
         if (!fs::exists(path))
         {
             GetLogger(session_id)->Error("GetDocumentName error: No such document: {}", name);
