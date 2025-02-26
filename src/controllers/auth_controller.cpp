@@ -722,12 +722,8 @@ bool AuthController::SendEmail(const std::string& from, const std::string& to, c
     std::string email_password = v.get("email_password", "").asString();
     CURLcode r = curl_easy_setopt(curl, CURLOPT_USERNAME, email_name.c_str());
     r = curl_easy_setopt(curl, CURLOPT_PASSWORD, email_password.c_str());
-    r = curl_easy_setopt(curl, CURLOPT_URL, "smtp://smtp.beget.com:2525");
+    r = curl_easy_setopt(curl, CURLOPT_URL, "smtps://smtp.beget.com:465");
     r = curl_easy_setopt(curl, CURLOPT_USE_SSL, (long)CURLUSESSL_ALL);
-    std::string ssl_key_path = v.get("email_ssl_key_path", "").asString();
-    r = curl_easy_setopt(curl, CURLOPT_SSH_PRIVATE_KEYFILE, ssl_key_path.c_str());
-    std::string ssl_pub_path = v.get("email_ssl_pub_path", "").asString();
-    r = curl_easy_setopt(curl, CURLOPT_SSH_PUBLIC_KEYFILE, ssl_pub_path.c_str());
     r = curl_easy_setopt(curl, CURLOPT_MAIL_FROM, from.c_str());
     struct curl_slist* recipients = nullptr;
     recipients = curl_slist_append(recipients, to.c_str());
@@ -753,7 +749,7 @@ bool AuthController::SendEmail(const std::string& from, const std::string& to, c
 
     r = curl_easy_setopt(curl, CURLOPT_READDATA, this);
     r = curl_easy_setopt(curl, CURLOPT_UPLOAD, 1L);
-    r = curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
+    r = curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT, 5);
     r = curl_easy_perform(curl);
     curl_slist_free_all(recipients);
     curl_easy_cleanup(curl);
