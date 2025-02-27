@@ -214,20 +214,46 @@ void SessionController::UserDocument(const HttpRequestPtr& req, std::function<vo
     callback(resp);
 }
 
-void SessionController::LibraryDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, std::string param)
+void SessionController::LibraryDocument1(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, 
+    std::string language, std::string filename)
+{
+    LibraryDocument(req, callback, language, filename);
+}
+
+void SessionController::LibraryDocument2(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, 
+    std::string language, std::string dir1, std::string filename)
+{
+    LibraryDocument(req, callback, language, dir1 + "/" + filename);
+}
+
+void SessionController::LibraryDocument3(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, 
+    std::string language, std::string dir1, std::string dir2, std::string filename)
+{
+    LibraryDocument(req, callback, language, dir1 + "/" + dir2 + "/" + filename);
+}
+
+void SessionController::LibraryDocument4(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, 
+    std::string language, std::string dir1, std::string dir2, std::string dir3, std::string filename)
+{
+    LibraryDocument(req, callback, language, dir1 + "/" + dir2 + "/" + dir3 + "/" + filename);
+}
+
+void SessionController::LibraryDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>& callback, 
+    std::string language, std::string path)
 {
     auto p = req->path();
     session_id = req->getCookie("session_id");
-    GetLogger(session_id)->Info("Request library document: path={}", p);
     std::string r = HttpAppFramework::instance().getDocumentRoot();
     HttpAppFramework& inst = HttpAppFramework::instance();
+    path = language + "/" + path;
+    GetLogger(session_id)->Info("Request library document: request={}, path={}", p, path);
     p = inst.getHomePage();
 
-    if (param.find(".yut") != std::string::npos || param.find("..") != std::string::npos || param.find(".") == std::string::npos)
+    if (path.find(".yut") != std::string::npos || path.find("..") != std::string::npos || path.find(".") == std::string::npos)
     {
         if (session_id.empty())
         {
-            if (!AddSession(param))
+            if (!AddSession("-1"))
             {
                 GetLogger(session_id)->Error("Database error: Error inserting a session");
                 SendError(k500InternalServerError, "Error inserting a session", callback);
@@ -238,16 +264,14 @@ void SessionController::LibraryDocument(const HttpRequestPtr& req, std::function
             session->insert("session_id", session_id);
         }
         
-        std::replace(param.begin(), param.end(), '\\', '/');
-        if (!param.ends_with(".yut"))
-            param += fs::path(".yut");
-        fs::path path = fs::path(library_path + param);
-        if (!fs::exists(path))
+        std::replace(path.begin(), path.end(), '\\', '/');
+        if (!path.ends_with(".yut"))
+            path += fs::path(".yut");
+        if (!fs::exists(fs::path(library_path + path)))
         {
-            GetLogger(session_id)->Error("Library document not found: {}", param);
-            std::string r = HttpAppFramework::instance().getDocumentRoot();
-            auto resp = HttpResponse::newFileResponse(r + "/index.html");
-            SetDocumentCookie(param, resp);
+            GetLogger(session_id)->Error("Library document not found: {}", path);
+            auto resp = HttpResponse::newFileResponse(r + p);
+            SetDocumentCookie(path, resp);
             SetSessionCookie(session_id, resp);
             resp->setStatusCode(k404NotFound);
             callback(resp);
@@ -263,7 +287,8 @@ void SessionController::LibraryDocument(const HttpRequestPtr& req, std::function
         return;
     }
 
-    auto resp = HttpResponse::newFileResponse(r + param);
+    auto f = fs::path(path);
+    auto resp = HttpResponse::newFileResponse(r + f.filename().c_str());
     callback(resp);
 }
 
