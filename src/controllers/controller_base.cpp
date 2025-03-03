@@ -5,6 +5,7 @@
 #include <boost/uuid/uuid.hpp>
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid/uuid_io.hpp>
+#include <openssl/md5.h>
 
 namespace yutovo_server
 {
@@ -408,6 +409,17 @@ int ControllerBase::GetFirstEmptyDocument(const std::string& user_id)
         }
     }
     return -1;
+}
+
+std::string ControllerBase::GetHash(const std::string& str, const std::string& salt)
+{
+    unsigned char hash[MD5_DIGEST_LENGTH];
+    std::string s = str + salt;
+    MD5((const unsigned char*)s.c_str(), s.size(), hash);
+    char hash_str[MD5_DIGEST_LENGTH * 2];
+    for(int i = 0; i < MD5_DIGEST_LENGTH; i++)
+        sprintf(&hash_str[i * 2], "%02x", (unsigned int)hash[i]);
+    return std::string(&hash_str[0], MD5_DIGEST_LENGTH * 2);
 }
 
 void ControllerBase::LogJson(const Json::Value& value)

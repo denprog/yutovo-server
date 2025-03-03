@@ -62,6 +62,8 @@ protected:
 
     int GetFirstEmptyDocument(const std::string& user_id);
 
+    std::string GetHash(const std::string& str, const std::string& salt);
+
 private:
     void LogJson(const Json::Value& value);
 

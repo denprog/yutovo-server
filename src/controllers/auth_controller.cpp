@@ -9,7 +9,6 @@
 #include <boost/uuid/uuid_io.hpp>
 #include <boost/lexical_cast.hpp>
 #include <functional>
-#include <openssl/md5.h>
 #include <random>
 #include <curl/curl.h>
 
@@ -127,7 +126,7 @@ void AuthController::GetCaptcha(const HttpRequestPtr& req, std::function<void (c
     GetLogger(session_id)->Debug("Sent captcha: {}", captcha_text);
 }
 
-void AuthController::SendRegisterCode(const HttpRequestPtr &req, std::function<void(const HttpResponsePtr &)> &&callback)
+void AuthController::SendEmailCode(const HttpRequestPtr &req, std::function<void(const HttpResponsePtr &)> &&callback)
 {
     SessionPtr session = req->session();
     auto json = req->getJsonObject();
@@ -137,7 +136,126 @@ void AuthController::SendRegisterCode(const HttpRequestPtr &req, std::function<v
         return;
     }
 
-    if (!json->isMember("login") || !(*json)["login"].isString() || !json->isMember("email") || !(*json)["email"].isString() ||     
+    auto send_email = 
+        [this, session](const std::string& email, std::string& subject, std::string& message)
+        {
+            std::random_device dev;
+            std::mt19937 rng(dev());
+            std::uniform_int_distribution<std::mt19937::result_type> dist6(0, 9);
+            std::string email_code;
+            for (int i = 0; i < 6; ++i)
+                email_code += std::to_string(dist6(rng));
+        
+            size_t p = message.find("EMAIL_CODE");
+            if (p != std::string::npos)
+                message.replace(p, strlen("EMAIL_CODE"), email_code);
+            const Json::Value& v = app().getCustomConfig();
+            std::string email_name = v.get("email_name", "").asString();
+            SendEmail(email_name, email, subject, message);
+        
+            session->erase("email_code");
+            session->insert("email_code", std::string(email_code));
+        
+            GetLogger(session_id)->Info("Sent email code: {} to {}", email_code, email);
+        };
+
+    if (!json->isMember("login") || !(*json)["login"].isString() || !json->isMember("email") || !(*json)["email"].isString())
+    {
+        if (!json->isMember("subject") || !(*json)["subject"].isString() || !json->isMember("message") || !(*json)["message"].isString() || 
+            !json->isMember("captcha") || !(*json)["captcha"].isString())
+        {
+            SendError(k400BadRequest, "Wrong json in the request", callback);
+            return;
+        }
+
+        //authenticate by the access token
+        std::string access_token = req->getHeader("access_token");
+        try
+        {
+            auto decoded = jwt::decode(access_token);
+            auto login = decoded.get_payload_claim("login").to_json().to_str();
+            if (login != session->get<std::string>("login"))
+            {
+                GetLogger(session_id)->Error("Unauthorized: {}", login);
+                SendError(k401Unauthorized, "Unauthorized", callback);
+                return;
+            }
+    
+            auto verifier = jwt::verify().allow_algorithm(jwt::algorithm::rs256("", private_key, "", "")).with_issuer("auth0");
+            verifier.verify(decoded);
+        }
+        catch (std::invalid_argument& ex)
+        {
+            GetLogger(session_id)->Error("Wrong access token: {}", ex.what());
+            SendError(k400BadRequest, "Wrong access token", callback);
+            return;
+        }
+        catch (jwt::error::claim_not_present_exception& ex)
+        {
+            GetLogger(session_id)->Error("Wrong access token: {}", ex.what());
+            SendError(k400BadRequest, "Wrong access token", callback);
+            return;
+        }
+        catch (jwt::token_verification_exception& ex)
+        {
+            GetLogger(session_id)->Error("Wrong access token: {}", ex.what());
+            SendError(k403Forbidden, "Wrong access token", callback);
+            return;
+        }
+        catch (...)
+        {
+            GetLogger(session_id)->Error("Wrong access token");
+            SendError(k405MethodNotAllowed, "Wrong access token", callback);
+            return;
+        }
+        
+        auto subject = (*json)["subject"].asString();
+        auto message = (*json)["message"].asString();
+        GetLogger(session_id)->Info("SendEmailCode request: subject={}", subject);
+        if (subject.empty() || message.empty())
+        {
+            SendError(k400BadRequest, "Fields must not be empty", callback);
+            return;
+        }
+
+#ifndef TEST
+        auto captcha = (*json)["captcha"].asString();
+        if (captcha.empty() || session->get<std::string>("captcha") != captcha)
+        {
+            SendError(k400BadRequest, "Wrong captcha", callback);
+            return;
+        }
+#endif
+
+        orm::DbClientPtr db = app().getDbClient();
+        std::string user_id = session->get<std::string>("user_id");
+        std::string email;
+
+        try
+        {
+            //get email
+            orm::Result result = db->execSqlSync("select email from users where user_id=$1", user_id);
+            if (result.size() == 0)
+            {
+                SendError(k401Unauthorized, "Login or password are incorrect", callback);
+                return;
+            }
+            auto row = result[0];
+            email = row["email"].as<std::string>();
+        } 
+        catch (const orm::DrogonDbException& e)
+        {
+            GetLogger(req->getCookie("session_id"))->Error("Database error: {}", e.base().what());
+            SendError(k500InternalServerError, e.base().what(), callback);
+            return;
+        }
+
+        send_email(email, subject, message);
+        SendOk(callback);
+        return;
+    }
+
+    if (!json->isMember("login") || !(*json)["login"].isString() || !json->isMember("email") || !(*json)["email"].isString() || 
         !json->isMember("subject") || !(*json)["subject"].isString() || !json->isMember("message") || !(*json)["message"].isString() || 
         !json->isMember("captcha") || !(*json)["captcha"].isString())
     {
@@ -149,7 +267,6 @@ void AuthController::SendRegisterCode(const HttpRequestPtr &req, std::function<v
     auto email = (*json)["email"].asString();
     auto subject = (*json)["subject"].asString();
     auto message = (*json)["message"].asString();
-    auto captcha = (*json)["captcha"].asString();
     GetLogger(session_id)->Info("SendEmailCode request: login={}, email={}", login, email);
     if (login.empty() || email.empty() || subject.empty() || message.empty())
     {
@@ -157,11 +274,14 @@ void AuthController::SendRegisterCode(const HttpRequestPtr &req, std::function<v
         return;
     }
 
+#ifndef TEST
+    auto captcha = (*json)["captcha"].asString();
     if (captcha.empty() || session->get<std::string>("captcha") != captcha)
     {
         SendError(k400BadRequest, "Wrong captcha", callback);
         return;
     }
+#endif
 
     orm::DbClientPtr db = app().getDbClient();
 
@@ -181,22 +301,7 @@ void AuthController::SendRegisterCode(const HttpRequestPtr &req, std::function<v
         SendError(k500InternalServerError, e.base().what(), callback);
     }
 
-    std::random_device dev;
-    std::mt19937 rng(dev());
-    std::uniform_int_distribution<std::mt19937::result_type> dist6(0, 9);
-    std::string register_code;
-    for (int i = 0; i < 6; ++i)
-        register_code += std::to_string(dist6(rng));
-
-    size_t p = message.find("REGISTER_CODE");
-    if (p != std::string::npos)
-        message.replace(p, strlen("REGISTER_CODE"), register_code);
-    SendEmail("<no-reply@yutovo.ru>", "<dgordenin@gmail.com>", subject, message);
-
-    session->erase("register_code");
-    session->insert("register_code", std::string(register_code));
-
-    GetLogger(session_id)->Debug("Sent email code: {}", register_code);
+    send_email(email, subject, message);
 
     SendOk(callback);
 }
@@ -214,17 +319,17 @@ void AuthController::Register(const HttpRequestPtr& req, std::function<void (con
         return;
     }
 
-    if (!json->isMember("register_code") || !(*json)["register_code"].isString() || !json->isMember("captcha") || !(*json)["captcha"].isString())
+#ifndef TEST
+    if (!json->isMember("email_code") || !(*json)["email_code"].isString() || !json->isMember("captcha") || !(*json)["captcha"].isString())
     {
         SendError(k400BadRequest, "Wrong json in the request", callback);
         return;
     }
 
-#ifndef TEST
-    auto register_code = (*json)["register_code"].asString();
-    if (register_code.empty() || session->get<std::string>("register_code") != register_code)
+    auto email_code = (*json)["email_code"].asString();
+    if (email_code.empty() || session->get<std::string>("email_code") != email_code)
     {
-        SendError(k400BadRequest, "Wrong register code", callback);
+        SendError(k400BadRequest, "Wrong email code", callback);
         return;
     }
 
@@ -677,17 +782,6 @@ void AuthController::UpdateSessionTime(const std::string& session_id)
     db->execSqlSync("update user_sessions set expire_time=$1 where session_id=$2", session_expires_date.secondsSinceEpoch(), session_id);
 }
 
-std::string AuthController::GetHash(const std::string& str, const std::string& salt)
-{
-    unsigned char hash[MD5_DIGEST_LENGTH];
-    std::string s = str + salt;
-    MD5((const unsigned char*)s.c_str(), s.size(), hash);
-    char hash_str[MD5_DIGEST_LENGTH * 2];
-    for(int i = 0; i < MD5_DIGEST_LENGTH; i++)
-        sprintf(&hash_str[i * 2], "%02x", (unsigned int)hash[i]);
-    return std::string(&hash_str[0], MD5_DIGEST_LENGTH * 2);
-}
-
 size_t AuthController::EmailPayload(char *ptr, size_t size, size_t nmemb, void *userp)
 {
     AuthController* context = (AuthController*)userp;
@@ -717,12 +811,14 @@ bool AuthController::SendEmail(const std::string& from, const std::string& to, c
     CURL* curl = curl_easy_init();
     if (!curl)
         return false;
+    
     const Json::Value& v = app().getCustomConfig();
-    std::string email_name = v.get("email_name", "").asString();
+    std::string email_server = v.get("email_server", "").asString();
     std::string email_password = v.get("email_password", "").asString();
-    CURLcode r = curl_easy_setopt(curl, CURLOPT_USERNAME, email_name.c_str());
+
+    CURLcode r = curl_easy_setopt(curl, CURLOPT_USERNAME, from.c_str());
     r = curl_easy_setopt(curl, CURLOPT_PASSWORD, email_password.c_str());
-    r = curl_easy_setopt(curl, CURLOPT_URL, "smtps://smtp.beget.com:465");
+    r = curl_easy_setopt(curl, CURLOPT_URL, email_server.c_str());
     r = curl_easy_setopt(curl, CURLOPT_USE_SSL, (long)CURLUSESSL_ALL);
     r = curl_easy_setopt(curl, CURLOPT_MAIL_FROM, from.c_str());
     struct curl_slist* recipients = nullptr;

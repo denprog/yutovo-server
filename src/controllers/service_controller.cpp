@@ -2,6 +2,10 @@
 #include "../logic/clear_db.h"
 #include <functional>
 #include <fstream>
+#include <boost/lexical_cast.hpp>
+#include <boost/uuid/uuid.hpp>
+#include <boost/uuid/uuid_generators.hpp>
+#include <boost/uuid/uuid_io.hpp>
 
 namespace yutovo_server
 {
@@ -1167,15 +1171,15 @@ void ServiceController::RenameDocument(const HttpRequestPtr& req, std::function<
     }
 }
 
-void ServiceController::SetSettings(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
+void ServiceController::SetUserSettings(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
     session_id = req->getCookie("session_id");
-    GetLogger(session_id)->Debug("SetSettings request");
+    GetLogger(session_id)->Debug("SetUserSettings request");
 
     auto json = req->getJsonObject();
     if (!json || !json->isObject())
     {
-        GetLogger(session_id)->Error("SetSettings error: Json not found in the request");
+        GetLogger(session_id)->Error("SetUserSettings error: Json not found in the request");
         SendError(k400BadRequest, "Json not found in the request", callback);
         return;
     }
@@ -1185,102 +1189,196 @@ void ServiceController::SetSettings(const HttpRequestPtr& req, std::function<voi
     std::string user_id = session->get<std::string>("user_id");
     if (user_id.empty())
     {
-        GetLogger(session_id)->Error("SetSettings error: Empty user_id");
+        GetLogger(session_id)->Error("SetUserSettings error: Empty user_id");
         SendError(k500InternalServerError, "Empty user_id", callback);
         return;
     }
 
-    std::string settings;
+    std::string settings, name, password, old_password, captcha, email_code;
     if (json->isMember("settings") && (*json)["settings"].isString())
         settings = (*json)["settings"].asString();
-    if (settings.empty())
+    if (json->isMember("name") && (*json)["name"].isString())
+        name = (*json)["name"].asString();
+    if (json->isMember("password") && (*json)["password"].isString())
+        password = (*json)["password"].asString();
+    if (json->isMember("old_password") && (*json)["old_password"].isString())
+        old_password = (*json)["old_password"].asString();
+    if (json->isMember("captcha") && (*json)["captcha"].isString())
+        captcha = (*json)["captcha"].asString();
+    if (json->isMember("email_code") && (*json)["email_code"].isString())
+        email_code = (*json)["email_code"].asString();
+
+    if (settings.empty() && name.empty() && (password.empty() || old_password.empty()))
     {
-        GetLogger(session_id)->Error("SetSettings error: Wrong request: empty settings");
-        SendError(k400BadRequest, "Wrong request: empty settings", callback);
+        GetLogger(session_id)->Error("SetUserSettings error: Wrong request: empty request");
+        SendError(k400BadRequest, "Wrong request: empty request", callback);
         return;
     }
 
-    Json::Reader reader;
-    Json::Value settings_val;
-    if (!reader.parse(settings, settings_val))
-    {
-        GetLogger(session_id)->Error("Database error: Error updating settings");
-        SendError(k500InternalServerError, "Error updating settings", callback);
-        return;
-    }
+    ClearDbTurnOff t; //skip the clear db circles for a while
 
-    try
+    if (!settings.empty()) //set settings
     {
-        //update the existing json, load it, change and save
-        orm::Result result = db->execSqlSync("select settings from users where user_id=$1", user_id);
-        if (result.affectedRows() == 0)
+        Json::Reader reader;
+        Json::Value settings_val;
+        if (!reader.parse(settings, settings_val))
         {
             GetLogger(session_id)->Error("Database error: Error updating settings");
             SendError(k500InternalServerError, "Error updating settings", callback);
             return;
         }
 
-        Json::Value s_val;
-        auto row = result[0];
-        std::string s = row["settings"].as<std::string>();
-        if (s.empty())
+        try
         {
-            s_val = settings_val;
-        }
-        else
-        {
-            if (!reader.parse(s, s_val))
+            //update the existing json, load it, change and save
+            orm::Result result = db->execSqlSync("select settings from users where user_id=$1", user_id);
+            if (result.affectedRows() == 0)
             {
                 GetLogger(session_id)->Error("Database error: Error updating settings");
                 SendError(k500InternalServerError, "Error updating settings", callback);
                 return;
             }
-
-            std::function<void (Json::Value&, Json::Value&)> merge =
-                [&](Json::Value& a, Json::Value& b)
+    
+            Json::Value s_val;
+            auto row = result[0];
+            std::string s = row["settings"].as<std::string>();
+            if (s.empty())
+            {
+                s_val = settings_val;
+            }
+            else
+            {
+                if (!reader.parse(s, s_val))
                 {
-                    if (!a.isObject() || !b.isObject())
-                        return;
-                    for (const auto& key : b.getMemberNames())
+                    GetLogger(session_id)->Error("Database error: Error updating settings");
+                    SendError(k500InternalServerError, "Error updating settings", callback);
+                    return;
+                }
+    
+                std::function<void (Json::Value&, Json::Value&)> merge =
+                    [&](Json::Value& a, Json::Value& b)
                     {
-                        if (a[key].isObject())
-                            merge(a[key], b[key]);
-                        else
-                            a[key] = b[key];
-                    }
-                };
-            
-            merge(s_val, settings_val);
+                        if (!a.isObject() || !b.isObject())
+                            return;
+                        for (const auto& key : b.getMemberNames())
+                        {
+                            if (a[key].isObject())
+                                merge(a[key], b[key]);
+                            else
+                                a[key] = b[key];
+                        }
+                    };
+                
+                merge(s_val, settings_val);
+            }
+    
+            result = db->execSqlSync("update users set settings=$1 where user_id=$2", s_val.toStyledString(), user_id);
+            if (result.affectedRows() == 0)
+            {
+                GetLogger(session_id)->Error("Database error: Error updating settings");
+                SendError(k500InternalServerError, "Error updating settings", callback);
+                return;
+            }
         }
-
-        result = db->execSqlSync("update users set settings=$1 where user_id=$2", s_val.toStyledString(), user_id);
-        if (result.affectedRows() == 0)
+        catch (const orm::DrogonDbException& e)
         {
-            GetLogger(session_id)->Error("Database error: Error updating settings");
-            SendError(k500InternalServerError, "Error updating settings", callback);
+            GetLogger(session_id)->Error("Database error: {}", e.base().what());
+            SendError(k500InternalServerError, e.base().what(), callback);
+        }
+    }
+
+    if (!name.empty()) //set name
+    {
+        try
+        {
+            orm::Result result = db->execSqlSync("update users set name=$1 where user_id=$2", name, user_id);
+            if (result.affectedRows() == 0)
+            {
+                GetLogger(session_id)->Error("Database error: Error updating name");
+                SendError(k500InternalServerError, "Error updating name", callback);
+                return;
+            }
+        }
+        catch (const orm::DrogonDbException& e)
+        {
+            GetLogger(session_id)->Error("Database error: {}", e.base().what());
+            SendError(k500InternalServerError, e.base().what(), callback);
+        }
+    }
+
+    if (!password.empty() && !old_password.empty()) //set new password
+    {
+#ifndef TEST        
+        auto captcha = (*json)["captcha"].asString();
+        if (captcha.empty() || session->get<std::string>("captcha") != captcha)
+        {
+            SendError(k400BadRequest, "Wrong captcha", callback);
             return;
         }
+        auto email_code = (*json)["email_code"].asString();
+        if (email_code.empty() || session->get<std::string>("email_code") != email_code)
+        {
+            SendError(k400BadRequest, "Wrong email code", callback);
+            return;
+        }
+#endif
+    
+        try
+        {
+            //check the old password
+            orm::Result result = db->execSqlSync("select password from users where user_id=$1", user_id);
+            if (result.size() == 0)
+            {
+                GetLogger(session_id)->Error("Login is incorrect");
+                SendError(k401Unauthorized, "Login is incorrect", callback);
+                return;
+            }
+    
+            auto row = result[0];
+            std::string hash = row["password"].as<std::string>();
+            std::string salt = hash.substr(0, 32);
+            std::string h = GetHash(old_password, salt);
+            if (salt + h != hash)
+            {
+                GetLogger(session_id)->Error("Old password is incorrect");
+                SendError(k401Unauthorized, "Old password is incorrect", callback);
+                return;
+            }
+    
+            //generate the hash of the password with salt
+            salt = std::string(boost::lexical_cast<std::string>(boost::uuids::random_generator()()));
+            salt.erase(std::remove(salt.begin(), salt.end(), '-'), salt.end());
+            hash = GetHash(password, salt);
 
-        SendOk(callback);
+            result = db->execSqlSync("update users set password=$1 where user_id=$2", salt + hash, user_id);
+            if (result.affectedRows() == 0)
+            {
+                GetLogger(session_id)->Error("Database error: Error updating password");
+                SendError(k500InternalServerError, "Error updating password", callback);
+                return;
+            }
+        }
+        catch (const orm::DrogonDbException& e)
+        {
+            GetLogger(session_id)->Error("Database error: {}", e.base().what());
+            SendError(k500InternalServerError, e.base().what(), callback);
+        }
     }
-    catch (const orm::DrogonDbException& e)
-    {
-        GetLogger(session_id)->Error("Database error: {}", e.base().what());
-        SendError(k500InternalServerError, e.base().what(), callback);
-    }
+
+    SendOk(callback);
 }
 
-void ServiceController::GetSettings(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
+void ServiceController::GetUserSettings(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
     session_id = req->getCookie("session_id");
-    GetLogger(session_id)->Debug("GetSettings request");
+    GetLogger(session_id)->Debug("GetUserSettings request");
 
     orm::DbClientPtr db = app().getDbClient();
     SessionPtr session = req->session();
     std::string user_id = session->get<std::string>("user_id");
     if (user_id.empty())
     {
-        GetLogger(session_id)->Error("GetSettings error: Empty user_id");
+        GetLogger(session_id)->Error("GetUserSettings error: Empty user_id");
         SendError(k500InternalServerError, "Empty user_id", callback);
         return;
     }
@@ -1288,7 +1386,7 @@ void ServiceController::GetSettings(const HttpRequestPtr& req, std::function<voi
     try
     {
         //update the existing json, load it, change and save
-        orm::Result result = db->execSqlSync("select settings from users where user_id=$1", user_id);
+        orm::Result result = db->execSqlSync("select login, name, email, settings from users where user_id=$1", user_id);
         if (result.affectedRows() == 0)
         {
             GetLogger(session_id)->Error("Database error: Error updating settings");
@@ -1300,7 +1398,19 @@ void ServiceController::GetSettings(const HttpRequestPtr& req, std::function<voi
         auto settings = row["settings"].as<std::string>();
         if (settings.empty())
             settings = "{}";
-        SendJson(callback, settings);
+        Json::Value s(Json::objectValue);
+        Json::Reader reader;
+        if (!reader.parse(settings.c_str(), s))
+        {
+            SendError(k500InternalServerError, "Json error", callback);
+            return;
+        }
+        Json::Value v(Json::objectValue);
+        v["login"] = row["login"].as<std::string>();
+        v["name"] = row["name"].as<std::string>();
+        v["email"] = row["email"].as<std::string>();
+        v["settings"] = s;
+        SendJson(callback, v);
     }
     catch (const orm::DrogonDbException& e)
     {
