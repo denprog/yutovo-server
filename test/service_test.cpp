@@ -901,7 +901,7 @@ TEST_F(ServiceTest, document17)
 
     auto req = HttpRequest::newHttpJsonRequest(body);
     req->setMethod(drogon::Post);
-    req->setPath("/service/set-settings");
+    req->setPath("/service/set-user-settings");
     req->addHeader("access_token", access_token);
     auto resp = client->sendRequest(req, 10);
     auto r = resp.second;
@@ -914,7 +914,7 @@ TEST_F(ServiceTest, document17)
 
     req = HttpRequest::newHttpJsonRequest(body2);
     req->setMethod(drogon::Post);
-    req->setPath("/service/set-settings");
+    req->setPath("/service/set-user-settings");
     req->addHeader("access_token", access_token);
     resp = client->sendRequest(req, 10);
     r = resp.second;
@@ -934,7 +934,7 @@ TEST_F(ServiceTest, document17)
     body2["settings"] = doc2.toStyledString();
     req = HttpRequest::newHttpJsonRequest(body2);
     req->setMethod(drogon::Post);
-    req->setPath("/service/set-settings");
+    req->setPath("/service/set-user-settings");
     req->addHeader("access_token", access_token);
     resp = client->sendRequest(req, 10);
     r = resp.second;
@@ -951,15 +951,89 @@ TEST_F(ServiceTest, document17)
     Json::Value v;
     req = HttpRequest::newHttpJsonRequest(v);
     req->setMethod(drogon::Post);
-    req->setPath("/service/get-settings");
+    req->setPath("/service/get-user-settings");
     req->addHeader("access_token", access_token);
     resp = client->sendRequest(req);
     r = resp.second;
     ASSERT_TRUE(r->getContentType() == CT_APPLICATION_JSON) << r->getContentType();
     const auto json = r->jsonObject();
-    ASSERT_TRUE((*json)["real_result"]["precision"] == 20) << json;
+    ASSERT_TRUE((*json)["settings"]["real_result"]["precision"] == 20) << json;
 
     Logout(client, "test1", access_token);
+}
+
+//Set password
+TEST_F(ServiceTest, document18)
+{
+    auto client = HttpClient::newHttpClient(address);
+    client->enableCookies(true);
+
+    Register(client, "User1", "user1@mail.com", "11");
+
+    auto req = HttpRequest::newHttpRequest();
+    req->setMethod(drogon::Get);
+    req->setPath("/");
+    auto resp = client->sendRequest(req);
+
+    std::string access_token;
+
+    {
+        //login
+        Json::Value body;
+        body["login"] = "User1";
+        body["password"] = "11";
+        req = HttpRequest::newHttpJsonRequest(body);
+        req->setMethod(drogon::Post);
+        req->setPath("/auth/login");
+        resp = client->sendRequest(req);
+        ReqResult& res = resp.first;
+        HttpResponsePtr& r = resp.second;
+        access_token = r->getHeader("access_token");
+        ASSERT_TRUE(res == ReqResult::Ok) << res;
+        ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
+    }
+
+    {
+        //change password
+        Json::Value body;
+        body["old_password"] = "11";
+        body["password"] = "5555";
+        req = HttpRequest::newHttpJsonRequest(body);
+        req->setMethod(drogon::Post);
+        req->setPath("/service/set-user-settings");
+        req->addHeader("access_token", access_token);
+        resp = client->sendRequest(req);
+        ReqResult& res = resp.first;
+        HttpResponsePtr& r = resp.second;
+        ASSERT_TRUE(res == ReqResult::Ok) << res;
+        ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
+    }
+
+    {
+        //logout
+        Json::Value body;
+        body["login"] = "User1";
+        req = HttpRequest::newHttpJsonRequest(body);
+        req->setMethod(drogon::Post);
+        req->setPath("/auth/logout");
+        req->addHeader("access_token", access_token);
+    }
+
+    {
+        //login
+        Json::Value body;
+        body["login"] = "User1";
+        body["password"] = "5555";
+        req = HttpRequest::newHttpJsonRequest(body);
+        req->setMethod(drogon::Post);
+        req->setPath("/auth/login");
+        resp = client->sendRequest(req);
+        ReqResult& res = resp.first;
+        HttpResponsePtr& r = resp.second;
+        access_token = r->getHeader("access_token");
+        ASSERT_TRUE(res == ReqResult::Ok) << res;
+        ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
+    }
 }
 
 }

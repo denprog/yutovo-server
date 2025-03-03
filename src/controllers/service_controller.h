@@ -29,8 +29,8 @@ public:
     ADD_METHOD_TO(ServiceController::GetDocumentId, "/service/get-document-id", Post); //get id of a user document
     ADD_METHOD_TO(ServiceController::GetDocumentName, "/service/get-document-name", Post); //get name of a user document
     ADD_METHOD_TO(ServiceController::RenameDocument, "/service/rename-document", Post, "yutovo_server::LoginFilter"); //rename a user document
-    ADD_METHOD_TO(ServiceController::SetSettings, "/service/set-settings", Post, "yutovo_server::LoginFilter"); //set user config
-    ADD_METHOD_TO(ServiceController::GetSettings, "/service/get-settings", Post, "yutovo_server::LoginFilter"); //get user config
+    ADD_METHOD_TO(ServiceController::SetUserSettings, "/service/set-user-settings", Post, "yutovo_server::LoginFilter"); //set user config
+    ADD_METHOD_TO(ServiceController::GetUserSettings, "/service/get-user-settings", Post, "yutovo_server::LoginFilter"); //get user config
     METHOD_LIST_END
 
     void GetLibraryDocuments(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
@@ -46,8 +46,8 @@ public:
     void GetDocumentId(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
     void GetDocumentName(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
     void RenameDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
-    void SetSettings(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
-    void GetSettings(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
+    void SetUserSettings(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
+    void GetUserSettings(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
 
 private:
 #ifdef REMOTE_SOLVER

@@ -53,7 +53,7 @@ public:
 
     METHOD_LIST_BEGIN
     ADD_METHOD_TO(AuthController::GetCaptcha, "/auth/get-captcha", Post);
-    ADD_METHOD_TO(AuthController::SendRegisterCode, "/auth/send-register-code", Post);
+    ADD_METHOD_TO(AuthController::SendEmailCode, "/auth/send-email-code", Post);
     ADD_METHOD_TO(AuthController::Register, "/auth/register", Post);
     ADD_METHOD_TO(AuthController::UnRegister, "/auth/unregister", Post, "yutovo_server::LoginFilter");
     ADD_METHOD_TO(AuthController::Login, "/auth/login", Post);
@@ -67,7 +67,7 @@ public:
     METHOD_LIST_END
 
     void GetCaptcha(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
-    void SendRegisterCode(const HttpRequestPtr &req, std::function<void(const HttpResponsePtr &)> &&callback);
+    void SendEmailCode(const HttpRequestPtr &req, std::function<void (const HttpResponsePtr &)> &&callback);
     void Register(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, User&& user);
     void UnRegister(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
     void Login(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
@@ -82,7 +82,6 @@ public:
 
 private:
     void UpdateSessionTime(const std::string& session_id);
-    std::string GetHash(const std::string& str, const std::string& salt);
     static size_t EmailPayload(char *ptr, size_t size, size_t nmemb, void *userp);
     bool SendEmail(const std::string& from, const std::string& to, const std::string& subject, const std::string& message);
 
