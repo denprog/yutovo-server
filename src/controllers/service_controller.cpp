@@ -1194,11 +1194,13 @@ void ServiceController::SetUserSettings(const HttpRequestPtr& req, std::function
         return;
     }
 
-    std::string settings, name, password, old_password, captcha, email_code;
+    std::string settings, name, email, password, old_password, captcha, email_code;
     if (json->isMember("settings") && (*json)["settings"].isString())
         settings = (*json)["settings"].asString();
     if (json->isMember("name") && (*json)["name"].isString())
         name = (*json)["name"].asString();
+    if (json->isMember("email") && (*json)["email"].isString())
+        email = (*json)["email"].asString();
     if (json->isMember("password") && (*json)["password"].isString())
         password = (*json)["password"].asString();
     if (json->isMember("old_password") && (*json)["old_password"].isString())
@@ -1208,7 +1210,7 @@ void ServiceController::SetUserSettings(const HttpRequestPtr& req, std::function
     if (json->isMember("email_code") && (*json)["email_code"].isString())
         email_code = (*json)["email_code"].asString();
 
-    if (settings.empty() && name.empty() && (password.empty() || old_password.empty()))
+    if (settings.empty() && name.empty() && email.empty() && (password.empty() || old_password.empty()))
     {
         GetLogger(session_id)->Error("SetUserSettings error: Wrong request: empty request");
         SendError(k400BadRequest, "Wrong request: empty request", callback);
@@ -1296,6 +1298,34 @@ void ServiceController::SetUserSettings(const HttpRequestPtr& req, std::function
             {
                 GetLogger(session_id)->Error("Database error: Error updating name");
                 SendError(k500InternalServerError, "Error updating name", callback);
+                return;
+            }
+        }
+        catch (const orm::DrogonDbException& e)
+        {
+            GetLogger(session_id)->Error("Database error: {}", e.base().what());
+            SendError(k500InternalServerError, e.base().what(), callback);
+        }
+    }
+
+    if (!email.empty()) //set e-mail
+    {
+        try
+        {
+            //check the e-mail doesn't exist
+            orm::Result result = db->execSqlSync("select 1 from users where email=$1", email);
+            if (result.affectedRows() != 0)
+            {
+                GetLogger(session_id)->Error("e-mail already exists: {}", email);
+                SendError(k409Conflict, "e-mail already exists", callback);
+                return;
+            }
+
+            result = db->execSqlSync("update users set email=$1 where user_id=$2", email, user_id);
+            if (result.affectedRows() == 0)
+            {
+                GetLogger(session_id)->Error("Database error: Error updating email");
+                SendError(k500InternalServerError, "Error updating email", callback);
                 return;
             }
         }

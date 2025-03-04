@@ -159,6 +159,8 @@ void AuthController::SendEmailCode(const HttpRequestPtr &req, std::function<void
             GetLogger(session_id)->Info("Sent email code: {} to {}", email_code, email);
         };
 
+    std::string login, email, subject, message;
+
     if (!json->isMember("login") || !(*json)["login"].isString() || !json->isMember("email") || !(*json)["email"].isString())
     {
         if (!json->isMember("subject") || !(*json)["subject"].isString() || !json->isMember("message") || !(*json)["message"].isString() || 
@@ -209,8 +211,8 @@ void AuthController::SendEmailCode(const HttpRequestPtr &req, std::function<void
             return;
         }
         
-        auto subject = (*json)["subject"].asString();
-        auto message = (*json)["message"].asString();
+        subject = (*json)["subject"].asString();
+        message = (*json)["message"].asString();
         GetLogger(session_id)->Info("SendEmailCode request: subject={}", subject);
         if (subject.empty() || message.empty())
         {
@@ -227,61 +229,70 @@ void AuthController::SendEmailCode(const HttpRequestPtr &req, std::function<void
         }
 #endif
 
-        orm::DbClientPtr db = app().getDbClient();
-        std::string user_id = session->get<std::string>("user_id");
-        std::string email;
-
-        try
+        if (json->isMember("email") && (*json)["email"].isString())
         {
-            //get email
-            orm::Result result = db->execSqlSync("select email from users where user_id=$1", user_id);
-            if (result.size() == 0)
+            email = (*json)["email"].asString();
+            if (email.empty())
             {
-                SendError(k401Unauthorized, "Login or password are incorrect", callback);
+                SendError(k400BadRequest, "Fields must not be empty", callback);
                 return;
             }
-            auto row = result[0];
-            email = row["email"].as<std::string>();
-        } 
-        catch (const orm::DrogonDbException& e)
+        }
+        else
         {
-            GetLogger(req->getCookie("session_id"))->Error("Database error: {}", e.base().what());
-            SendError(k500InternalServerError, e.base().what(), callback);
+            orm::DbClientPtr db = app().getDbClient();
+            std::string user_id = session->get<std::string>("user_id");
+
+            try
+            {
+                //get email
+                orm::Result result = db->execSqlSync("select email from users where user_id=$1", user_id);
+                if (result.size() == 0)
+                {
+                    SendError(k401Unauthorized, "Login or password are incorrect", callback);
+                    return;
+                }
+                auto row = result[0];
+                email = row["email"].as<std::string>();
+            } 
+            catch (const orm::DrogonDbException& e)
+            {
+                GetLogger(req->getCookie("session_id"))->Error("Database error: {}", e.base().what());
+                SendError(k500InternalServerError, e.base().what(), callback);
+                return;
+            }
+        }
+    }
+    else
+    {
+        if (!json->isMember("login") || !(*json)["login"].isString() || !json->isMember("email") || !(*json)["email"].isString() || 
+            !json->isMember("subject") || !(*json)["subject"].isString() || !json->isMember("message") || !(*json)["message"].isString() || 
+            !json->isMember("captcha") || !(*json)["captcha"].isString())
+        {
+            SendError(k400BadRequest, "Wrong json in the request", callback);
             return;
         }
 
-        send_email(email, subject, message);
-        SendOk(callback);
-        return;
-    }
-
-    if (!json->isMember("login") || !(*json)["login"].isString() || !json->isMember("email") || !(*json)["email"].isString() || 
-        !json->isMember("subject") || !(*json)["subject"].isString() || !json->isMember("message") || !(*json)["message"].isString() || 
-        !json->isMember("captcha") || !(*json)["captcha"].isString())
-    {
-        SendError(k400BadRequest, "Wrong json in the request", callback);
-        return;
-    }
-
-    auto login = (*json)["login"].asString();
-    auto email = (*json)["email"].asString();
-    auto subject = (*json)["subject"].asString();
-    auto message = (*json)["message"].asString();
-    GetLogger(session_id)->Info("SendEmailCode request: login={}, email={}", login, email);
-    if (login.empty() || email.empty() || subject.empty() || message.empty())
-    {
-        SendError(k400BadRequest, "Fields must not be empty", callback);
-        return;
-    }
+        login = (*json)["login"].asString();
+        email = (*json)["email"].asString();
+        subject = (*json)["subject"].asString();
+        message = (*json)["message"].asString();
+        GetLogger(session_id)->Info("SendEmailCode request: login={}, email={}", login, email);
+        if (login.empty() || email.empty() || subject.empty() || message.empty())
+        {
+            SendError(k400BadRequest, "Fields must not be empty", callback);
+            return;
+        }
 
 #ifndef TEST
-    auto captcha = (*json)["captcha"].asString();
-    if (captcha.empty() || session->get<std::string>("captcha") != captcha)
-    {
-        SendError(k400BadRequest, "Wrong captcha", callback);
-        return;
-    }
+        auto captcha = (*json)["captcha"].asString();
+        if (captcha.empty() || session->get<std::string>("captcha") != captcha)
+        {
+            SendError(k400BadRequest, "Wrong captcha", callback);
+            return;
+        }
 #endif
+    }
 
     orm::DbClientPtr db = app().getDbClient();
 
@@ -291,6 +302,7 @@ void AuthController::SendEmailCode(const HttpRequestPtr &req, std::function<void
         orm::Result result = db->execSqlSync("select 1 from users where login=$1 or email=$2", login, email);
         if (result.size() > 0)
         {
+            GetLogger(req->getCookie("session_id"))->Error("Login or e-mail already exists: {}, {}", login, email);
             SendError(k409Conflict, "Login or e-mail already exists", callback);
             return;
         }
@@ -302,7 +314,6 @@ void AuthController::SendEmailCode(const HttpRequestPtr &req, std::function<void
     }
 
     send_email(email, subject, message);
-
     SendOk(callback);
 }
 
