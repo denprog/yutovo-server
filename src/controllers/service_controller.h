@@ -31,6 +31,7 @@ public:
     ADD_METHOD_TO(ServiceController::RenameDocument, "/service/rename-document", Post, "yutovo_server::LoginFilter"); //rename a user document
     ADD_METHOD_TO(ServiceController::SetUserSettings, "/service/set-user-settings", Post, "yutovo_server::LoginFilter"); //set user config
     ADD_METHOD_TO(ServiceController::GetUserSettings, "/service/get-user-settings", Post, "yutovo_server::LoginFilter"); //get user config
+    ADD_METHOD_TO(ServiceController::RecoverPassword, "/service/recover-password", Post); //recover user password
     METHOD_LIST_END
 
     void GetLibraryDocuments(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
@@ -48,6 +49,7 @@ public:
     void RenameDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
     void SetUserSettings(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
     void GetUserSettings(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
+    void RecoverPassword(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
 
 private:
 #ifdef REMOTE_SOLVER
