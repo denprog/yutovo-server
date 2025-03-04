@@ -155,11 +155,16 @@ void AuthController::SendEmailCode(const HttpRequestPtr &req, std::function<void
         
             session->erase("email_code");
             session->insert("email_code", std::string(email_code));
+            session->erase("email_code_email");
+            session->insert("email_code_email", std::string(email));
         
             GetLogger(session_id)->Info("Sent email code: {} to {}", email_code, email);
         };
 
     std::string login, email, subject, message;
+
+    orm::DbClientPtr db = app().getDbClient();
+    ClearDbTurnOff t; //skip the clear db circles for a while
 
     if (!json->isMember("login") || !(*json)["login"].isString() || !json->isMember("email") || !(*json)["email"].isString())
     {
@@ -170,47 +175,6 @@ void AuthController::SendEmailCode(const HttpRequestPtr &req, std::function<void
             return;
         }
 
-        //authenticate by the access token
-        std::string access_token = req->getHeader("access_token");
-        try
-        {
-            auto decoded = jwt::decode(access_token);
-            auto login = decoded.get_payload_claim("login").to_json().to_str();
-            if (login != session->get<std::string>("login"))
-            {
-                GetLogger(session_id)->Error("Unauthorized: {}", login);
-                SendError(k401Unauthorized, "Unauthorized", callback);
-                return;
-            }
-    
-            auto verifier = jwt::verify().allow_algorithm(jwt::algorithm::rs256("", private_key, "", "")).with_issuer("auth0");
-            verifier.verify(decoded);
-        }
-        catch (std::invalid_argument& ex)
-        {
-            GetLogger(session_id)->Error("Wrong access token: {}", ex.what());
-            SendError(k400BadRequest, "Wrong access token", callback);
-            return;
-        }
-        catch (jwt::error::claim_not_present_exception& ex)
-        {
-            GetLogger(session_id)->Error("Wrong access token: {}", ex.what());
-            SendError(k400BadRequest, "Wrong access token", callback);
-            return;
-        }
-        catch (jwt::token_verification_exception& ex)
-        {
-            GetLogger(session_id)->Error("Wrong access token: {}", ex.what());
-            SendError(k403Forbidden, "Wrong access token", callback);
-            return;
-        }
-        catch (...)
-        {
-            GetLogger(session_id)->Error("Wrong access token");
-            SendError(k405MethodNotAllowed, "Wrong access token", callback);
-            return;
-        }
-        
         subject = (*json)["subject"].asString();
         message = (*json)["message"].asString();
         GetLogger(session_id)->Info("SendEmailCode request: subject={}", subject);
@@ -238,9 +202,45 @@ void AuthController::SendEmailCode(const HttpRequestPtr &req, std::function<void
                 return;
             }
         }
+        else if (json->isMember("login") && (*json)["login"].isString())
+        {
+            login = (*json)["login"].asString();
+            if (login.empty())
+            {
+                SendError(k400BadRequest, "Fields must not be empty", callback);
+                return;
+            }
+
+            try
+            {
+                //it may be email
+                orm::Result result = db->execSqlSync("select 1 from users where email=$1", login);
+                if (result.size() == 0)
+                {
+                    //it may be login
+                    result = db->execSqlSync("select email from users where login=$1", login);
+                    if (result.size() == 0)
+                    {
+                        SendError(k401Unauthorized, "Login or email are incorrect", callback);
+                        return;
+                    }
+                    auto row = result[0];
+                    email = row["email"].as<std::string>();
+                }
+                else
+                {
+                    email = login;
+                }
+            } 
+            catch (const orm::DrogonDbException& e)
+            {
+                GetLogger(req->getCookie("session_id"))->Error("Database error: {}", e.base().what());
+                SendError(k500InternalServerError, e.base().what(), callback);
+                return;
+            }
+        }
         else
         {
-            orm::DbClientPtr db = app().getDbClient();
             std::string user_id = session->get<std::string>("user_id");
 
             try
@@ -294,23 +294,24 @@ void AuthController::SendEmailCode(const HttpRequestPtr &req, std::function<void
 #endif
     }
 
-    orm::DbClientPtr db = app().getDbClient();
-
-    try
+    if (!json->isMember("recover") || !(*json)["recover"].isBool() || !(*json)["recover"].asBool())
     {
-        //check if such login or email already exists
-        orm::Result result = db->execSqlSync("select 1 from users where login=$1 or email=$2", login, email);
-        if (result.size() > 0)
+        try
         {
-            GetLogger(req->getCookie("session_id"))->Error("Login or e-mail already exists: {}, {}", login, email);
-            SendError(k409Conflict, "Login or e-mail already exists", callback);
-            return;
+            //check if such login or email already exists
+            orm::Result result = db->execSqlSync("select 1 from users where login=$1 or email=$2", login, email);
+            if (result.size() > 0)
+            {
+                GetLogger(req->getCookie("session_id"))->Error("Login or e-mail already exists: {}, {}", login, email);
+                SendError(k409Conflict, "Login or e-mail already exists", callback);
+                return;
+            }
+        } 
+        catch (const orm::DrogonDbException& e)
+        {
+            GetLogger(req->getCookie("session_id"))->Error("Database error: {}", e.base().what());
+            SendError(k500InternalServerError, e.base().what(), callback);
         }
-    } 
-    catch (const orm::DrogonDbException& e)
-    {
-        GetLogger(req->getCookie("session_id"))->Error("Database error: {}", e.base().what());
-        SendError(k500InternalServerError, e.base().what(), callback);
     }
 
     send_email(email, subject, message);

@@ -965,7 +965,6 @@ void ServiceController::GetDocumentId(const HttpRequestPtr& req, std::function<v
     }
 
     ClearDbTurnOff t; //skip the clear db circles for a while
-
     orm::DbClientPtr db = app().getDbClient();
 
     std::string document_id;
@@ -1286,6 +1285,7 @@ void ServiceController::SetUserSettings(const HttpRequestPtr& req, std::function
         {
             GetLogger(session_id)->Error("Database error: {}", e.base().what());
             SendError(k500InternalServerError, e.base().what(), callback);
+            return;
         }
     }
 
@@ -1305,6 +1305,7 @@ void ServiceController::SetUserSettings(const HttpRequestPtr& req, std::function
         {
             GetLogger(session_id)->Error("Database error: {}", e.base().what());
             SendError(k500InternalServerError, e.base().what(), callback);
+            return;
         }
     }
 
@@ -1333,12 +1334,13 @@ void ServiceController::SetUserSettings(const HttpRequestPtr& req, std::function
         {
             GetLogger(session_id)->Error("Database error: {}", e.base().what());
             SendError(k500InternalServerError, e.base().what(), callback);
+            return;
         }
     }
 
     if (!password.empty() && !old_password.empty()) //set new password
     {
-#ifndef TEST        
+#ifndef TEST
         auto captcha = (*json)["captcha"].asString();
         if (captcha.empty() || session->get<std::string>("captcha") != captcha)
         {
@@ -1392,6 +1394,7 @@ void ServiceController::SetUserSettings(const HttpRequestPtr& req, std::function
         {
             GetLogger(session_id)->Error("Database error: {}", e.base().what());
             SendError(k500InternalServerError, e.base().what(), callback);
+            return;
         }
     }
 
@@ -1447,6 +1450,77 @@ void ServiceController::GetUserSettings(const HttpRequestPtr& req, std::function
         GetLogger(session_id)->Error("Database error: {}", e.base().what());
         SendError(k500InternalServerError, e.base().what(), callback);
     }
+}
+
+void ServiceController::RecoverPassword(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
+{
+    session_id = req->getCookie("session_id");
+    GetLogger(session_id)->Debug("RecoverPassword request");
+
+    auto json = req->getJsonObject();
+    if (!json || !json->isObject())
+    {
+        GetLogger(session_id)->Error("RecoverPassword error: Wrong request: Json not found in the request");
+        SendError(k400BadRequest, "Json not found in the request", callback);
+        return;
+    }
+
+    if (!json->isMember("password") || !(*json)["password"].isString() || !json->isMember("email_code") || !(*json)["email_code"].isString())
+    {
+        GetLogger(session_id)->Error("RecoverPassword error: Wrong request: empty request");
+        SendError(k400BadRequest, "Wrong request: empty request", callback);
+        return;
+    }
+
+    std::string password, email_code;
+    if (json->isMember("password") && (*json)["password"].isString())
+        password = (*json)["password"].asString();
+    if (json->isMember("email_code") && (*json)["email_code"].isString())
+        email_code = (*json)["email_code"].asString();
+
+    if (password.empty() || email_code.empty())
+    {
+        GetLogger(session_id)->Error("RecoverPassword error: Wrong request: empty request");
+        SendError(k400BadRequest, "Wrong request: empty request", callback);
+        return;
+    }
+
+    SessionPtr session = req->session();
+#ifndef TEST
+    if (session->get<std::string>("email_code") != email_code)
+    {
+        SendError(k400BadRequest, "Wrong email code", callback);
+        return;
+    }
+#endif
+
+    ClearDbTurnOff t; //skip the clear db circles for a while
+    orm::DbClientPtr db = app().getDbClient();
+    auto email = session->get<std::string>("email_code_email");
+
+    //generate the hash of the password with salt
+    std::string salt(boost::lexical_cast<std::string>(boost::uuids::random_generator()()));
+    salt.erase(std::remove(salt.begin(), salt.end(), '-'), salt.end());
+    std::string hash = GetHash(password, salt);
+
+    try
+    {
+        orm::Result result = db->execSqlSync("update users set password=$1 where email=$2", salt + hash, email);
+        if (result.affectedRows() == 0)
+        {
+            GetLogger(session_id)->Error("Database error: Error updating password");
+            SendError(k500InternalServerError, "Error updating password", callback);
+            return;
+        }
+    }
+    catch (const orm::DrogonDbException& e)
+    {
+        GetLogger(session_id)->Error("Database error: {}", e.base().what());
+        SendError(k500InternalServerError, e.base().what(), callback);
+        return;
+    }
+
+    SendOk(callback);
 }
 
 };
