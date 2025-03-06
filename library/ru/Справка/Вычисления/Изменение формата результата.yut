@@ -1,6 +1,6 @@
 {
     "config": {
-        "language": 1,
+        "language": 2,
         "code_block_border_color": -16776961,
         "numbers_color": -16776961,
         "variables_color": -16755456,
@@ -69,6 +69,102 @@
         }
     },
     "string_formats": [
+        {
+            "id": "e178570d-1bfd-4d1a-b784-0a8f032af6eb",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "68214217-7325-4dd7-b657-7b8ab5d8ef0f",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "802412b5-19cf-447e-99dd-32ea7ed46878",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "cbfabfce-59a9-406a-913e-3bcb69e30c41",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "00aef3ee-562b-43db-8300-7a66e5e12620",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "ee8a3b74-2719-4ba2-b3ef-5086f384ac17",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "91639b51-1f0e-419d-b967-8d29435d382e",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "b579fa28-0d55-45b2-8381-a88546fe37ac",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
         {
             "id": "e7f34a97-3817-4b65-be70-aa7dccbb0a7a",
             "family": "Arial",
@@ -285,7 +381,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "e7f34a97-3817-4b65-be70-aa7dccbb0a7a"
+            "default_string_format": "e178570d-1bfd-4d1a-b784-0a8f032af6eb"
         },
         {
             "name": "Header 1",
@@ -297,7 +393,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "ce7762bf-25ba-4b8d-adf7-bdb5e1d44d2e"
+            "default_string_format": "68214217-7325-4dd7-b657-7b8ab5d8ef0f"
         },
         {
             "name": "Header 2",
@@ -309,7 +405,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "177bdbcd-bfb3-4460-9024-ded62535e3d7"
+            "default_string_format": "802412b5-19cf-447e-99dd-32ea7ed46878"
         },
         {
             "name": "Header 3",
@@ -321,7 +417,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "c9c9a9b2-0dbf-4256-b0c3-0fffe5079d52"
+            "default_string_format": "cbfabfce-59a9-406a-913e-3bcb69e30c41"
         },
         {
             "name": "Header 4",
@@ -333,7 +429,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "ae957d58-7b69-4927-9388-08ed4f72a32e"
+            "default_string_format": "00aef3ee-562b-43db-8300-7a66e5e12620"
         },
         {
             "name": "Example",
@@ -345,7 +441,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "f74cf769-6349-4242-82eb-a0ff30197f98"
+            "default_string_format": "ee8a3b74-2719-4ba2-b3ef-5086f384ac17"
         },
         {
             "name": "Monospace",
@@ -357,7 +453,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "9844d999-21bd-4861-994e-ceb7e76451c0"
+            "default_string_format": "91639b51-1f0e-419d-b967-8d29435d382e"
         },
         {
             "name": "Code",
@@ -369,7 +465,7 @@
             "indent_first_line": 0,
             "spacing_before": 2,
             "spacing_after": 2,
-            "default_string_format": "915ea2be-a56f-48b9-bda5-89492f44a9d8"
+            "default_string_format": "b579fa28-0d55-45b2-8381-a88546fe37ac"
         }
     ],
     "text": {
@@ -536,6 +632,11 @@
                                                                             },
                                                                             {
                                                                                 "id": "0,3,0,0,0,0,0,0,1,1",
+                                                                                "type": 10,
+                                                                                "elements": []
+                                                                            },
+                                                                            {
+                                                                                "id": "0,3,0,0,0,0,0,0,1,2",
                                                                                 "type": 10,
                                                                                 "elements": []
                                                                             }
@@ -744,6 +845,11 @@
                                                                                 "id": "0,5,0,0,0,0,0,0,1,1",
                                                                                 "type": 10,
                                                                                 "elements": []
+                                                                            },
+                                                                            {
+                                                                                "id": "0,5,0,0,0,0,0,0,1,2",
+                                                                                "type": 10,
+                                                                                "elements": []
                                                                             }
                                                                         ],
                                                                         "symbol": "+"
@@ -923,6 +1029,11 @@
                                                                             },
                                                                             {
                                                                                 "id": "0,7,0,0,0,0,0,0,1,2",
+                                                                                "type": 10,
+                                                                                "elements": []
+                                                                            },
+                                                                            {
+                                                                                "id": "0,7,0,0,0,0,0,0,1,3",
                                                                                 "type": 10,
                                                                                 "elements": []
                                                                             }
