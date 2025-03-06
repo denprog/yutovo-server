@@ -1,6 +1,6 @@
 {
     "config": {
-        "language": 1,
+        "language": 2,
         "code_block_border_color": -16776961,
         "numbers_color": -16776961,
         "variables_color": -16755456,
@@ -69,6 +69,102 @@
         }
     },
     "string_formats": [
+        {
+            "id": "36a2a35b-94d9-40b2-a5fe-bedaaa2439ea",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "d6d92260-c831-4b3d-9cf0-2194d5eec5d1",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "9f0b2a55-7d7f-4411-a625-9a8d71075788",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "de033f24-c211-4241-bdce-ce67b9ed9769",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "57ec886e-a801-4ede-bf23-0e70aaa49b89",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "099824cb-f1f2-4c3a-87ad-97fcb814fc2a",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "2f75ed0b-9ebe-4c13-843b-d77ff62434ae",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "fecdedb3-ae1b-4f08-a010-940881e9cd95",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
         {
             "id": "f1064bda-8692-49e0-8a3d-a7e96955e30d",
             "family": "Arial",
@@ -297,7 +393,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "f1064bda-8692-49e0-8a3d-a7e96955e30d"
+            "default_string_format": "36a2a35b-94d9-40b2-a5fe-bedaaa2439ea"
         },
         {
             "name": "Header 1",
@@ -309,7 +405,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "c135697a-c84a-4c13-b5e7-33abf8ab6cdc"
+            "default_string_format": "d6d92260-c831-4b3d-9cf0-2194d5eec5d1"
         },
         {
             "name": "Header 2",
@@ -321,7 +417,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "3acea4b0-c5d9-48e0-9d37-700869b5097a"
+            "default_string_format": "9f0b2a55-7d7f-4411-a625-9a8d71075788"
         },
         {
             "name": "Header 3",
@@ -333,7 +429,31 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "ef5e233b-a4d9-46be-9f73-b0a0d2268109"
+            "default_string_format": "de033f24-c211-4241-bdce-ce67b9ed9769"
+        },
+        {
+            "name": "Header 4",
+            "alignment": 0,
+            "word_wrap": 1,
+            "line_spacing": 5,
+            "indent_before": 10,
+            "indent_after": 10,
+            "indent_first_line": 0,
+            "spacing_before": 10,
+            "spacing_after": 10,
+            "default_string_format": "57ec886e-a801-4ede-bf23-0e70aaa49b89"
+        },
+        {
+            "name": "Example",
+            "alignment": 0,
+            "word_wrap": 1,
+            "line_spacing": 5,
+            "indent_before": 10,
+            "indent_after": 10,
+            "indent_first_line": 0,
+            "spacing_before": 10,
+            "spacing_after": 10,
+            "default_string_format": "099824cb-f1f2-4c3a-87ad-97fcb814fc2a"
         },
         {
             "name": "Monospace",
@@ -345,7 +465,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "a7a8fd75-55e5-413e-b227-5da617c0220c"
+            "default_string_format": "2f75ed0b-9ebe-4c13-843b-d77ff62434ae"
         },
         {
             "name": "Code",
@@ -357,7 +477,7 @@
             "indent_first_line": 0,
             "spacing_before": 2,
             "spacing_after": 2,
-            "default_string_format": "e3423b02-316e-43e4-8ab6-02ed99f8f3ab"
+            "default_string_format": "fecdedb3-ae1b-4f08-a010-940881e9cd95"
         }
     ],
     "text": {
@@ -375,7 +495,7 @@
                             {
                                 "id": "0,0,0,0",
                                 "type": 4,
-                                "elements": "Ютово - это веб-сайт и приложение для ПК для решения повседневных ",
+                                "elements": "Ютово - это веб-сайт и приложение для ПК для решения повседневных и профессиональных математических задач. ",
                                 "format_id": "02546dfa-a44e-4781-8924-23b0f7a49fb0"
                             }
                         ]
@@ -387,7 +507,7 @@
                             {
                                 "id": "0,0,1,0",
                                 "type": 4,
-                                "elements": "и профессиональных математических задач. Этот сервис объединяет ",
+                                "elements": "Этот сервис объединяет текстовый редактор с встроенным в нем удобным калькулятором с графическим (как на ",
                                 "format_id": "02546dfa-a44e-4781-8924-23b0f7a49fb0"
                             }
                         ]
@@ -399,19 +519,7 @@
                             {
                                 "id": "0,0,2,0",
                                 "type": 4,
-                                "elements": "текстовый редактор с встроенным в нем удобным калькулятором с ",
-                                "format_id": "02546dfa-a44e-4781-8924-23b0f7a49fb0"
-                            }
-                        ]
-                    },
-                    {
-                        "id": "0,0,3",
-                        "type": 3,
-                        "elements": [
-                            {
-                                "id": "0,0,3,0",
-                                "type": 4,
-                                "elements": "графическим (как на бумаге) отображением выполняемых действий.",
+                                "elements": "бумаге) отображением выполняемых действий.",
                                 "format_id": "02546dfa-a44e-4781-8924-23b0f7a49fb0"
                             }
                         ]

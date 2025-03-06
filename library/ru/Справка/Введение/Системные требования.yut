@@ -1,6 +1,6 @@
 {
     "config": {
-        "language": 1,
+        "language": 2,
         "code_block_border_color": -16776961,
         "numbers_color": -16776961,
         "variables_color": -16755456,
@@ -69,6 +69,102 @@
         }
     },
     "string_formats": [
+        {
+            "id": "ec873e8a-dfbe-4ef7-8195-4373afe20e82",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "46a03e7d-7536-4bf0-836f-34913ce0bba9",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "806560f3-2bda-4a37-a28b-fa3bee523ba7",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "0613829c-a33a-45a9-85c1-7015cb6f471f",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "aade257b-08dc-4598-951b-8d721da3e2c3",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "91382302-6850-4d22-992c-252b225cf19a",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "fbad96da-ba81-45df-b7e9-88f7aabb5540",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "68e4bfcd-88f8-4d7c-bd58-da9a4142a21e",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
         {
             "id": "8f43d12a-0564-43c8-8bfc-9fd46312e683",
             "family": "Arial",
@@ -321,7 +417,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "8f43d12a-0564-43c8-8bfc-9fd46312e683"
+            "default_string_format": "ec873e8a-dfbe-4ef7-8195-4373afe20e82"
         },
         {
             "name": "Header 1",
@@ -333,7 +429,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "1934a640-67bc-4d60-9e69-9b13a0b801ab"
+            "default_string_format": "46a03e7d-7536-4bf0-836f-34913ce0bba9"
         },
         {
             "name": "Header 2",
@@ -345,7 +441,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "55ec951d-d98f-44cd-8112-4d8c3d093a07"
+            "default_string_format": "806560f3-2bda-4a37-a28b-fa3bee523ba7"
         },
         {
             "name": "Header 3",
@@ -357,7 +453,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "65c08b1d-ef10-4fa7-b355-1a11c07b0e85"
+            "default_string_format": "0613829c-a33a-45a9-85c1-7015cb6f471f"
         },
         {
             "name": "Header 4",
@@ -369,7 +465,19 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "774e59a6-0504-465e-ae51-89c11131cbba"
+            "default_string_format": "aade257b-08dc-4598-951b-8d721da3e2c3"
+        },
+        {
+            "name": "Example",
+            "alignment": 0,
+            "word_wrap": 1,
+            "line_spacing": 5,
+            "indent_before": 10,
+            "indent_after": 10,
+            "indent_first_line": 0,
+            "spacing_before": 10,
+            "spacing_after": 10,
+            "default_string_format": "91382302-6850-4d22-992c-252b225cf19a"
         },
         {
             "name": "Monospace",
@@ -381,7 +489,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "b44511b9-ba38-4628-932d-bc837fe53fdc"
+            "default_string_format": "fbad96da-ba81-45df-b7e9-88f7aabb5540"
         },
         {
             "name": "Code",
@@ -393,7 +501,7 @@
             "indent_first_line": 0,
             "spacing_before": 2,
             "spacing_after": 2,
-            "default_string_format": "28718af1-0f93-42d4-9d9d-3dcccef64a05"
+            "default_string_format": "68e4bfcd-88f8-4d7c-bd58-da9a4142a21e"
         }
     ],
     "text": {
@@ -431,19 +539,7 @@
                             {
                                 "id": "0,1,0,0",
                                 "type": 4,
-                                "elements": "• Поддерживаемые браузеры: Google Chrome начиная с ",
-                                "format_id": "3e4a8e44-74f8-4c15-ac0b-e8d3a2f8bf9d"
-                            }
-                        ]
-                    },
-                    {
-                        "id": "0,1,1",
-                        "type": 3,
-                        "elements": [
-                            {
-                                "id": "0,1,1,0",
-                                "type": 4,
-                                "elements": "версии 57, Mozilla Firefox - начиная с версии 52.",
+                                "elements": "• Поддерживаемые браузеры: Google Chrome начиная с версии 57, Mozilla Firefox - начиная с версии 52.",
                                 "format_id": "3e4a8e44-74f8-4c15-ac0b-e8d3a2f8bf9d"
                             }
                         ]
