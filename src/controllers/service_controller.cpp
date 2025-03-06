@@ -1353,6 +1353,7 @@ void ServiceController::SetUserSettings(const HttpRequestPtr& req, std::function
             SendError(k400BadRequest, "Wrong email code", callback);
             return;
         }
+        session->erase("email_code");
 #endif
     
         try
@@ -1493,6 +1494,7 @@ void ServiceController::RecoverPassword(const HttpRequestPtr& req, std::function
         return;
     }
 #endif
+    session->erase("email_code");
 
     ClearDbTurnOff t; //skip the clear db circles for a while
     orm::DbClientPtr db = app().getDbClient();
