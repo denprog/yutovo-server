@@ -293,7 +293,9 @@ void ServiceController::SaveLibraryDocument(const HttpRequestPtr& req, std::func
             return;
         }
 
-        document = library_path + language + document + ".yut";
+        document = library_path + language + document;
+        if (!document.ends_with(".yut"))
+            document += fs::path(".yut");
         fs::path path;
         Json::Value doc;
 
