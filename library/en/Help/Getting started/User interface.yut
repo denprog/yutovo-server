@@ -1,0 +1,1039 @@
+{
+    "config": {
+        "language": 1,
+        "code_block_border_color": -16776961,
+        "numbers_color": -16776961,
+        "variables_color": -16755456,
+        "functions_color": -43776,
+        "units_color": -16755456,
+        "shapes_color": -16777216,
+        "error_marks_color": -65536,
+        "formula_bg_color": -1,
+        "bg_selection_color": -16776961,
+        "real_result": {
+            "precision": 3,
+            "exp": 10,
+            "default_angle_measure": 0,
+            "result_angle_measure": 0,
+            "show_angle_measure": false
+        },
+        "integer_result": {
+            "result_notation": 2,
+            "default_notation": 2,
+            "show_notation": true
+        },
+        "rational_result": {
+            "fraction_form": 0
+        },
+        "complex_result": {
+            "precision": 3,
+            "exp": 10,
+            "default_angle_measure": 0,
+            "result_angle_measure": 0,
+            "show_angle_measure": false,
+            "form": 0,
+            "max_count": 10
+        },
+        "auto_result": {
+            "result_auto_advance": true,
+            "results_order": [
+                1,
+                2,
+                3,
+                4
+            ],
+            "real_config": {
+                "precision": 3,
+                "exp": 10,
+                "default_angle_measure": 0,
+                "result_angle_measure": 0,
+                "show_angle_measure": false
+            },
+            "integer_config": {
+                "result_notation": 2,
+                "default_notation": 2,
+                "show_notation": true
+            },
+            "rational_config": {
+                "fraction_form": 0
+            },
+            "complex_config": {
+                "precision": 3,
+                "exp": 10,
+                "default_angle_measure": 0,
+                "result_angle_measure": 0,
+                "show_angle_measure": false,
+                "form": 0,
+                "max_count": 10
+            }
+        }
+    },
+    "string_formats": [
+        {
+            "id": "44d2542c-5977-4ae8-a93a-c5cf970e58ae",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "94ac2c0d-7f51-4c21-8134-3c1dc9e748c3",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "bad9e241-c98d-440b-94d0-1e21152cb329",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "da2d49be-3664-4371-aea8-1037cc8345f5",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "05c2df16-97c8-4d36-8750-99703cb61226",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "ec6cf313-837d-4c76-9a99-b09fa5159f95",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "3d354e6c-dc61-439b-b23d-d3df9ab02c77",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "8865ea51-100f-4fa4-bbc1-10f852fbfe0e",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "3c6a73a5-9ef3-45b2-a8c4-93ae046bd9c5",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "527ed905-0f96-4873-820c-bc8c55df4908",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "0b1ff5fd-c9cf-4a27-9bdf-c55f993e744b",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "09d32b21-0916-49a9-8ce9-8f3d47770268",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "541f42d1-800b-4469-bfb2-c25f3b8fb0f6",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "6468e22c-03dc-4e58-966f-04c32e8e71d5",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "f8ad4f39-b39a-4f07-a05b-43bf5fef58de",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "46b60168-9036-41b0-a065-9cb57769b008",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "3226c6e7-d11c-4513-ade7-b4ca6f27f9b0",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "3609fc9e-7de7-48c8-ad2f-38008d927356",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "00d0dae2-908b-4cf8-8d2e-7637aeca8ee3",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "bf75361a-8631-4317-9b47-9dd7a99d0626",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "d85c524b-55da-43dd-98dd-382be400c282",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "50574e37-6790-4195-995d-e3bd0ac156bd",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "2fcbcf3f-296d-44ef-bcd6-f1d96e31edac",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "64827c6a-bd69-472a-9e9a-aab7a89ed12c",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "3333989f-b08b-4668-a6b1-c7c3e75f3118",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "bf4baf19-af0f-41d0-8255-f31f1cbc9dc3",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "9ddec192-68d5-42e0-96a7-9c01420476d2",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "15e2f70a-6485-47bb-924b-fbe82e4d6947",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "487901ec-7161-4565-a4af-41f29241ca5c",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "2ffc4471-b453-4056-b5d3-8c3185d54344",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "eb473826-fbc7-4cb5-8584-33fb77f93e2a",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "9d8bea54-79e3-4627-a2f8-67603f5790ca",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "942ce21c-0176-4328-8465-1391df113c0b",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "b9278418-11ba-4450-9a00-6658974eefd2",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "f2916269-2070-410b-9483-81d37422b76d",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "0e7a8645-34be-42ae-bb0c-e6a2922d00b2",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "885b33c5-f35c-4d66-ae2f-eee20cbb2e35",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "a45e0431-de53-488b-8db5-79c6c8c0213b",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "6cf620e0-a9a2-4821-ae7e-5fdc3842ab5e",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "b614cc3e-069e-4190-ab62-6cc961f04313",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "b9655b07-e9aa-4330-b730-2652e084c524",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "e75c6f9b-31b3-4c37-8839-ab675677fe20",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "7407c68a-80af-4fec-9725-264c3c2b9218",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "a10c8e5c-7598-4b5f-b128-8f2e6c4e162b",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "4609daf6-782c-4bab-bb81-94c98bad959c",
+            "family": "Arial",
+            "size": 20,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "6db27f02-086d-4ca4-93b1-4a8d61e5d71c",
+            "family": "Arial",
+            "size": 20,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        }
+    ],
+    "paragraph_formats": [
+        {
+            "name": "Text body",
+            "alignment": 0,
+            "word_wrap": 1,
+            "line_spacing": 5,
+            "indent_before": 10,
+            "indent_after": 10,
+            "indent_first_line": 0,
+            "spacing_before": 10,
+            "spacing_after": 10,
+            "default_string_format": "44d2542c-5977-4ae8-a93a-c5cf970e58ae"
+        },
+        {
+            "name": "Header 1",
+            "alignment": 0,
+            "word_wrap": 1,
+            "line_spacing": 5,
+            "indent_before": 10,
+            "indent_after": 10,
+            "indent_first_line": 0,
+            "spacing_before": 10,
+            "spacing_after": 10,
+            "default_string_format": "94ac2c0d-7f51-4c21-8134-3c1dc9e748c3"
+        },
+        {
+            "name": "Header 2",
+            "alignment": 0,
+            "word_wrap": 1,
+            "line_spacing": 5,
+            "indent_before": 10,
+            "indent_after": 10,
+            "indent_first_line": 0,
+            "spacing_before": 10,
+            "spacing_after": 10,
+            "default_string_format": "bad9e241-c98d-440b-94d0-1e21152cb329"
+        },
+        {
+            "name": "Header 3",
+            "alignment": 0,
+            "word_wrap": 1,
+            "line_spacing": 5,
+            "indent_before": 10,
+            "indent_after": 10,
+            "indent_first_line": 0,
+            "spacing_before": 10,
+            "spacing_after": 10,
+            "default_string_format": "da2d49be-3664-4371-aea8-1037cc8345f5"
+        },
+        {
+            "name": "Header 4",
+            "alignment": 0,
+            "word_wrap": 1,
+            "line_spacing": 5,
+            "indent_before": 10,
+            "indent_after": 10,
+            "indent_first_line": 0,
+            "spacing_before": 10,
+            "spacing_after": 10,
+            "default_string_format": "05c2df16-97c8-4d36-8750-99703cb61226"
+        },
+        {
+            "name": "Example",
+            "alignment": 0,
+            "word_wrap": 1,
+            "line_spacing": 5,
+            "indent_before": 10,
+            "indent_after": 10,
+            "indent_first_line": 0,
+            "spacing_before": 10,
+            "spacing_after": 10,
+            "default_string_format": "ec6cf313-837d-4c76-9a99-b09fa5159f95"
+        },
+        {
+            "name": "Monospace",
+            "alignment": 0,
+            "word_wrap": 1,
+            "line_spacing": 5,
+            "indent_before": 10,
+            "indent_after": 10,
+            "indent_first_line": 0,
+            "spacing_before": 10,
+            "spacing_after": 10,
+            "default_string_format": "3d354e6c-dc61-439b-b23d-d3df9ab02c77"
+        },
+        {
+            "name": "Code",
+            "alignment": 0,
+            "word_wrap": 0,
+            "line_spacing": 2,
+            "indent_before": 2,
+            "indent_after": 2,
+            "indent_first_line": 0,
+            "spacing_before": 2,
+            "spacing_after": 2,
+            "default_string_format": "8865ea51-100f-4fa4-bbc1-10f852fbfe0e"
+        }
+    ],
+    "text": {
+        "id": "0",
+        "type": 1,
+        "elements": [
+            {
+                "id": "0,0",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,0,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,0,0,0",
+                                "type": 4,
+                                "elements": "Standard toolbar",
+                                "format_id": "05c2df16-97c8-4d36-8750-99703cb61226"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Header 4",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,1",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,1,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,1,0,0",
+                                "type": 34,
+                                "elements": [],
+                                "image_base64": "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"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,2",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,2,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,2,0,0",
+                                "type": 4,
+                                "elements": "It is intended for working with files and editing text. Opening, saving, downloading, renaming and deleting files are available only after logging in. The \"Settings\" button ",
+                                "format_id": "44d2542c-5977-4ae8-a93a-c5cf970e58ae"
+                            },
+                            {
+                                "id": "0,2,0,1",
+                                "type": 34,
+                                "elements": [],
+                                "image_base64": "iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAIAAAAmKNuZAAAACXBIWXMAAA7EAAAOxAGVKw4bAAABMUlEQVRIid2VMY6FIBCGeZt3AEs76SydG8gNfEfAe3EIPYEaMNFOOwsToaKx8wBuoUvMk1WzMXnJ/o1kZvhwZjLwmOcZ3aevG1kfxaVpKqW8DZckySnusbSiKIo8z60RABBFEUIojmOEEMZ4sRNCwjB8C34uH8/z9r5FruuadRAEAGC27INXHMbYHHsgACCEHEXMl8U511ofx1hwWmshxPVjtrJ0tus6xthp4lattWvbtmkagzPusiz7vrfuBIAgCOy4NfOftXFv7W+y2/f5Z1lGKf1b7eyt4JzfhttKCDFN03XcycwyxsZxPI6xtEIptR1v13V931/WdV0rpfY7Mcb7OVtxUsrtFQAABldVleM4exwhxDK2x7WglA7DcFvtXq+X9dd+03rf3aV/8/R8APcNEp8o1LeqNoEAAAAASUVORK5CYII="
+                            },
+                            {
+                                "id": "0,2,0,2",
+                                "type": 4,
+                                "elements": " is intended for setting the ",
+                                "format_id": "44d2542c-5977-4ae8-a93a-c5cf970e58ae"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "0,2,1",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,2,1,0",
+                                "type": 4,
+                                "elements": "parameters for calculating expressions and the document language. The set of built-in variables, functions and dimensions used depends on the document language. The \"Recalculate document\" ",
+                                "format_id": "44d2542c-5977-4ae8-a93a-c5cf970e58ae"
+                            },
+                            {
+                                "id": "0,2,1,1",
+                                "type": 34,
+                                "elements": [],
+                                "image_base64": "iVBORw0KGgoAAAANSUhEUgAAABEAAAAXCAIAAABiVjOwAAAACXBIWXMAAA7EAAAOxAGVKw4bAAABOElEQVQ4jc2Tv6uCUBTHb/qgKf8DHUWdncUhjIbAf8DR1b/A3cFNXBqiwa29Bkfd2wryx6BLQw4qJILgafC9B9XLigeP9xkv58M593vuHQAAehPsXeF3zuFw0HU9juOmaZ5LAAAAu92OJElRFE3TPJ1O0MvVbJZlbbfb2Wzmed6rfQCgrmvbthmG0XU9TdO2be/73Dod+/1e07TJZLJcLvM8f8kBgPP57HmeIAiyLMdx/JLTEYahKIosyyZJ8n348eieVVWt12vHcWiaNk2ToqiHGXQcj0dFUXie32w2ZVn2ZY0QKopitVpJkkQQhOu60+l0NBrd1FzN5vv+YrGoqsowjPF4PBwOn++H47j5fJ5l2X0YP+QWBIGqqlEU9Vd3DAAAIdQ0DYZhOI73PZkvPp23+OM/9y+dCyZ6ksuSAqBKAAAAAElFTkSuQmCC"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "0,2,2",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,2,2,0",
+                                "type": 4,
+                                "elements": " button causes the calculation of all expressions in the document. The buttons for selecting the paragraph format, font, its size and style are equivalent to a regular editor.",
+                                "format_id": "44d2542c-5977-4ae8-a93a-c5cf970e58ae"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,3",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,3,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,3,0,0",
+                                "type": 4,
+                                "elements": "Mathematical expressions panel",
+                                "format_id": "05c2df16-97c8-4d36-8750-99703cb61226"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Header 4",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,4",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,4,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,4,0,0",
+                                "type": 34,
+                                "elements": [],
+                                "image_base64": "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"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,5",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,5,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,5,0,0",
+                                "type": 4,
+                                "elements": "It is intended for editing mathematical expressions and calculating them.",
+                                "format_id": "44d2542c-5977-4ae8-a93a-c5cf970e58ae"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,6",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,6,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,6,0,0",
+                                "type": 4,
+                                "elements": "Documents panel",
+                                "format_id": "05c2df16-97c8-4d36-8750-99703cb61226"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Header 4",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,7",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,7,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,7,0,0",
+                                "type": 4,
+                                "elements": "It's located on the left and contains documents of the current user. Appears after logging in. When you click on a document, it is loaded, and mathematical expressions in it are calculated.",
+                                "format_id": "44d2542c-5977-4ae8-a93a-c5cf970e58ae"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,8",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,8,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,8,0,0",
+                                "type": 4,
+                                "elements": "Library panel",
+                                "format_id": "05c2df16-97c8-4d36-8750-99703cb61226"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Header 4",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,9",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,9,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,9,0,0",
+                                "type": 4,
+                                "elements": "It's located on the left and contains examples of use, reference and various auxiliary information. A document downloaded from the library can be edited, but you can only save it to your documents after ",
+                                "format_id": "44d2542c-5977-4ae8-a93a-c5cf970e58ae"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "0,9,1",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,9,1,0",
+                                "type": 4,
+                                "elements": "logging in.",
+                                "format_id": "44d2542c-5977-4ae8-a93a-c5cf970e58ae"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,10",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,10,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,10,0,0",
+                                "type": 4,
+                                "elements": "Identifiers Panel",
+                                "format_id": "05c2df16-97c8-4d36-8750-99703cb61226"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Header 4",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,11",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,11,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,11,0,0",
+                                "type": 4,
+                                "elements": "It contains built-in and user-defined variables, functions, and units, sorted alphabetically and by physical meaning (unit). User-defined identifiers appear in this panel when you enter them in the current ",
+                                "format_id": "44d2542c-5977-4ae8-a93a-c5cf970e58ae"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "0,11,1",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,11,1,0",
+                                "type": 4,
+                                "elements": "document.",
+                                "format_id": "44d2542c-5977-4ae8-a93a-c5cf970e58ae"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            }
+        ]
+    },
+    "caret": {
+        "id": "0,0,0,0"
+    },
+    "selection": []
+}

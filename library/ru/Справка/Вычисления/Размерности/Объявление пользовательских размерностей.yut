@@ -70,6 +70,102 @@
     },
     "string_formats": [
         {
+            "id": "ed8fd04b-1a4b-4e04-aa26-74a20ea258f2",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "6c50aadd-d096-430a-a6bc-c81921830232",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "d98e59b1-0c6a-440e-8bd6-be1c2cd0a149",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "0658d1b8-a8f7-4d78-8131-9edaaedc3085",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "6458cac8-16df-4cb2-9be1-e2c978c3bce4",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "6eacac9f-ea5e-421c-af9c-33118fe06251",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "0b49af4c-081b-44d6-bedc-4d32481344e5",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "eeab95aa-7f90-4f78-9e42-98fb148e21f3",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
             "id": "fa94a7b6-8887-45a4-b28a-ed7dcdf6e8dc",
             "family": "Arial",
             "size": 14,
@@ -177,7 +273,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "fa94a7b6-8887-45a4-b28a-ed7dcdf6e8dc"
+            "default_string_format": "ed8fd04b-1a4b-4e04-aa26-74a20ea258f2"
         },
         {
             "name": "Header 1",
@@ -189,7 +285,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "91e3f4b4-6435-4b9d-a192-f54edea4fa86"
+            "default_string_format": "6c50aadd-d096-430a-a6bc-c81921830232"
         },
         {
             "name": "Header 2",
@@ -201,7 +297,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "3f209351-dd85-44dc-a5d7-ec83b0a23957"
+            "default_string_format": "d98e59b1-0c6a-440e-8bd6-be1c2cd0a149"
         },
         {
             "name": "Header 3",
@@ -213,7 +309,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "8cda3b5a-2608-4458-bf88-46d37d98e41e"
+            "default_string_format": "0658d1b8-a8f7-4d78-8131-9edaaedc3085"
         },
         {
             "name": "Header 4",
@@ -225,7 +321,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "d7bc9520-5947-46f4-a457-07ea259e68eb"
+            "default_string_format": "6458cac8-16df-4cb2-9be1-e2c978c3bce4"
         },
         {
             "name": "Example",
@@ -237,7 +333,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "3973bc01-15c6-47f5-8af7-e7c6e2cdbcc4"
+            "default_string_format": "6eacac9f-ea5e-421c-af9c-33118fe06251"
         },
         {
             "name": "Monospace",
@@ -249,7 +345,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "581b282d-094e-4cf2-a513-1d5c4a849d27"
+            "default_string_format": "0b49af4c-081b-44d6-bedc-4d32481344e5"
         },
         {
             "name": "Code",
@@ -261,7 +357,7 @@
             "indent_first_line": 0,
             "spacing_before": 2,
             "spacing_after": 2,
-            "default_string_format": "a0724329-34dc-49d4-b2c4-450bec2487b6"
+            "default_string_format": "eeab95aa-7f90-4f78-9e42-98fb148e21f3"
         }
     ],
     "text": {
@@ -279,7 +375,7 @@
                             {
                                 "id": "0,0,0,0",
                                 "type": 4,
-                                "elements": "Ютово содержит большое количество встроенных размерностей. Однако, иногда их не хватает. ",
+                                "elements": "Ютово содержит большое количество встроенных размерностей. Однако, иногда их не хватает. Пользовательские размерности образуются из встроенных путем их объявления в ",
                                 "format_id": "fa94a7b6-8887-45a4-b28a-ed7dcdf6e8dc"
                             }
                         ]
@@ -291,29 +387,17 @@
                             {
                                 "id": "0,0,1,0",
                                 "type": 4,
-                                "elements": "Пользовательские размерности образуются из встроенных путем их объявления в документе. ",
-                                "format_id": "fa94a7b6-8887-45a4-b28a-ed7dcdf6e8dc"
-                            }
-                        ]
-                    },
-                    {
-                        "id": "0,0,2",
-                        "type": 3,
-                        "elements": [
-                            {
-                                "id": "0,0,2,0",
-                                "type": 4,
-                                "elements": "Их объявление производится кнопкой ",
+                                "elements": "документе. Их объявление производится кнопкой ",
                                 "format_id": "fa94a7b6-8887-45a4-b28a-ed7dcdf6e8dc"
                             },
                             {
-                                "id": "0,0,2,1",
+                                "id": "0,0,1,1",
                                 "type": 34,
                                 "elements": [],
                                 "image_base64": "iVBORw0KGgoAAAANSUhEUgAAAA8AAAAQCAIAAABGNLJTAAAACXBIWXMAAA7EAAAOxAGVKw4bAAABIElEQVQokdXRv+qCUBwF8Hu/9xbY4D9y08VFJJdwEqd8gMgHcHBxbehJ3HoPBx/AzQrfQAgFFwUJAiXt/oZeoKXhd+bPcDgHM8bQ14Hv6Y81ZYw9Ho/b7VZVFQCoqrrZbNbrNQAghF6v1/P5HMdRURQAoMMwZFl2Pp/zPCeE2LZ9OBwcx9E0jVJa13VZljzPy7IMALiua9/37/f7NE3v93scRwDwfT8IAkEQ0jS9Xq+n08l13eVyibIssywrjuPL5ZIkSRiGq9WK4zhJkmRZVhRlv9+3bTvPM2OMHI9HwzA8z9N1/VN6u932fd91HaV0t9tFUWSaJiEEIYS7rpvnWRTFxWKBEJqmqe/7oiiapsEY67puWZYgCJ9N8D/98pf6D3AGd8nX8DK+AAAAAElFTkSuQmCC"
                             },
                             {
-                                "id": "0,0,2,2",
+                                "id": "0,0,1,2",
                                 "type": 4,
                                 "elements": " или клавишей \"~\".",
                                 "format_id": "fa94a7b6-8887-45a4-b28a-ed7dcdf6e8dc"
@@ -355,7 +439,7 @@
                             {
                                 "id": "0,2,0,0",
                                 "type": 4,
-                                "elements": "Здесь объявлена размерность \"куб_м\", равная пятидесяти кубическим метрам. При вычислении ",
+                                "elements": "Здесь объявлена размерность \"куб_м\", равная пятидесяти кубическим метрам. При вычислении она подставляется в результат автоматически, поскольку в данном примере является ",
                                 "format_id": "fa94a7b6-8887-45a4-b28a-ed7dcdf6e8dc"
                             }
                         ]
@@ -367,19 +451,7 @@
                             {
                                 "id": "0,2,1,0",
                                 "type": 4,
-                                "elements": "она подставляется в результат автоматически, поскольку в данном примере является наиболее ",
-                                "format_id": "fa94a7b6-8887-45a4-b28a-ed7dcdf6e8dc"
-                            }
-                        ]
-                    },
-                    {
-                        "id": "0,2,2",
-                        "type": 3,
-                        "elements": [
-                            {
-                                "id": "0,2,2,0",
-                                "type": 4,
-                                "elements": "простой.",
+                                "elements": "наиболее простой.",
                                 "format_id": "fa94a7b6-8887-45a4-b28a-ed7dcdf6e8dc"
                             }
                         ]
@@ -471,7 +543,7 @@
                                                                                         "id": "0,3,0,0,0,0,0,2,1,2,0",
                                                                                         "type": 8,
                                                                                         "elements": "3",
-                                                                                        "format_id": "581b282d-094e-4cf2-a513-1d5c4a849d27",
+                                                                                        "format_id": "0b49af4c-081b-44d6-bedc-4d32481344e5",
                                                                                         "can_merge": true
                                                                                     }
                                                                                 ]
@@ -560,7 +632,7 @@
                                                                                         "id": "0,3,0,0,1,0,0,2,1,2,0",
                                                                                         "type": 8,
                                                                                         "elements": "3",
-                                                                                        "format_id": "581b282d-094e-4cf2-a513-1d5c4a849d27",
+                                                                                        "format_id": "0b49af4c-081b-44d6-bedc-4d32481344e5",
                                                                                         "can_merge": true
                                                                                     }
                                                                                 ]
@@ -678,7 +750,7 @@
         ]
     },
     "caret": {
-        "id": "0,2,0,45"
+        "id": "0,0,0,0"
     },
     "selection": []
 }

@@ -70,6 +70,102 @@
     },
     "string_formats": [
         {
+            "id": "861e13de-f94f-4b59-b05a-b5bc6567165f",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "48e72aed-3b63-46d2-b3e8-0b3538ea33f2",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "a998f08a-d7f0-40ae-b882-716ff697d908",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "3a1891fa-8e9f-4ad8-b5a6-45a6238b95fc",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "e9e21727-d5a8-491f-a1be-1923a6fc243f",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "45f99006-e5ae-4076-ba01-958358a9e7eb",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "94175044-fafb-474b-856b-3475d2af8e10",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "39002f89-11d8-4295-b04c-77f3da1903af",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
             "id": "a9b3e40b-840b-4d31-bba2-c59fbc2f4d2d",
             "family": "Arial",
             "size": 14,
@@ -741,7 +837,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "a9b3e40b-840b-4d31-bba2-c59fbc2f4d2d"
+            "default_string_format": "861e13de-f94f-4b59-b05a-b5bc6567165f"
         },
         {
             "name": "Header 1",
@@ -753,7 +849,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "543c420c-2b6e-4722-a469-39fdeb3aea22"
+            "default_string_format": "48e72aed-3b63-46d2-b3e8-0b3538ea33f2"
         },
         {
             "name": "Header 2",
@@ -765,7 +861,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "71cbd99b-322e-44ac-8bf8-114481c4b3cf"
+            "default_string_format": "a998f08a-d7f0-40ae-b882-716ff697d908"
         },
         {
             "name": "Header 3",
@@ -777,7 +873,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "5be2a151-3595-4ca1-991c-a8568df424e5"
+            "default_string_format": "3a1891fa-8e9f-4ad8-b5a6-45a6238b95fc"
         },
         {
             "name": "Header 4",
@@ -789,7 +885,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "d9b9f771-7596-45f1-b127-55a6ad425735"
+            "default_string_format": "e9e21727-d5a8-491f-a1be-1923a6fc243f"
         },
         {
             "name": "Example",
@@ -801,7 +897,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "aa112b06-0e63-4141-a8a9-fd9e1e5e99e1"
+            "default_string_format": "45f99006-e5ae-4076-ba01-958358a9e7eb"
         },
         {
             "name": "Monospace",
@@ -813,7 +909,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "8233899b-2150-4877-9f14-18e5439f2f86"
+            "default_string_format": "94175044-fafb-474b-856b-3475d2af8e10"
         },
         {
             "name": "Code",
@@ -825,7 +921,7 @@
             "indent_first_line": 0,
             "spacing_before": 2,
             "spacing_after": 2,
-            "default_string_format": "00f51db3-e974-41a6-9685-eec545e14bc3"
+            "default_string_format": "39002f89-11d8-4295-b04c-77f3da1903af"
         }
     ],
     "text": {
@@ -1031,7 +1127,7 @@
                             {
                                 "id": "0,8,0,0",
                                 "type": 4,
-                                "elements": "Введите: \"7.89*10[Ctrl+Shift+^]5\".",
+                                "elements": "Введите: \"7.89*10[Ctrl+Shift+P]5\".",
                                 "format_id": "121e01f8-379d-412d-bca8-203e6d5591bd"
                             }
                         ]
@@ -1081,21 +1177,6 @@
                                                                 "id": "0,9,0,1,0,0,1,0",
                                                                 "type": 10,
                                                                 "elements": []
-                                                            },
-                                                            {
-                                                                "id": "0,9,0,1,0,0,1,1",
-                                                                "type": 10,
-                                                                "elements": []
-                                                            },
-                                                            {
-                                                                "id": "0,9,0,1,0,0,1,2",
-                                                                "type": 10,
-                                                                "elements": []
-                                                            },
-                                                            {
-                                                                "id": "0,9,0,1,0,0,1,3",
-                                                                "type": 10,
-                                                                "elements": []
                                                             }
                                                         ],
                                                         "symbol": "·"
@@ -1130,7 +1211,7 @@
                                                                         "id": "0,9,0,1,0,0,2,2,0",
                                                                         "type": 8,
                                                                         "elements": "5",
-                                                                        "format_id": "8233899b-2150-4877-9f14-18e5439f2f86",
+                                                                        "format_id": "94175044-fafb-474b-856b-3475d2af8e10",
                                                                         "can_merge": true
                                                                     }
                                                                 ]
@@ -1183,19 +1264,7 @@
                             {
                                 "id": "0,11,0,0",
                                 "type": 4,
-                                "elements": "Целые числа не имеют дробной части. Они могут быть двоичной, десятичной, восьмеричной, либо ",
-                                "format_id": "eefebd6c-6f94-4f91-a429-95a7d74c5dde"
-                            }
-                        ]
-                    },
-                    {
-                        "id": "0,11,1",
-                        "type": 3,
-                        "elements": [
-                            {
-                                "id": "0,11,1,0",
-                                "type": 4,
-                                "elements": "шестнадцатеричной нотации. Над ними можно производить логические операции.",
+                                "elements": "Целые числа не имеют дробной части. Они могут быть двоичной, десятичной, восьмеричной, либо шестнадцатеричной нотации. Над ними можно производить логические операции.",
                                 "format_id": "eefebd6c-6f94-4f91-a429-95a7d74c5dde"
                             }
                         ]
@@ -1215,7 +1284,7 @@
                             {
                                 "id": "0,12,0,0",
                                 "type": 4,
-                                "elements": "Присвоение нотации числу осуществляется операцией (клавиша \"#\"), либо выбором в математической панели.",
+                                "elements": "Присвоение нотации числу осуществляется операцией (клавиши [Ctrl+Shift+S]), либо выбором в математической панели.",
                                 "format_id": "eefebd6c-6f94-4f91-a429-95a7d74c5dde"
                             }
                         ]
@@ -1255,7 +1324,7 @@
                             {
                                 "id": "0,14,0,0",
                                 "type": 4,
-                                "elements": "Вводите: \"10101110[Ctrl+Shift+#]bin\".",
+                                "elements": "Вводите: \"10101110[Ctrl+Shift+S]bin\".",
                                 "format_id": "eefebd6c-6f94-4f91-a429-95a7d74c5dde"
                             }
                         ]
@@ -1320,7 +1389,7 @@
                                                                         "id": "0,15,0,1,0,0,0,2,0",
                                                                         "type": 8,
                                                                         "elements": "bin",
-                                                                        "format_id": "8233899b-2150-4877-9f14-18e5439f2f86",
+                                                                        "format_id": "94175044-fafb-474b-856b-3475d2af8e10",
                                                                         "can_merge": true
                                                                     }
                                                                 ]
@@ -1373,7 +1442,7 @@
                             {
                                 "id": "0,17,0,0",
                                 "type": 4,
-                                "elements": "Дробные числа представлены обыкновенной дробью. Ввод их производится с использованием символа деления ",
+                                "elements": "Дробные числа представлены обыкновенной дробью. Ввод их производится с использованием символа деления (клавиша \"/\"), либо выбором этого символа в математической панели. Целую ",
                                 "format_id": "eefebd6c-6f94-4f91-a429-95a7d74c5dde"
                             }
                         ]
@@ -1385,19 +1454,7 @@
                             {
                                 "id": "0,17,1,0",
                                 "type": 4,
-                                "elements": "(клавиша \"/\"), либо выбором этого символа в математической панели. Целую часть дроби, при ее наличии, можно ",
-                                "format_id": "eefebd6c-6f94-4f91-a429-95a7d74c5dde"
-                            }
-                        ]
-                    },
-                    {
-                        "id": "0,17,2",
-                        "type": 3,
-                        "elements": [
-                            {
-                                "id": "0,17,2,0",
-                                "type": 4,
-                                "elements": "вводить слитно с самой дробью, как это показано в следующем примере, так и через символ сложения.",
+                                "elements": "часть дроби, при ее наличии, можно вводить слитно с самой дробью, как это показано в следующем примере, так и через символ сложения.",
                                 "format_id": "eefebd6c-6f94-4f91-a429-95a7d74c5dde"
                             }
                         ]
@@ -1562,7 +1619,7 @@
                             {
                                 "id": "0,22,0,0",
                                 "type": 4,
-                                "elements": "Комплексные числа имеют действительную и мнимую части. Для обозначения мнимой части имеется константа \"j\". ",
+                                "elements": "Комплексные числа имеют действительную и мнимую части. Для обозначения мнимой части имеется константа \"j\". Символ \"j\", как и любая переменная, должен вводиться путем явного ",
                                 "format_id": "eefebd6c-6f94-4f91-a429-95a7d74c5dde"
                             }
                         ]
@@ -1574,19 +1631,7 @@
                             {
                                 "id": "0,22,1,0",
                                 "type": 4,
-                                "elements": "Символ \"j\", как и любая переменная, должен вводиться путем явного умножения на число, либо через пробел - ",
-                                "format_id": "eefebd6c-6f94-4f91-a429-95a7d74c5dde"
-                            }
-                        ]
-                    },
-                    {
-                        "id": "0,22,2",
-                        "type": 3,
-                        "elements": [
-                            {
-                                "id": "0,22,2,0",
-                                "type": 4,
-                                "elements": "неявное умножение.",
+                                "elements": "умножения на число, либо через пробел - неявное умножение.",
                                 "format_id": "eefebd6c-6f94-4f91-a429-95a7d74c5dde"
                             }
                         ]
@@ -1686,6 +1731,11 @@
                                                                 "id": "0,25,0,1,0,0,1,2",
                                                                 "type": 10,
                                                                 "elements": []
+                                                            },
+                                                            {
+                                                                "id": "0,25,0,1,0,0,1,3",
+                                                                "type": 10,
+                                                                "elements": []
                                                             }
                                                         ],
                                                         "symbol": "+"
@@ -1722,7 +1772,7 @@
         ]
     },
     "caret": {
-        "id": "0,0,0,0"
+        "id": "0,25,2"
     },
     "selection": []
 }

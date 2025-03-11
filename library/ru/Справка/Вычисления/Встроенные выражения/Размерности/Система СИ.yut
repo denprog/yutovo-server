@@ -70,6 +70,198 @@
     },
     "string_formats": [
         {
+            "id": "1e774b55-8581-4366-b3d9-2c9381c2325c",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "1a846728-5ad6-4b4c-b48b-2649ac148edc",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "75ee6f4f-f488-46e0-afc3-b5d77785bd63",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "3f7c934f-6d14-411c-a60d-0869754e197c",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "65ed78e4-ee27-4823-ba3d-230bfa2c3273",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "9ea09dfe-8216-44bd-8e68-d176bb0c061b",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "eeafbe63-2ba2-4fcd-a4a9-ee98c4d67b0e",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "2e74215e-f71b-4cdc-96e5-e0685561793c",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "b5339607-b1ac-49cb-a242-188aa0597781",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "895f81e1-323e-4bda-aba8-18a11a6dbc81",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "86c4be81-d6db-4978-b110-b0758b4a8f8d",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "2e0f2fcb-dd5d-451d-ab1c-7d4b07415d29",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "5ba1336b-a582-437e-aa65-adfc476dfe43",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "c4208134-3ae3-4502-9607-0aced3820f50",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "6961f7c9-703b-4369-b6fe-c9a960229bb1",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "c37ae7b8-da4f-4d68-b7fa-9458bc6c3fb8",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
             "id": "253e3335-c46b-45c8-8c15-3c7352baca5a",
             "family": "Arial",
             "size": 14,
@@ -1773,7 +1965,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "253e3335-c46b-45c8-8c15-3c7352baca5a"
+            "default_string_format": "1e774b55-8581-4366-b3d9-2c9381c2325c"
         },
         {
             "name": "Header 1",
@@ -1785,7 +1977,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "45f2e128-ec8d-40e5-b398-7b42b9149f43"
+            "default_string_format": "1a846728-5ad6-4b4c-b48b-2649ac148edc"
         },
         {
             "name": "Header 2",
@@ -1797,7 +1989,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "793c94c1-9e4c-4a6f-bcaa-3bc49b03241c"
+            "default_string_format": "75ee6f4f-f488-46e0-afc3-b5d77785bd63"
         },
         {
             "name": "Header 3",
@@ -1809,7 +2001,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "035087d6-c9ee-41d8-85a7-27ac4b02a365"
+            "default_string_format": "3f7c934f-6d14-411c-a60d-0869754e197c"
         },
         {
             "name": "Header 4",
@@ -1821,7 +2013,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "e82d949a-a4d7-43b3-ac8f-98efe852114e"
+            "default_string_format": "65ed78e4-ee27-4823-ba3d-230bfa2c3273"
         },
         {
             "name": "Example",
@@ -1833,7 +2025,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "17912247-ec78-4ff5-b229-3341af417aab"
+            "default_string_format": "9ea09dfe-8216-44bd-8e68-d176bb0c061b"
         },
         {
             "name": "Monospace",
@@ -1845,7 +2037,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "7025e0d1-fbfa-487f-afcd-cdc45d1c6ae7"
+            "default_string_format": "eeafbe63-2ba2-4fcd-a4a9-ee98c4d67b0e"
         },
         {
             "name": "Code",
@@ -1857,7 +2049,7 @@
             "indent_first_line": 0,
             "spacing_before": 2,
             "spacing_after": 2,
-            "default_string_format": "38e141ee-1cbc-455e-8695-04dca3590c41"
+            "default_string_format": "2e74215e-f71b-4cdc-96e5-e0685561793c"
         }
     ],
     "text": {
@@ -3695,7 +3887,7 @@
                             {
                                 "id": "0,91,0,0",
                                 "type": 4,
-                                "elements": "• мкВ - микровольт",
+                                "elements": "• пВ - пиковольт",
                                 "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
                             }
                         ]
@@ -3715,7 +3907,7 @@
                             {
                                 "id": "0,92,0,0",
                                 "type": 4,
-                                "elements": "• мВ - милливольт",
+                                "elements": "• нВ - нановольт",
                                 "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
                             }
                         ]
@@ -3735,7 +3927,7 @@
                             {
                                 "id": "0,93,0,0",
                                 "type": 4,
-                                "elements": "• кВ - киловольт",
+                                "elements": "• мкВ - микровольт",
                                 "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
                             }
                         ]
@@ -3755,7 +3947,7 @@
                             {
                                 "id": "0,94,0,0",
                                 "type": 4,
-                                "elements": "• МВ - мегавольт",
+                                "elements": "• мВ - милливольт",
                                 "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
                             }
                         ]
@@ -3775,13 +3967,13 @@
                             {
                                 "id": "0,95,0,0",
                                 "type": 4,
-                                "elements": "Электрическое сопротивление",
-                                "format_id": "6777ae47-44cf-4281-84d0-e33c9e095d2d"
+                                "elements": "• кВ - киловольт",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
                             }
                         ]
                     }
                 ],
-                "format_name": "Header 4",
+                "format_name": "Text body",
                 "format_alignment": 0
             },
             {
@@ -3795,7 +3987,7 @@
                             {
                                 "id": "0,96,0,0",
                                 "type": 4,
-                                "elements": "• Ом - ом",
+                                "elements": "• МВ - мегавольт",
                                 "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
                             }
                         ]
@@ -3815,13 +4007,13 @@
                             {
                                 "id": "0,97,0,0",
                                 "type": 4,
-                                "elements": "• мкОм - микроом",
-                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                                "elements": "Электрическое сопротивление",
+                                "format_id": "6777ae47-44cf-4281-84d0-e33c9e095d2d"
                             }
                         ]
                     }
                 ],
-                "format_name": "Text body",
+                "format_name": "Header 4",
                 "format_alignment": 0
             },
             {
@@ -3835,7 +4027,7 @@
                             {
                                 "id": "0,98,0,0",
                                 "type": 4,
-                                "elements": "• мОм - миллиом",
+                                "elements": "• Ом - ом",
                                 "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
                             }
                         ]
@@ -3855,7 +4047,7 @@
                             {
                                 "id": "0,99,0,0",
                                 "type": 4,
-                                "elements": "• кОм - килоом",
+                                "elements": "• мкОм - микроом",
                                 "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
                             }
                         ]
@@ -3875,7 +4067,7 @@
                             {
                                 "id": "0,100,0,0",
                                 "type": 4,
-                                "elements": "• МОм - мегаом",
+                                "elements": "• мОм - миллиом",
                                 "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
                             }
                         ]
@@ -3895,13 +4087,13 @@
                             {
                                 "id": "0,101,0,0",
                                 "type": 4,
-                                "elements": "Электроёмкость",
-                                "format_id": "6777ae47-44cf-4281-84d0-e33c9e095d2d"
+                                "elements": "• кОм - килоом",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
                             }
                         ]
                     }
                 ],
-                "format_name": "Header 4",
+                "format_name": "Text body",
                 "format_alignment": 0
             },
             {
@@ -3915,7 +4107,7 @@
                             {
                                 "id": "0,102,0,0",
                                 "type": 4,
-                                "elements": "• Ф - фарад",
+                                "elements": "• МОм - мегаом",
                                 "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
                             }
                         ]
@@ -3935,13 +4127,13 @@
                             {
                                 "id": "0,103,0,0",
                                 "type": 4,
-                                "elements": "• пФ - пикофарад",
-                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                                "elements": "Электроёмкость",
+                                "format_id": "6777ae47-44cf-4281-84d0-e33c9e095d2d"
                             }
                         ]
                     }
                 ],
-                "format_name": "Text body",
+                "format_name": "Header 4",
                 "format_alignment": 0
             },
             {
@@ -3955,7 +4147,7 @@
                             {
                                 "id": "0,104,0,0",
                                 "type": 4,
-                                "elements": "• нФ - нанофарад",
+                                "elements": "• Ф - фарад",
                                 "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
                             }
                         ]
@@ -3975,7 +4167,7 @@
                             {
                                 "id": "0,105,0,0",
                                 "type": 4,
-                                "elements": "• мкФ - микрофарад",
+                                "elements": "• пФ - пикофарад",
                                 "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
                             }
                         ]
@@ -3995,7 +4187,7 @@
                             {
                                 "id": "0,106,0,0",
                                 "type": 4,
-                                "elements": "• мФ - миллифарад",
+                                "elements": "• нФ - нанофарад",
                                 "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
                             }
                         ]
@@ -4015,13 +4207,13 @@
                             {
                                 "id": "0,107,0,0",
                                 "type": 4,
-                                "elements": "Магнитный поток",
-                                "format_id": "6777ae47-44cf-4281-84d0-e33c9e095d2d"
+                                "elements": "• мкФ - микрофарад",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
                             }
                         ]
                     }
                 ],
-                "format_name": "Header 4",
+                "format_name": "Text body",
                 "format_alignment": 0
             },
             {
@@ -4035,7 +4227,7 @@
                             {
                                 "id": "0,108,0,0",
                                 "type": 4,
-                                "elements": "• Вб - вебер",
+                                "elements": "• мФ - миллифарад",
                                 "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
                             }
                         ]
@@ -4055,13 +4247,13 @@
                             {
                                 "id": "0,109,0,0",
                                 "type": 4,
-                                "elements": "• мкВб - микровебер",
-                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                                "elements": "Магнитный поток",
+                                "format_id": "6777ae47-44cf-4281-84d0-e33c9e095d2d"
                             }
                         ]
                     }
                 ],
-                "format_name": "Text body",
+                "format_name": "Header 4",
                 "format_alignment": 0
             },
             {
@@ -4075,7 +4267,7 @@
                             {
                                 "id": "0,110,0,0",
                                 "type": 4,
-                                "elements": "• мВб - милливебер",
+                                "elements": "• Вб - вебер",
                                 "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
                             }
                         ]
@@ -4095,7 +4287,7 @@
                             {
                                 "id": "0,111,0,0",
                                 "type": 4,
-                                "elements": "• кВб - киловебер",
+                                "elements": "• мкВб - микровебер",
                                 "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
                             }
                         ]
@@ -4115,7 +4307,7 @@
                             {
                                 "id": "0,112,0,0",
                                 "type": 4,
-                                "elements": "• МВб - мегавебер",
+                                "elements": "• мВб - милливебер",
                                 "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
                             }
                         ]
@@ -4135,13 +4327,13 @@
                             {
                                 "id": "0,113,0,0",
                                 "type": 4,
-                                "elements": "Магнитная индукция",
-                                "format_id": "6777ae47-44cf-4281-84d0-e33c9e095d2d"
+                                "elements": "• кВб - киловебер",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
                             }
                         ]
                     }
                 ],
-                "format_name": "Header 4",
+                "format_name": "Text body",
                 "format_alignment": 0
             },
             {
@@ -4155,7 +4347,7 @@
                             {
                                 "id": "0,114,0,0",
                                 "type": 4,
-                                "elements": "• Тл - тесла",
+                                "elements": "• МВб - мегавебер",
                                 "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
                             }
                         ]
@@ -4175,13 +4367,13 @@
                             {
                                 "id": "0,115,0,0",
                                 "type": 4,
-                                "elements": "• мкТл - микротексла",
-                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                                "elements": "Магнитная индукция",
+                                "format_id": "6777ae47-44cf-4281-84d0-e33c9e095d2d"
                             }
                         ]
                     }
                 ],
-                "format_name": "Text body",
+                "format_name": "Header 4",
                 "format_alignment": 0
             },
             {
@@ -4195,7 +4387,7 @@
                             {
                                 "id": "0,116,0,0",
                                 "type": 4,
-                                "elements": "• мТл - миллитесла",
+                                "elements": "• Тл - тесла",
                                 "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
                             }
                         ]
@@ -4215,7 +4407,7 @@
                             {
                                 "id": "0,117,0,0",
                                 "type": 4,
-                                "elements": "• кТл - килотесла",
+                                "elements": "• мкТл - микротексла",
                                 "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
                             }
                         ]
@@ -4235,7 +4427,7 @@
                             {
                                 "id": "0,118,0,0",
                                 "type": 4,
-                                "elements": "• МТл - мегатесла",
+                                "elements": "• мТл - миллитесла",
                                 "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
                             }
                         ]
@@ -4255,13 +4447,13 @@
                             {
                                 "id": "0,119,0,0",
                                 "type": 4,
-                                "elements": "Индуктивность",
-                                "format_id": "6777ae47-44cf-4281-84d0-e33c9e095d2d"
+                                "elements": "• кТл - килотесла",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
                             }
                         ]
                     }
                 ],
-                "format_name": "Header 4",
+                "format_name": "Text body",
                 "format_alignment": 0
             },
             {
@@ -4275,7 +4467,7 @@
                             {
                                 "id": "0,120,0,0",
                                 "type": 4,
-                                "elements": "• Гн - генри",
+                                "elements": "• МТл - мегатесла",
                                 "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
                             }
                         ]
@@ -4295,13 +4487,13 @@
                             {
                                 "id": "0,121,0,0",
                                 "type": 4,
-                                "elements": "• пГн - пикогенри",
-                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                                "elements": "Индуктивность",
+                                "format_id": "6777ae47-44cf-4281-84d0-e33c9e095d2d"
                             }
                         ]
                     }
                 ],
-                "format_name": "Text body",
+                "format_name": "Header 4",
                 "format_alignment": 0
             },
             {
@@ -4315,7 +4507,7 @@
                             {
                                 "id": "0,122,0,0",
                                 "type": 4,
-                                "elements": "• нГн - наногенри",
+                                "elements": "• Гн - генри",
                                 "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
                             }
                         ]
@@ -4335,7 +4527,7 @@
                             {
                                 "id": "0,123,0,0",
                                 "type": 4,
-                                "elements": "• мкГн - микрогенри",
+                                "elements": "• пГн - пикогенри",
                                 "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
                             }
                         ]
@@ -4355,7 +4547,7 @@
                             {
                                 "id": "0,124,0,0",
                                 "type": 4,
-                                "elements": "• мГн - миллигенри",
+                                "elements": "• нГн - наногенри",
                                 "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
                             }
                         ]
@@ -4375,13 +4567,13 @@
                             {
                                 "id": "0,125,0,0",
                                 "type": 4,
-                                "elements": "Электрическая проводимость",
-                                "format_id": "6777ae47-44cf-4281-84d0-e33c9e095d2d"
+                                "elements": "• мкГн - микрогенри",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
                             }
                         ]
                     }
                 ],
-                "format_name": "Header 4",
+                "format_name": "Text body",
                 "format_alignment": 0
             },
             {
@@ -4395,7 +4587,7 @@
                             {
                                 "id": "0,126,0,0",
                                 "type": 4,
-                                "elements": "• См - сименс",
+                                "elements": "• мГн - миллигенри",
                                 "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
                             }
                         ]
@@ -4415,13 +4607,13 @@
                             {
                                 "id": "0,127,0,0",
                                 "type": 4,
-                                "elements": "• мкСм - микросименс",
-                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                                "elements": "Электрическая проводимость",
+                                "format_id": "6777ae47-44cf-4281-84d0-e33c9e095d2d"
                             }
                         ]
                     }
                 ],
-                "format_name": "Text body",
+                "format_name": "Header 4",
                 "format_alignment": 0
             },
             {
@@ -4435,7 +4627,7 @@
                             {
                                 "id": "0,128,0,0",
                                 "type": 4,
-                                "elements": "• мСм - миллисименс",
+                                "elements": "• См - сименс",
                                 "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
                             }
                         ]
@@ -4455,7 +4647,7 @@
                             {
                                 "id": "0,129,0,0",
                                 "type": 4,
-                                "elements": "• кСм - килосименс",
+                                "elements": "• мкСм - микросименс",
                                 "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
                             }
                         ]
@@ -4475,7 +4667,7 @@
                             {
                                 "id": "0,130,0,0",
                                 "type": 4,
-                                "elements": "• МСм - мегасименс",
+                                "elements": "• мСм - миллисименс",
                                 "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
                             }
                         ]
@@ -4495,13 +4687,13 @@
                             {
                                 "id": "0,131,0,0",
                                 "type": 4,
-                                "elements": "Поглощенная доза ионизирующего излучения",
-                                "format_id": "6777ae47-44cf-4281-84d0-e33c9e095d2d"
+                                "elements": "• кСм - килосименс",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
                             }
                         ]
                     }
                 ],
-                "format_name": "Header 4",
+                "format_name": "Text body",
                 "format_alignment": 0
             },
             {
@@ -4515,7 +4707,7 @@
                             {
                                 "id": "0,132,0,0",
                                 "type": 4,
-                                "elements": "• Гр - грэй",
+                                "elements": "• МСм - мегасименс",
                                 "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
                             }
                         ]
@@ -4535,13 +4727,13 @@
                             {
                                 "id": "0,133,0,0",
                                 "type": 4,
-                                "elements": "• мкГр - микрогрэй",
-                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                                "elements": "Поглощенная доза ионизирующего излучения",
+                                "format_id": "6777ae47-44cf-4281-84d0-e33c9e095d2d"
                             }
                         ]
                     }
                 ],
-                "format_name": "Text body",
+                "format_name": "Header 4",
                 "format_alignment": 0
             },
             {
@@ -4555,7 +4747,7 @@
                             {
                                 "id": "0,134,0,0",
                                 "type": 4,
-                                "elements": "• мГр - миллигрэй",
+                                "elements": "• Гр - грэй",
                                 "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
                             }
                         ]
@@ -4575,7 +4767,7 @@
                             {
                                 "id": "0,135,0,0",
                                 "type": 4,
-                                "elements": "• кГр - килогрэй",
+                                "elements": "• мкГр - микрогрэй",
                                 "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
                             }
                         ]
@@ -4595,7 +4787,7 @@
                             {
                                 "id": "0,136,0,0",
                                 "type": 4,
-                                "elements": "• МГр - мегагрэй",
+                                "elements": "• мГр - миллигрэй",
                                 "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
                             }
                         ]
@@ -4615,13 +4807,13 @@
                             {
                                 "id": "0,137,0,0",
                                 "type": 4,
-                                "elements": "Площадь",
-                                "format_id": "6777ae47-44cf-4281-84d0-e33c9e095d2d"
+                                "elements": "• кГр - килогрэй",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
                             }
                         ]
                     }
                 ],
-                "format_name": "Header 4",
+                "format_name": "Text body",
                 "format_alignment": 0
             },
             {
@@ -4635,7 +4827,7 @@
                             {
                                 "id": "0,138,0,0",
                                 "type": 4,
-                                "elements": "• ар - ар",
+                                "elements": "• МГр - мегагрэй",
                                 "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
                             }
                         ]
@@ -4655,13 +4847,13 @@
                             {
                                 "id": "0,139,0,0",
                                 "type": 4,
-                                "elements": "• га - гектар",
-                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                                "elements": "Площадь",
+                                "format_id": "6777ae47-44cf-4281-84d0-e33c9e095d2d"
                             }
                         ]
                     }
                 ],
-                "format_name": "Text body",
+                "format_name": "Header 4",
                 "format_alignment": 0
             },
             {
@@ -4675,13 +4867,13 @@
                             {
                                 "id": "0,140,0,0",
                                 "type": 4,
-                                "elements": "Объем",
-                                "format_id": "6777ae47-44cf-4281-84d0-e33c9e095d2d"
+                                "elements": "• ар - ар",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
                             }
                         ]
                     }
                 ],
-                "format_name": "Header 4",
+                "format_name": "Text body",
                 "format_alignment": 0
             },
             {
@@ -4695,7 +4887,7 @@
                             {
                                 "id": "0,141,0,0",
                                 "type": 4,
-                                "elements": "• л - литр",
+                                "elements": "• га - гектар",
                                 "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
                             }
                         ]
@@ -4715,13 +4907,13 @@
                             {
                                 "id": "0,142,0,0",
                                 "type": 4,
-                                "elements": "• мкл - микролитр",
-                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
+                                "elements": "Объем",
+                                "format_id": "6777ae47-44cf-4281-84d0-e33c9e095d2d"
                             }
                         ]
                     }
                 ],
-                "format_name": "Text body",
+                "format_name": "Header 4",
                 "format_alignment": 0
             },
             {
@@ -4735,7 +4927,7 @@
                             {
                                 "id": "0,143,0,0",
                                 "type": 4,
-                                "elements": "• мл - миллилитр",
+                                "elements": "• л - литр",
                                 "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
                             }
                         ]
@@ -4755,7 +4947,7 @@
                             {
                                 "id": "0,144,0,0",
                                 "type": 4,
-                                "elements": "• дл - децилитр",
+                                "elements": "• мкл - микролитр",
                                 "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
                             }
                         ]
@@ -4775,7 +4967,7 @@
                             {
                                 "id": "0,145,0,0",
                                 "type": 4,
-                                "elements": "• дал - декалитр",
+                                "elements": "• мл - миллилитр",
                                 "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
                             }
                         ]
@@ -4795,7 +4987,7 @@
                             {
                                 "id": "0,146,0,0",
                                 "type": 4,
-                                "elements": "• гл - гектолитр",
+                                "elements": "• дл - децилитр",
                                 "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
                             }
                         ]
@@ -4815,13 +5007,13 @@
                             {
                                 "id": "0,147,0,0",
                                 "type": 4,
-                                "elements": "Данные",
-                                "format_id": "6777ae47-44cf-4281-84d0-e33c9e095d2d"
+                                "elements": "• дал - декалитр",
+                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
                             }
                         ]
                     }
                 ],
-                "format_name": "Header 4",
+                "format_name": "Text body",
                 "format_alignment": 0
             },
             {
@@ -4835,87 +5027,7 @@
                             {
                                 "id": "0,148,0,0",
                                 "type": 4,
-                                "elements": "• байт - байт",
-                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
-                            }
-                        ]
-                    }
-                ],
-                "format_name": "Text body",
-                "format_alignment": 0
-            },
-            {
-                "id": "0,149",
-                "type": 2,
-                "elements": [
-                    {
-                        "id": "0,149,0",
-                        "type": 3,
-                        "elements": [
-                            {
-                                "id": "0,149,0,0",
-                                "type": 4,
-                                "elements": "• кбайт - кбайт",
-                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
-                            }
-                        ]
-                    }
-                ],
-                "format_name": "Text body",
-                "format_alignment": 0
-            },
-            {
-                "id": "0,150",
-                "type": 2,
-                "elements": [
-                    {
-                        "id": "0,150,0",
-                        "type": 3,
-                        "elements": [
-                            {
-                                "id": "0,150,0,0",
-                                "type": 4,
-                                "elements": "• Мбайт - Мбайт",
-                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
-                            }
-                        ]
-                    }
-                ],
-                "format_name": "Text body",
-                "format_alignment": 0
-            },
-            {
-                "id": "0,151",
-                "type": 2,
-                "elements": [
-                    {
-                        "id": "0,151,0",
-                        "type": 3,
-                        "elements": [
-                            {
-                                "id": "0,151,0,0",
-                                "type": 4,
-                                "elements": "• Гбайт - Гбайт",
-                                "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
-                            }
-                        ]
-                    }
-                ],
-                "format_name": "Text body",
-                "format_alignment": 0
-            },
-            {
-                "id": "0,152",
-                "type": 2,
-                "elements": [
-                    {
-                        "id": "0,152,0",
-                        "type": 3,
-                        "elements": [
-                            {
-                                "id": "0,152,0,0",
-                                "type": 4,
-                                "elements": "• Тбайт - Тбайт",
+                                "elements": "• гл - гектолитр",
                                 "format_id": "76c67feb-e6fd-414a-a36f-3926bf595ee7"
                             }
                         ]
