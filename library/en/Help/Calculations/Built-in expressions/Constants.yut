@@ -70,7 +70,7 @@
     },
     "string_formats": [
         {
-            "id": "75b4affa-00e0-4976-94f0-40d8a106ad0d",
+            "id": "49b93c00-ae4c-4ac9-a193-f0a3e766c4b2",
             "family": "Arial",
             "size": 14,
             "bold": false,
@@ -82,7 +82,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "56a7af62-78fe-4d81-a9a4-c56f0ec12fa7",
+            "id": "e94b9ba3-f16f-4048-9e63-7d7578c5fa8f",
             "family": "Arial",
             "size": 30,
             "bold": true,
@@ -94,7 +94,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "3d427c6a-c1fc-4c21-8233-52446c6317f4",
+            "id": "a1ae588b-d73c-47fc-9cef-fc3c13308f4c",
             "family": "Arial",
             "size": 26,
             "bold": true,
@@ -106,7 +106,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "5eb15a95-a5b9-43b2-b88c-d26f8f5954bd",
+            "id": "74053bc3-9088-4280-8e0e-80344901286a",
             "family": "Arial",
             "size": 22,
             "bold": true,
@@ -118,7 +118,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "61e09c81-caf3-439a-8f30-b5290ae9bb38",
+            "id": "2cd1026f-eeba-49e8-b25f-f67eb5419692",
             "family": "Arial",
             "size": 16,
             "bold": true,
@@ -130,7 +130,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "c064fb7a-8356-4b29-82ea-c6c13f9a4a78",
+            "id": "df776451-57dd-4907-b64d-d32dee563c5f",
             "family": "Arial",
             "size": 14,
             "bold": false,
@@ -142,7 +142,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "f870fd8f-84c4-4486-b318-aaacb5b29615",
+            "id": "33473772-15de-416b-85f6-a25c1628d27f",
             "family": "Courier New",
             "size": 12,
             "bold": false,
@@ -154,7 +154,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "8232acbe-e5cd-4fa7-a9ce-80536da5b364",
+            "id": "e13d8d15-e272-40f4-9ef6-f30e71e8ae84",
             "family": "Courier New",
             "size": 14,
             "bold": false,
@@ -1185,7 +1185,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "75b4affa-00e0-4976-94f0-40d8a106ad0d"
+            "default_string_format": "49b93c00-ae4c-4ac9-a193-f0a3e766c4b2"
         },
         {
             "name": "Header 1",
@@ -1197,7 +1197,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "56a7af62-78fe-4d81-a9a4-c56f0ec12fa7"
+            "default_string_format": "e94b9ba3-f16f-4048-9e63-7d7578c5fa8f"
         },
         {
             "name": "Header 2",
@@ -1209,7 +1209,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "3d427c6a-c1fc-4c21-8233-52446c6317f4"
+            "default_string_format": "a1ae588b-d73c-47fc-9cef-fc3c13308f4c"
         },
         {
             "name": "Header 3",
@@ -1221,7 +1221,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "5eb15a95-a5b9-43b2-b88c-d26f8f5954bd"
+            "default_string_format": "74053bc3-9088-4280-8e0e-80344901286a"
         },
         {
             "name": "Header 4",
@@ -1233,7 +1233,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "61e09c81-caf3-439a-8f30-b5290ae9bb38"
+            "default_string_format": "2cd1026f-eeba-49e8-b25f-f67eb5419692"
         },
         {
             "name": "Example",
@@ -1245,7 +1245,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "c064fb7a-8356-4b29-82ea-c6c13f9a4a78"
+            "default_string_format": "df776451-57dd-4907-b64d-d32dee563c5f"
         },
         {
             "name": "Monospace",
@@ -1257,7 +1257,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "f870fd8f-84c4-4486-b318-aaacb5b29615"
+            "default_string_format": "33473772-15de-416b-85f6-a25c1628d27f"
         },
         {
             "name": "Code",
@@ -1269,7 +1269,7 @@
             "indent_first_line": 0,
             "spacing_before": 2,
             "spacing_after": 2,
-            "default_string_format": "8232acbe-e5cd-4fa7-a9ce-80536da5b364"
+            "default_string_format": "e13d8d15-e272-40f4-9ef6-f30e71e8ae84"
         }
     ],
     "text": {
@@ -1287,8 +1287,8 @@
                             {
                                 "id": "0,0,0,0",
                                 "type": 4,
-                                "elements": "Эти пользовательские символы названы \"константами\" учитывая их физическое значение. Однако, ",
-                                "format_id": "ff4e2bcb-21f7-4546-96f8-98c892e5a619"
+                                "elements": "These custom symbols are called \"constants\" because of their physical meaning. However, they can also ",
+                                "format_id": "49b93c00-ae4c-4ac9-a193-f0a3e766c4b2"
                             }
                         ]
                     },
@@ -1299,8 +1299,8 @@
                             {
                                 "id": "0,0,1,0",
                                 "type": 4,
-                                "elements": "они также могут быть переопределены.",
-                                "format_id": "ff4e2bcb-21f7-4546-96f8-98c892e5a619"
+                                "elements": "be redefined.",
+                                "format_id": "49b93c00-ae4c-4ac9-a193-f0a3e766c4b2"
                             }
                         ]
                     }
@@ -1319,8 +1319,8 @@
                             {
                                 "id": "0,1,0,0",
                                 "type": 4,
-                                "elements": "Математические константы",
-                                "format_id": "39d8d686-ea60-41ff-8db5-327402fddad6"
+                                "elements": "Mathematical constants",
+                                "format_id": "2cd1026f-eeba-49e8-b25f-f67eb5419692"
                             }
                         ]
                     }
@@ -1339,8 +1339,8 @@
                             {
                                 "id": "0,2,0,0",
                                 "type": 4,
-                                "elements": "• pi - число пи",
-                                "format_id": "ff4e2bcb-21f7-4546-96f8-98c892e5a619"
+                                "elements": "• pi - pi",
+                                "format_id": "49b93c00-ae4c-4ac9-a193-f0a3e766c4b2"
                             }
                         ]
                     }
@@ -1359,8 +1359,8 @@
                             {
                                 "id": "0,3,0,0",
                                 "type": 4,
-                                "elements": "• e - число Эйлера",
-                                "format_id": "ff4e2bcb-21f7-4546-96f8-98c892e5a619"
+                                "elements": "• e - Euler number",
+                                "format_id": "49b93c00-ae4c-4ac9-a193-f0a3e766c4b2"
                             }
                         ]
                     }
@@ -1379,8 +1379,8 @@
                             {
                                 "id": "0,4,0,0",
                                 "type": 4,
-                                "elements": "• j - мнимое число",
-                                "format_id": "ff4e2bcb-21f7-4546-96f8-98c892e5a619"
+                                "elements": "• i - imaginary number",
+                                "format_id": "49b93c00-ae4c-4ac9-a193-f0a3e766c4b2"
                             }
                         ]
                     }
@@ -1399,8 +1399,8 @@
                             {
                                 "id": "0,5,0,0",
                                 "type": 4,
-                                "elements": "Физические константы",
-                                "format_id": "39d8d686-ea60-41ff-8db5-327402fddad6"
+                                "elements": "Physical constants",
+                                "format_id": "2cd1026f-eeba-49e8-b25f-f67eb5419692"
                             }
                         ]
                     }
@@ -1419,8 +1419,8 @@
                             {
                                 "id": "0,6,0,0",
                                 "type": 4,
-                                "elements": "• ск_св - скорость света",
-                                "format_id": "ff4e2bcb-21f7-4546-96f8-98c892e5a619"
+                                "elements": "• c - speed of light",
+                                "format_id": "49b93c00-ae4c-4ac9-a193-f0a3e766c4b2"
                             }
                         ]
                     }
@@ -1439,8 +1439,8 @@
                             {
                                 "id": "0,7,0,0",
                                 "type": 4,
-                                "elements": "• G - гравитационная постоянная",
-                                "format_id": "ff4e2bcb-21f7-4546-96f8-98c892e5a619"
+                                "elements": "• G - gravitational constant",
+                                "format_id": "49b93c00-ae4c-4ac9-a193-f0a3e766c4b2"
                             }
                         ]
                     }
@@ -1459,8 +1459,8 @@
                             {
                                 "id": "0,8,0,0",
                                 "type": 4,
-                                "elements": "• h - постоянная Планка",
-                                "format_id": "ff4e2bcb-21f7-4546-96f8-98c892e5a619"
+                                "elements": "• h - Planck constant",
+                                "format_id": "49b93c00-ae4c-4ac9-a193-f0a3e766c4b2"
                             }
                         ]
                     }
@@ -1479,8 +1479,8 @@
                             {
                                 "id": "0,9,0,0",
                                 "type": 4,
-                                "elements": "• e_c - элементарный заряд",
-                                "format_id": "ff4e2bcb-21f7-4546-96f8-98c892e5a619"
+                                "elements": "• e_c - elementary charge",
+                                "format_id": "49b93c00-ae4c-4ac9-a193-f0a3e766c4b2"
                             }
                         ]
                     }
@@ -1499,8 +1499,8 @@
                             {
                                 "id": "0,10,0,0",
                                 "type": 4,
-                                "elements": "• k - постоянная Больцмана",
-                                "format_id": "ff4e2bcb-21f7-4546-96f8-98c892e5a619"
+                                "elements": "• k - Boltzmann constant",
+                                "format_id": "49b93c00-ae4c-4ac9-a193-f0a3e766c4b2"
                             }
                         ]
                     }
@@ -1519,8 +1519,8 @@
                             {
                                 "id": "0,11,0,0",
                                 "type": 4,
-                                "elements": "• g_a - ускорение свободного падения",
-                                "format_id": "ff4e2bcb-21f7-4546-96f8-98c892e5a619"
+                                "elements": "• g_a - Gravitational acceleration",
+                                "format_id": "49b93c00-ae4c-4ac9-a193-f0a3e766c4b2"
                             }
                         ]
                     }

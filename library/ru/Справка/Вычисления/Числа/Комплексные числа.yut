@@ -70,6 +70,102 @@
     },
     "string_formats": [
         {
+            "id": "b49d3e97-a764-41dc-8ad8-8dfe03f289b7",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "f73eec69-4619-4a86-8226-a28c79b4e74d",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "97919e52-e927-4025-aa35-3d5900e3931c",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "70eb4be9-1593-4239-a63c-92a65ba3e3a7",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "9ea0a044-5ca7-42da-81af-f4713bb07401",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "95b5decd-0e79-4bfb-bbb0-d734e1185096",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "b55718ee-1372-48f3-a909-5d4b0c61025c",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "eb5cc206-37fe-4826-affd-1c4876cb13dc",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
             "id": "fd3e2877-4208-43dc-933d-f790cd45f21a",
             "family": "Arial",
             "size": 14,
@@ -777,7 +873,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "fd3e2877-4208-43dc-933d-f790cd45f21a"
+            "default_string_format": "b49d3e97-a764-41dc-8ad8-8dfe03f289b7"
         },
         {
             "name": "Header 1",
@@ -789,7 +885,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "d4573b87-3e03-436a-9631-7911d898d210"
+            "default_string_format": "f73eec69-4619-4a86-8226-a28c79b4e74d"
         },
         {
             "name": "Header 2",
@@ -801,7 +897,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "f36d2e0b-70ac-4b49-ad9d-a409c17c402d"
+            "default_string_format": "97919e52-e927-4025-aa35-3d5900e3931c"
         },
         {
             "name": "Header 3",
@@ -813,7 +909,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "334bb744-da3d-4ee8-af1d-8534d4fa70ff"
+            "default_string_format": "70eb4be9-1593-4239-a63c-92a65ba3e3a7"
         },
         {
             "name": "Header 4",
@@ -825,7 +921,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "07b5bd14-a104-4892-a9c4-17207c1babfa"
+            "default_string_format": "9ea0a044-5ca7-42da-81af-f4713bb07401"
         },
         {
             "name": "Example",
@@ -837,7 +933,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "6a7f82da-7a09-4e6c-8b34-23dec968a401"
+            "default_string_format": "95b5decd-0e79-4bfb-bbb0-d734e1185096"
         },
         {
             "name": "Monospace",
@@ -849,7 +945,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "a41a2053-1c0b-4b53-96ac-3df6fa10bb45"
+            "default_string_format": "b55718ee-1372-48f3-a909-5d4b0c61025c"
         },
         {
             "name": "Code",
@@ -861,7 +957,7 @@
             "indent_first_line": 0,
             "spacing_before": 2,
             "spacing_after": 2,
-            "default_string_format": "b11f598a-f7d3-4b85-8e08-e653a03d5c82"
+            "default_string_format": "eb5cc206-37fe-4826-affd-1c4876cb13dc"
         }
     ],
     "text": {
@@ -1219,8 +1315,8 @@
                             {
                                 "id": "0,14,0,0",
                                 "type": 4,
-                                "elements": "\"ln\" - натуральный логарифм;",
-                                "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
+                                "elements": "\"exp\" - экспонента;",
+                                "format_id": "b49d3e97-a764-41dc-8ad8-8dfe03f289b7"
                             }
                         ]
                     }
@@ -1239,7 +1335,7 @@
                             {
                                 "id": "0,15,0,0",
                                 "type": 4,
-                                "elements": "\"lg\" - десятичный логарифм;",
+                                "elements": "\"ln\" - натуральный логарифм;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1259,7 +1355,7 @@
                             {
                                 "id": "0,16,0,0",
                                 "type": 4,
-                                "elements": "\"log\" - логарифм по основанию;",
+                                "elements": "\"lg\" - десятичный логарифм;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1279,7 +1375,7 @@
                             {
                                 "id": "0,17,0,0",
                                 "type": 4,
-                                "elements": "\"abs\" - абсолютное значение;",
+                                "elements": "\"log\" - логарифм по основанию;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1299,7 +1395,7 @@
                             {
                                 "id": "0,18,0,0",
                                 "type": 4,
-                                "elements": "\"int\" - целая часть;",
+                                "elements": "\"abs\" - абсолютное значение;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1319,7 +1415,7 @@
                             {
                                 "id": "0,19,0,0",
                                 "type": 4,
-                                "elements": "\"fract\" - дробная часть;",
+                                "elements": "\"int\" - целая часть;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1339,7 +1435,7 @@
                             {
                                 "id": "0,20,0,0",
                                 "type": 4,
-                                "elements": "\"round\" - округление до ближайшего целого;",
+                                "elements": "\"fract\" - дробная часть;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1359,8 +1455,8 @@
                             {
                                 "id": "0,21,0,0",
                                 "type": 4,
-                                "elements": "\"re\" - действительная часть комплексного числа;",
-                                "format_id": "876e9e13-4116-4619-b084-a939cdf777a7"
+                                "elements": "\"round\" - округление до ближайшего целого;",
+                                "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
                     }
@@ -1379,7 +1475,7 @@
                             {
                                 "id": "0,22,0,0",
                                 "type": 4,
-                                "elements": "\"im\" - мнимая часть комплексного числа.",
+                                "elements": "\"re\" - действительная часть комплексного числа;",
                                 "format_id": "876e9e13-4116-4619-b084-a939cdf777a7"
                             }
                         ]
@@ -1399,13 +1495,13 @@
                             {
                                 "id": "0,23,0,0",
                                 "type": 4,
-                                "elements": "Тригонометрические функции:",
-                                "format_id": "4112ae68-1aae-4780-b4bf-eb8aa4b90aa2"
+                                "elements": "\"im\" - мнимая часть комплексного числа.",
+                                "format_id": "876e9e13-4116-4619-b084-a939cdf777a7"
                             }
                         ]
                     }
                 ],
-                "format_name": "Header 4",
+                "format_name": "Text body",
                 "format_alignment": 0
             },
             {
@@ -1419,13 +1515,13 @@
                             {
                                 "id": "0,24,0,0",
                                 "type": 4,
-                                "elements": "\"sin\" - синус;",
-                                "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
+                                "elements": "Тригонометрические функции:",
+                                "format_id": "4112ae68-1aae-4780-b4bf-eb8aa4b90aa2"
                             }
                         ]
                     }
                 ],
-                "format_name": "Text body",
+                "format_name": "Header 4",
                 "format_alignment": 0
             },
             {
@@ -1439,7 +1535,7 @@
                             {
                                 "id": "0,25,0,0",
                                 "type": 4,
-                                "elements": "\"cos\" - косинус;",
+                                "elements": "\"sin\" - синус;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1459,7 +1555,7 @@
                             {
                                 "id": "0,26,0,0",
                                 "type": 4,
-                                "elements": "\"tg\" - тангенс;",
+                                "elements": "\"cos\" - косинус;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1479,7 +1575,7 @@
                             {
                                 "id": "0,27,0,0",
                                 "type": 4,
-                                "elements": "\"ctg\" - котангенс;",
+                                "elements": "\"tg\" - тангенс;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1499,7 +1595,7 @@
                             {
                                 "id": "0,28,0,0",
                                 "type": 4,
-                                "elements": "\"sec\" - секанс;",
+                                "elements": "\"ctg\" - котангенс;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1519,7 +1615,7 @@
                             {
                                 "id": "0,29,0,0",
                                 "type": 4,
-                                "elements": "\"cosec\" - косеканс;",
+                                "elements": "\"sec\" - секанс;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1539,7 +1635,7 @@
                             {
                                 "id": "0,30,0,0",
                                 "type": 4,
-                                "elements": "\"arcsin\" - арксинус;",
+                                "elements": "\"cosec\" - косеканс;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1559,7 +1655,7 @@
                             {
                                 "id": "0,31,0,0",
                                 "type": 4,
-                                "elements": "\"arccos\" - арккосинус;",
+                                "elements": "\"arcsin\" - арксинус;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1579,7 +1675,7 @@
                             {
                                 "id": "0,32,0,0",
                                 "type": 4,
-                                "elements": "\"arctg\" - арктангенс;",
+                                "elements": "\"arccos\" - арккосинус;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1599,7 +1695,7 @@
                             {
                                 "id": "0,33,0,0",
                                 "type": 4,
-                                "elements": "\"arcctg\" - арккотангенс;",
+                                "elements": "\"arctg\" - арктангенс;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1619,7 +1715,7 @@
                             {
                                 "id": "0,34,0,0",
                                 "type": 4,
-                                "elements": "\"arcsec\" - арксеканс;",
+                                "elements": "\"arcctg\" - арккотангенс;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1639,7 +1735,7 @@
                             {
                                 "id": "0,35,0,0",
                                 "type": 4,
-                                "elements": "\"arccosec\" - арккосеканс.",
+                                "elements": "\"arcsec\" - арксеканс;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1659,13 +1755,13 @@
                             {
                                 "id": "0,36,0,0",
                                 "type": 4,
-                                "elements": "Гиперболические функции:",
-                                "format_id": "4112ae68-1aae-4780-b4bf-eb8aa4b90aa2"
+                                "elements": "\"arccosec\" - арккосеканс.",
+                                "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
                     }
                 ],
-                "format_name": "Header 4",
+                "format_name": "Text body",
                 "format_alignment": 0
             },
             {
@@ -1679,13 +1775,13 @@
                             {
                                 "id": "0,37,0,0",
                                 "type": 4,
-                                "elements": "\"sh\" - гиперболический синус;",
-                                "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
+                                "elements": "Гиперболические функции:",
+                                "format_id": "4112ae68-1aae-4780-b4bf-eb8aa4b90aa2"
                             }
                         ]
                     }
                 ],
-                "format_name": "Text body",
+                "format_name": "Header 4",
                 "format_alignment": 0
             },
             {
@@ -1699,7 +1795,7 @@
                             {
                                 "id": "0,38,0,0",
                                 "type": 4,
-                                "elements": "\"ch\" - гиперболический косинус;",
+                                "elements": "\"sh\" - гиперболический синус;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1719,7 +1815,7 @@
                             {
                                 "id": "0,39,0,0",
                                 "type": 4,
-                                "elements": "\"th\" - гиперболический тангенс;",
+                                "elements": "\"ch\" - гиперболический косинус;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1739,7 +1835,7 @@
                             {
                                 "id": "0,40,0,0",
                                 "type": 4,
-                                "elements": "\"cth\" - гиперболический котангенс;",
+                                "elements": "\"th\" - гиперболический тангенс;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1759,7 +1855,7 @@
                             {
                                 "id": "0,41,0,0",
                                 "type": 4,
-                                "elements": "\"sch\" - гиперболический секанс;",
+                                "elements": "\"cth\" - гиперболический котангенс;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1779,7 +1875,7 @@
                             {
                                 "id": "0,42,0,0",
                                 "type": 4,
-                                "elements": "\"csch\" - гиперболический косеканс;",
+                                "elements": "\"sch\" - гиперболический секанс;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1799,7 +1895,7 @@
                             {
                                 "id": "0,43,0,0",
                                 "type": 4,
-                                "elements": "\"arsh\" - гиперболический ареасинус;",
+                                "elements": "\"csch\" - гиперболический косеканс;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1819,7 +1915,7 @@
                             {
                                 "id": "0,44,0,0",
                                 "type": 4,
-                                "elements": "\"arch\" - гиперболический ареакосинус;",
+                                "elements": "\"arsh\" - гиперболический ареасинус;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1839,7 +1935,7 @@
                             {
                                 "id": "0,45,0,0",
                                 "type": 4,
-                                "elements": "\"arth\" - гиперболический ареатангенс;",
+                                "elements": "\"arch\" - гиперболический ареакосинус;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1859,7 +1955,7 @@
                             {
                                 "id": "0,46,0,0",
                                 "type": 4,
-                                "elements": "\"arcth\" - гиперболический ареакотангенс;",
+                                "elements": "\"arth\" - гиперболический ареатангенс;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1879,7 +1975,7 @@
                             {
                                 "id": "0,47,0,0",
                                 "type": 4,
-                                "elements": "\"arsch\" - гиперболический ареасеканс;",
+                                "elements": "\"arcth\" - гиперболический ареакотангенс;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1899,6 +1995,26 @@
                             {
                                 "id": "0,48,0,0",
                                 "type": 4,
+                                "elements": "\"arsch\" - гиперболический ареасеканс;",
+                                "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,49",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,49,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,49,0,0",
+                                "type": 4,
                                 "elements": "\"arcsch\" - гиперболический ареакосеканс.",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
@@ -1911,7 +2027,7 @@
         ]
     },
     "caret": {
-        "id": "0,32,0,21"
+        "id": "0,0,0,0"
     },
     "selection": []
 }

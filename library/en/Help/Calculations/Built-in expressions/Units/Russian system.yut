@@ -70,7 +70,7 @@
     },
     "string_formats": [
         {
-            "id": "f6e2c740-8f41-4fd5-9835-3f1b0b93d58c",
+            "id": "ca934bee-140f-41a5-a758-4eb5775830af",
             "family": "Arial",
             "size": 14,
             "bold": false,
@@ -82,7 +82,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "a9f3c15e-c3b4-4b2c-85eb-681193d71cb5",
+            "id": "85a22101-522e-4238-9e04-349fbf89ed07",
             "family": "Arial",
             "size": 30,
             "bold": true,
@@ -94,7 +94,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "8c9cb85e-474e-4359-bbf3-e74aea077304",
+            "id": "7d3d9ca9-9249-4076-969a-6ea02b149751",
             "family": "Arial",
             "size": 26,
             "bold": true,
@@ -106,7 +106,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "b0b04256-6ce9-49ef-8566-d6ac63905a47",
+            "id": "f6e1ce79-4252-46f2-ad35-e7022d3de1d8",
             "family": "Arial",
             "size": 22,
             "bold": true,
@@ -118,7 +118,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "c6fa455e-f59a-4631-8902-c886687ffcd9",
+            "id": "57bade83-68c5-4090-84e3-56287705f1a6",
             "family": "Arial",
             "size": 16,
             "bold": true,
@@ -130,7 +130,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "5d0fb4ec-02bf-4f59-b0aa-b80416edd675",
+            "id": "082f2b99-914a-4b8f-86e9-fbd5f616c7b9",
             "family": "Arial",
             "size": 14,
             "bold": false,
@@ -142,7 +142,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "a963dbf1-e420-4ca8-b044-f6e0d07aa316",
+            "id": "5db0505f-9c17-467f-adcd-204fc032aadc",
             "family": "Courier New",
             "size": 12,
             "bold": false,
@@ -154,7 +154,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "703be717-6ec4-4919-a64d-b892b58d5d45",
+            "id": "5a8b3a4d-4dfb-4cf5-a957-a1c9df6b0529",
             "family": "Courier New",
             "size": 14,
             "bold": false,
@@ -166,7 +166,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "4c1c63c5-8e81-44c6-85a4-48c60b485d4f",
+            "id": "01c20d12-009c-40ed-b357-5a7ee86b4348",
             "family": "Arial",
             "size": 14,
             "bold": false,
@@ -178,7 +178,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "f9aa40e5-aa7c-4c68-954d-942645086a69",
+            "id": "a72aaa67-d6c3-4edb-837c-2c73cec9d2c2",
             "family": "Arial",
             "size": 30,
             "bold": true,
@@ -190,7 +190,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "d8ae57be-6e5f-43a8-b045-88f97a190222",
+            "id": "38accb6a-37da-40cc-ad8a-a841e8cc2296",
             "family": "Arial",
             "size": 26,
             "bold": true,
@@ -202,7 +202,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "10f96bda-6462-4c00-a723-f056d3e70e12",
+            "id": "03fb5c3c-7db6-4aee-b9ab-d5f14b0bbace",
             "family": "Arial",
             "size": 22,
             "bold": true,
@@ -214,7 +214,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "db24247f-839b-4182-b24b-db1203ef117d",
+            "id": "a7eeffb5-74ae-4c13-9876-692386e643ed",
             "family": "Arial",
             "size": 16,
             "bold": true,
@@ -226,7 +226,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "b26004bf-804e-4722-9310-214add8e023d",
+            "id": "9f18dcb9-8c3b-4295-972d-e46a615bfe12",
             "family": "Arial",
             "size": 14,
             "bold": false,
@@ -238,7 +238,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "3b6d60c7-083c-4aa1-9c72-f449d86924b1",
+            "id": "a8af49a4-d467-4c6f-8ca3-7399eb5c16cd",
             "family": "Courier New",
             "size": 12,
             "bold": false,
@@ -250,7 +250,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "1aad305e-f281-4bdc-89b2-4c871bb36538",
+            "id": "9e52df4e-c350-45f2-afeb-5e40f10e63df",
             "family": "Courier New",
             "size": 14,
             "bold": false,
@@ -262,7 +262,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "12059c46-a9c5-4746-98f7-e1487f1e03be",
+            "id": "10e44d8c-f76a-46ac-9807-942720727dfc",
             "family": "Arial",
             "size": 14,
             "bold": false,
@@ -274,7 +274,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "33317770-878f-4a56-bde6-051474be0d1e",
+            "id": "15e873ad-b513-4687-b1fc-6156342c7362",
             "family": "Arial",
             "size": 30,
             "bold": true,
@@ -286,7 +286,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "4c2b7d04-cd7a-4800-8f2d-0befe5e86f71",
+            "id": "5ad1b2e1-71ca-440d-9dbf-62bd08d7237a",
             "family": "Arial",
             "size": 26,
             "bold": true,
@@ -298,7 +298,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "79ab9c1e-e65a-4987-bb2a-0d702939adf8",
+            "id": "b8d8e5b1-65ca-4741-b72e-3cca2d42cf7c",
             "family": "Arial",
             "size": 22,
             "bold": true,
@@ -310,7 +310,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "abbe9cbc-8b3f-4239-a2ba-206944f2bcc9",
+            "id": "af1e3006-ba75-4e4a-9f34-5f7ee643020a",
             "family": "Arial",
             "size": 16,
             "bold": true,
@@ -322,7 +322,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "b8caf75b-9f26-49df-a600-1d3b7d3a350a",
+            "id": "1b389982-7630-4034-a068-4b19128fb7a6",
             "family": "Arial",
             "size": 14,
             "bold": false,
@@ -334,7 +334,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "c47accc9-64da-455f-b5c3-ec60ecaa80db",
+            "id": "f59fa2b8-0984-4743-a84e-4ba4adf990cb",
             "family": "Courier New",
             "size": 12,
             "bold": false,
@@ -346,7 +346,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "586249e3-d553-4c5e-84f3-18f4581ccb45",
+            "id": "470db645-a80f-4f62-9863-dec839beaed8",
             "family": "Courier New",
             "size": 14,
             "bold": false,
@@ -358,7 +358,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "1c226412-4a7c-465c-9a7d-dc97f33f1afa",
+            "id": "76c67feb-e6fd-414a-a36f-3926bf595ee7",
             "family": "Arial",
             "size": 14,
             "bold": false,
@@ -370,7 +370,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "890a4f46-e2ab-4f6f-9600-ed9af07b10eb",
+            "id": "2779d796-8f37-424b-8425-84ce181a3d40",
             "family": "Arial",
             "size": 30,
             "bold": true,
@@ -382,7 +382,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "d1bba187-2efa-4e38-b484-f47deaf0e29d",
+            "id": "1cf2fa6e-2d1f-48d7-84cc-00702ac8b5ce",
             "family": "Arial",
             "size": 26,
             "bold": true,
@@ -394,7 +394,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "960fcfc0-0b3f-41a8-bc9c-d88d9aae0767",
+            "id": "4c7369a9-db4b-49fb-9882-9197c86e59ec",
             "family": "Arial",
             "size": 22,
             "bold": true,
@@ -406,7 +406,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "38417b0d-b759-4f9d-b511-5df2ad48814d",
+            "id": "6777ae47-44cf-4281-84d0-e33c9e095d2d",
             "family": "Arial",
             "size": 16,
             "bold": true,
@@ -418,7 +418,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "73c4e8d8-be39-4b2b-9e32-a30bba9660db",
+            "id": "8983b927-6e4e-4a91-b921-4614c9644416",
             "family": "Arial",
             "size": 14,
             "bold": false,
@@ -430,7 +430,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "d7e5ac68-e042-412c-a063-94a3762025b2",
+            "id": "cf8ea2e2-b31b-43f7-afd4-6b3f03760cf3",
             "family": "Courier New",
             "size": 12,
             "bold": false,
@@ -442,295 +442,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "98bf002e-1e7a-4b1f-a63e-83a95fefbe01",
-            "family": "Courier New",
-            "size": 14,
-            "bold": false,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "0b74602c-6675-42e7-b7d3-652745ec0ca4",
-            "family": "Arial",
-            "size": 14,
-            "bold": false,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "180b2766-7f48-4b3a-8ef0-7f7615a5183d",
-            "family": "Arial",
-            "size": 30,
-            "bold": true,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "ae0594ce-e294-4add-80a6-0040c8a64fe7",
-            "family": "Arial",
-            "size": 26,
-            "bold": true,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "4125d4f8-e491-4d1f-9893-b54f10c655b3",
-            "family": "Arial",
-            "size": 22,
-            "bold": true,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "286a85ef-62dd-4799-9361-920a17ca0360",
-            "family": "Arial",
-            "size": 16,
-            "bold": true,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "1b4f675d-3d5c-4b5e-ad16-070a74320be4",
-            "family": "Arial",
-            "size": 14,
-            "bold": false,
-            "italic": true,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "4a6bce62-981f-420a-829e-7844acb045e7",
-            "family": "Courier New",
-            "size": 12,
-            "bold": false,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "83d615bb-e689-49f3-8685-42962de84164",
-            "family": "Courier New",
-            "size": 14,
-            "bold": false,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "8ff599fa-ac52-4ae0-b332-781663af2618",
-            "family": "Arial",
-            "size": 14,
-            "bold": false,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "b3c99ca1-8710-4815-9d66-1d4fa917898e",
-            "family": "Arial",
-            "size": 30,
-            "bold": true,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "82fd8c89-2099-434b-9b8b-2c3683f1f23a",
-            "family": "Arial",
-            "size": 26,
-            "bold": true,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "17f0bb79-abb4-4144-bc23-67438f5d37b9",
-            "family": "Arial",
-            "size": 22,
-            "bold": true,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "37cbe350-cf40-4a7e-bf13-ae66dd01488c",
-            "family": "Arial",
-            "size": 16,
-            "bold": true,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "3e5fea0c-fda0-4d64-9c61-d7ad4e0c2783",
-            "family": "Arial",
-            "size": 14,
-            "bold": false,
-            "italic": true,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "cbd2e630-fd42-4040-a6e3-059395edce89",
-            "family": "Courier New",
-            "size": 12,
-            "bold": false,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "a5894a8e-399c-42a1-91f3-2d082c0e8bb6",
-            "family": "Courier New",
-            "size": 14,
-            "bold": false,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "3021b50c-ed7a-4b16-b4d2-6b038d0f2ebd",
-            "family": "Arial",
-            "size": 14,
-            "bold": false,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "478cfed9-7d18-4e1a-a2f9-bac2af93054e",
-            "family": "Arial",
-            "size": 30,
-            "bold": true,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "55a0eb53-1889-45fb-84bc-d5920d3cc16a",
-            "family": "Arial",
-            "size": 26,
-            "bold": true,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "d4e206fb-9fe7-454b-8aa2-92824da212e0",
-            "family": "Arial",
-            "size": 22,
-            "bold": true,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "0dd82dc9-bd63-429d-b6fa-487e51c695ba",
-            "family": "Arial",
-            "size": 16,
-            "bold": true,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "240769b4-5017-425d-819b-8b4077f7dbec",
-            "family": "Arial",
-            "size": 14,
-            "bold": false,
-            "italic": true,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "0482ee6a-dbe7-4dfb-9aeb-044925b7eed1",
-            "family": "Courier New",
-            "size": 12,
-            "bold": false,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "ba02e7f5-ea63-4dd2-be52-3f3526e4661d",
+            "id": "002bbd6a-7759-44d4-a1a9-7e24816413ae",
             "family": "Courier New",
             "size": 14,
             "bold": false,
@@ -2240,42 +1952,6 @@
             "text_color": 4278190335,
             "text_bg_color": 4294967295,
             "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "29019838-4e66-4990-8e28-f7835bfa6243",
-            "family": "Arial",
-            "size": 20,
-            "bold": false,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "9071dcea-722f-4aa3-8ade-df8493a2d934",
-            "family": "DejaVu Serif",
-            "size": 30,
-            "bold": false,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "cb591af1-462a-462b-b542-4ddc963c996c",
-            "family": "DejaVu Serif",
-            "size": 64,
-            "bold": false,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
         }
     ],
     "paragraph_formats": [
@@ -2289,7 +1965,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "f6e2c740-8f41-4fd5-9835-3f1b0b93d58c"
+            "default_string_format": "ca934bee-140f-41a5-a758-4eb5775830af"
         },
         {
             "name": "Header 1",
@@ -2301,7 +1977,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "a9f3c15e-c3b4-4b2c-85eb-681193d71cb5"
+            "default_string_format": "85a22101-522e-4238-9e04-349fbf89ed07"
         },
         {
             "name": "Header 2",
@@ -2313,7 +1989,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "8c9cb85e-474e-4359-bbf3-e74aea077304"
+            "default_string_format": "7d3d9ca9-9249-4076-969a-6ea02b149751"
         },
         {
             "name": "Header 3",
@@ -2325,7 +2001,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "b0b04256-6ce9-49ef-8566-d6ac63905a47"
+            "default_string_format": "f6e1ce79-4252-46f2-ad35-e7022d3de1d8"
         },
         {
             "name": "Header 4",
@@ -2337,7 +2013,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "c6fa455e-f59a-4631-8902-c886687ffcd9"
+            "default_string_format": "57bade83-68c5-4090-84e3-56287705f1a6"
         },
         {
             "name": "Example",
@@ -2349,7 +2025,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "5d0fb4ec-02bf-4f59-b0aa-b80416edd675"
+            "default_string_format": "082f2b99-914a-4b8f-86e9-fbd5f616c7b9"
         },
         {
             "name": "Monospace",
@@ -2361,7 +2037,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "a963dbf1-e420-4ca8-b044-f6e0d07aa316"
+            "default_string_format": "5db0505f-9c17-467f-adcd-204fc032aadc"
         },
         {
             "name": "Code",
@@ -2373,7 +2049,7 @@
             "indent_first_line": 0,
             "spacing_before": 2,
             "spacing_after": 2,
-            "default_string_format": "703be717-6ec4-4919-a64d-b892b58d5d45"
+            "default_string_format": "5a8b3a4d-4dfb-4cf5-a957-a1c9df6b0529"
         }
     ],
     "text": {
@@ -2391,37 +2067,13 @@
                             {
                                 "id": "0,0,0,0",
                                 "type": 4,
-                                "elements": "Все приведенные функции являются встроенными, однако могут быть переопределены ",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
-                            }
-                        ]
-                    },
-                    {
-                        "id": "0,0,1",
-                        "type": 3,
-                        "elements": [
-                            {
-                                "id": "0,0,1,0",
-                                "type": 4,
-                                "elements": "пользователем. Смотрите также примеры использования этих функций с вещественными, ",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
-                            }
-                        ]
-                    },
-                    {
-                        "id": "0,0,2",
-                        "type": 3,
-                        "elements": [
-                            {
-                                "id": "0,0,2,0",
-                                "type": 4,
-                                "elements": "дробными, целыми и комплексными числами.",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                                "elements": "Distance",
+                                "format_id": "57bade83-68c5-4090-84e3-56287705f1a6"
                             }
                         ]
                     }
                 ],
-                "format_name": "Text body",
+                "format_name": "Header 4",
                 "format_alignment": 0
             },
             {
@@ -2435,8 +2087,8 @@
                             {
                                 "id": "0,1,0,0",
                                 "type": 4,
-                                "elements": "• sin - синус - вещественные, комплексные",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                                "elements": "• tochka",
+                                "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
                     }
@@ -2455,8 +2107,8 @@
                             {
                                 "id": "0,2,0,0",
                                 "type": 4,
-                                "elements": "• cos - косинус - вещественные, комплексные",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                                "elements": "• liniya",
+                                "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
                     }
@@ -2475,8 +2127,8 @@
                             {
                                 "id": "0,3,0,0",
                                 "type": 4,
-                                "elements": "• tg - тангенс - вещественные, комплексные",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                                "elements": "• sotka",
+                                "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
                     }
@@ -2495,8 +2147,8 @@
                             {
                                 "id": "0,4,0,0",
                                 "type": 4,
-                                "elements": "• ctg - котангенс - вещественные, комплексные",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                                "elements": "• dyum",
+                                "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
                     }
@@ -2515,8 +2167,8 @@
                             {
                                 "id": "0,5,0,0",
                                 "type": 4,
-                                "elements": "• sec - секанс - вещественные, комплексные",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                                "elements": "• vershok",
+                                "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
                     }
@@ -2535,8 +2187,8 @@
                             {
                                 "id": "0,6,0,0",
                                 "type": 4,
-                                "elements": "• cosec - косеканс - вещественные, комплексные",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                                "elements": "• chetvert",
+                                "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
                     }
@@ -2555,8 +2207,8 @@
                             {
                                 "id": "0,7,0,0",
                                 "type": 4,
-                                "elements": "• arcsin - арксинус - вещественные, комплексные",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                                "elements": "• fut",
+                                "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
                     }
@@ -2575,8 +2227,8 @@
                             {
                                 "id": "0,8,0,0",
                                 "type": 4,
-                                "elements": "• arccos - арккосинус - вещественные, комплексные",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                                "elements": "• arshin",
+                                "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
                     }
@@ -2595,8 +2247,8 @@
                             {
                                 "id": "0,9,0,0",
                                 "type": 4,
-                                "elements": "• arctg - арктангенс - вещественные, комплексные",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                                "elements": "• sazhen",
+                                "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
                     }
@@ -2615,8 +2267,8 @@
                             {
                                 "id": "0,10,0,0",
                                 "type": 4,
-                                "elements": "• arcctg - арккотангенс - вещественные, комплексные",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                                "elements": "• versta",
+                                "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
                     }
@@ -2635,13 +2287,13 @@
                             {
                                 "id": "0,11,0,0",
                                 "type": 4,
-                                "elements": "• arcsec - арксеканс - вещественные, комплексные",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                                "elements": "Mass",
+                                "format_id": "57bade83-68c5-4090-84e3-56287705f1a6"
                             }
                         ]
                     }
                 ],
-                "format_name": "Text body",
+                "format_name": "Header 4",
                 "format_alignment": 0
             },
             {
@@ -2655,8 +2307,8 @@
                             {
                                 "id": "0,12,0,0",
                                 "type": 4,
-                                "elements": "• arccosec - арккосеканс - вещественные, комплексные",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                                "elements": "• funt",
+                                "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
                     }
@@ -2675,8 +2327,8 @@
                             {
                                 "id": "0,13,0,0",
                                 "type": 4,
-                                "elements": "• sh - гиперболический синус - вещественные, комплексные",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                                "elements": "• batman",
+                                "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
                     }
@@ -2695,8 +2347,8 @@
                             {
                                 "id": "0,14,0,0",
                                 "type": 4,
-                                "elements": "• ch - гиперболический косинус - вещественные, комплексные",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                                "elements": "• pud",
+                                "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
                     }
@@ -2715,8 +2367,8 @@
                             {
                                 "id": "0,15,0,0",
                                 "type": 4,
-                                "elements": "• th - гиперболический тангенс - вещественные, комплексные",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                                "elements": "• bezmen",
+                                "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
                     }
@@ -2735,8 +2387,8 @@
                             {
                                 "id": "0,16,0,0",
                                 "type": 4,
-                                "elements": "• cth - гиперболический котангенс - вещественные, комплексные",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                                "elements": "• kongar",
+                                "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
                     }
@@ -2755,8 +2407,8 @@
                             {
                                 "id": "0,17,0,0",
                                 "type": 4,
-                                "elements": "• sch - гиперболический секанс - вещественные, комплексные",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                                "elements": "• pirog",
+                                "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
                     }
@@ -2775,8 +2427,8 @@
                             {
                                 "id": "0,18,0,0",
                                 "type": 4,
-                                "elements": "• csch - гиперболический косеканс - вещественные, комплексные",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                                "elements": "• zolotnik",
+                                "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
                     }
@@ -2795,8 +2447,8 @@
                             {
                                 "id": "0,19,0,0",
                                 "type": 4,
-                                "elements": "• arsh - гиперболический ареасинус - вещественные, комплексные",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                                "elements": "• dolya",
+                                "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
                     }
@@ -2815,8 +2467,8 @@
                             {
                                 "id": "0,20,0,0",
                                 "type": 4,
-                                "elements": "• arch - гиперболический ареакосинус - вещественные, комплексные",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                                "elements": "• pochka",
+                                "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
                     }
@@ -2835,8 +2487,8 @@
                             {
                                 "id": "0,21,0,0",
                                 "type": 4,
-                                "elements": "• arth - гиперболический ареатангенс - вещественные, комплексные",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                                "elements": "• lot",
+                                "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
                     }
@@ -2855,13 +2507,13 @@
                             {
                                 "id": "0,22,0,0",
                                 "type": 4,
-                                "elements": "• arcth - гиперболический ареакотангенс - вещественные, комплексные",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                                "elements": "Time",
+                                "format_id": "57bade83-68c5-4090-84e3-56287705f1a6"
                             }
                         ]
                     }
                 ],
-                "format_name": "Text body",
+                "format_name": "Header 4",
                 "format_alignment": 0
             },
             {
@@ -2875,8 +2527,8 @@
                             {
                                 "id": "0,23,0,0",
                                 "type": 4,
-                                "elements": "• arsch - гиперболический ареасеканс - вещественные, комплексные",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                                "elements": "• s - second",
+                                "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
                     }
@@ -2895,8 +2547,8 @@
                             {
                                 "id": "0,24,0,0",
                                 "type": 4,
-                                "elements": "• arcsch - гиперболический ареакосеканс - вещественные, комплексные",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                                "elements": "• min - minute",
+                                "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
                     }
@@ -2915,8 +2567,8 @@
                             {
                                 "id": "0,25,0,0",
                                 "type": 4,
-                                "elements": "• exp - экспонента - вещественные, комплексные",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                                "elements": "• hour",
+                                "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
                     }
@@ -2935,13 +2587,13 @@
                             {
                                 "id": "0,26,0,0",
                                 "type": 4,
-                                "elements": "• ln - натуральный логарифм - вещественные, комплексные",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                                "elements": "Volume",
+                                "format_id": "57bade83-68c5-4090-84e3-56287705f1a6"
                             }
                         ]
                     }
                 ],
-                "format_name": "Text body",
+                "format_name": "Header 4",
                 "format_alignment": 0
             },
             {
@@ -2955,8 +2607,8 @@
                             {
                                 "id": "0,27,0,0",
                                 "type": 4,
-                                "elements": "• lg - десятичный логарифм - вещественные, комплексные",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                                "elements": "• stakan",
+                                "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
                     }
@@ -2975,8 +2627,8 @@
                             {
                                 "id": "0,28,0,0",
                                 "type": 4,
-                                "elements": "• log - логарифм по основанию - вещественные, комплексные",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                                "elements": "• polygarnets",
+                                "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
                     }
@@ -2995,20 +2647,8 @@
                             {
                                 "id": "0,29,0,0",
                                 "type": 4,
-                                "elements": "• ",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
-                            },
-                            {
-                                "id": "0,29,0,1",
-                                "type": 34,
-                                "elements": [],
-                                "image_base64": "iVBORw0KGgoAAAANSUhEUgAAAA8AAAAUCAYAAABSx2cSAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAZUlEQVQ4jdWTUQ7AIAhD67KD9WaEm3Ez9rcFp47MD2P/MLxgSyju7vipM9OkqqEWEQDAkZ1CEiTDWxpuaQq+Pde+gMfbJwwgeDKz0FjXL7in3g/WBbYpHNJurWOkMnNVmwa2Dr4AvU4YpmQLVwYAAAAASUVORK5CYII="
-                            },
-                            {
-                                "id": "0,29,0,2",
-                                "type": 4,
-                                "elements": "(pow) - возведение в степень \t*",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                                "elements": "• garnets",
+                                "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
                     }
@@ -3027,20 +2667,8 @@
                             {
                                 "id": "0,30,0,0",
                                 "type": 4,
-                                "elements": "• ",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
-                            },
-                            {
-                                "id": "0,30,0,1",
-                                "type": 34,
-                                "elements": [],
-                                "image_base64": "iVBORw0KGgoAAAANSUhEUgAAABMAAAAUCAYAAABvVQZ0AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAfklEQVQ4jdWUXQrAIAyDm7GDeTPxZt4se7J0G9afCdvyJEQ/MA0FScoibatAy2F7zyUArl+S6oLZB56aMAAKSind/BhjP+yqEIKec84n77vTdGE2r2FYqwJDsKdAhdkvzQK1GgVEUgBU87rWwQq1rTEavogzzZnN9NPSvgo7AI7PLmknmsAzAAAAAElFTkSuQmCC"
-                            },
-                            {
-                                "id": "0,30,0,2",
-                                "type": 4,
-                                "elements": "(sqrt) - корень квадратный - вещественные, комплексные",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                                "elements": "• chetveric",
+                                "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
                     }
@@ -3059,20 +2687,8 @@
                             {
                                 "id": "0,31,0,0",
                                 "type": 4,
-                                "elements": "• ",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
-                            },
-                            {
-                                "id": "0,31,0,1",
-                                "type": 34,
-                                "elements": [],
-                                "image_base64": "iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAjklEQVQ4jc2USw6AIAxEZ4wH42aEm3GzuqqhqBX5JM6KT3gwHVKKiGCitpmwJcBdByklsxFjNHOSLkgrt5eLIQQAQM7ZPdT0Qk8kT1jtBLBumoC11AlwdbMulLvbhoB1qqqyfi26WH77Hp+Bo1ADLO31Qk0oChMRkHysnxcevW7zNRDg5R/2dLb/t6//Aw9ZOjgqIs2NIAAAAABJRU5ErkJggg=="
-                            },
-                            {
-                                "id": "0,31,0,2",
-                                "type": 4,
-                                "elements": "(root) - корень степени - вещественные, комплексные",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                                "elements": "• osmina",
+                                "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
                     }
@@ -3091,20 +2707,8 @@
                             {
                                 "id": "0,32,0,0",
                                 "type": 4,
-                                "elements": "• ",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
-                            },
-                            {
-                                "id": "0,32,0,1",
-                                "type": 34,
-                                "elements": [],
-                                "image_base64": "iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAh0lEQVQ4jc3UwQ2AIAwF0P8Ng7EZYTM2qycICkiFmthTMfJoaANFRGAYhyX2CehyQnL6s+Z2XL142qA5EABYN4WkqooYY/MthNCvUIt670ueUip505SMrka3yzvocGxW0SGovUsVuIp1wR0MuI3NG6welYuRB3uGaQ9rKtyNAlo9i/9/D83BE2mGQWM4M9NsAAAAAElFTkSuQmCC"
-                            },
-                            {
-                                "id": "0,32,0,2",
-                                "type": 4,
-                                "elements": "(sum) - суммирование - *",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                                "elements": "• polosminy",
+                                "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
                     }
@@ -3123,20 +2727,8 @@
                             {
                                 "id": "0,33,0,0",
                                 "type": 4,
-                                "elements": "• ",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
-                            },
-                            {
-                                "id": "0,33,0,1",
-                                "type": 34,
-                                "elements": [],
-                                "image_base64": "iVBORw0KGgoAAAANSUhEUgAAABMAAAAUCAYAAABvVQZ0AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAcklEQVQ4je2UwQ3AIAwD46qDZbOIzdjMfRGhFkQLefCoX1YEJyAxIEkJ0hEFCoedxQAYLh69iMNICoDmhl69C3urlNKjZmZzMBERVXWfc3a/bzd/2HdNjUY9DrVQ/xqrCfBrlmzeM9qrD0+2qn27GQq7AO4wJm0Wsr/jAAAAAElFTkSuQmCC"
-                            },
-                            {
-                                "id": "0,33,0,2",
-                                "type": 4,
-                                "elements": "(prod) - произведение - *",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                                "elements": "• chet",
+                                "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
                     }
@@ -3155,20 +2747,8 @@
                             {
                                 "id": "0,34,0,0",
                                 "type": 4,
-                                "elements": "• ",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
-                            },
-                            {
-                                "id": "0,34,0,1",
-                                "type": 34,
-                                "elements": [],
-                                "image_base64": "iVBORw0KGgoAAAANSUhEUgAAAA4AAAAUCAYAAAC9BQwsAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAWUlEQVQ4jWP8////fwYyABM5muinkZGRkc42IgMWZE5jYyOGgvr6esIaGRgYGBwcHODsAwcO4LRxkEcH/TUiJ2vqxCMDA/4oQAaMpGQrRkZGuHOHUOCQrREA27oZYqHey78AAAAASUVORK5CYII="
-                            },
-                            {
-                                "id": "0,34,0,2",
-                                "type": 4,
-                                "elements": "(fact) - факториал - *",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                                "elements": "• polovnik",
+                                "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
                     }
@@ -3187,8 +2767,8 @@
                             {
                                 "id": "0,35,0,0",
                                 "type": 4,
-                                "elements": "• mod - модуль - *",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                                "elements": "• kadka",
+                                "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
                     }
@@ -3207,8 +2787,8 @@
                             {
                                 "id": "0,36,0,0",
                                 "type": 4,
-                                "elements": "• abs - абсолютное значение - *",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                                "elements": "• shkalic",
+                                "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
                     }
@@ -3227,8 +2807,8 @@
                             {
                                 "id": "0,37,0,0",
                                 "type": 4,
-                                "elements": "• int - целая часть - вещественные",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                                "elements": "• charka",
+                                "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
                     }
@@ -3247,8 +2827,8 @@
                             {
                                 "id": "0,38,0,0",
                                 "type": 4,
-                                "elements": "• fract - дробная часть - вещественные",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                                "elements": "• kosushka",
+                                "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
                     }
@@ -3267,8 +2847,8 @@
                             {
                                 "id": "0,39,0,0",
                                 "type": 4,
-                                "elements": "• round - округление - вещественные",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                                "elements": "• shtof",
+                                "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
                     }
@@ -3287,8 +2867,8 @@
                             {
                                 "id": "0,40,0,0",
                                 "type": 4,
-                                "elements": "• ceil - ближайшее целое не меньшее чем данное - вещественные",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                                "elements": "• vedro",
+                                "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
                     }
@@ -3307,188 +2887,8 @@
                             {
                                 "id": "0,41,0,0",
                                 "type": 4,
-                                "elements": "• floor - ближайшее целое не большее чем данное - вещественные",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
-                            }
-                        ]
-                    }
-                ],
-                "format_name": "Text body",
-                "format_alignment": 0
-            },
-            {
-                "id": "0,42",
-                "type": 2,
-                "elements": [
-                    {
-                        "id": "0,42,0",
-                        "type": 3,
-                        "elements": [
-                            {
-                                "id": "0,42,0,0",
-                                "type": 4,
-                                "elements": "• trunc - ближайшее целое не меньше по значению чем данное - вещественные",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
-                            }
-                        ]
-                    }
-                ],
-                "format_name": "Text body",
-                "format_alignment": 0
-            },
-            {
-                "id": "0,43",
-                "type": 2,
-                "elements": [
-                    {
-                        "id": "0,43,0",
-                        "type": 3,
-                        "elements": [
-                            {
-                                "id": "0,43,0,0",
-                                "type": 4,
-                                "elements": "• and - логическое И - целые",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
-                            }
-                        ]
-                    }
-                ],
-                "format_name": "Text body",
-                "format_alignment": 0
-            },
-            {
-                "id": "0,44",
-                "type": 2,
-                "elements": [
-                    {
-                        "id": "0,44,0",
-                        "type": 3,
-                        "elements": [
-                            {
-                                "id": "0,44,0,0",
-                                "type": 4,
-                                "elements": "• or - логическое ИЛИ - целые",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
-                            }
-                        ]
-                    }
-                ],
-                "format_name": "Text body",
-                "format_alignment": 0
-            },
-            {
-                "id": "0,45",
-                "type": 2,
-                "elements": [
-                    {
-                        "id": "0,45,0",
-                        "type": 3,
-                        "elements": [
-                            {
-                                "id": "0,45,0,0",
-                                "type": 4,
-                                "elements": "• xor - исключающее ИЛИ - целые",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
-                            }
-                        ]
-                    }
-                ],
-                "format_name": "Text body",
-                "format_alignment": 0
-            },
-            {
-                "id": "0,46",
-                "type": 2,
-                "elements": [
-                    {
-                        "id": "0,46,0",
-                        "type": 3,
-                        "elements": [
-                            {
-                                "id": "0,46,0,0",
-                                "type": 4,
-                                "elements": "• not - логическое НЕ - целые",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
-                            }
-                        ]
-                    }
-                ],
-                "format_name": "Text body",
-                "format_alignment": 0
-            },
-            {
-                "id": "0,47",
-                "type": 2,
-                "elements": [
-                    {
-                        "id": "0,47,0",
-                        "type": 3,
-                        "elements": [
-                            {
-                                "id": "0,47,0,0",
-                                "type": 4,
-                                "elements": "• arg - аргумент комплексного числа - комплексные",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
-                            }
-                        ]
-                    }
-                ],
-                "format_name": "Text body",
-                "format_alignment": 0
-            },
-            {
-                "id": "0,48",
-                "type": 2,
-                "elements": [
-                    {
-                        "id": "0,48,0",
-                        "type": 3,
-                        "elements": [
-                            {
-                                "id": "0,48,0,0",
-                                "type": 4,
-                                "elements": "• mod - модуль комплексного числа - комплексные",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
-                            }
-                        ]
-                    }
-                ],
-                "format_name": "Text body",
-                "format_alignment": 0
-            },
-            {
-                "id": "0,49",
-                "type": 2,
-                "elements": [
-                    {
-                        "id": "0,49,0",
-                        "type": 3,
-                        "elements": [
-                            {
-                                "id": "0,49,0,0",
-                                "type": 4,
-                                "elements": "• re - действительная часть комплексного числа - комплексные",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
-                            }
-                        ]
-                    }
-                ],
-                "format_name": "Text body",
-                "format_alignment": 0
-            },
-            {
-                "id": "0,50",
-                "type": 2,
-                "elements": [
-                    {
-                        "id": "0,50,0",
-                        "type": 3,
-                        "elements": [
-                            {
-                                "id": "0,50,0,0",
-                                "type": 4,
-                                "elements": "• im - мнимая часть комплексного числа - комплексные",
-                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                                "elements": "• bochka",
+                                "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
                     }

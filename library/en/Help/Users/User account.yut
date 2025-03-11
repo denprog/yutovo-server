@@ -1,6 +1,6 @@
 {
     "config": {
-        "language": 2,
+        "language": 1,
         "code_block_border_color": -16776961,
         "numbers_color": -16776961,
         "variables_color": -16755456,
@@ -30,7 +30,7 @@
             "exp": 10,
             "default_angle_measure": 0,
             "result_angle_measure": 0,
-            "show_angle_measure": false,
+            "show_angle_measure": true,
             "form": 0,
             "max_count": 10
         },
@@ -62,7 +62,7 @@
                 "exp": 10,
                 "default_angle_measure": 0,
                 "result_angle_measure": 0,
-                "show_angle_measure": false,
+                "show_angle_measure": true,
                 "form": 0,
                 "max_count": 10
             }
@@ -70,7 +70,7 @@
     },
     "string_formats": [
         {
-            "id": "75b4affa-00e0-4976-94f0-40d8a106ad0d",
+            "id": "fe22532e-9756-41e3-a6af-c838a572d5cc",
             "family": "Arial",
             "size": 14,
             "bold": false,
@@ -82,7 +82,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "56a7af62-78fe-4d81-a9a4-c56f0ec12fa7",
+            "id": "950b5017-e8a3-40f6-ac18-979bb685601d",
             "family": "Arial",
             "size": 30,
             "bold": true,
@@ -94,7 +94,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "3d427c6a-c1fc-4c21-8233-52446c6317f4",
+            "id": "e9af57c5-4ec9-4aeb-a84d-364004550943",
             "family": "Arial",
             "size": 26,
             "bold": true,
@@ -106,7 +106,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "5eb15a95-a5b9-43b2-b88c-d26f8f5954bd",
+            "id": "7e5e38d5-73eb-4af7-a52e-ac64c1c645a2",
             "family": "Arial",
             "size": 22,
             "bold": true,
@@ -118,7 +118,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "61e09c81-caf3-439a-8f30-b5290ae9bb38",
+            "id": "885a3cb5-e722-4f8d-b50b-2fde90e0b4ca",
             "family": "Arial",
             "size": 16,
             "bold": true,
@@ -130,7 +130,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "c064fb7a-8356-4b29-82ea-c6c13f9a4a78",
+            "id": "edb4c928-ecaa-4b9e-bd33-bdc90d15b61e",
             "family": "Arial",
             "size": 14,
             "bold": false,
@@ -142,7 +142,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "f870fd8f-84c4-4486-b318-aaacb5b29615",
+            "id": "f9b2fe39-d4f9-43e5-8de8-67bd9a695129",
             "family": "Courier New",
             "size": 12,
             "bold": false,
@@ -154,7 +154,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "8232acbe-e5cd-4fa7-a9ce-80536da5b364",
+            "id": "a06be619-2657-445d-8301-c975ad6242a2",
             "family": "Courier New",
             "size": 14,
             "bold": false,
@@ -166,7 +166,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "fd44834c-94d9-4321-9601-565582334714",
+            "id": "3afdab91-3cc0-4be0-9da7-df0a74fab15e",
             "family": "Arial",
             "size": 14,
             "bold": false,
@@ -178,7 +178,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "8038618d-6bdf-4c69-8e7c-fec4302585ce",
+            "id": "f3ff656c-ed72-45e2-a2d7-080003328e87",
             "family": "Arial",
             "size": 30,
             "bold": true,
@@ -190,7 +190,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "329f5ff0-7f8f-46fb-8320-637af040c63d",
+            "id": "a8cab9f8-a808-4c20-9b71-9e3ea680bdb7",
             "family": "Arial",
             "size": 26,
             "bold": true,
@@ -202,7 +202,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "9a8d584b-d436-4f67-b70c-81c4050ba29c",
+            "id": "efd7c593-e97e-459c-8c7b-560e476d469a",
             "family": "Arial",
             "size": 22,
             "bold": true,
@@ -214,7 +214,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "c6582729-9e5f-4749-aa6c-899b4b7b099a",
+            "id": "4bca1859-5eaa-403e-b300-a5c12fd901c5",
             "family": "Arial",
             "size": 16,
             "bold": true,
@@ -226,7 +226,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "c735632b-ffe2-4c9d-a9b1-71ba6e38435a",
+            "id": "5b8e389b-e2d1-460c-9ab2-cd55fbd03c33",
             "family": "Arial",
             "size": 14,
             "bold": false,
@@ -238,7 +238,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "69ae6aea-65da-4ba4-b754-d88f749352b8",
+            "id": "41f2882e-1886-4613-949b-a93853d6cddd",
             "family": "Courier New",
             "size": 12,
             "bold": false,
@@ -250,7 +250,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "58c078b3-b15e-406b-91a3-c645b8cf5835",
+            "id": "bc8e692f-1f45-4c66-9b68-7324c6be9d4c",
             "family": "Courier New",
             "size": 14,
             "bold": false,
@@ -262,7 +262,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "ff4e2bcb-21f7-4546-96f8-98c892e5a619",
+            "id": "846c7ced-52d5-4c34-890c-0ed2736b7ba7",
             "family": "Arial",
             "size": 14,
             "bold": false,
@@ -274,7 +274,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "b411b958-a069-4292-a1a5-a072cb8a22d8",
+            "id": "732ab502-9694-468b-9921-cfd25b5242d5",
             "family": "Arial",
             "size": 30,
             "bold": true,
@@ -286,7 +286,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "24f6a4c6-c342-4399-9b48-f90b2ea57ff2",
+            "id": "27822b79-e8a6-408d-a408-0af2d986a9d1",
             "family": "Arial",
             "size": 26,
             "bold": true,
@@ -298,7 +298,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "fe33a4c2-0245-456b-b36c-21440ce54320",
+            "id": "4d7a462a-72a5-4417-a956-886091100f9b",
             "family": "Arial",
             "size": 22,
             "bold": true,
@@ -310,7 +310,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "39d8d686-ea60-41ff-8db5-327402fddad6",
+            "id": "4c535c5b-4e85-4df5-acfa-d4238ccc90e5",
             "family": "Arial",
             "size": 16,
             "bold": true,
@@ -322,7 +322,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "9ae3f44c-bde2-491d-8c6f-aa49a70ad402",
+            "id": "6575da56-a864-4257-8f8a-b6fc293b7485",
             "family": "Arial",
             "size": 14,
             "bold": false,
@@ -334,7 +334,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "88f4781a-ed63-4b04-b9a3-53daab04b859",
+            "id": "5424a1c6-e5f6-45fc-8661-c4fb900395c0",
             "family": "Courier New",
             "size": 12,
             "bold": false,
@@ -346,7 +346,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "73e4cfa6-8b4e-45a0-a97a-42d1945cc99f",
+            "id": "a5b6d83d-51b9-44e8-ac23-2665075bed44",
             "family": "Courier New",
             "size": 14,
             "bold": false,
@@ -358,7 +358,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "2b19ec4f-d6a8-4859-b9b7-97e4a0e122dd",
+            "id": "4e2a8f80-372d-4e4c-a127-eb603499e8e7",
             "family": "Arial",
             "size": 14,
             "bold": false,
@@ -370,7 +370,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "33645e91-832e-48e1-869b-1c83699aa5e4",
+            "id": "7160dbc3-5cd2-4852-bb6f-625b52746710",
             "family": "Arial",
             "size": 30,
             "bold": true,
@@ -382,7 +382,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "5adc8c5b-19c7-4336-8a24-e3aac7da87c8",
+            "id": "9b35e6dc-5272-421b-ac8b-bbccc5377dfe",
             "family": "Arial",
             "size": 26,
             "bold": true,
@@ -394,7 +394,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "e9456333-9082-49a4-b785-8a4bc458b007",
+            "id": "dbd18ef7-edec-4bc1-b7c5-78e0670bbdeb",
             "family": "Arial",
             "size": 22,
             "bold": true,
@@ -406,7 +406,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "2dc73221-6029-45d1-a344-5effdb3d9397",
+            "id": "0e054bf4-0196-40f5-88f7-f522235dc38d",
             "family": "Arial",
             "size": 16,
             "bold": true,
@@ -418,7 +418,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "6a74e203-1d4b-4658-b60e-4962d5d65530",
+            "id": "6093e373-3a83-433b-83bc-3c6eb2afc2d0",
             "family": "Arial",
             "size": 14,
             "bold": false,
@@ -430,7 +430,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "5ee55332-b7cb-46ae-9e8c-8f013d177fb2",
+            "id": "29d77630-48b5-4b6e-9ad7-92b1910393a0",
             "family": "Courier New",
             "size": 12,
             "bold": false,
@@ -442,7 +442,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "c190ce8a-a263-489d-a4a5-58943dde59fc",
+            "id": "5a0652dc-f234-400f-a579-51ce137685c2",
             "family": "Courier New",
             "size": 14,
             "bold": false,
@@ -454,7 +454,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "2d34e459-818b-4487-a1ba-7b6da48430cb",
+            "id": "ec873e8a-dfbe-4ef7-8195-4373afe20e82",
             "family": "Arial",
             "size": 14,
             "bold": false,
@@ -466,7 +466,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "221f3e4c-92a4-4377-83ae-23000c6823be",
+            "id": "46a03e7d-7536-4bf0-836f-34913ce0bba9",
             "family": "Arial",
             "size": 30,
             "bold": true,
@@ -478,7 +478,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "f70c513f-7bc4-4914-a2c2-4309827489f8",
+            "id": "806560f3-2bda-4a37-a28b-fa3bee523ba7",
             "family": "Arial",
             "size": 26,
             "bold": true,
@@ -490,7 +490,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "47ce2601-1056-44fc-853c-fcf083dcba62",
+            "id": "0613829c-a33a-45a9-85c1-7015cb6f471f",
             "family": "Arial",
             "size": 22,
             "bold": true,
@@ -502,7 +502,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "59324bb0-6f4e-40f5-88ea-61739d1233d5",
+            "id": "aade257b-08dc-4598-951b-8d721da3e2c3",
             "family": "Arial",
             "size": 16,
             "bold": true,
@@ -514,7 +514,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "9a8029e9-28fb-43b5-a58a-6d48981cde3d",
+            "id": "91382302-6850-4d22-992c-252b225cf19a",
             "family": "Arial",
             "size": 14,
             "bold": false,
@@ -526,7 +526,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "3c5eca84-d7c6-4948-b051-81cbea06bbcf",
+            "id": "fbad96da-ba81-45df-b7e9-88f7aabb5540",
             "family": "Courier New",
             "size": 12,
             "bold": false,
@@ -538,7 +538,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "1cc0dba7-c4d2-4828-a60d-69da8bab0ae2",
+            "id": "68e4bfcd-88f8-4d7c-bd58-da9a4142a21e",
             "family": "Courier New",
             "size": 14,
             "bold": false,
@@ -550,7 +550,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "6083211a-f9ac-495b-8960-278fef5c3a4f",
+            "id": "8f43d12a-0564-43c8-8bfc-9fd46312e683",
             "family": "Arial",
             "size": 14,
             "bold": false,
@@ -562,7 +562,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "6da69185-b020-4137-81fb-293533260721",
+            "id": "1934a640-67bc-4d60-9e69-9b13a0b801ab",
             "family": "Arial",
             "size": 30,
             "bold": true,
@@ -574,7 +574,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "7cb0914f-8261-4fef-8d7c-7186755ab0e8",
+            "id": "55ec951d-d98f-44cd-8112-4d8c3d093a07",
             "family": "Arial",
             "size": 26,
             "bold": true,
@@ -586,7 +586,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "7ede9b94-0692-4bfa-bf8d-629842d2a1a9",
+            "id": "65c08b1d-ef10-4fa7-b355-1a11c07b0e85",
             "family": "Arial",
             "size": 22,
             "bold": true,
@@ -598,7 +598,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "d1a1ec54-b8dc-4153-a2f7-903ea2ecaf6e",
+            "id": "774e59a6-0504-465e-ae51-89c11131cbba",
             "family": "Arial",
             "size": 16,
             "bold": true,
@@ -610,19 +610,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "a0e43c66-8559-4922-930d-3fcf370ae8b9",
-            "family": "Arial",
-            "size": 14,
-            "bold": false,
-            "italic": true,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "a5a7ddf9-62d8-423e-a7bd-f74790320d0e",
+            "id": "b44511b9-ba38-4628-932d-bc837fe53fdc",
             "family": "Courier New",
             "size": 12,
             "bold": false,
@@ -634,7 +622,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "7f312f00-67e7-4d9f-a982-b39618d8bc1f",
+            "id": "28718af1-0f93-42d4-9d9d-3dcccef64a05",
             "family": "Courier New",
             "size": 14,
             "bold": false,
@@ -646,7 +634,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "014955f8-2a77-4c58-857b-9e168ae64230",
+            "id": "3b585091-a336-403a-9c4a-2bbdaf2b1a80",
             "family": "Arial",
             "size": 14,
             "bold": false,
@@ -658,7 +646,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "ae2434be-6fcb-476b-9add-fb06e8540173",
+            "id": "22c5e971-245d-456f-8615-90dc6bcc24ba",
             "family": "Arial",
             "size": 30,
             "bold": true,
@@ -670,7 +658,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "01b08b7a-646c-4fe7-b053-5815ed937c7e",
+            "id": "8124f82b-f04e-43f2-9803-2140d6bf5234",
             "family": "Arial",
             "size": 26,
             "bold": true,
@@ -682,7 +670,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "2df3af6f-0b4c-47f1-aaa4-0f8695b475d6",
+            "id": "c3310be5-7121-4d1f-b508-ecdd542735e3",
             "family": "Arial",
             "size": 22,
             "bold": true,
@@ -694,31 +682,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "e9e2c79c-a8af-4a42-a71e-928afde59bd9",
-            "family": "Arial",
-            "size": 16,
-            "bold": true,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "5597f214-25d7-495f-b3be-64399fe500be",
-            "family": "Arial",
-            "size": 14,
-            "bold": false,
-            "italic": true,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "1d548ca5-25e1-4575-9243-526b3a80831b",
+            "id": "dbccbc17-1087-4713-99d1-6688878a6a03",
             "family": "Courier New",
             "size": 12,
             "bold": false,
@@ -730,355 +694,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "d1ab5230-60e1-4299-a3e7-2d8aec156168",
-            "family": "Courier New",
-            "size": 14,
-            "bold": false,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "4f88348d-da5f-4dfd-bd07-bd4bdb0b604e",
-            "family": "Arial",
-            "size": 14,
-            "bold": false,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "a3c40803-fa85-4aa1-8261-96088709a247",
-            "family": "Arial",
-            "size": 30,
-            "bold": true,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "caa297dc-9cf3-4de5-989d-a2e182448085",
-            "family": "Arial",
-            "size": 26,
-            "bold": true,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "62929bc0-e97a-47bd-a97d-fbb24822a94e",
-            "family": "Arial",
-            "size": 22,
-            "bold": true,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "1bdba8f0-ac55-4fbc-b43e-a5039f3af049",
-            "family": "Arial",
-            "size": 16,
-            "bold": true,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "065da342-fde6-47a2-87fa-d076095740f2",
-            "family": "Arial",
-            "size": 14,
-            "bold": false,
-            "italic": true,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "48bc04b9-692e-4e7b-8b0f-29a8f1ded2d2",
-            "family": "Courier New",
-            "size": 12,
-            "bold": false,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "da7ca043-d574-4208-8e2c-5adeb227313a",
-            "family": "Courier New",
-            "size": 14,
-            "bold": false,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "136734a7-3892-430d-986d-c27d227fbd30",
-            "family": "Arial",
-            "size": 14,
-            "bold": false,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "2499518d-b75b-4f70-a4a9-77c69312e911",
-            "family": "Arial",
-            "size": 30,
-            "bold": true,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "74310844-633e-4ca1-b60a-006d8928fc97",
-            "family": "Arial",
-            "size": 26,
-            "bold": true,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "6a72f6e3-7e46-4728-b6cf-969be41b4330",
-            "family": "Arial",
-            "size": 22,
-            "bold": true,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "94633829-a11c-4513-9c95-eeddf2f06fae",
-            "family": "Arial",
-            "size": 16,
-            "bold": true,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "0e4482fb-43a0-4504-aef2-f6dbaf050b8b",
-            "family": "Courier New",
-            "size": 12,
-            "bold": false,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "a0fecd92-4498-4ba7-ab61-2f59452cf576",
-            "family": "Courier New",
-            "size": 14,
-            "bold": false,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "9655a3ed-c4e8-4dca-b0e3-16c24d4f67dd",
-            "family": "Arial",
-            "size": 14,
-            "bold": false,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "073a31d2-64cc-4a1e-9927-e74ff186729d",
-            "family": "Arial",
-            "size": 30,
-            "bold": true,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "45e98451-dbcb-41cb-a7f2-6a623f168d2e",
-            "family": "Arial",
-            "size": 26,
-            "bold": true,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "d8a876c5-b0cb-413f-941a-850012f839cb",
-            "family": "Arial",
-            "size": 22,
-            "bold": true,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "7a94eef2-7e33-4129-92a7-1dc60e55c0a5",
-            "family": "Arial",
-            "size": 16,
-            "bold": true,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "833d8f2e-4be9-4fcc-9812-708180b4269d",
-            "family": "Courier New",
-            "size": 12,
-            "bold": false,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "0614fa66-9dbd-4973-ac82-030c46d51770",
-            "family": "Courier New",
-            "size": 14,
-            "bold": false,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "b451d762-71d6-406d-94bb-e6443b3c584c",
-            "family": "Arial",
-            "size": 14,
-            "bold": false,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "bd4e8bf8-1517-4be4-bf24-f83d20c48828",
-            "family": "Arial",
-            "size": 30,
-            "bold": true,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "2d41ad67-3dfc-4956-82cc-7cbe08d480f4",
-            "family": "Arial",
-            "size": 26,
-            "bold": true,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "0445abe4-777c-4a83-b9bb-c70e74febaa8",
-            "family": "Arial",
-            "size": 22,
-            "bold": true,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "5bbeebd1-e629-451f-b21a-a6afe5fa57fa",
-            "family": "Arial",
-            "size": 16,
-            "bold": true,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "ad86b01f-c673-48e3-99d6-8ce06cd29e02",
-            "family": "Courier New",
-            "size": 12,
-            "bold": false,
-            "italic": false,
-            "underline": false,
-            "strikethrough": false,
-            "text_color": 4278190080,
-            "text_bg_color": 4294967295,
-            "text_bg_selection_color": 4278190335
-        },
-        {
-            "id": "777563ef-cb3a-47a2-80fc-19f799a4f113",
+            "id": "3e035436-318d-4670-82c2-e748d77f801b",
             "family": "Courier New",
             "size": 14,
             "bold": false,
@@ -1162,11 +778,11 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "d615ec55-f012-4d71-9610-6d4652d05be5",
+            "id": "a1fb058b-75e4-44f7-8818-ee16767890a6",
             "family": "Arial",
             "size": 14,
-            "bold": false,
-            "italic": true,
+            "bold": true,
+            "italic": false,
             "underline": false,
             "strikethrough": false,
             "text_color": 4278190080,
@@ -1185,7 +801,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "75b4affa-00e0-4976-94f0-40d8a106ad0d"
+            "default_string_format": "fe22532e-9756-41e3-a6af-c838a572d5cc"
         },
         {
             "name": "Header 1",
@@ -1197,7 +813,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "56a7af62-78fe-4d81-a9a4-c56f0ec12fa7"
+            "default_string_format": "950b5017-e8a3-40f6-ac18-979bb685601d"
         },
         {
             "name": "Header 2",
@@ -1209,7 +825,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "3d427c6a-c1fc-4c21-8233-52446c6317f4"
+            "default_string_format": "e9af57c5-4ec9-4aeb-a84d-364004550943"
         },
         {
             "name": "Header 3",
@@ -1221,7 +837,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "5eb15a95-a5b9-43b2-b88c-d26f8f5954bd"
+            "default_string_format": "7e5e38d5-73eb-4af7-a52e-ac64c1c645a2"
         },
         {
             "name": "Header 4",
@@ -1233,7 +849,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "61e09c81-caf3-439a-8f30-b5290ae9bb38"
+            "default_string_format": "885a3cb5-e722-4f8d-b50b-2fde90e0b4ca"
         },
         {
             "name": "Example",
@@ -1245,7 +861,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "c064fb7a-8356-4b29-82ea-c6c13f9a4a78"
+            "default_string_format": "edb4c928-ecaa-4b9e-bd33-bdc90d15b61e"
         },
         {
             "name": "Monospace",
@@ -1257,7 +873,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "f870fd8f-84c4-4486-b318-aaacb5b29615"
+            "default_string_format": "f9b2fe39-d4f9-43e5-8de8-67bd9a695129"
         },
         {
             "name": "Code",
@@ -1269,7 +885,7 @@
             "indent_first_line": 0,
             "spacing_before": 2,
             "spacing_after": 2,
-            "default_string_format": "8232acbe-e5cd-4fa7-a9ce-80536da5b364"
+            "default_string_format": "a06be619-2657-445d-8301-c975ad6242a2"
         }
     ],
     "text": {
@@ -1287,20 +903,8 @@
                             {
                                 "id": "0,0,0,0",
                                 "type": 4,
-                                "elements": "Эти пользовательские символы названы \"константами\" учитывая их физическое значение. Однако, ",
-                                "format_id": "ff4e2bcb-21f7-4546-96f8-98c892e5a619"
-                            }
-                        ]
-                    },
-                    {
-                        "id": "0,0,1",
-                        "type": 3,
-                        "elements": [
-                            {
-                                "id": "0,0,1,0",
-                                "type": 4,
-                                "elements": "они также могут быть переопределены.",
-                                "format_id": "ff4e2bcb-21f7-4546-96f8-98c892e5a619"
+                                "elements": "Upon successful login, the user has access to the following options, which are in the dialog box, that is called up when clicking on the login:",
+                                "format_id": "3afdab91-3cc0-4be0-9da7-df0a74fab15e"
                             }
                         ]
                     }
@@ -1319,13 +923,13 @@
                             {
                                 "id": "0,1,0,0",
                                 "type": 4,
-                                "elements": "Математические константы",
-                                "format_id": "39d8d686-ea60-41ff-8db5-327402fddad6"
+                                "elements": "• log out of the account;",
+                                "format_id": "3afdab91-3cc0-4be0-9da7-df0a74fab15e"
                             }
                         ]
                     }
                 ],
-                "format_name": "Header 4",
+                "format_name": "Text body",
                 "format_alignment": 0
             },
             {
@@ -1339,8 +943,8 @@
                             {
                                 "id": "0,2,0,0",
                                 "type": 4,
-                                "elements": "• pi - число пи",
-                                "format_id": "ff4e2bcb-21f7-4546-96f8-98c892e5a619"
+                                "elements": "• changing the name that was entered during registration (not the login - it cannot be changed);",
+                                "format_id": "3afdab91-3cc0-4be0-9da7-df0a74fab15e"
                             }
                         ]
                     }
@@ -1359,8 +963,8 @@
                             {
                                 "id": "0,3,0,0",
                                 "type": 4,
-                                "elements": "• e - число Эйлера",
-                                "format_id": "ff4e2bcb-21f7-4546-96f8-98c892e5a619"
+                                "elements": "• changing the email;",
+                                "format_id": "3afdab91-3cc0-4be0-9da7-df0a74fab15e"
                             }
                         ]
                     }
@@ -1379,148 +983,8 @@
                             {
                                 "id": "0,4,0,0",
                                 "type": 4,
-                                "elements": "• j - мнимое число",
-                                "format_id": "ff4e2bcb-21f7-4546-96f8-98c892e5a619"
-                            }
-                        ]
-                    }
-                ],
-                "format_name": "Text body",
-                "format_alignment": 0
-            },
-            {
-                "id": "0,5",
-                "type": 2,
-                "elements": [
-                    {
-                        "id": "0,5,0",
-                        "type": 3,
-                        "elements": [
-                            {
-                                "id": "0,5,0,0",
-                                "type": 4,
-                                "elements": "Физические константы",
-                                "format_id": "39d8d686-ea60-41ff-8db5-327402fddad6"
-                            }
-                        ]
-                    }
-                ],
-                "format_name": "Header 4",
-                "format_alignment": 0
-            },
-            {
-                "id": "0,6",
-                "type": 2,
-                "elements": [
-                    {
-                        "id": "0,6,0",
-                        "type": 3,
-                        "elements": [
-                            {
-                                "id": "0,6,0,0",
-                                "type": 4,
-                                "elements": "• ск_св - скорость света",
-                                "format_id": "ff4e2bcb-21f7-4546-96f8-98c892e5a619"
-                            }
-                        ]
-                    }
-                ],
-                "format_name": "Text body",
-                "format_alignment": 0
-            },
-            {
-                "id": "0,7",
-                "type": 2,
-                "elements": [
-                    {
-                        "id": "0,7,0",
-                        "type": 3,
-                        "elements": [
-                            {
-                                "id": "0,7,0,0",
-                                "type": 4,
-                                "elements": "• G - гравитационная постоянная",
-                                "format_id": "ff4e2bcb-21f7-4546-96f8-98c892e5a619"
-                            }
-                        ]
-                    }
-                ],
-                "format_name": "Text body",
-                "format_alignment": 0
-            },
-            {
-                "id": "0,8",
-                "type": 2,
-                "elements": [
-                    {
-                        "id": "0,8,0",
-                        "type": 3,
-                        "elements": [
-                            {
-                                "id": "0,8,0,0",
-                                "type": 4,
-                                "elements": "• h - постоянная Планка",
-                                "format_id": "ff4e2bcb-21f7-4546-96f8-98c892e5a619"
-                            }
-                        ]
-                    }
-                ],
-                "format_name": "Text body",
-                "format_alignment": 0
-            },
-            {
-                "id": "0,9",
-                "type": 2,
-                "elements": [
-                    {
-                        "id": "0,9,0",
-                        "type": 3,
-                        "elements": [
-                            {
-                                "id": "0,9,0,0",
-                                "type": 4,
-                                "elements": "• e_c - элементарный заряд",
-                                "format_id": "ff4e2bcb-21f7-4546-96f8-98c892e5a619"
-                            }
-                        ]
-                    }
-                ],
-                "format_name": "Text body",
-                "format_alignment": 0
-            },
-            {
-                "id": "0,10",
-                "type": 2,
-                "elements": [
-                    {
-                        "id": "0,10,0",
-                        "type": 3,
-                        "elements": [
-                            {
-                                "id": "0,10,0,0",
-                                "type": 4,
-                                "elements": "• k - постоянная Больцмана",
-                                "format_id": "ff4e2bcb-21f7-4546-96f8-98c892e5a619"
-                            }
-                        ]
-                    }
-                ],
-                "format_name": "Text body",
-                "format_alignment": 0
-            },
-            {
-                "id": "0,11",
-                "type": 2,
-                "elements": [
-                    {
-                        "id": "0,11,0",
-                        "type": 3,
-                        "elements": [
-                            {
-                                "id": "0,11,0,0",
-                                "type": 4,
-                                "elements": "• g_a - ускорение свободного падения",
-                                "format_id": "ff4e2bcb-21f7-4546-96f8-98c892e5a619"
+                                "elements": "• changing the password.",
+                                "format_id": "3afdab91-3cc0-4be0-9da7-df0a74fab15e"
                             }
                         ]
                     }

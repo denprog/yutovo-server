@@ -1,6 +1,6 @@
 {
     "config": {
-        "language": 2,
+        "language": 1,
         "code_block_border_color": -16776961,
         "numbers_color": -16776961,
         "variables_color": -16755456,
@@ -70,7 +70,7 @@
     },
     "string_formats": [
         {
-            "id": "9c0f733f-b1b7-4d3a-a9a6-5ec344d90d5b",
+            "id": "abb77fd3-7ae3-40d2-9b2f-77b70dddf7bd",
             "family": "Arial",
             "size": 14,
             "bold": false,
@@ -82,7 +82,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "7b6f8e23-5966-4c58-b322-4048be431313",
+            "id": "586bf7dc-f051-45d3-8342-419c9f04be21",
             "family": "Arial",
             "size": 30,
             "bold": true,
@@ -94,7 +94,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "7b1371c0-bff2-4717-aa1d-50cf6000f030",
+            "id": "1101adfb-93e0-48ef-958c-f0fd25c638d8",
             "family": "Arial",
             "size": 26,
             "bold": true,
@@ -106,7 +106,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "7c496b04-a4f2-41a3-bf90-4d1a8c0e751b",
+            "id": "f467a791-5ae2-40f5-8bb2-8e9d51f37381",
             "family": "Arial",
             "size": 22,
             "bold": true,
@@ -118,7 +118,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "f5257f5d-f1d1-4a62-8790-a7945a461544",
+            "id": "e0bdd68d-f56e-4901-9803-1ae965a31bbc",
             "family": "Arial",
             "size": 16,
             "bold": true,
@@ -130,7 +130,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "86ee8f21-d7b6-4996-acaf-71544d6b5c90",
+            "id": "b2d9b0d3-0415-4af7-92ac-ae7a00f87941",
             "family": "Arial",
             "size": 14,
             "bold": false,
@@ -142,7 +142,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "0a4258af-cfb7-471e-9532-0c4e59b8c731",
+            "id": "f2fcdd6f-f5bc-43ff-8098-b7ceb813112a",
             "family": "Courier New",
             "size": 12,
             "bold": false,
@@ -154,7 +154,7 @@
             "text_bg_selection_color": 4278190335
         },
         {
-            "id": "134de844-10b4-46f8-bcb3-60b8a524c94b",
+            "id": "d397f9a6-accc-48b4-9e5d-cc65b26ccb9c",
             "family": "Courier New",
             "size": 14,
             "bold": false,
@@ -273,7 +273,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "9c0f733f-b1b7-4d3a-a9a6-5ec344d90d5b"
+            "default_string_format": "abb77fd3-7ae3-40d2-9b2f-77b70dddf7bd"
         },
         {
             "name": "Header 1",
@@ -285,7 +285,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "7b6f8e23-5966-4c58-b322-4048be431313"
+            "default_string_format": "586bf7dc-f051-45d3-8342-419c9f04be21"
         },
         {
             "name": "Header 2",
@@ -297,7 +297,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "7b1371c0-bff2-4717-aa1d-50cf6000f030"
+            "default_string_format": "1101adfb-93e0-48ef-958c-f0fd25c638d8"
         },
         {
             "name": "Header 3",
@@ -309,7 +309,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "7c496b04-a4f2-41a3-bf90-4d1a8c0e751b"
+            "default_string_format": "f467a791-5ae2-40f5-8bb2-8e9d51f37381"
         },
         {
             "name": "Header 4",
@@ -321,7 +321,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "f5257f5d-f1d1-4a62-8790-a7945a461544"
+            "default_string_format": "e0bdd68d-f56e-4901-9803-1ae965a31bbc"
         },
         {
             "name": "Example",
@@ -333,7 +333,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "86ee8f21-d7b6-4996-acaf-71544d6b5c90"
+            "default_string_format": "b2d9b0d3-0415-4af7-92ac-ae7a00f87941"
         },
         {
             "name": "Monospace",
@@ -345,7 +345,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "0a4258af-cfb7-471e-9532-0c4e59b8c731"
+            "default_string_format": "f2fcdd6f-f5bc-43ff-8098-b7ceb813112a"
         },
         {
             "name": "Code",
@@ -357,7 +357,7 @@
             "indent_first_line": 0,
             "spacing_before": 2,
             "spacing_after": 2,
-            "default_string_format": "134de844-10b4-46f8-bcb3-60b8a524c94b"
+            "default_string_format": "d397f9a6-accc-48b4-9e5d-cc65b26ccb9c"
         }
     ],
     "text": {
@@ -375,8 +375,8 @@
                             {
                                 "id": "0,0,0,0",
                                 "type": 4,
-                                "elements": "Изменение вида дроби возможно только для дробных чисел.",
-                                "format_id": "9957a5c5-ee14-4215-a5b7-8aaf91bef801"
+                                "elements": "Changing the fraction type is only possible for rational numbers.",
+                                "format_id": "abb77fd3-7ae3-40d2-9b2f-77b70dddf7bd"
                             }
                         ]
                     }
@@ -395,8 +395,8 @@
                             {
                                 "id": "0,1,0,0",
                                 "type": 4,
-                                "elements": "В настройках задается вид дробного результата (правильная дробь или неправильная). Его можно изменить для отдельных результатов.",
-                                "format_id": "9957a5c5-ee14-4215-a5b7-8aaf91bef801"
+                                "elements": "The type of fractional result (proper or improper fraction) is set in the settings. It can be changed for individual results.",
+                                "format_id": "abb77fd3-7ae3-40d2-9b2f-77b70dddf7bd"
                             }
                         ]
                     }
@@ -415,7 +415,7 @@
                             {
                                 "id": "0,2,0,0",
                                 "type": 4,
-                                "elements": "Пример:",
+                                "elements": "Example:",
                                 "format_id": "b3b1a021-cb89-4137-aff1-d626db2fa1fd"
                             }
                         ]
@@ -435,8 +435,8 @@
                             {
                                 "id": "0,3,0,0",
                                 "type": 4,
-                                "elements": "При вычислении следующего выражения для правильной дроби получается:",
-                                "format_id": "9957a5c5-ee14-4215-a5b7-8aaf91bef801"
+                                "elements": "When calculating the following expression for a proper fraction, we get:",
+                                "format_id": "abb77fd3-7ae3-40d2-9b2f-77b70dddf7bd"
                             }
                         ]
                     }
@@ -524,11 +524,6 @@
                                                                                 "id": "0,4,0,0,0,0,0,0,2,0",
                                                                                 "type": 10,
                                                                                 "elements": []
-                                                                            },
-                                                                            {
-                                                                                "id": "0,4,0,0,0,0,0,0,2,1",
-                                                                                "type": 10,
-                                                                                "elements": []
                                                                             }
                                                                         ],
                                                                         "symbol": "+"
@@ -604,11 +599,6 @@
                                                                                                 "id": "0,4,0,0,0,0,0,0,3,2,1,0",
                                                                                                 "type": 10,
                                                                                                 "elements": []
-                                                                                            },
-                                                                                            {
-                                                                                                "id": "0,4,0,0,0,0,0,0,3,2,1,1",
-                                                                                                "type": 10,
-                                                                                                "elements": []
                                                                                             }
                                                                                         ],
                                                                                         "symbol": "·"
@@ -626,11 +616,6 @@
                                                                                         "elements": [
                                                                                             {
                                                                                                 "id": "0,4,0,0,0,0,0,0,3,2,3,0",
-                                                                                                "type": 10,
-                                                                                                "elements": []
-                                                                                            },
-                                                                                            {
-                                                                                                "id": "0,4,0,0,0,0,0,0,3,2,3,1",
                                                                                                 "type": 10,
                                                                                                 "elements": []
                                                                                             }
@@ -726,8 +711,8 @@
                             {
                                 "id": "0,5,0,0",
                                 "type": 4,
-                                "elements": "Кликнув правой кнопкой на результате, выберите \"Тип дроби\" - \"Неправильная\". Получается:",
-                                "format_id": "9957a5c5-ee14-4215-a5b7-8aaf91bef801"
+                                "elements": "Right-click on the result and select \"Fraction Type\" - \"Improper\". We get:",
+                                "format_id": "abb77fd3-7ae3-40d2-9b2f-77b70dddf7bd"
                             }
                         ]
                     }
@@ -815,16 +800,6 @@
                                                                                 "id": "0,6,0,0,0,0,0,0,2,0",
                                                                                 "type": 10,
                                                                                 "elements": []
-                                                                            },
-                                                                            {
-                                                                                "id": "0,6,0,0,0,0,0,0,2,1",
-                                                                                "type": 10,
-                                                                                "elements": []
-                                                                            },
-                                                                            {
-                                                                                "id": "0,6,0,0,0,0,0,0,2,2",
-                                                                                "type": 10,
-                                                                                "elements": []
                                                                             }
                                                                         ],
                                                                         "symbol": "+"
@@ -900,16 +875,6 @@
                                                                                                 "id": "0,6,0,0,0,0,0,0,3,2,1,0",
                                                                                                 "type": 10,
                                                                                                 "elements": []
-                                                                                            },
-                                                                                            {
-                                                                                                "id": "0,6,0,0,0,0,0,0,3,2,1,1",
-                                                                                                "type": 10,
-                                                                                                "elements": []
-                                                                                            },
-                                                                                            {
-                                                                                                "id": "0,6,0,0,0,0,0,0,3,2,1,2",
-                                                                                                "type": 10,
-                                                                                                "elements": []
                                                                                             }
                                                                                         ],
                                                                                         "symbol": "·"
@@ -927,16 +892,6 @@
                                                                                         "elements": [
                                                                                             {
                                                                                                 "id": "0,6,0,0,0,0,0,0,3,2,3,0",
-                                                                                                "type": 10,
-                                                                                                "elements": []
-                                                                                            },
-                                                                                            {
-                                                                                                "id": "0,6,0,0,0,0,0,0,3,2,3,1",
-                                                                                                "type": 10,
-                                                                                                "elements": []
-                                                                                            },
-                                                                                            {
-                                                                                                "id": "0,6,0,0,0,0,0,0,3,2,3,2",
                                                                                                 "type": 10,
                                                                                                 "elements": []
                                                                                             }

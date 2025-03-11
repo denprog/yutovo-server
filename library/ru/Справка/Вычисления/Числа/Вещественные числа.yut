@@ -70,6 +70,198 @@
     },
     "string_formats": [
         {
+            "id": "3540e6b2-d351-4cd5-ba02-9add1a01dae0",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "c50c8429-725e-47ed-acf9-0899d2fa2de2",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "9e3ab413-5884-4cdf-b96d-d2a33bcd8fc5",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "02919caf-c721-4d21-a0c1-50e5ea7ec912",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "8cbe5622-ef25-4087-93d7-7fcc9e98fb1e",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "a331ad24-62f9-47f0-b648-13ffa65ed11d",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "d451944a-3225-4349-afcd-2bae0f2b7a43",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "1a63a57f-8c58-4df1-a2dc-968a8491142c",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "f427de17-9a4a-416b-b866-765d4152cf44",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "dc90b173-abe3-4ed3-a26b-54c46e1a06a9",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "3267f6fa-f1e7-4bc8-bbeb-fb754717704c",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "75e62933-2d38-4dcc-9bcd-4ea8e6c2d6aa",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "2594bc4c-3ad0-48b8-9a25-c532a2818791",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "3f5d46c6-422c-4392-b111-1a2608731473",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "06945839-2736-4a6c-8480-4586355b7ac7",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "d10a12b0-2481-49d9-b6b9-f8414b7bb3ee",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
             "id": "686ad6ae-0165-45a4-9709-44e86bdfb748",
             "family": "Arial",
             "size": 14,
@@ -669,7 +861,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "686ad6ae-0165-45a4-9709-44e86bdfb748"
+            "default_string_format": "3540e6b2-d351-4cd5-ba02-9add1a01dae0"
         },
         {
             "name": "Header 1",
@@ -681,7 +873,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "61bd98ae-4cf9-4332-8678-308d73c365d9"
+            "default_string_format": "c50c8429-725e-47ed-acf9-0899d2fa2de2"
         },
         {
             "name": "Header 2",
@@ -693,7 +885,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "42506e6d-8f64-4f55-a272-ae0d6311cb18"
+            "default_string_format": "9e3ab413-5884-4cdf-b96d-d2a33bcd8fc5"
         },
         {
             "name": "Header 3",
@@ -705,7 +897,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "0101b587-403a-4543-8443-2b93bb9fc696"
+            "default_string_format": "02919caf-c721-4d21-a0c1-50e5ea7ec912"
         },
         {
             "name": "Header 4",
@@ -717,7 +909,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "0f3f952e-c37d-4ef5-8986-7ab6f26f98c3"
+            "default_string_format": "8cbe5622-ef25-4087-93d7-7fcc9e98fb1e"
         },
         {
             "name": "Example",
@@ -729,7 +921,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "7a8064e7-7be3-4b1e-9105-1ce0722e05cc"
+            "default_string_format": "a331ad24-62f9-47f0-b648-13ffa65ed11d"
         },
         {
             "name": "Monospace",
@@ -741,7 +933,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "ad009f86-e96b-452d-ad75-9647b1ed83bd"
+            "default_string_format": "d451944a-3225-4349-afcd-2bae0f2b7a43"
         },
         {
             "name": "Code",
@@ -753,7 +945,7 @@
             "indent_first_line": 0,
             "spacing_before": 2,
             "spacing_after": 2,
-            "default_string_format": "e7793c29-fe00-4e95-87c1-507c214240fe"
+            "default_string_format": "1a63a57f-8c58-4df1-a2dc-968a8491142c"
         }
     ],
     "text": {
@@ -771,19 +963,7 @@
                             {
                                 "id": "0,0,0,0",
                                 "type": 4,
-                                "elements": "Вещественные (экспоненциальные) числа представлены произведением мантиссы (дробной части) на экспоненту ",
-                                "format_id": "ef590b2b-fd51-43b9-9d86-113faf259c1c"
-                            }
-                        ]
-                    },
-                    {
-                        "id": "0,0,1",
-                        "type": 3,
-                        "elements": [
-                            {
-                                "id": "0,0,1,0",
-                                "type": 4,
-                                "elements": "(порядок). Это наиболее употребимый класс чисел. Целые числа вводятся без десятичной точки.",
+                                "elements": "Вещественные (экспоненциальные) числа представлены произведением мантиссы (дробной части) на экспоненту (порядок). Это наиболее употребимый класс чисел.",
                                 "format_id": "ef590b2b-fd51-43b9-9d86-113faf259c1c"
                             }
                         ]
@@ -1123,8 +1303,8 @@
                             {
                                 "id": "0,14,0,0",
                                 "type": 4,
-                                "elements": "\"ln\" - натуральный логарифм;",
-                                "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
+                                "elements": "\"exp\" - экспонента;",
+                                "format_id": "3540e6b2-d351-4cd5-ba02-9add1a01dae0"
                             }
                         ]
                     }
@@ -1143,7 +1323,7 @@
                             {
                                 "id": "0,15,0,0",
                                 "type": 4,
-                                "elements": "\"lg\" - десятичный логарифм;",
+                                "elements": "\"ln\" - натуральный логарифм;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1163,7 +1343,7 @@
                             {
                                 "id": "0,16,0,0",
                                 "type": 4,
-                                "elements": "\"log\" - логарифм по основанию;",
+                                "elements": "\"lg\" - десятичный логарифм;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1183,7 +1363,7 @@
                             {
                                 "id": "0,17,0,0",
                                 "type": 4,
-                                "elements": "\"abs\" - абсолютное значение;",
+                                "elements": "\"log\" - логарифм по основанию;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1203,7 +1383,7 @@
                             {
                                 "id": "0,18,0,0",
                                 "type": 4,
-                                "elements": "\"int\" - целая часть;",
+                                "elements": "\"abs\" - абсолютное значение;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1223,7 +1403,7 @@
                             {
                                 "id": "0,19,0,0",
                                 "type": 4,
-                                "elements": "\"fract\" - дробная часть;",
+                                "elements": "\"int\" - целая часть;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1243,7 +1423,7 @@
                             {
                                 "id": "0,20,0,0",
                                 "type": 4,
-                                "elements": "\"round\" - округление до ближайшего целого.",
+                                "elements": "\"fract\" - дробная часть;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1263,13 +1443,13 @@
                             {
                                 "id": "0,21,0,0",
                                 "type": 4,
-                                "elements": "Тригонометрические функции:",
-                                "format_id": "4112ae68-1aae-4780-b4bf-eb8aa4b90aa2"
+                                "elements": "\"round\" - округление до ближайшего целого.",
+                                "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
                     }
                 ],
-                "format_name": "Header 4",
+                "format_name": "Text body",
                 "format_alignment": 0
             },
             {
@@ -1283,13 +1463,13 @@
                             {
                                 "id": "0,22,0,0",
                                 "type": 4,
-                                "elements": "\"sin\" - синус;",
-                                "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
+                                "elements": "Тригонометрические функции:",
+                                "format_id": "4112ae68-1aae-4780-b4bf-eb8aa4b90aa2"
                             }
                         ]
                     }
                 ],
-                "format_name": "Text body",
+                "format_name": "Header 4",
                 "format_alignment": 0
             },
             {
@@ -1303,7 +1483,7 @@
                             {
                                 "id": "0,23,0,0",
                                 "type": 4,
-                                "elements": "\"cos\" - косинус;",
+                                "elements": "\"sin\" - синус;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1323,7 +1503,7 @@
                             {
                                 "id": "0,24,0,0",
                                 "type": 4,
-                                "elements": "\"tg\" - тангенс;",
+                                "elements": "\"cos\" - косинус;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1343,7 +1523,7 @@
                             {
                                 "id": "0,25,0,0",
                                 "type": 4,
-                                "elements": "\"ctg\" - котангенс;",
+                                "elements": "\"tg\" - тангенс;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1363,7 +1543,7 @@
                             {
                                 "id": "0,26,0,0",
                                 "type": 4,
-                                "elements": "\"sec\" - секанс;",
+                                "elements": "\"ctg\" - котангенс;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1383,7 +1563,7 @@
                             {
                                 "id": "0,27,0,0",
                                 "type": 4,
-                                "elements": "\"cosec\" - косеканс;",
+                                "elements": "\"sec\" - секанс;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1403,7 +1583,7 @@
                             {
                                 "id": "0,28,0,0",
                                 "type": 4,
-                                "elements": "\"arcsin\" - арксинус;",
+                                "elements": "\"cosec\" - косеканс;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1423,7 +1603,7 @@
                             {
                                 "id": "0,29,0,0",
                                 "type": 4,
-                                "elements": "\"arccos\" - арккосинус;",
+                                "elements": "\"arcsin\" - арксинус;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1443,7 +1623,7 @@
                             {
                                 "id": "0,30,0,0",
                                 "type": 4,
-                                "elements": "\"arctg\" - арстангенс;",
+                                "elements": "\"arccos\" - арккосинус;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1463,7 +1643,7 @@
                             {
                                 "id": "0,31,0,0",
                                 "type": 4,
-                                "elements": "\"arcctg\" - арккотангенс;",
+                                "elements": "\"arctg\" - арстангенс;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1483,7 +1663,7 @@
                             {
                                 "id": "0,32,0,0",
                                 "type": 4,
-                                "elements": "\"arcsec\" - арксеканс;",
+                                "elements": "\"arcctg\" - арккотангенс;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1503,7 +1683,7 @@
                             {
                                 "id": "0,33,0,0",
                                 "type": 4,
-                                "elements": "\"arccosec\" - арккосеканс.",
+                                "elements": "\"arcsec\" - арксеканс;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1523,13 +1703,13 @@
                             {
                                 "id": "0,34,0,0",
                                 "type": 4,
-                                "elements": "Гиперболические функции:",
-                                "format_id": "4112ae68-1aae-4780-b4bf-eb8aa4b90aa2"
+                                "elements": "\"arccosec\" - арккосеканс.",
+                                "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
                     }
                 ],
-                "format_name": "Header 4",
+                "format_name": "Text body",
                 "format_alignment": 0
             },
             {
@@ -1543,13 +1723,13 @@
                             {
                                 "id": "0,35,0,0",
                                 "type": 4,
-                                "elements": "\"sh\" - гиперболический синус;",
-                                "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
+                                "elements": "Гиперболические функции:",
+                                "format_id": "4112ae68-1aae-4780-b4bf-eb8aa4b90aa2"
                             }
                         ]
                     }
                 ],
-                "format_name": "Text body",
+                "format_name": "Header 4",
                 "format_alignment": 0
             },
             {
@@ -1563,7 +1743,7 @@
                             {
                                 "id": "0,36,0,0",
                                 "type": 4,
-                                "elements": "\"ch\" - гиперболический косинус;",
+                                "elements": "\"sh\" - гиперболический синус;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1583,7 +1763,7 @@
                             {
                                 "id": "0,37,0,0",
                                 "type": 4,
-                                "elements": "\"th\" - гиперболический тангенс;",
+                                "elements": "\"ch\" - гиперболический косинус;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1603,7 +1783,7 @@
                             {
                                 "id": "0,38,0,0",
                                 "type": 4,
-                                "elements": "\"cth\" - гиперболический котангенс;",
+                                "elements": "\"th\" - гиперболический тангенс;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1623,7 +1803,7 @@
                             {
                                 "id": "0,39,0,0",
                                 "type": 4,
-                                "elements": "\"sch\" - гиперболический секанс;",
+                                "elements": "\"cth\" - гиперболический котангенс;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1643,7 +1823,7 @@
                             {
                                 "id": "0,40,0,0",
                                 "type": 4,
-                                "elements": "\"csch\" - гиперболический косеканс;",
+                                "elements": "\"sch\" - гиперболический секанс;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1663,7 +1843,7 @@
                             {
                                 "id": "0,41,0,0",
                                 "type": 4,
-                                "elements": "\"arsh\" - гиперболический ареасинус;",
+                                "elements": "\"csch\" - гиперболический косеканс;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1683,7 +1863,7 @@
                             {
                                 "id": "0,42,0,0",
                                 "type": 4,
-                                "elements": "\"arch\" - гиперболический ареакосинус;",
+                                "elements": "\"arsh\" - гиперболический ареасинус;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1703,7 +1883,7 @@
                             {
                                 "id": "0,43,0,0",
                                 "type": 4,
-                                "elements": "\"arth\" - гиперболический ареатангенс;",
+                                "elements": "\"arch\" - гиперболический ареакосинус;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1723,7 +1903,7 @@
                             {
                                 "id": "0,44,0,0",
                                 "type": 4,
-                                "elements": "\"arcth\" - гиперболический ареакотангенс;",
+                                "elements": "\"arth\" - гиперболический ареатангенс;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1743,7 +1923,7 @@
                             {
                                 "id": "0,45,0,0",
                                 "type": 4,
-                                "elements": "\"arsch\" - гиперболический ареасеканс;",
+                                "elements": "\"arcth\" - гиперболический ареакотангенс;",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
                             }
                         ]
@@ -1762,6 +1942,26 @@
                         "elements": [
                             {
                                 "id": "0,46,0,0",
+                                "type": 4,
+                                "elements": "\"arsch\" - гиперболический ареасеканс;",
+                                "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,47",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,47,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,47,0,0",
                                 "type": 4,
                                 "elements": "\"arcsch\" - гиперболический ареакосеканс.",
                                 "format_id": "0d9a2784-7c12-4485-bbe1-dd715231d611"
