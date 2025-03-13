@@ -10,7 +10,6 @@
 #include <boost/lexical_cast.hpp>
 #include <functional>
 #include <random>
-#include <curl/curl.h>
 
 namespace yutovo_server
 {
@@ -151,14 +150,18 @@ void AuthController::SendEmailCode(const HttpRequestPtr &req, std::function<void
                 message.replace(p, strlen("EMAIL_CODE"), email_code);
             const Json::Value& v = app().getCustomConfig();
             std::string email_name = v.get("email_name", "").asString();
-            SendEmail(email_name, email, subject, message);
-        
+
             session->erase("email_code");
-            session->insert("email_code", std::string(email_code));
             session->erase("email_code_email");
-            session->insert("email_code_email", std::string(email));
-        
-            GetLogger(session_id)->Info("Sent email code: {} to {}", email_code, email);
+            CURLcode r = SendEmail(email_name, email, subject, message);
+            if (r == CURLE_OK)
+            {
+                session->insert("email_code", email_code);
+                session->insert("email_code_email", email);
+                GetLogger(session_id)->Info("Sent email code: {} to {}", email_code, email);
+            }
+            else
+                GetLogger(session_id)->Error("Error sending email code: {} to {}: {}", email_code, email, (int)r);
         };
 
     std::string login, email, subject, message;
@@ -818,27 +821,39 @@ size_t AuthController::EmailPayload(char *ptr, size_t size, size_t nmemb, void *
     return 0;
 }
 
-bool AuthController::SendEmail(const std::string& from, const std::string& to, const std::string& subject, const std::string& message)
+CURLcode AuthController::SendEmail(const std::string& from, const std::string& to, const std::string& subject, const std::string& message)
 {
     CURL* curl = curl_easy_init();
     if (!curl)
-        return false;
+        return CURLE_FAILED_INIT;
     
     const Json::Value& v = app().getCustomConfig();
     std::string email_server = v.get("email_server", "").asString();
     std::string email_password = v.get("email_password", "").asString();
 
     CURLcode r = curl_easy_setopt(curl, CURLOPT_USERNAME, from.c_str());
-    r = curl_easy_setopt(curl, CURLOPT_PASSWORD, email_password.c_str());
-    r = curl_easy_setopt(curl, CURLOPT_URL, email_server.c_str());
-    r = curl_easy_setopt(curl, CURLOPT_USE_SSL, (long)CURLUSESSL_ALL);
-    r = curl_easy_setopt(curl, CURLOPT_MAIL_FROM, from.c_str());
+    if (r == CURLE_OK)
+        r = curl_easy_setopt(curl, CURLOPT_PASSWORD, email_password.c_str());
+    if (r == CURLE_OK)
+        r = curl_easy_setopt(curl, CURLOPT_URL, email_server.c_str());
+    if (r == CURLE_OK)
+        r = curl_easy_setopt(curl, CURLOPT_USE_SSL, (long)CURLUSESSL_ALL);
+    if (r == CURLE_OK)
+        r = curl_easy_setopt(curl, CURLOPT_MAIL_FROM, from.c_str());
     struct curl_slist* recipients = nullptr;
     recipients = curl_slist_append(recipients, to.c_str());
-    r = curl_easy_setopt(curl, CURLOPT_MAIL_RCPT, recipients);
-    r = curl_easy_setopt(curl, CURLOPT_READFUNCTION, AuthController::EmailPayload);
-    upload_context = { 0 };
+    if (r == CURLE_OK)
+        r = curl_easy_setopt(curl, CURLOPT_MAIL_RCPT, recipients);
+    if (r == CURLE_OK)
+        r = curl_easy_setopt(curl, CURLOPT_READFUNCTION, AuthController::EmailPayload);
+    if (r != CURLE_OK)
+    {
+        curl_slist_free_all(recipients);
+        curl_easy_cleanup(curl);
+        return r;
+    }
 
+    upload_context = { 0 };
     auto t = std::time(nullptr);
     auto tm = *std::localtime(&t);
     std::ostringstream oss;
@@ -856,12 +871,15 @@ bool AuthController::SendEmail(const std::string& from, const std::string& to, c
         "\r\n";
 
     r = curl_easy_setopt(curl, CURLOPT_READDATA, this);
-    r = curl_easy_setopt(curl, CURLOPT_UPLOAD, 1L);
-    r = curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT, 5);
-    r = curl_easy_perform(curl);
+    if (r == CURLE_OK)
+        r = curl_easy_setopt(curl, CURLOPT_UPLOAD, 1L);
+    if (r == CURLE_OK)
+        r = curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT, 5);
+    if (r == CURLE_OK)
+        r = curl_easy_perform(curl);
     curl_slist_free_all(recipients);
     curl_easy_cleanup(curl);
-    return r == CURLE_OK;
+    return r;
 }
 
 }
