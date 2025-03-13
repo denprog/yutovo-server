@@ -2,6 +2,7 @@
 #define __API_CONTROLLER_H__
 
 #include "controller_base.h"
+#include <curl/curl.h>
 
 using namespace drogon;
 using namespace yutovo;
@@ -83,7 +84,7 @@ public:
 private:
     void UpdateSessionTime(const std::string& session_id);
     static size_t EmailPayload(char *ptr, size_t size, size_t nmemb, void *userp);
-    bool SendEmail(const std::string& from, const std::string& to, const std::string& subject, const std::string& message);
+    CURLcode SendEmail(const std::string& from, const std::string& to, const std::string& subject, const std::string& message);
 
 private:
     int session_expires = 0;
