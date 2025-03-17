@@ -70,6 +70,102 @@
     },
     "string_formats": [
         {
+            "id": "7db12e12-3dd2-4d48-a8d5-1bc2aa91219c",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "5e2b7cc0-e13e-4e7e-8dff-00f145d34c98",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "c0e3e295-5e49-4248-98d4-73cf34324469",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "3c5905e7-97b9-4958-bff8-b8f318a129dd",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "dd5d9c17-756f-4af9-9058-8c3eb2cf7347",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "13a8daff-2ae4-4af5-9d00-3c1469f86a98",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "ffdab534-3b76-4ddc-823f-2948e91d83d3",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "c0bc34cc-8749-41e7-a1ba-4522f36b9da8",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
             "id": "f6e2c740-8f41-4fd5-9835-3f1b0b93d58c",
             "family": "Arial",
             "size": 14,
@@ -2289,7 +2385,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "f6e2c740-8f41-4fd5-9835-3f1b0b93d58c"
+            "default_string_format": "7db12e12-3dd2-4d48-a8d5-1bc2aa91219c"
         },
         {
             "name": "Header 1",
@@ -2301,7 +2397,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "a9f3c15e-c3b4-4b2c-85eb-681193d71cb5"
+            "default_string_format": "5e2b7cc0-e13e-4e7e-8dff-00f145d34c98"
         },
         {
             "name": "Header 2",
@@ -2313,7 +2409,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "8c9cb85e-474e-4359-bbf3-e74aea077304"
+            "default_string_format": "c0e3e295-5e49-4248-98d4-73cf34324469"
         },
         {
             "name": "Header 3",
@@ -2325,7 +2421,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "b0b04256-6ce9-49ef-8566-d6ac63905a47"
+            "default_string_format": "3c5905e7-97b9-4958-bff8-b8f318a129dd"
         },
         {
             "name": "Header 4",
@@ -2337,7 +2433,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "c6fa455e-f59a-4631-8902-c886687ffcd9"
+            "default_string_format": "dd5d9c17-756f-4af9-9058-8c3eb2cf7347"
         },
         {
             "name": "Example",
@@ -2349,7 +2445,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "5d0fb4ec-02bf-4f59-b0aa-b80416edd675"
+            "default_string_format": "13a8daff-2ae4-4af5-9d00-3c1469f86a98"
         },
         {
             "name": "Monospace",
@@ -2361,7 +2457,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "a963dbf1-e420-4ca8-b044-f6e0d07aa316"
+            "default_string_format": "ffdab534-3b76-4ddc-823f-2948e91d83d3"
         },
         {
             "name": "Code",
@@ -2373,7 +2469,7 @@
             "indent_first_line": 0,
             "spacing_before": 2,
             "spacing_after": 2,
-            "default_string_format": "703be717-6ec4-4919-a64d-b892b58d5d45"
+            "default_string_format": "c0bc34cc-8749-41e7-a1ba-4522f36b9da8"
         }
     ],
     "text": {
@@ -2391,7 +2487,7 @@
                             {
                                 "id": "0,0,0,0",
                                 "type": 4,
-                                "elements": "Все приведенные функции являются встроенными, однако могут быть переопределены ",
+                                "elements": "Все приведенные функции являются встроенными, однако ",
                                 "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
                             }
                         ]
@@ -2403,7 +2499,7 @@
                             {
                                 "id": "0,0,1,0",
                                 "type": 4,
-                                "elements": "пользователем. Смотрите также примеры использования этих функций с вещественными, ",
+                                "elements": "могут быть переопределены пользователем. Смотрите ",
                                 "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
                             }
                         ]
@@ -2415,7 +2511,31 @@
                             {
                                 "id": "0,0,2,0",
                                 "type": 4,
-                                "elements": "дробными, целыми и комплексными числами.",
+                                "elements": "также примеры использования этих функций с ",
+                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "0,0,3",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,0,3,0",
+                                "type": 4,
+                                "elements": "вещественными, дробными, целыми и комплексными ",
+                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "0,0,4",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,0,4,0",
+                                "type": 4,
+                                "elements": "числами.",
                                 "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
                             }
                         ]
@@ -2735,7 +2855,19 @@
                             {
                                 "id": "0,16,0,0",
                                 "type": 4,
-                                "elements": "• cth - гиперболический котангенс - вещественные, комплексные",
+                                "elements": "• cth - гиперболический котангенс - вещественные, ",
+                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "0,16,1",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,16,1,0",
+                                "type": 4,
+                                "elements": "комплексные",
                                 "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
                             }
                         ]
@@ -2775,7 +2907,19 @@
                             {
                                 "id": "0,18,0,0",
                                 "type": 4,
-                                "elements": "• csch - гиперболический косеканс - вещественные, комплексные",
+                                "elements": "• csch - гиперболический косеканс - вещественные, ",
+                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "0,18,1",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,18,1,0",
+                                "type": 4,
+                                "elements": "комплексные",
                                 "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
                             }
                         ]
@@ -2795,7 +2939,19 @@
                             {
                                 "id": "0,19,0,0",
                                 "type": 4,
-                                "elements": "• arsh - гиперболический ареасинус - вещественные, комплексные",
+                                "elements": "• arsh - гиперболический ареасинус - вещественные, ",
+                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "0,19,1",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,19,1,0",
+                                "type": 4,
+                                "elements": "комплексные",
                                 "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
                             }
                         ]
@@ -2815,7 +2971,19 @@
                             {
                                 "id": "0,20,0,0",
                                 "type": 4,
-                                "elements": "• arch - гиперболический ареакосинус - вещественные, комплексные",
+                                "elements": "• arch - гиперболический ареакосинус - вещественные, ",
+                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "0,20,1",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,20,1,0",
+                                "type": 4,
+                                "elements": "комплексные",
                                 "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
                             }
                         ]
@@ -2835,7 +3003,19 @@
                             {
                                 "id": "0,21,0,0",
                                 "type": 4,
-                                "elements": "• arth - гиперболический ареатангенс - вещественные, комплексные",
+                                "elements": "• arth - гиперболический ареатангенс - вещественные, ",
+                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "0,21,1",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,21,1,0",
+                                "type": 4,
+                                "elements": "комплексные",
                                 "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
                             }
                         ]
@@ -2855,7 +3035,19 @@
                             {
                                 "id": "0,22,0,0",
                                 "type": 4,
-                                "elements": "• arcth - гиперболический ареакотангенс - вещественные, комплексные",
+                                "elements": "• arcth - гиперболический ареакотангенс - вещественные, ",
+                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "0,22,1",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,22,1,0",
+                                "type": 4,
+                                "elements": "комплексные",
                                 "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
                             }
                         ]
@@ -2875,7 +3067,19 @@
                             {
                                 "id": "0,23,0,0",
                                 "type": 4,
-                                "elements": "• arsch - гиперболический ареасеканс - вещественные, комплексные",
+                                "elements": "• arsch - гиперболический ареасеканс - вещественные, ",
+                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "0,23,1",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,23,1,0",
+                                "type": 4,
+                                "elements": "комплексные",
                                 "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
                             }
                         ]
@@ -2895,7 +3099,19 @@
                             {
                                 "id": "0,24,0,0",
                                 "type": 4,
-                                "elements": "• arcsch - гиперболический ареакосеканс - вещественные, комплексные",
+                                "elements": "• arcsch - гиперболический ареакосеканс - вещественные, ",
+                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "0,24,1",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,24,1,0",
+                                "type": 4,
+                                "elements": "комплексные",
                                 "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
                             }
                         ]
@@ -3287,7 +3503,19 @@
                             {
                                 "id": "0,40,0,0",
                                 "type": 4,
-                                "elements": "• ceil - ближайшее целое не меньшее чем данное - вещественные",
+                                "elements": "• ceil - ближайшее целое не меньшее чем данное - ",
+                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "0,40,1",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,40,1,0",
+                                "type": 4,
+                                "elements": "вещественные",
                                 "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
                             }
                         ]
@@ -3307,7 +3535,19 @@
                             {
                                 "id": "0,41,0,0",
                                 "type": 4,
-                                "elements": "• floor - ближайшее целое не большее чем данное - вещественные",
+                                "elements": "• floor - ближайшее целое не большее чем данное - ",
+                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "0,41,1",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,41,1,0",
+                                "type": 4,
+                                "elements": "вещественные",
                                 "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
                             }
                         ]
@@ -3327,7 +3567,19 @@
                             {
                                 "id": "0,42,0,0",
                                 "type": 4,
-                                "elements": "• trunc - ближайшее целое не меньше по значению чем данное - вещественные",
+                                "elements": "• trunc - ближайшее целое не меньше по значению чем ",
+                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "0,42,1",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,42,1,0",
+                                "type": 4,
+                                "elements": "данное - вещественные",
                                 "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
                             }
                         ]
@@ -3467,7 +3719,19 @@
                             {
                                 "id": "0,49,0,0",
                                 "type": 4,
-                                "elements": "• re - действительная часть комплексного числа - комплексные",
+                                "elements": "• re - действительная часть комплексного числа - ",
+                                "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "0,49,1",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,49,1,0",
+                                "type": 4,
+                                "elements": "комплексные",
                                 "format_id": "09b51b09-b48c-4aeb-aa5d-92c75a75592f"
                             }
                         ]

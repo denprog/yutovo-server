@@ -70,6 +70,102 @@
     },
     "string_formats": [
         {
+            "id": "3b225f42-fd38-47aa-a93e-cc4d500ef1a2",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "e6f18c43-6d98-48db-8828-95ff8e0f696b",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "794418df-574a-479e-929f-4d00b7869a2b",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "6bc09597-a7fa-4b1a-b4b4-1b916bf9b410",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "c8acf972-abdb-4a37-9f80-198e6e4bfadc",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "aea0f1e7-3af9-4228-8600-12ac4821fa3c",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "a0df4066-0396-4190-b963-a2370dbb9f4e",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "3c71598f-9feb-4474-941c-299c305f0db5",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
             "id": "003cf8d8-5209-45fe-a03f-766f27c94c31",
             "family": "Arial",
             "size": 14,
@@ -356,6 +452,198 @@
             "text_color": 4278190080,
             "text_bg_color": 4294967295,
             "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "8931bd81-530f-4389-b002-a6ead32854ba",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "3852917d-2926-40c7-9558-ee3afca1b1c9",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "43497d4a-19fd-45b4-8684-3c38104bb6e0",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "4ac475a3-bfe8-4099-90be-0b050cd9625b",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "3020b370-f19f-4a83-bc7e-8a6ae5808dc4",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "893456a4-cdc6-412a-abfa-ce8735b11348",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "3e7224a6-ef08-48b7-a701-295b15b52ae7",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "84e4d23f-979c-4af8-8f58-7793fd6e460f",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "6fa11dac-2d2c-4917-9d23-35fd63785a19",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "8051a881-447c-40c1-8019-93db807c6633",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "f117acc4-0277-47a0-88bb-409e8cbe779d",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "b2c8fcfd-2a05-4a22-99f9-d3608f8a0e0d",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "c1c2e953-d5c2-455f-ba46-6c9282d9e72b",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "5b596d23-533e-4226-8795-ad097a57b818",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "50e03bb7-d0ab-4117-a80b-7f29b6e867a9",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "bfc1374e-74b5-4424-a088-420eb32918f6",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
         }
     ],
     "paragraph_formats": [
@@ -369,7 +657,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "003cf8d8-5209-45fe-a03f-766f27c94c31"
+            "default_string_format": "3b225f42-fd38-47aa-a93e-cc4d500ef1a2"
         },
         {
             "name": "Header 1",
@@ -381,7 +669,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "598e5c8e-73bc-4b56-8cac-029b5d41c399"
+            "default_string_format": "e6f18c43-6d98-48db-8828-95ff8e0f696b"
         },
         {
             "name": "Header 2",
@@ -393,7 +681,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "c09217a3-63f8-4e7b-ba2e-40803cd61e5a"
+            "default_string_format": "794418df-574a-479e-929f-4d00b7869a2b"
         },
         {
             "name": "Header 3",
@@ -405,7 +693,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "f9ac6998-8ced-44f8-bd5a-26114c88bd29"
+            "default_string_format": "6bc09597-a7fa-4b1a-b4b4-1b916bf9b410"
         },
         {
             "name": "Header 4",
@@ -417,7 +705,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "c26cdc1b-a35e-4255-84fc-4f6326bf0536"
+            "default_string_format": "c8acf972-abdb-4a37-9f80-198e6e4bfadc"
         },
         {
             "name": "Example",
@@ -429,7 +717,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "5cb5232b-19e4-4846-b1a4-55bf6619ef99"
+            "default_string_format": "aea0f1e7-3af9-4228-8600-12ac4821fa3c"
         },
         {
             "name": "Monospace",
@@ -441,7 +729,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "4b774ec7-cba2-4349-afb2-906a594f0e2d"
+            "default_string_format": "a0df4066-0396-4190-b963-a2370dbb9f4e"
         },
         {
             "name": "Code",
@@ -453,7 +741,7 @@
             "indent_first_line": 0,
             "spacing_before": 2,
             "spacing_after": 2,
-            "default_string_format": "ae2ce624-0c39-4e43-a1ac-0b727c7eb4d9"
+            "default_string_format": "3c71598f-9feb-4474-941c-299c305f0db5"
         }
     ],
     "text": {
@@ -471,19 +759,7 @@
                             {
                                 "id": "0,0,0,0",
                                 "type": 4,
-                                "elements": "Yutovo supports units of numbers and unit systems. There are built-in and user-defined units. A unit is defined by the symbol ",
-                                "format_id": "003cf8d8-5209-45fe-a03f-766f27c94c31"
-                            },
-                            {
-                                "id": "0,0,0,1",
-                                "type": 34,
-                                "elements": [],
-                                "image_base64": "iVBORw0KGgoAAAANSUhEUgAAABIAAAAQCAIAAACUZLgLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAABOElEQVQokd2SscqCYBiFv+/tM8ghS3IIbHHNrSVxaGiPvIAGr6EraesGugKHLsBNjQZxi0AMdHAQScjy620o/n/+/7EzHQ48HHjfQxGR/F3wD+bLMfbjELEsy8PhkCQJAKiqOh6PB4MBABBCHo9HVVV1XSuKAgC/2O12c113u916ntdqtSaTyXK5NAxjNBoxxi6Xy/l87na7siwDAH3/jXOeZZllWXEcN03zfD7rugYAy7JWq5UkSfv9PgiC9Xptmma73SaIiIjX69V1XV3XN5uN7/uO49i2LYpip9Pp9/uyLCuKslgs8jznnCPip62qqtPpFEXRdDodDof3+z1JkiAIdrtdGIaU0tlsZtv2fD5njBFCPljTNGVZcs57vZ4gCO+kKIrj8ZimKaVU0zRd1yVJeh+CfvEmX8yEmyifipn1AAAAAElFTkSuQmCC"
-                            },
-                            {
-                                "id": "0,0,0,2",
-                                "type": 4,
-                                "elements": " (the \"~\" key). A unit must be defined before its first use. You can define any ",
+                                "elements": "Yutovo supports units of numbers and unit systems. There are built-in and user-defined units. A unit is defined by ",
                                 "format_id": "003cf8d8-5209-45fe-a03f-766f27c94c31"
                             }
                         ]
@@ -495,7 +771,43 @@
                             {
                                 "id": "0,0,1,0",
                                 "type": 4,
-                                "elements": "composite units by assigning names to them. In the future, if units are used in the calculated expression, the result will be presented with the most appropriate unit.",
+                                "elements": "the symbol ",
+                                "format_id": "003cf8d8-5209-45fe-a03f-766f27c94c31"
+                            },
+                            {
+                                "id": "0,0,1,1",
+                                "type": 34,
+                                "elements": [],
+                                "image_base64": "iVBORw0KGgoAAAANSUhEUgAAABIAAAAQCAIAAACUZLgLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAABOElEQVQokd2SscqCYBiFv+/tM8ghS3IIbHHNrSVxaGiPvIAGr6EraesGugKHLsBNjQZxi0AMdHAQScjy620o/n/+/7EzHQ48HHjfQxGR/F3wD+bLMfbjELEsy8PhkCQJAKiqOh6PB4MBABBCHo9HVVV1XSuKAgC/2O12c113u916ntdqtSaTyXK5NAxjNBoxxi6Xy/l87na7siwDAH3/jXOeZZllWXEcN03zfD7rugYAy7JWq5UkSfv9PgiC9Xptmma73SaIiIjX69V1XV3XN5uN7/uO49i2LYpip9Pp9/uyLCuKslgs8jznnCPip62qqtPpFEXRdDodDof3+z1JkiAIdrtdGIaU0tlsZtv2fD5njBFCPljTNGVZcs57vZ4gCO+kKIrj8ZimKaVU0zRd1yVJeh+CfvEmX8yEmyifipn1AAAAAElFTkSuQmCC"
+                            },
+                            {
+                                "id": "0,0,1,2",
+                                "type": 4,
+                                "elements": " (the \"~\" key). A unit must be defined before its first use. You can define any composite units by ",
+                                "format_id": "003cf8d8-5209-45fe-a03f-766f27c94c31"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "0,0,2",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,0,2,0",
+                                "type": 4,
+                                "elements": "assigning names to them. In the future, if units are used in the calculated expression, the result will be presented ",
+                                "format_id": "003cf8d8-5209-45fe-a03f-766f27c94c31"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "0,0,3",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,0,3,0",
+                                "type": 4,
+                                "elements": "with the most appropriate unit.",
                                 "format_id": "003cf8d8-5209-45fe-a03f-766f27c94c31"
                             }
                         ]
@@ -537,6 +849,50 @@
                                 "type": 4,
                                 "elements": "Built-in units are defined for the following systems: SI, Russian and non-systemic.",
                                 "format_id": "003cf8d8-5209-45fe-a03f-766f27c94c31"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,3",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,3,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,3,0,0",
+                                "type": 4,
+                                "elements": "Using of certain units depends on the current locale of the document, which is set in the settings by clicking the ",
+                                "format_id": "3b225f42-fd38-47aa-a93e-cc4d500ef1a2"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "0,3,1",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,3,1,0",
+                                "type": 4,
+                                "elements": "button ",
+                                "format_id": "3b225f42-fd38-47aa-a93e-cc4d500ef1a2"
+                            },
+                            {
+                                "id": "0,3,1,1",
+                                "type": 34,
+                                "elements": [],
+                                "image_base64": "iVBORw0KGgoAAAANSUhEUgAAABsAAAAbCAIAAAACtmMCAAAACXBIWXMAAA7EAAAOxAGVKw4bAAABM0lEQVRIie2VPW6EMBCFvVEOQEmHO0rmBvgGcARzLw4BJwBkkKCDjgIJu6Kho6Nxik0sMD9hI4ot8qphPP5svdGYxzzP6FY9pJT3Ej/uxb0HMY5jzvmdxCiKzomrzmRZlqbpbh0AeJ6HEAqCACGEMX7mCSGu6y4rP5cflmVpy0qmaarYcRwAUFu0yhURY6wOPxEAEEIOl+WLYowNw3BScEgchiHP81fPk1Ie9rpt2zAMf3Vgq5WPTdPUda2IKl8URdd1u/sBwHGcQ+K3ET/xbl7TTv7IjiRJKKV/8PGsM4yxO4lL5Xk+TdNF4qW5DsNwHMcrlXpnhBDLV8A0Tdu2n3FVVUKI7X6MsTaIKyLnfPlSAIAilmVpGMaWSAjRR/uKNZTSvu/v9NH3/d0L7ur/z/WuxC8I5z2x/wRBvQAAAABJRU5ErkJggg=="
+                            },
+                            {
+                                "id": "0,3,1,2",
+                                "type": 4,
+                                "elements": ".",
+                                "format_id": "3b225f42-fd38-47aa-a93e-cc4d500ef1a2"
                             }
                         ]
                     }
