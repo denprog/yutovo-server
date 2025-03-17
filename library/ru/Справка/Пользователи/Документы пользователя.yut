@@ -70,6 +70,102 @@
     },
     "string_formats": [
         {
+            "id": "8931bd81-530f-4389-b002-a6ead32854ba",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "3852917d-2926-40c7-9558-ee3afca1b1c9",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "43497d4a-19fd-45b4-8684-3c38104bb6e0",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "4ac475a3-bfe8-4099-90be-0b050cd9625b",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "3020b370-f19f-4a83-bc7e-8a6ae5808dc4",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "893456a4-cdc6-412a-abfa-ce8735b11348",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "3e7224a6-ef08-48b7-a701-295b15b52ae7",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "84e4d23f-979c-4af8-8f58-7793fd6e460f",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
             "id": "6fa11dac-2d2c-4917-9d23-35fd63785a19",
             "family": "Arial",
             "size": 14,
@@ -177,7 +273,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "6fa11dac-2d2c-4917-9d23-35fd63785a19"
+            "default_string_format": "8931bd81-530f-4389-b002-a6ead32854ba"
         },
         {
             "name": "Header 1",
@@ -189,7 +285,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "8051a881-447c-40c1-8019-93db807c6633"
+            "default_string_format": "3852917d-2926-40c7-9558-ee3afca1b1c9"
         },
         {
             "name": "Header 2",
@@ -201,7 +297,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "f117acc4-0277-47a0-88bb-409e8cbe779d"
+            "default_string_format": "43497d4a-19fd-45b4-8684-3c38104bb6e0"
         },
         {
             "name": "Header 3",
@@ -213,7 +309,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "b2c8fcfd-2a05-4a22-99f9-d3608f8a0e0d"
+            "default_string_format": "4ac475a3-bfe8-4099-90be-0b050cd9625b"
         },
         {
             "name": "Header 4",
@@ -225,7 +321,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "c1c2e953-d5c2-455f-ba46-6c9282d9e72b"
+            "default_string_format": "3020b370-f19f-4a83-bc7e-8a6ae5808dc4"
         },
         {
             "name": "Example",
@@ -237,7 +333,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "5b596d23-533e-4226-8795-ad097a57b818"
+            "default_string_format": "893456a4-cdc6-412a-abfa-ce8735b11348"
         },
         {
             "name": "Monospace",
@@ -249,7 +345,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "50e03bb7-d0ab-4117-a80b-7f29b6e867a9"
+            "default_string_format": "3e7224a6-ef08-48b7-a701-295b15b52ae7"
         },
         {
             "name": "Code",
@@ -261,7 +357,7 @@
             "indent_first_line": 0,
             "spacing_before": 2,
             "spacing_after": 2,
-            "default_string_format": "bfc1374e-74b5-4424-a088-420eb32918f6"
+            "default_string_format": "84e4d23f-979c-4af8-8f58-7793fd6e460f"
         }
     ],
     "text": {
@@ -279,7 +375,7 @@
                             {
                                 "id": "0,0,0,0",
                                 "type": 4,
-                                "elements": "Документы пользователя хранятся на сайте, их список отбражается в разделе Документы. В данное время ",
+                                "elements": "Документы пользователя хранятся на сайте, их список отбражается в разделе Документы. В данное ",
                                 "format_id": "6fa11dac-2d2c-4917-9d23-35fd63785a19"
                             }
                         ]
@@ -291,7 +387,7 @@
                             {
                                 "id": "0,0,1,0",
                                 "type": 4,
-                                "elements": "максимальное количество документов одного пользователя - 10, максимальный размер каждого документа - 100 ",
+                                "elements": "время максимальное количество документов одного пользователя - 10, максимальный размер каждого ",
                                 "format_id": "6fa11dac-2d2c-4917-9d23-35fd63785a19"
                             }
                         ]
@@ -303,7 +399,7 @@
                             {
                                 "id": "0,0,2,0",
                                 "type": 4,
-                                "elements": "кбайт.",
+                                "elements": "документа - 100 кбайт.",
                                 "format_id": "6fa11dac-2d2c-4917-9d23-35fd63785a19"
                             }
                         ]
@@ -477,7 +573,19 @@
                             {
                                 "id": "0,6,0,1",
                                 "type": 4,
-                                "elements": " - скачать документ на компьютер пользователя; в дальнейшем он может быть открыт приложением Ютово для ПК.",
+                                "elements": " - скачать документ на компьютер пользователя; в дальнейшем он может быть открыт приложением ",
+                                "format_id": "6fa11dac-2d2c-4917-9d23-35fd63785a19"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "0,6,1",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,6,1,0",
+                                "type": 4,
+                                "elements": "Ютово для ПК.",
                                 "format_id": "6fa11dac-2d2c-4917-9d23-35fd63785a19"
                             }
                         ]
@@ -549,7 +657,7 @@
                             {
                                 "id": "0,9,0,0",
                                 "type": 4,
-                                "elements": "Документ, хранящийся на сайте открывается по клику на его имени в разделе Документы. После этого этим ",
+                                "elements": "Документ, хранящийся на сайте открывается по клику на его имени в разделе Документы. После этого ",
                                 "format_id": "6fa11dac-2d2c-4917-9d23-35fd63785a19"
                             }
                         ]
@@ -561,7 +669,7 @@
                             {
                                 "id": "0,9,1,0",
                                 "type": 4,
-                                "elements": "документом можно делиться с другими людьми - для этого надо им передать его адрес из строки браузера. Они ",
+                                "elements": "этим документом можно делиться с другими людьми - для этого надо им передать его адрес из строки ",
                                 "format_id": "6fa11dac-2d2c-4917-9d23-35fd63785a19"
                             }
                         ]
@@ -573,7 +681,19 @@
                             {
                                 "id": "0,9,2,0",
                                 "type": 4,
-                                "elements": "смогут просматривать и редактировать этот документ, но сохранить смогут только в свой аккуаунт.",
+                                "elements": "браузера. Они смогут просматривать и редактировать этот документ, но сохранить смогут только в свой ",
+                                "format_id": "6fa11dac-2d2c-4917-9d23-35fd63785a19"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "0,9,3",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,9,3,0",
+                                "type": 4,
+                                "elements": "аккуаунт.",
                                 "format_id": "6fa11dac-2d2c-4917-9d23-35fd63785a19"
                             }
                         ]
@@ -593,7 +713,7 @@
                             {
                                 "id": "0,10,0,0",
                                 "type": 4,
-                                "elements": "Документы из библиотеки также можно сохранить в свой раздел - после сохранения он появится в соответствующей ",
+                                "elements": "Документы из библиотеки также можно сохранить в свой раздел - после сохранения он появится в ",
                                 "format_id": "6fa11dac-2d2c-4917-9d23-35fd63785a19"
                             }
                         ]
@@ -605,7 +725,7 @@
                             {
                                 "id": "0,10,1,0",
                                 "type": 4,
-                                "elements": "панели. Таким образом, примеры и различные материалы из библиотеки можно использовать как начальная точка ",
+                                "elements": "соответствующей панели. Таким образом, примеры и различные материалы из библиотеки можно ",
                                 "format_id": "6fa11dac-2d2c-4917-9d23-35fd63785a19"
                             }
                         ]
@@ -617,8 +737,64 @@
                             {
                                 "id": "0,10,2,0",
                                 "type": 4,
-                                "elements": "для ваших расчётов.",
+                                "elements": "использовать как начальная точка для ваших расчётов.",
                                 "format_id": "6fa11dac-2d2c-4917-9d23-35fd63785a19"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,11",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,11,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,11,0,0",
+                                "type": 4,
+                                "elements": "Каждый документ имеет связанный с ним язык (локаль), который задаётся в настройках документа по ",
+                                "format_id": "8931bd81-530f-4389-b002-a6ead32854ba"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "0,11,1",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,11,1,0",
+                                "type": 4,
+                                "elements": "кнопке ",
+                                "format_id": "8931bd81-530f-4389-b002-a6ead32854ba"
+                            },
+                            {
+                                "id": "0,11,1,1",
+                                "type": 34,
+                                "elements": [],
+                                "image_base64": "iVBORw0KGgoAAAANSUhEUgAAABsAAAAbCAIAAAACtmMCAAAACXBIWXMAAA7EAAAOxAGVKw4bAAABM0lEQVRIie2VPW6EMBCFvVEOQEmHO0rmBvgGcARzLw4BJwBkkKCDjgIJu6Kho6Nxik0sMD9hI4ot8qphPP5svdGYxzzP6FY9pJT3Ej/uxb0HMY5jzvmdxCiKzomrzmRZlqbpbh0AeJ6HEAqCACGEMX7mCSGu6y4rP5cflmVpy0qmaarYcRwAUFu0yhURY6wOPxEAEEIOl+WLYowNw3BScEgchiHP81fPk1Ie9rpt2zAMf3Vgq5WPTdPUda2IKl8URdd1u/sBwHGcQ+K3ET/xbl7TTv7IjiRJKKV/8PGsM4yxO4lL5Xk+TdNF4qW5DsNwHMcrlXpnhBDLV8A0Tdu2n3FVVUKI7X6MsTaIKyLnfPlSAIAilmVpGMaWSAjRR/uKNZTSvu/v9NH3/d0L7ur/z/WuxC8I5z2x/wRBvQAAAABJRU5ErkJggg=="
+                            },
+                            {
+                                "id": "0,11,1,2",
+                                "type": 4,
+                                "elements": ". Язык определяет набор встроенных переменных, функций и размерностей, которые будут ",
+                                "format_id": "8931bd81-530f-4389-b002-a6ead32854ba"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "0,11,2",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,11,2,0",
+                                "type": 4,
+                                "elements": "использоваться в вычислениях.",
+                                "format_id": "8931bd81-530f-4389-b002-a6ead32854ba"
                             }
                         ]
                     }

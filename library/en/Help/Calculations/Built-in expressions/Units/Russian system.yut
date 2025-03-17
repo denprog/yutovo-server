@@ -70,6 +70,102 @@
     },
     "string_formats": [
         {
+            "id": "eca96b47-4be1-4b12-9856-240e1a20f26e",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "e37f2f2a-9efe-4506-a644-411724fde983",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "b09d538e-c7cd-40e0-b4f0-930424b557eb",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "63e4cdfe-dd65-4be9-bfa9-76bdcc046d26",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "2d3ac397-2036-4174-8401-144b57ec0f82",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "c1976d39-7ab3-4ab8-9bc6-efebc14e8822",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "71d2872e-5935-425b-b0d2-0512316739a4",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "401adab8-0e94-4a3a-83bb-2d038d4d1f1b",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
             "id": "ca934bee-140f-41a5-a758-4eb5775830af",
             "family": "Arial",
             "size": 14,
@@ -1952,6 +2048,390 @@
             "text_color": 4278190335,
             "text_bg_color": 4294967295,
             "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "5f78129c-8e2f-4396-9523-4b0151d81f85",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "cb913419-2c5f-4c10-9a39-9f1eaeaf4b81",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "bcb7aa0f-8648-4313-8591-8d95e87b2b57",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "ffb69993-607b-47ae-a55b-55227b20f062",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "c1e373f1-cc0f-4379-98be-331d0c5ea1de",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "7d37489c-0535-45a1-89f9-dc42c772df2d",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "77e800c4-52f5-4456-adb5-9d32b918a3bf",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "2f913862-03b2-4abd-854b-c07998e4c68a",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "1e774b55-8581-4366-b3d9-2c9381c2325c",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "1a846728-5ad6-4b4c-b48b-2649ac148edc",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "75ee6f4f-f488-46e0-afc3-b5d77785bd63",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "3f7c934f-6d14-411c-a60d-0869754e197c",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "65ed78e4-ee27-4823-ba3d-230bfa2c3273",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "9ea09dfe-8216-44bd-8e68-d176bb0c061b",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "eeafbe63-2ba2-4fcd-a4a9-ee98c4d67b0e",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "2e74215e-f71b-4cdc-96e5-e0685561793c",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "b5339607-b1ac-49cb-a242-188aa0597781",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "895f81e1-323e-4bda-aba8-18a11a6dbc81",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "86c4be81-d6db-4978-b110-b0758b4a8f8d",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "2e0f2fcb-dd5d-451d-ab1c-7d4b07415d29",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "5ba1336b-a582-437e-aa65-adfc476dfe43",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "c4208134-3ae3-4502-9607-0aced3820f50",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "6961f7c9-703b-4369-b6fe-c9a960229bb1",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "c37ae7b8-da4f-4d68-b7fa-9458bc6c3fb8",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "253e3335-c46b-45c8-8c15-3c7352baca5a",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "45f2e128-ec8d-40e5-b398-7b42b9149f43",
+            "family": "Arial",
+            "size": 30,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "793c94c1-9e4c-4a6f-bcaa-3bc49b03241c",
+            "family": "Arial",
+            "size": 26,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "035087d6-c9ee-41d8-85a7-27ac4b02a365",
+            "family": "Arial",
+            "size": 22,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "e82d949a-a4d7-43b3-ac8f-98efe852114e",
+            "family": "Arial",
+            "size": 16,
+            "bold": true,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "17912247-ec78-4ff5-b229-3341af417aab",
+            "family": "Arial",
+            "size": 14,
+            "bold": false,
+            "italic": true,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "7025e0d1-fbfa-487f-afcd-cdc45d1c6ae7",
+            "family": "Courier New",
+            "size": 12,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
+        },
+        {
+            "id": "38e141ee-1cbc-455e-8695-04dca3590c41",
+            "family": "Courier New",
+            "size": 14,
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strikethrough": false,
+            "text_color": 4278190080,
+            "text_bg_color": 4294967295,
+            "text_bg_selection_color": 4278190335
         }
     ],
     "paragraph_formats": [
@@ -1965,7 +2445,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "ca934bee-140f-41a5-a758-4eb5775830af"
+            "default_string_format": "eca96b47-4be1-4b12-9856-240e1a20f26e"
         },
         {
             "name": "Header 1",
@@ -1977,7 +2457,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "85a22101-522e-4238-9e04-349fbf89ed07"
+            "default_string_format": "e37f2f2a-9efe-4506-a644-411724fde983"
         },
         {
             "name": "Header 2",
@@ -1989,7 +2469,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "7d3d9ca9-9249-4076-969a-6ea02b149751"
+            "default_string_format": "b09d538e-c7cd-40e0-b4f0-930424b557eb"
         },
         {
             "name": "Header 3",
@@ -2001,7 +2481,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "f6e1ce79-4252-46f2-ad35-e7022d3de1d8"
+            "default_string_format": "63e4cdfe-dd65-4be9-bfa9-76bdcc046d26"
         },
         {
             "name": "Header 4",
@@ -2013,7 +2493,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "57bade83-68c5-4090-84e3-56287705f1a6"
+            "default_string_format": "2d3ac397-2036-4174-8401-144b57ec0f82"
         },
         {
             "name": "Example",
@@ -2025,7 +2505,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "082f2b99-914a-4b8f-86e9-fbd5f616c7b9"
+            "default_string_format": "c1976d39-7ab3-4ab8-9bc6-efebc14e8822"
         },
         {
             "name": "Monospace",
@@ -2037,7 +2517,7 @@
             "indent_first_line": 0,
             "spacing_before": 10,
             "spacing_after": 10,
-            "default_string_format": "5db0505f-9c17-467f-adcd-204fc032aadc"
+            "default_string_format": "71d2872e-5935-425b-b0d2-0512316739a4"
         },
         {
             "name": "Code",
@@ -2049,7 +2529,7 @@
             "indent_first_line": 0,
             "spacing_before": 2,
             "spacing_after": 2,
-            "default_string_format": "5a8b3a4d-4dfb-4cf5-a957-a1c9df6b0529"
+            "default_string_format": "401adab8-0e94-4a3a-83bb-2d038d4d1f1b"
         }
     ],
     "text": {
@@ -2067,13 +2547,13 @@
                             {
                                 "id": "0,0,0,0",
                                 "type": 4,
-                                "elements": "Distance",
-                                "format_id": "57bade83-68c5-4090-84e3-56287705f1a6"
+                                "elements": "The listed units will be used in calculations when setting the English language of the document.",
+                                "format_id": "5f78129c-8e2f-4396-9523-4b0151d81f85"
                             }
                         ]
                     }
                 ],
-                "format_name": "Header 4",
+                "format_name": "Text body",
                 "format_alignment": 0
             },
             {
@@ -2087,13 +2567,13 @@
                             {
                                 "id": "0,1,0,0",
                                 "type": 4,
-                                "elements": "• tochka",
-                                "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
+                                "elements": "Distance",
+                                "format_id": "57bade83-68c5-4090-84e3-56287705f1a6"
                             }
                         ]
                     }
                 ],
-                "format_name": "Text body",
+                "format_name": "Header 4",
                 "format_alignment": 0
             },
             {
@@ -2107,7 +2587,7 @@
                             {
                                 "id": "0,2,0,0",
                                 "type": 4,
-                                "elements": "• liniya",
+                                "elements": "• tochka",
                                 "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
@@ -2127,7 +2607,7 @@
                             {
                                 "id": "0,3,0,0",
                                 "type": 4,
-                                "elements": "• sotka",
+                                "elements": "• liniya",
                                 "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
@@ -2147,7 +2627,7 @@
                             {
                                 "id": "0,4,0,0",
                                 "type": 4,
-                                "elements": "• dyum",
+                                "elements": "• sotka",
                                 "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
@@ -2167,7 +2647,7 @@
                             {
                                 "id": "0,5,0,0",
                                 "type": 4,
-                                "elements": "• vershok",
+                                "elements": "• dyum",
                                 "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
@@ -2187,7 +2667,7 @@
                             {
                                 "id": "0,6,0,0",
                                 "type": 4,
-                                "elements": "• chetvert",
+                                "elements": "• vershok",
                                 "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
@@ -2207,7 +2687,7 @@
                             {
                                 "id": "0,7,0,0",
                                 "type": 4,
-                                "elements": "• fut",
+                                "elements": "• chetvert",
                                 "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
@@ -2227,7 +2707,7 @@
                             {
                                 "id": "0,8,0,0",
                                 "type": 4,
-                                "elements": "• arshin",
+                                "elements": "• fut",
                                 "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
@@ -2247,7 +2727,7 @@
                             {
                                 "id": "0,9,0,0",
                                 "type": 4,
-                                "elements": "• sazhen",
+                                "elements": "• arshin",
                                 "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
@@ -2267,7 +2747,7 @@
                             {
                                 "id": "0,10,0,0",
                                 "type": 4,
-                                "elements": "• versta",
+                                "elements": "• sazhen",
                                 "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
@@ -2287,13 +2767,13 @@
                             {
                                 "id": "0,11,0,0",
                                 "type": 4,
-                                "elements": "Mass",
-                                "format_id": "57bade83-68c5-4090-84e3-56287705f1a6"
+                                "elements": "• versta",
+                                "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
                     }
                 ],
-                "format_name": "Header 4",
+                "format_name": "Text body",
                 "format_alignment": 0
             },
             {
@@ -2307,13 +2787,13 @@
                             {
                                 "id": "0,12,0,0",
                                 "type": 4,
-                                "elements": "• funt",
-                                "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
+                                "elements": "Mass",
+                                "format_id": "57bade83-68c5-4090-84e3-56287705f1a6"
                             }
                         ]
                     }
                 ],
-                "format_name": "Text body",
+                "format_name": "Header 4",
                 "format_alignment": 0
             },
             {
@@ -2327,7 +2807,7 @@
                             {
                                 "id": "0,13,0,0",
                                 "type": 4,
-                                "elements": "• batman",
+                                "elements": "• funt",
                                 "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
@@ -2347,7 +2827,7 @@
                             {
                                 "id": "0,14,0,0",
                                 "type": 4,
-                                "elements": "• pud",
+                                "elements": "• batman",
                                 "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
@@ -2367,7 +2847,7 @@
                             {
                                 "id": "0,15,0,0",
                                 "type": 4,
-                                "elements": "• bezmen",
+                                "elements": "• pud",
                                 "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
@@ -2387,7 +2867,7 @@
                             {
                                 "id": "0,16,0,0",
                                 "type": 4,
-                                "elements": "• kongar",
+                                "elements": "• bezmen",
                                 "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
@@ -2407,7 +2887,7 @@
                             {
                                 "id": "0,17,0,0",
                                 "type": 4,
-                                "elements": "• pirog",
+                                "elements": "• kongar",
                                 "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
@@ -2427,7 +2907,7 @@
                             {
                                 "id": "0,18,0,0",
                                 "type": 4,
-                                "elements": "• zolotnik",
+                                "elements": "• pirog",
                                 "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
@@ -2447,7 +2927,7 @@
                             {
                                 "id": "0,19,0,0",
                                 "type": 4,
-                                "elements": "• dolya",
+                                "elements": "• zolotnik",
                                 "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
@@ -2467,7 +2947,7 @@
                             {
                                 "id": "0,20,0,0",
                                 "type": 4,
-                                "elements": "• pochka",
+                                "elements": "• dolya",
                                 "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
@@ -2487,7 +2967,7 @@
                             {
                                 "id": "0,21,0,0",
                                 "type": 4,
-                                "elements": "• lot",
+                                "elements": "• pochka",
                                 "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
@@ -2507,13 +2987,13 @@
                             {
                                 "id": "0,22,0,0",
                                 "type": 4,
-                                "elements": "Time",
-                                "format_id": "57bade83-68c5-4090-84e3-56287705f1a6"
+                                "elements": "• lot",
+                                "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
                     }
                 ],
-                "format_name": "Header 4",
+                "format_name": "Text body",
                 "format_alignment": 0
             },
             {
@@ -2527,13 +3007,13 @@
                             {
                                 "id": "0,23,0,0",
                                 "type": 4,
-                                "elements": "• s - second",
-                                "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
+                                "elements": "Time",
+                                "format_id": "57bade83-68c5-4090-84e3-56287705f1a6"
                             }
                         ]
                     }
                 ],
-                "format_name": "Text body",
+                "format_name": "Header 4",
                 "format_alignment": 0
             },
             {
@@ -2547,7 +3027,7 @@
                             {
                                 "id": "0,24,0,0",
                                 "type": 4,
-                                "elements": "• min - minute",
+                                "elements": "• s - second",
                                 "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
@@ -2567,7 +3047,7 @@
                             {
                                 "id": "0,25,0,0",
                                 "type": 4,
-                                "elements": "• hour",
+                                "elements": "• min - minute",
                                 "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
@@ -2587,13 +3067,13 @@
                             {
                                 "id": "0,26,0,0",
                                 "type": 4,
-                                "elements": "Volume",
-                                "format_id": "57bade83-68c5-4090-84e3-56287705f1a6"
+                                "elements": "• hour",
+                                "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
                     }
                 ],
-                "format_name": "Header 4",
+                "format_name": "Text body",
                 "format_alignment": 0
             },
             {
@@ -2607,13 +3087,13 @@
                             {
                                 "id": "0,27,0,0",
                                 "type": 4,
-                                "elements": "• stakan",
-                                "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
+                                "elements": "Volume",
+                                "format_id": "57bade83-68c5-4090-84e3-56287705f1a6"
                             }
                         ]
                     }
                 ],
-                "format_name": "Text body",
+                "format_name": "Header 4",
                 "format_alignment": 0
             },
             {
@@ -2627,7 +3107,7 @@
                             {
                                 "id": "0,28,0,0",
                                 "type": 4,
-                                "elements": "• polygarnets",
+                                "elements": "• stakan",
                                 "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
@@ -2647,7 +3127,7 @@
                             {
                                 "id": "0,29,0,0",
                                 "type": 4,
-                                "elements": "• garnets",
+                                "elements": "• polygarnets",
                                 "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
@@ -2667,7 +3147,7 @@
                             {
                                 "id": "0,30,0,0",
                                 "type": 4,
-                                "elements": "• chetveric",
+                                "elements": "• garnets",
                                 "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
@@ -2687,7 +3167,7 @@
                             {
                                 "id": "0,31,0,0",
                                 "type": 4,
-                                "elements": "• osmina",
+                                "elements": "• chetveric",
                                 "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
@@ -2707,7 +3187,7 @@
                             {
                                 "id": "0,32,0,0",
                                 "type": 4,
-                                "elements": "• polosminy",
+                                "elements": "• osmina",
                                 "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
@@ -2727,7 +3207,7 @@
                             {
                                 "id": "0,33,0,0",
                                 "type": 4,
-                                "elements": "• chet",
+                                "elements": "• polosminy",
                                 "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
@@ -2747,7 +3227,7 @@
                             {
                                 "id": "0,34,0,0",
                                 "type": 4,
-                                "elements": "• polovnik",
+                                "elements": "• chet",
                                 "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
@@ -2767,7 +3247,7 @@
                             {
                                 "id": "0,35,0,0",
                                 "type": 4,
-                                "elements": "• kadka",
+                                "elements": "• polovnik",
                                 "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
@@ -2787,7 +3267,7 @@
                             {
                                 "id": "0,36,0,0",
                                 "type": 4,
-                                "elements": "• shkalic",
+                                "elements": "• kadka",
                                 "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
@@ -2807,7 +3287,7 @@
                             {
                                 "id": "0,37,0,0",
                                 "type": 4,
-                                "elements": "• charka",
+                                "elements": "• shkalic",
                                 "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
@@ -2827,7 +3307,7 @@
                             {
                                 "id": "0,38,0,0",
                                 "type": 4,
-                                "elements": "• kosushka",
+                                "elements": "• charka",
                                 "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
@@ -2847,7 +3327,7 @@
                             {
                                 "id": "0,39,0,0",
                                 "type": 4,
-                                "elements": "• shtof",
+                                "elements": "• kosushka",
                                 "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
@@ -2867,7 +3347,7 @@
                             {
                                 "id": "0,40,0,0",
                                 "type": 4,
-                                "elements": "• vedro",
+                                "elements": "• shtof",
                                 "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
                             }
                         ]
@@ -2886,6 +3366,26 @@
                         "elements": [
                             {
                                 "id": "0,41,0,0",
+                                "type": 4,
+                                "elements": "• vedro",
+                                "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
+                            }
+                        ]
+                    }
+                ],
+                "format_name": "Text body",
+                "format_alignment": 0
+            },
+            {
+                "id": "0,42",
+                "type": 2,
+                "elements": [
+                    {
+                        "id": "0,42,0",
+                        "type": 3,
+                        "elements": [
+                            {
+                                "id": "0,42,0,0",
                                 "type": 4,
                                 "elements": "• bochka",
                                 "format_id": "10e44d8c-f76a-46ac-9807-942720727dfc"
