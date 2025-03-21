@@ -348,6 +348,13 @@ void ServiceController::ListIdentifiers(const HttpRequestPtr& req, std::function
     }
     
     auto json = req->getJsonObject();
+    if (!json || !json->isObject())
+    {
+        GetLogger(session_id)->Error("ListIdentifiers error: Json not found in the request");
+        SendError(k400BadRequest, "Json not found in the request", callback);
+        return;
+    }
+
     (*json)["command"] = "LIST_IDENTIFIERS";
     Json::FastWriter json_writer;
     solver_response = "";
@@ -376,7 +383,7 @@ void ServiceController::NewDocument(const HttpRequestPtr& req, std::function<voi
     GetLogger(session_id)->Info("NewDocument request");
 
     auto json = req->getJsonObject();
-    if (!json)
+    if (!json || !json->isObject())
     {
         GetLogger(session_id)->Error("NewDocument error: Json not found in the request");
         SendError(k400BadRequest, "Json not found in the request", callback);
@@ -427,7 +434,7 @@ void ServiceController::NewDocument(const HttpRequestPtr& req, std::function<voi
             }
 
             std::string name;
-            if (json->isObject() && json->isMember("name") && (*json)["name"].isString())
+            if (json->isMember("name") && (*json)["name"].isString())
                 name = (*json)["name"].asString();
             
             //for registered user create a new document
@@ -451,7 +458,7 @@ void ServiceController::NewDocument(const HttpRequestPtr& req, std::function<voi
                 }
             }
 
-            if (json->isObject() && json->isMember("json"))
+            if (json->isMember("json"))
             {
                 orm::Result result = db->execSqlSync("update user_documents set document=$1 where document_id=$2", 
                     (*json)["json"].isString() ? (*json)["json"].asString() : (*json)["json"].toStyledString(), document_id);
@@ -480,7 +487,7 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
     session_id = req->getCookie("session_id");
     GetLogger(session_id)->Debug("SaveDocument request");
     auto json = req->getJsonObject();
-    if (!json)
+    if (!json || !json->isObject())
     {
         GetLogger(session_id)->Error("SaveDocument error: Wrong request: Json not found in the request");
         SendError(k400BadRequest, "Json not found in the request", callback);
@@ -494,7 +501,7 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
     }
 
     Json::Value& doc = *json;
-    if (!doc.isObject() || !doc.isMember("text"))
+    if (!doc.isMember("text"))
     {
         GetLogger(session_id)->Error("SaveDocument error: Text field not found in the request");
         SendError(k400BadRequest, "Text field not found in the request", callback);
@@ -763,7 +770,7 @@ void ServiceController::LoadDocument(const HttpRequestPtr& req, std::function<vo
 
     SessionPtr session = req->session();
     std::string document_id;
-    if (json->isObject() && json->isMember("document_id") && ((*json)["document_id"].isInt() || (*json)["document_id"].isString()))
+    if (json->isMember("document_id") && ((*json)["document_id"].isInt() || (*json)["document_id"].isString()))
         document_id = (*json)["document_id"].asString();
     if (document_id.empty() || document_id == "-1")
         document_id = req->getCookie("document_id");
@@ -864,7 +871,7 @@ void ServiceController::DeleteDocument(const HttpRequestPtr& req, std::function<
     GetLogger(session_id)->Debug("DeleteDocument request");
 
     auto json = req->getJsonObject();
-    if (!json)
+    if (!json || !json->isObject())
     {
         GetLogger(session_id)->Error("DeleteDocument error: Wrong request: Json not found in the request");
         SendError(k400BadRequest, "Json not found in the request", callback);
@@ -872,7 +879,7 @@ void ServiceController::DeleteDocument(const HttpRequestPtr& req, std::function<
     }
 
     std::string document_id;
-    if (json->isObject() && json->isMember("document_id") && (*json)["document_id"].isInt())
+    if (json->isMember("document_id") && (*json)["document_id"].isInt())
         document_id = (*json)["document_id"].asString();
     else
         document_id = req->getCookie("document_id");
