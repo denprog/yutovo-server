@@ -447,11 +447,21 @@ void ServiceController::NewDocument(const HttpRequestPtr& req, std::function<voi
                 return;
             }
 
+            int max_file_size = session->get<int>("max_file_size");
             Json::Value text;
             Json::Value& doc = *json;
             if (doc.isObject() && doc.isMember("text"))
             {
-                result = db->execSqlSync("update user_documents set document=$1 where document_id=$2", doc.toStyledString(), document_id);
+                auto d = doc.toStyledString();
+                if (d.size() > max_file_size)
+                {
+                    db->execSqlSync("delete from user_documents where document_id=$1", document_id);
+                    GetLogger(session_id)->Error("Document size is more then limit");
+                    SendError(k400BadRequest, "Document size is more then limit", callback);
+                    return;
+                }
+    
+                result = db->execSqlSync("update user_documents set document=$1 where document_id=$2", d, document_id);
                 if (result.affectedRows() == 0)
                 {
                     db->execSqlSync("delete from user_documents where document_id=$1", document_id);
@@ -463,8 +473,17 @@ void ServiceController::NewDocument(const HttpRequestPtr& req, std::function<voi
 
             if (json->isMember("json"))
             {
+                auto d = (*json)["json"].toStyledString();
+                if (d.size() > max_file_size)
+                {
+                    db->execSqlSync("delete from user_documents where document_id=$1", document_id);
+                    GetLogger(session_id)->Error("Document size is more then limit");
+                    SendError(k400BadRequest, "Document size is more then limit", callback);
+                    return;
+                }
+
                 orm::Result result = db->execSqlSync("update user_documents set document=$1 where document_id=$2", 
-                    (*json)["json"].isString() ? (*json)["json"].asString() : (*json)["json"].toStyledString(), document_id);
+                    (*json)["json"].isString() ? (*json)["json"].asString() : d, document_id);
                 if (result.affectedRows() == 0)
                 {
                     db->execSqlSync("delete from user_documents where document_id=$1", document_id);
@@ -645,7 +664,6 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
         path += "}'";
 
         auto document = text.toStyledString();
-        auto s = document.size();
 
         //firstly check the size
         if (document_size + document.size() > max_file_size)
