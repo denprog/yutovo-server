@@ -396,6 +396,7 @@ void ServiceController::NewDocument(const HttpRequestPtr& req, std::function<voi
         return;
     }
 
+    bool add_doc = false;
     orm::DbClientPtr db = app().getDbClient();
     SessionPtr session = req->session();
     std::string user_id = session->get<std::string>("user_id");
@@ -438,6 +439,7 @@ void ServiceController::NewDocument(const HttpRequestPtr& req, std::function<voi
                 name = (*json)["name"].asString();
             
             //for registered user create a new document
+            add_doc = true;
             if (!AddDocument(user_id, document_id, name))
             {
                 GetLogger(session_id)->Error("Database error: Error inserting a document");
@@ -452,6 +454,7 @@ void ServiceController::NewDocument(const HttpRequestPtr& req, std::function<voi
                 result = db->execSqlSync("update user_documents set document=$1 where document_id=$2", doc.toStyledString(), document_id);
                 if (result.affectedRows() == 0)
                 {
+                    db->execSqlSync("delete from user_documents where document_id=$1", document_id);
                     GetLogger(session_id)->Error("Database error: Error inserting a document: document_id={}", document_id);
                     SendError(k500InternalServerError, "Error inserting a document", callback);
                     return;
@@ -464,6 +467,7 @@ void ServiceController::NewDocument(const HttpRequestPtr& req, std::function<voi
                     (*json)["json"].isString() ? (*json)["json"].asString() : (*json)["json"].toStyledString(), document_id);
                 if (result.affectedRows() == 0)
                 {
+                    db->execSqlSync("delete from user_documents where document_id=$1", document_id);
                     GetLogger(session_id)->Error("Database error: Error inserting a document: document_id={}", document_id);
                     SendError(k500InternalServerError, "Error inserting a document", callback);
                     return;
@@ -477,8 +481,10 @@ void ServiceController::NewDocument(const HttpRequestPtr& req, std::function<voi
     }
     catch (const orm::DrogonDbException& e)
     {
+        if (add_doc)
+            db->execSqlSync("delete from user_documents where document_id=$1", document_id);
         GetLogger(session_id)->Error("Database error: {}", e.base().what());
-        SendError(k500InternalServerError, e.base().what(), callback);
+        SendError(k500InternalServerError, "Error inserting a document", callback);
     }
 }
 
