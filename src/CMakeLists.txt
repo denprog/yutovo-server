@@ -42,6 +42,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     X11
     jpeg
     curl
+    boost_iostreams
 )
 
 target_sources(${PROJECT_NAME} PRIVATE

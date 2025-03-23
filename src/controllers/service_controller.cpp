@@ -2,6 +2,10 @@
 #include "../logic/clear_db.h"
 #include <functional>
 #include <fstream>
+#include <iostream>
+#include <boost/iostreams/filtering_streambuf.hpp>
+#include <boost/iostreams/copy.hpp>
+#include <boost/iostreams/filter/gzip.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/uuid/uuid.hpp>
 #include <boost/uuid/uuid_generators.hpp>
@@ -223,6 +227,29 @@ void ServiceController::LoadLibraryDocument(const HttpRequestPtr& req, std::func
             GetLogger(session_id)->Error("LoadLibraryDocument error: Path not found: {}", path.c_str());
             SendError(k404NotFound, "Path not found", callback);
             return;
+        }
+
+        std::ifstream file(path.string().c_str());
+        if (!file.is_open())
+        {
+            GetLogger(session_id)->Error("LoadLibraryDocument error: Path not found: {}", path.c_str());
+            SendError(k500InternalServerError, "Error loading file", callback);
+            return;
+        }
+
+        try
+        {
+            //try to open as compressed file
+            boost::iostreams::filtering_streambuf<boost::iostreams::input> in;
+            in.push(boost::iostreams::gzip_decompressor());
+            in.push(file);
+            std::stringstream json;
+            boost::iostreams::copy(in, json);
+            SendJson(callback, json.str());
+            return;
+        }
+        catch (const std::ios_base::failure& ex)
+        {
         }
 
         SendFile(callback, path);
