@@ -25,41 +25,41 @@
     //         ]
     //     }
     // ],
-    "db_clients": [
-        {
-            //name: Name of the client,'default' by default
-            //"name":"",
-            //rdbms: Server type, postgresql,mysql or sqlite3, "postgresql" by default
-            "rdbms": "postgresql",
-            //filename: Sqlite3 db file name
-            //"filename":"",
-            //host: Server address,localhost by default
-            "host": "127.0.0.1",
-            //port: Server port, 5432 by default
-            "port": 5432,
-            //dbname: Database name
-            "dbname": "yutovo",
-            //user: 'postgres' by default
-            "user": "yutovo",
-            //passwd: '' by default
-            "passwd": "11",
-            //is_fast: false by default, if it is true, the client is faster but user can't call
-            //any synchronous interface of it.
-            "is_fast": false,
-            //client_encoding: The character set used by the client. it is empty string by default which 
-            //means use the default character set.
-            //"client_encoding": "",
-            //number_of_connections: 1 by default, if the 'is_fast' is true, the number is the number of  
-            //connections per IO thread, otherwise it is the total number of all connections.  
-            "number_of_connections": 1,
-            //timeout: -1.0 by default, in seconds, the timeout for executing a SQL query.
-            //zero or negative value means no timeout.
-            "timeout": 10.0,
-            //"auto_batch": this feature is only available for the PostgreSQL driver(version >= 14.0), see
-            // the wiki for more details.
-            "auto_batch": false
-        }
-    ],
+    // "db_clients": [
+    //     {
+    //         //name: Name of the client,'default' by default
+    //         //"name":"",
+    //         //rdbms: Server type, postgresql,mysql or sqlite3, "postgresql" by default
+    //         "rdbms": "postgresql",
+    //         //filename: Sqlite3 db file name
+    //         //"filename":"",
+    //         //host: Server address,localhost by default
+    //         "host": "127.0.0.1",
+    //         //port: Server port, 5432 by default
+    //         "port": 5432,
+    //         //dbname: Database name
+    //         "dbname": "yutovo",
+    //         //user: 'postgres' by default
+    //         "user": "yutovo",
+    //         //passwd: '' by default
+    //         "passwd": "",
+    //         //is_fast: false by default, if it is true, the client is faster but user can't call
+    //         //any synchronous interface of it.
+    //         "is_fast": false,
+    //         //client_encoding: The character set used by the client. it is empty string by default which 
+    //         //means use the default character set.
+    //         //"client_encoding": "",
+    //         //number_of_connections: 1 by default, if the 'is_fast' is true, the number is the number of  
+    //         //connections per IO thread, otherwise it is the total number of all connections.  
+    //         "number_of_connections": 1,
+    //         //timeout: -1.0 by default, in seconds, the timeout for executing a SQL query.
+    //         //zero or negative value means no timeout.
+    //         "timeout": 10.0,
+    //         //"auto_batch": this feature is only available for the PostgreSQL driver(version >= 14.0), see
+    //         // the wiki for more details.
+    //         "auto_batch": false
+    //     }
+    // ],
     "app": {
         //number_of_threads: The number of IO threads, 1 by default, if the value is set to 0, the number of threads
         //is the number of CPU cores
@@ -293,7 +293,7 @@
         "solver_address": "wss://yutovo.ru:8010",
         "email_server": "smtps://smtp.beget.com:465",
         "email_name": "no-reply@yutovo.ru",
-        "email_password": "OB*ZCUZ*4IBx",
+        "email_password": "",
         "email_ssl_key_path": "../../keys/email_yutovo_service.key",
         "email_ssl_pub_path": "../../keys/email_yutovo_service.pub"
     }

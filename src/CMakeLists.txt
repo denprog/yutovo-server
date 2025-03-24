@@ -109,3 +109,12 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/../keys/yutovo_service.key ${CMAKE_CURRENT_BINARY_DIR}/../
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/../keys/yutovo_service.pub ${CMAKE_CURRENT_BINARY_DIR}/../
 )
+
+add_definitions(-DDB_HOST="127.0.0.1")
+add_definitions(-DDB_PORT=5432)
+add_definitions(-DDB_NAME="yutovo")
+add_definitions(-DDB_USER="yutovo")
+add_definitions(-DDB_PASSWORD="nom5Jouv")
+add_definitions(-DDB_TIMEOUT=10.0)
+
+add_definitions(-DEMAIL_PASSWORD="OB*ZCUZ*4IBx")

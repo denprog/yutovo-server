@@ -829,11 +829,10 @@ CURLcode AuthController::SendEmail(const std::string& from, const std::string& t
     
     const Json::Value& v = app().getCustomConfig();
     std::string email_server = v.get("email_server", "").asString();
-    std::string email_password = v.get("email_password", "").asString();
 
     CURLcode r = curl_easy_setopt(curl, CURLOPT_USERNAME, from.c_str());
     if (r == CURLE_OK)
-        r = curl_easy_setopt(curl, CURLOPT_PASSWORD, email_password.c_str());
+        r = curl_easy_setopt(curl, CURLOPT_PASSWORD, EMAIL_PASSWORD);
     if (r == CURLE_OK)
         r = curl_easy_setopt(curl, CURLOPT_URL, email_server.c_str());
     if (r == CURLE_OK)
