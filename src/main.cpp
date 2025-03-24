@@ -35,7 +35,10 @@ int main(int argc, char *argv[])
         std::thread app_thread = std::thread(
             [&]()
             {
-                drogon::app().addListener("0.0.0.0", 9001).loadConfigFile("config.json");
+                drogon::app().
+                    createDbClient("postgresql", DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASSWORD, 1, "", "default", false, "", DB_TIMEOUT, false).
+                    addListener("0.0.0.0", 9001).
+                    loadConfigFile("config.json");
                 if (!document_root.empty())
                     drogon::app().setDocumentRoot(document_root);
                 drogon::app().enableSession();
