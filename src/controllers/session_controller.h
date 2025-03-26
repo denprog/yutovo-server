@@ -1,6 +1,8 @@
 #ifndef __SESSION_CONTROLLER_H__
 #define __SESSION_CONTROLLER_H__
 
+#include <map>
+#include <drogon/HttpClient.h>
 #include "controller_base.h"
 
 using namespace drogon;
@@ -25,6 +27,8 @@ public:
     ADD_METHOD_TO(SessionController::LibraryDocument3, "/library/{1}/{2}/{3}/{4}", Get);
     ADD_METHOD_TO(SessionController::LibraryDocument4, "/library/{1}/{2}/{3}/{4}/{5}", Get);
     ADD_METHOD_TO(SessionController::Downloads, "/downloads/{1}", Get);
+    ADD_METHOD_VIA_REGEX(SessionController::Cors, "/cors/(.*)", Get); //reverse proxy for Yandex Metrica
+    ADD_METHOD_VIA_REGEX(SessionController::Cors, "/cors/(.*)", Post);
     METHOD_LIST_END
 
     void Root(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, std::string param);
@@ -41,10 +45,13 @@ public:
     void LibraryDocument4(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, 
         std::string language, std::string dir1, std::string dir2, std::string dir3, std::string filename);
     void Downloads(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, std::string param);
+    void Cors(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, std::string param);
 
 private:
-    void LibraryDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>& callback, 
-        std::string language, std::string path);
+    void LibraryDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>& callback, std::string language, std::string path);
+
+private:
+    std::map<std::string, HttpClientPtr> cors_clients;
 };
 
 }
