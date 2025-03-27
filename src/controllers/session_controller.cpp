@@ -302,4 +302,57 @@ void SessionController::Downloads(const HttpRequestPtr& req, std::function<void 
     callback(resp);
 }
 
+void SessionController::Cors(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, std::string param)
+{
+    session_id = req->getCookie("session_id");
+    GetLogger(session_id)->Debug("Request cors: param={}, query={}", param, req->getQuery());
+
+    auto c = req->cookies();
+    req->addCookie("app_initialized", "");
+    req->addCookie("JSESSIONID", "");
+    req->addCookie("language", "");
+    req->addCookie("session_id", "");
+    c = req->cookies();
+
+    std::string address, path;
+    auto p = param.find('/');
+    if (p == std::string::npos)
+        address = param;
+    else
+    {
+        address = param.substr(0, p);
+        path = param.substr(p);
+    }
+    
+    auto it = cors_clients.find(address);
+    if (it == cors_clients.end())
+    {
+        auto _p = cors_clients.emplace(address, HttpClient::newHttpClient("https://" + address, 
+            trantor::EventLoop::getEventLoopOfCurrentThread()));
+        it = _p.first;
+    }
+
+    auto client = it->second;
+    client->enableCookies(true);
+    req->setPath(path);
+    req->setPassThrough(true);
+    client->sendRequest(req, 
+        [s = session_id, callback = std::move(callback)]
+        (ReqResult res, const HttpResponsePtr &resp)
+        {
+            if (res == ReqResult::Ok)
+            {
+                resp->setPassThrough(true);
+                callback(resp);
+            }
+            else
+            {
+                GetLogger(s)->Debug("proxy error={}", (int)res);
+                auto err_resp = HttpResponse::newHttpResponse();
+                err_resp->setStatusCode(res == ReqResult::Timeout ? k504GatewayTimeout : k500InternalServerError);
+                callback(err_resp);
+            }
+        }, 20);
+}
+
 }
