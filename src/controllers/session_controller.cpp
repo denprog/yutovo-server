@@ -323,18 +323,12 @@ void SessionController::Cors(const HttpRequestPtr& req, std::function<void (cons
         address = param.substr(0, p);
         path = param.substr(p);
     }
-    
-    auto it = cors_clients.find(address);
-    if (it == cors_clients.end())
-    {
-        auto client = HttpClient::newHttpClient("https://" + address + "/", trantor::EventLoop::getEventLoopOfCurrentThread());
-        client->setPipeliningDepth(0);
-        client->enableCookies(true);
-        auto _p = cors_clients.emplace(address, client);
-        it = _p.first;
-    }
 
-    auto client = it->second;
+    auto client = HttpClient::newHttpClient("https://" + address + "/");
+    client->setPipeliningDepth(0);
+    client->enableCookies(true);
+
+    // auto client = it->second;
     GetLogger(session_id)->Debug("path={}", path);
     req->setPath(path);
     req->setPassThrough(true);
@@ -355,7 +349,7 @@ void SessionController::Cors(const HttpRequestPtr& req, std::function<void (cons
                 err_resp->setStatusCode(res == ReqResult::Timeout ? k504GatewayTimeout : k500InternalServerError);
                 callback(err_resp);
             }
-        }, 10);
+        }, 2);
 }
 
 }
