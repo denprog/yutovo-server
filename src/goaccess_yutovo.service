@@ -1,0 +1,10 @@
+[Unit]
+Description=GoAccess Yutovo script
+
+[Service]
+ExecStart=/root/goaccess_yutovo
+Restart=always
+RestartSec=1
+
+[Install]
+WantedBy=multi-user.target
