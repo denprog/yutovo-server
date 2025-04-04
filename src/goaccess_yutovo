@@ -1,0 +1,3 @@
+#!/bin/bash
+
+goaccess -f /var/log/nginx/yutovo.ru.access.log --real-time-html --restore --persist -a -o /var/www/goaccess/report.html --ws-url=wss://yutovo.ru --ssl-cert=/etc/letsencrypt/live/yutovo.ru/fullchain.pem --ssl-key=/etc/letsencrypt/live/yutovo.ru/privkey.pem
