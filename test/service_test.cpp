@@ -1052,4 +1052,46 @@ TEST_F(ServiceTest, document18)
     }
 }
 
+//Check a wrong SessionId
+TEST_F(ServiceTest, document19)
+{
+    auto client = HttpClient::newHttpClient(address);
+    client->enableCookies(true);
+
+    Register(client, "User1", "user1@mail.com", "11");
+
+    auto req = HttpRequest::newHttpRequest();
+    req->setMethod(drogon::Get);
+    req->setPath("/");
+
+    auto resp = client->sendRequest(req);
+    ReqResult& res = resp.first;
+    HttpResponsePtr& r = resp.second;
+    ASSERT_TRUE(res == ReqResult::Ok) << res;
+    ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
+    auto session_cookie = r->getCookie("session_id");
+    ASSERT_TRUE(session_cookie.value() != "");
+
+    std::string access_token, document_id, name, language;
+    Login(client, "User1", "11", access_token, document_id, name, language);
+
+    resp = client->sendRequest(req);
+    r = resp.second;
+
+    std::ifstream f("../../tests/files11.yut");
+
+    Json::Value save_body;
+    f >> save_body;
+    req = HttpRequest::newHttpJsonRequest(save_body);
+    req->setMethod(drogon::Post);
+    req->setPath("/service/save-document");
+    client->addCookie("session_id", "1234324");
+    client->addCookie("document_id", document_id);
+    req->addHeader("access_token", access_token);
+    resp = client->sendRequest(req, 10);
+    res = resp.first;
+    r = resp.second;
+    ASSERT_TRUE(r->getStatusCode() == k403Forbidden) << r->getStatusCode();
+}
+
 }
