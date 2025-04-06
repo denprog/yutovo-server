@@ -26,7 +26,7 @@ LoginFilter::LoginFilter()
 void LoginFilter::doFilter(const HttpRequestPtr& req, FilterCallback&& not_valid_callback, FilterChainCallback&& valid_callback)
 {
     std::string session_id = req->getCookie("session_id");
-    if (!IsGuid(session_id))
+    if (!session_id.empty() && !IsGuid(session_id))
     {
         GetLogger(session_id)->Error("LoginFilter SessionId error: {}", session_id);
         auto resp = HttpResponse::newHttpResponse();

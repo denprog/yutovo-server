@@ -14,7 +14,9 @@ int main(int argc, char** argv)
     std::thread app_thread = std::thread(
         [&]()
         {
-            drogon::app().loadConfigFile("config.json");
+            drogon::app().
+                createDbClient("postgresql", DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASSWORD, 1, "", "default", false, "", DB_TIMEOUT, false).
+                loadConfigFile("config.json");
             drogon::app().run();
         });
     

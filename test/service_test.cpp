@@ -142,7 +142,9 @@ TEST_F(ServiceTest, document1)
     r = resp.second;
     ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
 
-    req = HttpRequest::newHttpJsonRequest("{}");
+    Json::Value s;
+    s["document_id"] = -1;
+    req = HttpRequest::newHttpJsonRequest(s);
     req->setMethod(drogon::Post);
     req->setPath("/service/load-document");
     resp = client->sendRequest(req, 10);
@@ -264,7 +266,9 @@ TEST_F(ServiceTest, document3)
     resp = client->sendRequest(req);
     r = resp.second;
 
-    req = HttpRequest::newHttpJsonRequest("{}");
+    Json::Value s;
+    s["document_id"] = -1;
+    req = HttpRequest::newHttpJsonRequest(s);
     req->setMethod(drogon::Post);
     client->addCookie("document_id", document_id);
     req->setPath("/service/load-document");
@@ -315,7 +319,9 @@ TEST_F(ServiceTest, document4)
     client->enableCookies(true);
 
     //load the last document
-    auto req = HttpRequest::newHttpJsonRequest("{}");
+    Json::Value s;
+    s["document_id"] = -1;
+    auto req = HttpRequest::newHttpJsonRequest(s);
     req->setMethod(drogon::Post);
     req->setPath("/service/load-document");
     client->addCookie("document_id", document_id);
@@ -385,7 +391,9 @@ TEST_F(ServiceTest, document5)
     ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
 
     //load the last document
-    req = HttpRequest::newHttpJsonRequest("{}");
+    Json::Value s;
+    s["document_id"] = -1;
+    req = HttpRequest::newHttpJsonRequest(s);
     req->setMethod(drogon::Post);
     req->setPath("/service/load-document");
     resp = client->sendRequest(req, 10);
@@ -415,7 +423,7 @@ TEST_F(ServiceTest, document5)
     ASSERT_TRUE(d == new_document_id);
 
     //load the new document
-    req = HttpRequest::newHttpJsonRequest("{}");
+    req = HttpRequest::newHttpJsonRequest(s);
     req->setMethod(drogon::Post);
     client->addCookie("document_id", new_document_id);
     req->setPath("/service/load-document");
@@ -475,7 +483,7 @@ TEST_F(ServiceTest, document6)
         auto client = HttpClient::newHttpClient(address);
         client->enableCookies(true);
 
-        Register(client, "User2", "user1@mail.com", "22");
+        Register(client, "User2", "user2@mail.com", "22");
 
         auto req = HttpRequest::newHttpRequest();
         req->setMethod(drogon::Get);
@@ -487,8 +495,10 @@ TEST_F(ServiceTest, document6)
         std::string document2_id;
         Login(client, "User2", "22", access_token, document2_id, name, language);
 
-        //load the foreing document
-        req = HttpRequest::newHttpJsonRequest("{}");
+        //load a foreign document
+        Json::Value s;
+        s["document_id"] = -1;
+        req = HttpRequest::newHttpJsonRequest(s);
         req->setMethod(drogon::Post);
         req->setPath("/service/load-document");
         client->addCookie("document_id", document_id);
@@ -544,7 +554,9 @@ TEST_F(ServiceTest, document7)
     ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
     SessionPtr session = req->session();
 
-    req = HttpRequest::newHttpJsonRequest("{}");
+    Json::Value s;
+    s["document_id"] = -1;
+    req = HttpRequest::newHttpJsonRequest(s);
     req->setMethod(drogon::Post);
     req->setPath("/service/list-documents");
     req->addHeader("access_token", access_token);
@@ -584,7 +596,9 @@ TEST_F(ServiceTest, document8)
     client->addCookie("document_id", document_id);
     DeleteDocument(client, access_token);
 
-    req = HttpRequest::newHttpJsonRequest("{\"document_id\":" + document_id + "}");
+    Json::Value s;
+    s["document_id"] = document_id;
+    req = HttpRequest::newHttpJsonRequest(s);
     req->setMethod(drogon::Post);
     req->setPath("/service/load-document");
     resp = client->sendRequest(req, 10);
@@ -841,7 +855,9 @@ TEST_F(ServiceTest, document15)
     for (int i = 0; i < 9; ++i)
         NewDocument(client, access_token, document_id);
 
-    auto req = HttpRequest::newHttpJsonRequest("{}");
+    Json::Value s;
+    s["document_id"] = -1;
+    auto req = HttpRequest::newHttpJsonRequest(s);
     req->setMethod(drogon::Post);
     req->setPath("/service/new-document");
     req->addHeader("access_token", access_token);
