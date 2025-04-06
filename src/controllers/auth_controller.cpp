@@ -26,7 +26,8 @@ AuthController::AuthController()
 
 void AuthController::GetCaptcha(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
-    std::string session_id = req->getCookie("session_id");
+    if (!GetSessionId(req, callback))
+        return;
     GetLogger(session_id)->Debug("Get captcha request");
 
     //generate captcha text (6 char max).
@@ -323,7 +324,8 @@ void AuthController::SendEmailCode(const HttpRequestPtr &req, std::function<void
 
 void AuthController::Register(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, User&& user)
 {
-    std::string session_id = req->getCookie("session_id");
+    if (!GetSessionId(req, callback))
+        return;
     GetLogger(session_id)->Info("Register request: login={}, email={}, name={}", user.login, user.email, user.name);
 
     SessionPtr session = req->session();
@@ -399,7 +401,8 @@ void AuthController::Register(const HttpRequestPtr& req, std::function<void (con
 
 void AuthController::UnRegister(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
-    std::string session_id = req->getCookie("session_id");
+    if (!GetSessionId(req, callback))
+        return;
     auto json = req->getJsonObject();
     if (!json || !json->isObject())
     {
@@ -445,7 +448,8 @@ void AuthController::UnRegister(const HttpRequestPtr& req, std::function<void (c
 
 void AuthController::Login(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
-    session_id = req->getCookie("session_id");
+    if (!GetSessionId(req, callback))
+        return;
     auto json = req->getJsonObject();
     if (!json || !json->isObject())
     {
@@ -630,7 +634,8 @@ void AuthController::Logout(const HttpRequestPtr& req, std::function<void (const
 
 void AuthController::RefreshToken(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
-    std::string session_id = req->getCookie("session_id");
+    if (!GetSessionId(req, callback))
+        return;
     std::string refresh_token = req->getCookie("refresh_token");
     orm::DbClientPtr db = app().getDbClient();
     SessionPtr session = req->session();
@@ -674,7 +679,6 @@ void AuthController::RefreshToken(const HttpRequestPtr& req, std::function<void 
         session->erase("user_id");
         session->insert("user_id", user_id);
 
-        std::string session_id = req->getCookie("session_id");
         if (!session_id.empty())
             UpdateSessionTime(session_id);
 
@@ -710,6 +714,9 @@ void AuthController::RefreshToken(const HttpRequestPtr& req, std::function<void 
 
 void AuthController::SetLanguage(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
+    if (!GetSessionId(req, callback))
+        return;
+
     auto json = req->getJsonObject();
     if (!json || !json->isObject())
     {
@@ -717,7 +724,6 @@ void AuthController::SetLanguage(const HttpRequestPtr& req, std::function<void (
         return;
     }
 
-    std::string session_id = req->getCookie("session_id");
     SessionPtr session = req->session();
     std::string user_id = session->get<std::string>("user_id");
 
@@ -749,9 +755,11 @@ void AuthController::SetLanguage(const HttpRequestPtr& req, std::function<void (
 
 void AuthController::GetLanguage(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
+    if (!GetSessionId(req, callback))
+        return;
+
     SessionPtr session = req->session();
     std::string user_id = session->get<std::string>("user_id");
-    std::string session_id = req->getCookie("session_id");
 
     GetLogger(session_id)->Debug("Get language request: user_id={}", user_id);
     orm::DbClientPtr db = app().getDbClient();

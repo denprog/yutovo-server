@@ -64,6 +64,8 @@ protected:
 
     std::string GetHash(const std::string& str, const std::string& salt);
 
+    bool GetSessionId(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>& callback);
+
 private:
     void LogJson(const Json::Value& value);
 
