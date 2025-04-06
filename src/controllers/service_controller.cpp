@@ -930,15 +930,8 @@ void ServiceController::DeleteDocument(const HttpRequestPtr& req, std::function<
     GetLogger(session_id)->Debug("DeleteDocument request");
 
     auto json = req->getJsonObject();
-    if (!json || !json->isObject())
-    {
-        GetLogger(session_id)->Error("DeleteDocument error: Wrong request: Json not found in the request");
-        SendError(k400BadRequest, "Json not found in the request", callback);
-        return;
-    }
-
     std::string document_id;
-    if (json->isMember("document_id") && (*json)["document_id"].isInt())
+    if (json && json->isObject() && json->isMember("document_id") && (*json)["document_id"].isInt())
         document_id = (*json)["document_id"].asString();
     else
         document_id = req->getCookie("document_id");

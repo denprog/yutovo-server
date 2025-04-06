@@ -140,7 +140,9 @@ void TestBase::Logout(HttpClientPtr client, const std::string& login, const std:
 
 void TestBase::NewDocument(HttpClientPtr client, const std::string& access_token, std::string& document_id)
 {
-    auto req = HttpRequest::newHttpJsonRequest("{}");
+    Json::Value s;
+    s["document_id"] = -1;
+    auto req = HttpRequest::newHttpJsonRequest(s);
     req->setMethod(drogon::Post);
     req->setPath("/service/new-document");
     req->addHeader("access_token", access_token);
