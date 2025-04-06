@@ -26,6 +26,15 @@ LoginFilter::LoginFilter()
 void LoginFilter::doFilter(const HttpRequestPtr& req, FilterCallback&& not_valid_callback, FilterChainCallback&& valid_callback)
 {
     std::string session_id = req->getCookie("session_id");
+    if (!IsGuid(session_id))
+    {
+        GetLogger(session_id)->Error("LoginFilter SessionId error: {}", session_id);
+        auto resp = HttpResponse::newHttpResponse();
+        resp->setStatusCode(k403Forbidden);
+        not_valid_callback(resp);
+        return;
+    }
+
     SessionPtr session = req->session();
     if (session_id.empty())
         session_id = session->get<std::string>("session_id");
@@ -420,6 +429,26 @@ std::string ControllerBase::GetHash(const std::string& str, const std::string& s
     for(int i = 0; i < MD5_DIGEST_LENGTH; i++)
         sprintf(&hash_str[i * 2], "%02x", (unsigned int)hash[i]);
     return std::string(&hash_str[0], MD5_DIGEST_LENGTH * 2);
+}
+
+bool ControllerBase::GetSessionId(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>& callback)
+{
+    session_id = req->getCookie("session_id");
+    if (session_id.empty())
+    {
+        SessionPtr session = req->session();
+        session_id = session->get<std::string>("session_id");
+        return true;
+    }
+
+    //check the SessionId is valid
+    if (!IsGuid(session_id))
+    {
+        GetLogger("")->Error("SessionId error: {}", session_id);
+        SendError(k403Forbidden, "SessionId error", callback);
+        return false;
+    }
+    return true;
 }
 
 void ControllerBase::LogJson(const Json::Value& value)

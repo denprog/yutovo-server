@@ -16,8 +16,9 @@ SessionController::SessionController()
 
 void SessionController::Root(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, std::string param)
 {
+    if (!GetSessionId(req, callback))
+        return;
     auto p = req->path();
-    session_id = req->getCookie("session_id");
     GetLogger(session_id)->SetLevel((int)trantor::Logger::logLevel());
     GetLogger(session_id)->Debug("Request root: path={}", p);
     if (req->path() == "/")
@@ -119,8 +120,9 @@ void SessionController::Root(const HttpRequestPtr& req, std::function<void (cons
 
 void SessionController::Assets(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, std::string param)
 {
+    if (!GetSessionId(req, callback))
+        return;
     auto p = req->path();
-    session_id = req->getCookie("session_id");
     GetLogger(session_id)->Debug("Request images: path={}", p);
     GetLogger(session_id)->Debug("Request assets: path={}", p);
     std::string r = HttpAppFramework::instance().getDocumentRoot();
@@ -130,8 +132,9 @@ void SessionController::Assets(const HttpRequestPtr& req, std::function<void (co
 
 void SessionController::Icons(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, std::string param)
 {
+    if (!GetSessionId(req, callback))
+        return;
     auto p = req->path();
-    session_id = req->getCookie("session_id");
     GetLogger(session_id)->Debug("Request images: path={}", p);
     GetLogger(session_id)->Debug("Request icons: path={}", p);
     std::string r = HttpAppFramework::instance().getDocumentRoot();
@@ -141,8 +144,9 @@ void SessionController::Icons(const HttpRequestPtr& req, std::function<void (con
 
 void SessionController::Images(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, std::string param)
 {
+    if (!GetSessionId(req, callback))
+        return;
     auto p = req->path();
-    session_id = req->getCookie("session_id");
     GetLogger(session_id)->Debug("Request images: path={}", p);
     std::string r = HttpAppFramework::instance().getDocumentRoot();
     auto resp = HttpResponse::newFileResponse(r + p);
@@ -151,8 +155,9 @@ void SessionController::Images(const HttpRequestPtr& req, std::function<void (co
 
 void SessionController::UserDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, std::string param)
 {
+    if (!GetSessionId(req, callback))
+        return;
     auto p = req->path();
-    session_id = req->getCookie("session_id");
     GetLogger(session_id)->Info("Request user document: path={}", p);
     std::string r = HttpAppFramework::instance().getDocumentRoot();
     HttpAppFramework& inst = HttpAppFramework::instance();
@@ -241,8 +246,9 @@ void SessionController::LibraryDocument4(const HttpRequestPtr& req, std::functio
 void SessionController::LibraryDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>& callback, 
     std::string language, std::string path)
 {
+    if (!GetSessionId(req, callback))
+        return;
     auto p = req->path();
-    session_id = req->getCookie("session_id");
     std::string r = HttpAppFramework::instance().getDocumentRoot();
     HttpAppFramework& inst = HttpAppFramework::instance();
     path = language + "/" + path;
@@ -294,8 +300,9 @@ void SessionController::LibraryDocument(const HttpRequestPtr& req, std::function
 
 void SessionController::Downloads(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, std::string param)
 {
+    if (!GetSessionId(req, callback))
+        return;
     auto p = req->path();
-    session_id = req->getCookie("session_id");
     GetLogger(session_id)->Info("Request downloads: path={}", p);
     std::string r = HttpAppFramework::instance().getDocumentRoot();
     auto resp = HttpResponse::newFileResponse(r + p);

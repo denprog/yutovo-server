@@ -53,7 +53,8 @@ ServiceController::ServiceController()
 
 void ServiceController::GetLibraryDocuments(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
-    session_id = req->getCookie("session_id");
+    if (!GetSessionId(req, callback))
+        return;
     GetLogger(session_id)->Debug("GetLibraryDocuments request");
 
     auto json_object = req->getJsonObject();
@@ -190,7 +191,8 @@ void ServiceController::GetLibraryDocuments(const HttpRequestPtr& req, std::func
 
 void ServiceController::LoadLibraryDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
-    session_id = req->getCookie("session_id");
+    if (!GetSessionId(req, callback))
+        return;
     auto json = req->getJsonObject();
     if (!json || !json->isObject())
     {
@@ -263,7 +265,8 @@ void ServiceController::LoadLibraryDocument(const HttpRequestPtr& req, std::func
 
 void ServiceController::SaveLibraryDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
-    session_id = req->getCookie("session_id");
+    if (!GetSessionId(req, callback))
+        return;
     auto json = req->getJsonObject();
     if (!json || !json->isObject())
     {
@@ -406,7 +409,8 @@ void ServiceController::ListIdentifiers(const HttpRequestPtr& req, std::function
 
 void ServiceController::NewDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
-    session_id = req->getCookie("session_id");
+    if (!GetSessionId(req, callback))
+        return;
     GetLogger(session_id)->Info("NewDocument request");
 
     auto json = req->getJsonObject();
@@ -536,7 +540,8 @@ void ServiceController::NewDocument(const HttpRequestPtr& req, std::function<voi
 
 void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
-    session_id = req->getCookie("session_id");
+    if (!GetSessionId(req, callback))
+        return;
     GetLogger(session_id)->Debug("SaveDocument request");
     auto json = req->getJsonObject();
     if (!json || !json->isObject())
@@ -714,7 +719,8 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
 
 void ServiceController::SaveAsDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
-    session_id = req->getCookie("session_id");
+    if (!GetSessionId(req, callback))
+        return;
     GetLogger(session_id)->Debug("SaveAsDocument request");
 
     auto json = req->getJsonObject();
@@ -808,7 +814,8 @@ void ServiceController::SaveAsDocument(const HttpRequestPtr& req, std::function<
 
 void ServiceController::LoadDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
-    session_id = req->getCookie("session_id");
+    if (!GetSessionId(req, callback))
+        return;
     GetLogger(session_id)->Debug("LoadDocument request");
 
     auto json = req->getJsonObject();
@@ -918,7 +925,8 @@ void ServiceController::LoadDocument(const HttpRequestPtr& req, std::function<vo
 
 void ServiceController::DeleteDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
-    session_id = req->getCookie("session_id");
+    if (!GetSessionId(req, callback))
+        return;
     GetLogger(session_id)->Debug("DeleteDocument request");
 
     auto json = req->getJsonObject();
@@ -979,7 +987,8 @@ void ServiceController::DeleteDocument(const HttpRequestPtr& req, std::function<
 
 void ServiceController::ListDocuments(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
-    session_id = req->getCookie("session_id");
+    if (!GetSessionId(req, callback))
+        return;
     GetLogger(session_id)->Debug("ListDocuments request");
 
     ClearDbTurnOff t; //skip the clear db circles for a while
@@ -1013,7 +1022,8 @@ void ServiceController::ListDocuments(const HttpRequestPtr& req, std::function<v
 
 void ServiceController::GetDocumentId(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
-    session_id = req->getCookie("session_id");
+    if (!GetSessionId(req, callback))
+        return;
     GetLogger(session_id)->Debug("GetDocumentId request");
 
     auto json = req->getJsonObject();
@@ -1065,7 +1075,8 @@ void ServiceController::GetDocumentId(const HttpRequestPtr& req, std::function<v
 
 void ServiceController::GetDocumentName(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
-    session_id = req->getCookie("session_id");
+    if (!GetSessionId(req, callback))
+        return;
     GetLogger(session_id)->Debug("GetDocumentName request");
 
     auto json = req->getJsonObject();
@@ -1172,7 +1183,8 @@ void ServiceController::GetDocumentName(const HttpRequestPtr& req, std::function
 
 void ServiceController::RenameDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
-    session_id = req->getCookie("session_id");
+    if (!GetSessionId(req, callback))
+        return;
     GetLogger(session_id)->Debug("RenameDocument request");
 
     auto json = req->getJsonObject();
@@ -1232,7 +1244,8 @@ void ServiceController::RenameDocument(const HttpRequestPtr& req, std::function<
 
 void ServiceController::SetUserSettings(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
-    session_id = req->getCookie("session_id");
+    if (!GetSessionId(req, callback))
+        return;
     GetLogger(session_id)->Debug("SetUserSettings request");
 
     auto json = req->getJsonObject();
@@ -1464,7 +1477,8 @@ void ServiceController::SetUserSettings(const HttpRequestPtr& req, std::function
 
 void ServiceController::GetUserSettings(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
-    session_id = req->getCookie("session_id");
+    if (!GetSessionId(req, callback))
+        return;
     GetLogger(session_id)->Debug("GetUserSettings request");
 
     orm::DbClientPtr db = app().getDbClient();
@@ -1515,7 +1529,8 @@ void ServiceController::GetUserSettings(const HttpRequestPtr& req, std::function
 
 void ServiceController::RecoverPassword(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
-    session_id = req->getCookie("session_id");
+    if (!GetSessionId(req, callback))
+        return;
     GetLogger(session_id)->Debug("RecoverPassword request");
 
     auto json = req->getJsonObject();
