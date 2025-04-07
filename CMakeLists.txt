@@ -6,7 +6,7 @@ project(yutovo_server
 )
 
 add_compile_definitions(DEBUG)
-add_compile_definitions(TEST)
+#add_compile_definitions(TEST)
 # set(REMOTE_SOLVER true)
 # add_compile_definitions(REMOTE_SOLVER)
 
