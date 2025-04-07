@@ -219,39 +219,15 @@ void SessionController::UserDocument(const HttpRequestPtr& req, std::function<vo
     callback(resp);
 }
 
-void SessionController::LibraryDocument1(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, 
-    std::string language, std::string filename)
-{
-    LibraryDocument(req, callback, language, filename);
-}
-
-void SessionController::LibraryDocument2(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, 
-    std::string language, std::string dir1, std::string filename)
-{
-    LibraryDocument(req, callback, language, dir1 + "/" + filename);
-}
-
-void SessionController::LibraryDocument3(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, 
-    std::string language, std::string dir1, std::string dir2, std::string filename)
-{
-    LibraryDocument(req, callback, language, dir1 + "/" + dir2 + "/" + filename);
-}
-
-void SessionController::LibraryDocument4(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, 
-    std::string language, std::string dir1, std::string dir2, std::string dir3, std::string filename)
-{
-    LibraryDocument(req, callback, language, dir1 + "/" + dir2 + "/" + dir3 + "/" + filename);
-}
-
-void SessionController::LibraryDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>& callback, 
-    std::string language, std::string path)
+void SessionController::LibraryDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, std::string path)
 {
     if (!GetSessionId(req, callback))
         return;
+    GetLogger(session_id)->Debug("Request library document: path={}", path);
+
     auto p = req->path();
     std::string r = HttpAppFramework::instance().getDocumentRoot();
     HttpAppFramework& inst = HttpAppFramework::instance();
-    path = language + "/" + path;
     GetLogger(session_id)->Info("Request library document: request={}, path={}", p, path);
     p = inst.getHomePage();
 
