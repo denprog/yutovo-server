@@ -20,7 +20,7 @@ void SessionController::Root(const HttpRequestPtr& req, std::function<void (cons
         return;
     auto p = req->path();
     GetLogger(session_id)->SetLevel((int)trantor::Logger::logLevel());
-    GetLogger(session_id)->Debug("Request root: path={}", p);
+    GetLogger(session_id)->Debug("Request root: path={}, ip={}", p, req->getPeerAddr().toIp());
     if (req->path() == "/")
     {
         orm::DbClientPtr db = app().getDbClient();
