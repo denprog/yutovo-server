@@ -19,6 +19,18 @@ TestBase::TestBase()
     db->execSqlSync("delete from users where login='User1' or login='User2'");
 }
 
+void TestBase::StartPage(HttpClientPtr client)
+{
+    auto req = HttpRequest::newHttpRequest();
+    req->setMethod(drogon::Get);
+    req->setPath("/");
+    auto resp = client->sendRequest(req);
+    ReqResult& res = resp.first;
+    HttpResponsePtr& r = resp.second;
+    ASSERT_TRUE(res == ReqResult::Ok) << res;
+    ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
+}
+
 void TestBase::Register(HttpClientPtr client, std::string login, std::string email, std::string password)
 {
     Json::Value body;

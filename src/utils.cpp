@@ -1,5 +1,5 @@
 #include "utils.h"
-#include <sstream>
+#include <regex>
 
 namespace yutovo_server
 {
@@ -15,16 +15,8 @@ yutovo::Logger* GetLogger(const std::string& session_id)
 
 bool IsGuid(const std::string& str)
 {
-    std::istringstream f(str);
-    std::string s;
-    int p = 0;
-    while (getline(f, s, '-'))
-    {
-        if ((p == 0 && s.size() != 8) || ((p >= 1 && p <= 3) && s.size() != 4) || (p == 4 && s.size() != 12) || !std::all_of(s.begin(), s.end(), ::isalnum))
-            return false;
-        ++p;
-    }
-    return p == 5;
+    static std::regex guid("(^([0-9A-Fa-f]{8}[-]?[0-9A-Fa-f]{4}[-]?[0-9A-Fa-f]{4}[-]?[0-9A-Fa-f]{4}[-]?[0-9A-Fa-f]{12})$)");
+    return std::regex_match(str, guid);
 }
 
 }

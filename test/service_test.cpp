@@ -1092,6 +1092,17 @@ TEST_F(ServiceTest, document19)
     res = resp.first;
     r = resp.second;
     ASSERT_TRUE(r->getStatusCode() == k403Forbidden) << r->getStatusCode();
+
+    req = HttpRequest::newHttpJsonRequest(save_body);
+    req->setMethod(drogon::Post);
+    req->setPath("/service/save-document");
+    client->addCookie("session_id", "12344567-2345-5467-234578901234deffe");
+    client->addCookie("document_id", document_id);
+    req->addHeader("access_token", access_token);
+    resp = client->sendRequest(req, 10);
+    res = resp.first;
+    r = resp.second;
+    ASSERT_TRUE(r->getStatusCode() == k403Forbidden) << r->getStatusCode();
 }
 
 }
