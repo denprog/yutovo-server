@@ -178,7 +178,7 @@ TEST_F(AuthTest, login1)
     ASSERT_TRUE(result.size() != 0);
     auto row = result[0];
     auto user_id = row["user_id"].as<int>();
-    ASSERT_TRUE(user_id == -1);
+    ASSERT_TRUE(user_id == -1) << user_id;
 
     //login back for unregister
     body["login"] = "User1";
