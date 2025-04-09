@@ -12,6 +12,9 @@ int main(int argc, char *argv[])
     logger->Info("Yutovo server start");
     logger->SetLevel((int)trantor::Logger::logLevel());
 
+    Logger* server_logger = Logger::GetInstance(std::string(std::getenv("YUTOVO_DEPLOY")) + "/log/yutovo_server/server", "server", true, true);
+    server_logger->Info("Yutovo server start");
+
     std::string document_root;
     for (size_t i = 1; i < argc; ++i)
     {
@@ -56,5 +59,6 @@ int main(int argc, char *argv[])
     }
 
     logger->Info("Yutovo server finish");
+    server_logger->Info("Yutovo server finish");
     return 0;
 }
