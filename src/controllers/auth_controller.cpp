@@ -385,6 +385,7 @@ void AuthController::Register(const HttpRequestPtr& req, std::function<void (con
         if (result.size() == 0)
         {
             SendOk(callback);
+            register_logger->Info("Register: login={}", user.login);
         }
         else
         {
@@ -438,6 +439,7 @@ void AuthController::UnRegister(const HttpRequestPtr& req, std::function<void (c
         db->execSqlSync("delete from user_sessions where user_id=$1", user_id);
         session->erase("user_id");
         SendOk(callback);
+        register_logger->Info("Unregister: user_id={}", user_id);
     }
     catch (const orm::DrogonDbException& e)
     {
