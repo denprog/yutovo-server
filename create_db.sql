@@ -11,7 +11,8 @@ CREATE TABLE IF NOT EXISTS users
     document_id int default -1, --current document for this user
     language varchar(10),
     plan_id int not null default 1,
-    settings jsonb
+    settings jsonb,
+    admin boolean default false
 );
 
 CREATE TABLE IF NOT EXISTS user_sessions
