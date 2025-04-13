@@ -15,13 +15,16 @@ SessionController::SessionController()
 {
 }
 
-void SessionController::Root(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, std::string param)
+void SessionController::Root(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, std::string param, std::string ref)
 {
     if (!GetSessionId(req, callback))
         return;
     auto p = req->path();
     GetLogger(session_id)->SetLevel((int)trantor::Logger::logLevel());
-    GetLogger(session_id)->Debug("Request root: path={}, ip={}", p, drogon::plugin::RealIpResolver::GetRealAddr(req).toIp());
+    if (!ref.empty())
+        GetLogger(session_id)->Debug("Request root: path={}, ref={}, ip={}", p, ref, drogon::plugin::RealIpResolver::GetRealAddr(req).toIp());
+    else
+        GetLogger(session_id)->Debug("Request root: path={}, ip={}", p, drogon::plugin::RealIpResolver::GetRealAddr(req).toIp());
     if (req->path() == "/")
     {
         orm::DbClientPtr db = app().getDbClient();

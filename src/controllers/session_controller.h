@@ -17,7 +17,7 @@ public:
     SessionController();
 
     METHOD_LIST_BEGIN
-    ADD_METHOD_TO(SessionController::Root, "/{1}", Get);
+    ADD_METHOD_TO(SessionController::Root, "/{1}?ref={2}", Get);
     ADD_METHOD_TO(SessionController::Assets, "/assets/{1}", Get);
     ADD_METHOD_TO(SessionController::Icons, "/icons/{1}", Get);
     ADD_METHOD_TO(SessionController::Images, "/images/{1}", Get);
@@ -26,7 +26,7 @@ public:
     ADD_METHOD_TO(SessionController::Downloads, "/downloads/{1}", Get);
     METHOD_LIST_END
 
-    void Root(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, std::string param);
+    void Root(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, std::string param, std::string ref);
     void Assets(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, std::string param);
     void Icons(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, std::string param);
     void Images(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, std::string param);
