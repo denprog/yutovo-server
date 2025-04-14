@@ -130,7 +130,7 @@ void ControllerBase::SendOk(std::function<void (const HttpResponsePtr &)>& callb
     r["document_id"] = document_id;
     auto resp = HttpResponse::newHttpJsonResponse(r);
     resp->setStatusCode(k200OK);
-    LogJson(r);
+    LogJson(GetLogger(session_id), r);
     callback(resp);
 }
 
@@ -141,7 +141,7 @@ void ControllerBase::SendOk(std::function<void (const HttpResponsePtr &)>& callb
     r["name"] = name;
     auto resp = HttpResponse::newHttpJsonResponse(r);
     resp->setStatusCode(k200OK);
-    LogJson(r);
+    LogJson(GetLogger(session_id), r);
     callback(resp);
 }
 
@@ -451,13 +451,13 @@ bool ControllerBase::GetSessionId(const HttpRequestPtr& req, std::function<void 
     return true;
 }
 
-void ControllerBase::LogJson(const Json::Value& value)
+void ControllerBase::LogJson(yutovo::Logger* logger, const Json::Value& value)
 {
     Json::FastWriter fastWriter;
     std::string output = fastWriter.write(value);
     if (!output.empty() && output[output.size() - 1] == '\n')
         output.pop_back();
-    GetLogger(session_id)->Info("{}", output);
+    logger->Info("{}", output);
 }
 
 }

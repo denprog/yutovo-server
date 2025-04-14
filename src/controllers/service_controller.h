@@ -32,6 +32,7 @@ public:
     ADD_METHOD_TO(ServiceController::SetUserSettings, "/service/set-user-settings", Post, "yutovo_server::LoginFilter"); //set user config
     ADD_METHOD_TO(ServiceController::GetUserSettings, "/service/get-user-settings", Post, "yutovo_server::LoginFilter"); //get user config
     ADD_METHOD_TO(ServiceController::RecoverPassword, "/service/recover-password", Post); //recover user password
+    ADD_METHOD_TO(ServiceController::SolverAction, "/service/solver-action", Post); //solver ation
     METHOD_LIST_END
 
     void GetLibraryDocuments(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
@@ -50,6 +51,7 @@ public:
     void SetUserSettings(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
     void GetUserSettings(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
     void RecoverPassword(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
+    void SolverAction(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
 
 private:
 #ifdef REMOTE_SOLVER

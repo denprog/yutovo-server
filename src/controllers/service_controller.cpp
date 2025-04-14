@@ -1593,4 +1593,41 @@ void ServiceController::RecoverPassword(const HttpRequestPtr& req, std::function
     SendOk(callback);
 }
 
+void ServiceController::SolverAction(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
+{
+    if (!GetSessionId(req, callback))
+        return;
+
+    auto json = req->getJsonObject();
+    if (!json || !json->isObject())
+    {
+        GetLogger(session_id)->Error("SolverAction error: Wrong request: Json not found in the request");
+        SendError(k400BadRequest, "Json not found in the request", callback);
+        return;
+    }
+
+    std::string guid;
+    if (!json->isMember("guid") || !(*json)["guid"].isString())
+    {
+        SendError(k400BadRequest, "Guid not found in the request", callback);
+        return;
+    }
+    guid = (*json)["guid"].asString();
+
+    SessionPtr session = req->session();
+    if (session->get<std::string>("solver_id") == "")
+    {
+        GetLogger(session_id)->Info("Solver started: {}", guid);
+        session->insert("solver_id", guid);
+    }
+
+    std::string command;
+    if (json->isMember("command") && (*json)["command"].isString())
+        command = (*json)["command"].asString();
+    
+    LogJson(GetSolverLogger(guid), *json);
+
+    SendOk(callback);
+}
+
 };
