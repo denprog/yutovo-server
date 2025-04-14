@@ -66,8 +66,7 @@ protected:
 
     bool GetSessionId(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>& callback);
 
-private:
-    void LogJson(const Json::Value& value);
+    void LogJson(yutovo::Logger* logger, const Json::Value& value);
 
 protected:
     int session_expires = 0; //session without user, in seconds, after last using
