@@ -1615,15 +1615,12 @@ void ServiceController::SolverAction(const HttpRequestPtr& req, std::function<vo
     guid = (*json)["guid"].asString();
 
     SessionPtr session = req->session();
-    if (session->get<std::string>("solver_id") == "")
+    if (session->get<std::string>("solver_id") != guid)
     {
         GetLogger(session_id)->Info("Solver started: {}", guid);
+        session->erase("solver_id");
         session->insert("solver_id", guid);
     }
-
-    std::string command;
-    if (json->isMember("command") && (*json)["command"].isString())
-        command = (*json)["command"].asString();
     
     LogJson(GetSolverLogger(guid), *json);
 
