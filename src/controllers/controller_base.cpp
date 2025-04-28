@@ -219,7 +219,6 @@ void ControllerBase::SendJson(std::function<void (const HttpResponsePtr &)>& cal
 void ControllerBase::SendFile(std::function<void (const HttpResponsePtr &)>& callback, const fs::path& path)
 {
     auto resp = HttpResponse::newFileResponse(path.c_str());
-    resp->setStatusCode(k200OK);
     callback(resp);
 }
 
