@@ -10,6 +10,7 @@
 #include <boost/lexical_cast.hpp>
 #include <functional>
 #include <random>
+#include <drogon/plugins/RealIpResolver.h>
 
 namespace yutovo_server
 {
@@ -385,7 +386,7 @@ void AuthController::Register(const HttpRequestPtr& req, std::function<void (con
         if (result.size() == 0)
         {
             SendOk(callback);
-            register_logger->Info("Register: login={}", user.login);
+            register_logger->Info("Register: login={}, ip={}", user.login, drogon::plugin::RealIpResolver::GetRealAddr(req).toIp());
         }
         else
         {
@@ -439,7 +440,7 @@ void AuthController::UnRegister(const HttpRequestPtr& req, std::function<void (c
         db->execSqlSync("delete from user_sessions where user_id=$1", user_id);
         session->erase("user_id");
         SendOk(callback);
-        register_logger->Info("Unregister: user_id={}", user_id);
+        register_logger->Info("Unregister: user_id={}, ip={}", user_id, drogon::plugin::RealIpResolver::GetRealAddr(req).toIp());
     }
     catch (const orm::DrogonDbException& e)
     {
@@ -584,7 +585,7 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
     }
 
     session->erase("captcha");
-    auth_logger->Info("Login: login={}, user_id={}", login, user_id);
+    auth_logger->Info("Login: login={}, user_id={}, ip={}", login, user_id, drogon::plugin::RealIpResolver::GetRealAddr(req).toIp());
 }
 
 void AuthController::Logout(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
