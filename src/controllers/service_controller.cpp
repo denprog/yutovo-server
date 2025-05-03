@@ -10,6 +10,7 @@
 #include <boost/uuid/uuid.hpp>
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid/uuid_io.hpp>
+#include <drogon/plugins/RealIpResolver.h>
 
 namespace yutovo_server
 {
@@ -1620,6 +1621,7 @@ void ServiceController::SolverAction(const HttpRequestPtr& req, std::function<vo
         GetLogger(session_id)->Info("Solver started: {}", guid);
         session->erase("solver_id");
         session->insert("solver_id", guid);
+        GetSolverLogger(guid)->Info("Solver started: ip={}", drogon::plugin::RealIpResolver::GetRealAddr(req).toIp());
     }
     
     LogJson(GetSolverLogger(guid), *json);
