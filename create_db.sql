@@ -1,4 +1,4 @@
-SELECT 'CREATE DATABASE yutovo' WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'yutovo')\gexec
+SELECT 'CREATE DATABASE yutovo' WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'yutovo')
 
 CREATE TABLE IF NOT EXISTS users
 (
