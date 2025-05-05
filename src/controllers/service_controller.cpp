@@ -324,38 +324,55 @@ void ServiceController::SaveLibraryDocument(const HttpRequestPtr& req, std::func
             return;
         }
 
-        document = library_path + language + document;
-        if (!document.ends_with(".yut"))
-            document += fs::path(".yut");
-        fs::path path;
-        Json::Value doc;
-
-        //check if the path is inside library_path
-        try
+        if (json->isMember("json"))
         {
-            path = fs::canonical(fs::path(document));
-            if (!std::string(path.c_str()).starts_with(library_path))
+            //save this json
+            auto d = (*json)["json"].asString();
+
+            orm::Result result = db->execSqlSync("update user_documents set document=$1 where document_id=$2", d, document_id);
+            if (result.affectedRows() == 0)
             {
-                GetLogger(session_id)->Error("SaveLibraryDocument error: Path not found: {}", path.c_str());
+                GetLogger(session_id)->Error("Database error: Error inserting a document");
+                SendError(k500InternalServerError, "Error inserting a document", callback);
+                return;
+            }
+        }
+        else
+        {
+            //save from the file
+            document = library_path + language + document;
+            if (!document.ends_with(".yut"))
+                document += fs::path(".yut");
+            fs::path path;
+            Json::Value doc;
+
+            //check if the path is inside library_path
+            try
+            {
+                path = fs::canonical(fs::path(document));
+                if (!std::string(path.c_str()).starts_with(library_path))
+                {
+                    GetLogger(session_id)->Error("SaveLibraryDocument error: Path not found: {}", path.c_str());
+                    SendError(k404NotFound, "Path not found", callback);
+                    return;
+                }
+
+                std::ifstream f(path.string().c_str());
+                f >> doc;
+            }
+            catch (const std::exception& ex)
+            {
                 SendError(k404NotFound, "Path not found", callback);
                 return;
             }
 
-            std::ifstream f(path.string().c_str());
-            f >> doc;
-        }
-        catch (const std::exception& ex)
-        {
-            SendError(k404NotFound, "Path not found", callback);
-            return;
-        }
-
-        orm::Result result = db->execSqlSync("update user_documents set document=$1 where document_id=$2", doc.toStyledString(), document_id);
-        if (result.affectedRows() == 0)
-        {
-            GetLogger(session_id)->Error("Database error: Error inserting a document");
-            SendError(k500InternalServerError, "Error inserting a document", callback);
-            return;
+            orm::Result result = db->execSqlSync("update user_documents set document=$1 where document_id=$2", doc.toStyledString(), document_id);
+            if (result.affectedRows() == 0)
+            {
+                GetLogger(session_id)->Error("Database error: Error inserting a document");
+                SendError(k500InternalServerError, "Error inserting a document", callback);
+                return;
+            }
         }
 
         db->execSqlSync("update user_sessions set document_id=$1 where session_id=$2", document_id, session_id);
