@@ -1,0 +1,42 @@
+1.0.4 - 07.05.2025
+-----
+
+Features
+- Adding logs.
+- Adding links between library documents.
+- Saving an edited library document.
+
+Bug fixes
+- Fixing of buffer overflow in calculating hash.
+- Minory fixes.
+
+
+1.0.3 - 08.04.2025
+-----
+
+Features
+- Better checking SessionId.
+- Adding ip to the log.
+- Show the real IP address in the log.
+- Redirect from nmathematics.ru.
+
+
+
+1.0.2 - 04.04.2025
+-----
+
+Features
+- Adding awstats.
+- Adding goaccess.
+
+Bug fixes
+- Fix the reverse proxy.
+- Fix the timeout issue.
+
+
+
+1.0.1 - 26.03.2025
+-----
+
+Features
+- Init version.
