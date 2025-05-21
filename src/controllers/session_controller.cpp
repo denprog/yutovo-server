@@ -25,10 +25,22 @@ void SessionController::Root(const HttpRequestPtr& req, std::function<void (cons
         GetLogger(session_id)->Debug("Request root: path={}, ref={}, ip={}", p, ref, drogon::plugin::RealIpResolver::GetRealAddr(req).toIp());
     else
         GetLogger(session_id)->Debug("Request root: path={}, ip={}", p, drogon::plugin::RealIpResolver::GetRealAddr(req).toIp());
+
+    SessionPtr session = req->session();
+    if (!session->get<bool>("log_updated"))
+    {
+        auto accept_language = req->getHeader("Accept-Language");
+        auto host = req->getHeader("Host");
+        auto referer = req->getHeader("Referer");
+        auto user_agent = req->getHeader("User-Agent");
+        GetLogger(session_id)->Debug("Accept-Language={}, Host={}, Referer={}, User-Agent={}", accept_language, host, referer, user_agent);
+        if (!accept_language.empty() && !host.empty() && !referer.empty() && !user_agent.empty())
+            session->insert("log_updated", true);
+    }
+
     if (req->path() == "/")
     {
         orm::DbClientPtr db = app().getDbClient();
-        SessionPtr session = req->session();
         std::string user_id = session->get<std::string>("user_id");
 
         try
