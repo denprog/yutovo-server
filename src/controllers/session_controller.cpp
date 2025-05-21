@@ -22,7 +22,12 @@ void SessionController::Root(const HttpRequestPtr& req, std::function<void (cons
     auto p = req->path();
     GetLogger(session_id)->SetLevel((int)trantor::Logger::logLevel());
     if (!ref.empty())
+    {
         GetLogger(session_id)->Debug("Request root: path={}, ref={}, ip={}", p, ref, drogon::plugin::RealIpResolver::GetRealAddr(req).toIp());
+        ref_logger->Info("Request: ref={}, ip={}, Accept-Language={}, Host={}, Referer={}, User-Agent={}", ref, 
+            drogon::plugin::RealIpResolver::GetRealAddr(req).toIp(), req->getHeader("Accept-Language"), req->getHeader("Host"), req->getHeader("Referer"), 
+            req->getHeader("User-Agent"));
+    }
     else
         GetLogger(session_id)->Debug("Request root: path={}, ip={}", p, drogon::plugin::RealIpResolver::GetRealAddr(req).toIp());
 
