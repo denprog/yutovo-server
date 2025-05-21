@@ -2,17 +2,18 @@
 #include <drogon/HttpAppFramework.h>
 #include <yutovo_logger/logger.h>
 #include "logic/clear_db.h"
+#include "utils.h"
 
 using namespace yutovo;
 using namespace std::chrono_literals;
 
 int main(int argc, char *argv[])
 {
-    Logger* logger = Logger::GetInstance(std::string(std::getenv("YUTOVO_DEPLOY")) + "/log/yutovo_server/", "server", true, true);
+    Logger* logger = Logger::GetInstance(yutovo_server::GetDeployPath() + "/log/yutovo_server/", "server", true, true);
     logger->Info("Yutovo server start");
     logger->SetLevel((int)trantor::Logger::logLevel());
 
-    Logger* server_logger = Logger::GetInstance(std::string(std::getenv("YUTOVO_DEPLOY")) + "/log/yutovo_server/server", "server", true, true);
+    Logger* server_logger = Logger::GetInstance(yutovo_server::GetDeployPath() + "/log/yutovo_server/server", "server", true, true);
     server_logger->Info("Yutovo server start");
 
     std::string document_root;
