@@ -3,6 +3,7 @@
 
 #include <thread>
 #include <yutovo_logger/logger.h>
+#include "utils.h"
 
 namespace yutovo_server
 {
@@ -30,7 +31,7 @@ private:
 private:
     std::thread clear_db_thread;
     int clear_db_timeout = 0; //seconds
-    Logger* logger = Logger::GetInstance(std::string(std::getenv("YUTOVO_DEPLOY")) + "/log/yutovo_server/", "server", true, true);
+    Logger* logger = Logger::GetInstance(GetDeployPath() + "/log/yutovo_server/", "server", true, true);
     bool exit = false;
     std::atomic<bool> turn_on = true;
     std::mutex turn_on_mutex;
