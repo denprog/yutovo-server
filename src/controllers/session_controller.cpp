@@ -24,7 +24,7 @@ void SessionController::Root(const HttpRequestPtr& req, std::function<void (cons
     if (!ref.empty())
     {
         GetLogger(session_id)->Debug("Request root: path={}, ref={}, ip={}", p, ref, drogon::plugin::RealIpResolver::GetRealAddr(req).toIp());
-        ref_logger->Info("Request: ref={}, ip={}, Accept-Language={}, Host={}, Referer={}, User-Agent={}", ref, 
+        ref_logger->Info("Request: ref={}, session_id={}, ip={}, Accept-Language={}, Host={}, Referer={}, User-Agent={}", ref, session_id, 
             drogon::plugin::RealIpResolver::GetRealAddr(req).toIp(), req->getHeader("Accept-Language"), req->getHeader("Host"), req->getHeader("Referer"), 
             req->getHeader("User-Agent"));
     }
@@ -303,6 +303,8 @@ void SessionController::Downloads(const HttpRequestPtr& req, std::function<void 
     GetLogger(session_id)->Info("Request downloads: path={}", p);
     std::string r = HttpAppFramework::instance().getDocumentRoot();
     auto resp = HttpResponse::newFileResponse(r + p);
+    downloads_logger->Info("Request download: path={}, session_id={}, ip={}, result={}", p, session_id, drogon::plugin::RealIpResolver::GetRealAddr(req).toIp(), 
+        resp->getStatusCode());
     callback(resp);
 }
 
