@@ -1641,7 +1641,86 @@ void ServiceController::SolverAction(const HttpRequestPtr& req, std::function<vo
         GetSolverLogger(guid)->Info("Solver started: ip={}", drogon::plugin::RealIpResolver::GetRealAddr(req).toIp());
     }
     
-    LogJson(GetSolverLogger(guid), *json);
+    if (json->isMember("command") && (*json)["command"].isString() && (*json)["command"].asString() == "SOLVE_CODE")
+    {
+        std::string expression;
+        if (json->isMember("expression") && (*json)["expression"].isString())
+            expression = (*json)["expression"].asString();
+        int expression_type = -1;
+        if (json->isMember("expression_type") && (*json)["expression_type"].isInt())
+            expression_type = (*json)["expression_type"].asInt();
+
+        Json::FastWriter fastWriter;
+        std::string id;
+        if (json->isMember("id"))
+        {
+            id = fastWriter.write((*json)["id"]);
+            if (!id.empty() && id[id.size() - 1] == '\n')
+                id.pop_back();
+        }
+        
+        std::string results_order;
+        if (json->isMember("results_order"))
+        {
+            results_order = fastWriter.write((*json)["results_order"]);
+            if (!results_order.empty() && results_order[results_order.size() - 1] == '\n')
+                results_order.pop_back();
+        }
+
+        int result_type = -1;
+        if (json->isMember("result_type") && (*json)["result_type"].isInt())
+            result_type = (*json)["result_type"].asInt();
+
+        int real_exponent_size = -1;
+        if (json->isMember("real_exponent_size") && (*json)["real_exponent_size"].isInt())
+            real_exponent_size = (*json)["real_exponent_size"].asInt();
+        int real_precision = -1;
+        if (json->isMember("real_precision") && (*json)["real_precision"].isInt())
+            real_precision = (*json)["real_precision"].asInt();
+        int real_default_angle_measure = -1;
+        if (json->isMember("real_default_angle_measure") && (*json)["real_default_angle_measure"].isInt())
+            real_default_angle_measure = (*json)["real_default_angle_measure"].asInt();
+        int real_result_angle_measure = -1;
+        if (json->isMember("real_result_angle_measure") && (*json)["real_result_angle_measure"].isInt())
+            real_result_angle_measure = (*json)["real_result_angle_measure"].asInt();
+        
+        int integer_default_notation = -1;
+        if (json->isMember("integer_default_notation") && (*json)["integer_default_notation"].isInt())
+            integer_default_notation = (*json)["integer_default_notation"].asInt();
+        int integer_result_notation = -1;
+        if (json->isMember("integer_result_notation") && (*json)["integer_result_notation"].isInt())
+            integer_result_notation = (*json)["result_notation"].asInt();
+        
+        int fraction_form = -1;
+        if (json->isMember("fraction_form") && (*json)["fraction_form"].isInt())
+            fraction_form = (*json)["fraction_form"].asInt();
+
+        int complex_form = -1;
+        if (json->isMember("complex_form") && (*json)["complex_form"].isInt())
+            complex_form = (*json)["complex_form"].asInt();
+        int complex_default_angle_measure = -1;
+        if (json->isMember("complex_default_angle_measure") && (*json)["complex_default_angle_measure"].isInt())
+            complex_default_angle_measure = (*json)["complex_default_angle_measure"].asInt();
+        int complex_exponent_size = -1;
+        if (json->isMember("complex_exponent_size") && (*json)["complex_exponent_size"].isInt())
+            complex_exponent_size = (*json)["complex_exponent_size"].asInt();
+        int complex_precision = -1;
+        if (json->isMember("complex_precision") && (*json)["complex_precision"].isInt())
+            complex_precision = (*json)["complex_precision"].asInt();
+        int complex_result_angle_measure = -1;
+        if (json->isMember("complex_result_angle_measure") && (*json)["complex_result_angle_measure"].isInt())
+            complex_result_angle_measure = (*json)["complex_result_angle_measure"].asInt();
+        int complex_max_count = -1;
+        if (json->isMember("complex_max_count") && (*json)["complex_max_count"].isInt())
+            complex_max_count = (*json)["complex_max_count"].asInt();
+        
+        GetSolverLogger(guid)->Info("SOLVE_CODE: expression={}, expression_type={}, id={}, results_order={}, result_type={}, real_exponent_size={}, "
+            "real_precision={}, real_default_angle_measure={}, real_result_angle_measure={}, integer_default_notation={}, integer_result_notation={}, "
+            "fraction_form={}, complex_form={}, complex_default_angle_measure={}, complex_exponent_size={}, complex_precision={}, "
+            "complex_result_angle_measure={}, complex_max_count={}", expression, expression_type, id, results_order, result_type, real_exponent_size,
+            real_precision, real_default_angle_measure, real_result_angle_measure, integer_default_notation, integer_result_notation, 
+            fraction_form, complex_form, complex_default_angle_measure, complex_exponent_size, complex_precision, complex_result_angle_measure, complex_max_count);
+    }
 
     SendOk(callback);
 }
