@@ -873,11 +873,12 @@ TEST_F(ServiceTest, document16)
 {
     auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
+    Register(client, "User1", "user1@mail.com", "11");
 
     Locate(client, "/");
 
     std::string access_token, document_id, name, language;
-    Login(client, "test1", "11", access_token, document_id, name, language);
+    Login(client, "User1", "11", access_token, document_id, name, language);
 
     Json::Value save_body;
     std::ifstream f("../../tests/file_size_limit.yut");
@@ -890,22 +891,23 @@ TEST_F(ServiceTest, document16)
     auto r = resp.second;
     ASSERT_TRUE(r->getStatusCode() == k400BadRequest) << r->getStatusCode();
 
-    Logout(client, "test1", access_token);
+    Logout(client, "User1", access_token);
 }
 
 //Set/get settings
 TEST_F(ServiceTest, document17)
 {
-    drogon::orm::DbClientPtr db = drogon::app().getDbClient();
-    db->execSqlSync("update users set settings='{}'::jsonb where login='test1'");
-
     auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
+    Register(client, "User1", "user1@mail.com", "11");
 
-    Locate(client, "/");
+    drogon::orm::DbClientPtr db = drogon::app().getDbClient();
+    db->execSqlSync("update users set settings='{}'::jsonb where login='User1'");
+
+     Locate(client, "/");
 
     std::string access_token, document_id, name, language, settings;
-    Login(client, "test1", "11", access_token, document_id, name, language, settings);
+    Login(client, "User1", "11", access_token, document_id, name, language, settings);
 
     Json::Value doc;
     Json::Reader reader;
@@ -936,10 +938,10 @@ TEST_F(ServiceTest, document17)
     r = resp.second;
     ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
 
-    Logout(client, "test1", access_token);
+    Logout(client, "User1", access_token);
 
     std::string config2;
-    Login(client, "test1", "11", access_token, document_id, name, language, config2);
+    Login(client, "User1", "11", access_token, document_id, name, language, config2);
 
     Json::Value doc3;
     reader.parse(config2, doc3);
@@ -956,9 +958,9 @@ TEST_F(ServiceTest, document17)
     r = resp.second;
     ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
 
-    Logout(client, "test1", access_token);
+    Logout(client, "User1", access_token);
 
-    Login(client, "test1", "11", access_token, document_id, name, language, config2);
+    Login(client, "User1", "11", access_token, document_id, name, language, config2);
 
     reader.parse(config2, doc3);
     ASSERT_TRUE(doc3["with_border"] == true);
@@ -975,7 +977,7 @@ TEST_F(ServiceTest, document17)
     const auto json = r->jsonObject();
     ASSERT_TRUE((*json)["settings"]["real_result"]["precision"] == 20) << json;
 
-    Logout(client, "test1", access_token);
+    Logout(client, "User1", access_token);
 }
 
 //Set password
