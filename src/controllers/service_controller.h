@@ -24,6 +24,7 @@ public:
     ADD_METHOD_TO(ServiceController::SaveDocument, "/service/save-document", Post, "yutovo_server::LoginFilter"); //save to the DB
     ADD_METHOD_TO(ServiceController::SaveAsDocument, "/service/save-as-document", Post, "yutovo_server::LoginFilter"); //save as to the DB
     ADD_METHOD_TO(ServiceController::LoadDocument, "/service/load-document", Post); //load from the DB
+    ADD_METHOD_TO(ServiceController::LoadIncludeDocument, "/service/load-include-document", Post); //load from the DB
     ADD_METHOD_TO(ServiceController::DeleteDocument, "/service/delete-document", Post, "yutovo_server::LoginFilter"); //delete a document from the DB
     ADD_METHOD_TO(ServiceController::ListDocuments, "/service/list-documents", Post, "yutovo_server::LoginFilter"); //list user documents
     ADD_METHOD_TO(ServiceController::GetDocumentId, "/service/get-document-id", Post); //get id of a user document
@@ -43,6 +44,7 @@ public:
     void SaveDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
     void SaveAsDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
     void LoadDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
+    void LoadIncludeDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
     void DeleteDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
     void ListDocuments(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
     void GetDocumentId(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
@@ -54,6 +56,8 @@ public:
     void SolverAction(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
 
 private:
+    void SendLibraryDocument(const std::string& document, std::function<void (const HttpResponsePtr &)>& callback);
+
 #ifdef REMOTE_SOLVER
     WebSocketClientPtr solver_client;
     std::string solver_response;

@@ -219,49 +219,8 @@ void ServiceController::LoadLibraryDocument(const HttpRequestPtr& req, std::func
     document = library_path + language + document;
     if (!document.ends_with(".yut"))
         document += fs::path(".yut");
-    fs::path path;
 
-    //check if the path is inside library_path
-    try
-    {
-        path = fs::canonical(fs::path(document));
-        if (!std::string(path.c_str()).starts_with(library_path))
-        {
-            GetLogger(session_id)->Error("LoadLibraryDocument error: Path not found: {}", path.c_str());
-            SendError(k404NotFound, "Path not found", callback);
-            return;
-        }
-
-        std::ifstream file(path.string().c_str());
-        if (!file.is_open())
-        {
-            GetLogger(session_id)->Error("LoadLibraryDocument error: Path not found: {}", path.c_str());
-            SendError(k500InternalServerError, "Error loading file", callback);
-            return;
-        }
-
-        try
-        {
-            //try to open as compressed file
-            boost::iostreams::filtering_streambuf<boost::iostreams::input> in;
-            in.push(boost::iostreams::gzip_decompressor());
-            in.push(file);
-            std::stringstream json;
-            boost::iostreams::copy(in, json);
-            SendJson(callback, json.str());
-            return;
-        }
-        catch (const std::ios_base::failure& ex)
-        {
-        }
-
-        SendFile(callback, path);
-    }
-    catch (const std::exception& ex)
-    {
-        GetLogger(session_id)->Error("LoadLibraryDocument error: Path not found");
-        SendError(k404NotFound, "Path not found", callback);
-    }
+    SendLibraryDocument(document, callback);
 }
 
 void ServiceController::SaveLibraryDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
@@ -939,6 +898,97 @@ void ServiceController::LoadDocument(const HttpRequestPtr& req, std::function<vo
         GetLogger(session_id)->Error("Database error: {}", e.base().what());
         SendError(k500InternalServerError, e.base().what(), callback);
     }
+}
+
+void ServiceController::LoadIncludeDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
+{
+    if (!GetSessionId(req, callback))
+        return;
+    GetLogger(session_id)->Debug("LoadIncludeDocument request");
+
+    auto json = req->getJsonObject();
+    if (!json || !json->isObject())
+    {
+        GetLogger(session_id)->Error("LoadIncludeDocument error: Wrong request: Json not found in the request");
+        SendError(k400BadRequest, "Json not found in the request", callback);
+        return;
+    }
+
+    std::string language = "en";
+    if (json->isMember("language") && (*json)["language"].isString())
+        language = (*json)["language"].asString();
+
+    std::string name;
+    if (!json->isMember("name") || !(*json)["name"].isString())
+    {
+        GetLogger(session_id)->Error("LoadLibraryDocument error: Wrong request: empty document name");
+        SendError(k400BadRequest, "Wrong request: empty document name", callback);
+        return;
+    }
+    name = (*json)["name"].asString();
+
+    std::string current_document;
+    if (json->isMember("current_document") && (*json)["current_document"].isString())
+        current_document = (*json)["current_document"].asString();
+
+    SessionPtr session = req->session();
+    std::string user_id = session->get<std::string>("user_id");
+
+    GetLogger(session_id)->Info("LoadIncludeDocument request name={}", name);
+
+    ClearDbTurnOff t; //skip the clear db circles for a while
+
+    orm::DbClientPtr db = app().getDbClient();
+
+    if (!user_id.empty())
+    {
+        //include document may be user document
+        try
+        {
+            //find document by name
+            orm::Result result = db->execSqlSync("select document from user_documents where user_id=$1 and name=$2", user_id, name);
+            if (result.size() != 0)
+            {
+                auto row = result[0];
+                SendJson(callback, row["document"].as<std::string>());
+                return;
+            }
+        }
+        catch (const orm::DrogonDbException& e)
+        {
+            GetLogger(session_id)->Error("Database error: {}", e.base().what());
+            SendError(k500InternalServerError, e.base().what(), callback);
+            return;
+        }
+    }
+
+    //otherwise find document in the library
+    if (name.starts_with('/'))
+        name.erase(name.begin());
+    std::string path;
+    try
+    {
+        fs::path p(library_path + language + current_document);
+        if (!current_document.empty())
+            p = p.parent_path();
+        p /= name;
+        path = fs::canonical(p);
+    }
+    catch (const std::exception& ex)
+    {
+        GetLogger(session_id)->Error("GetIncludeDocument error: Path not found: {}", name);
+        SendError(k404NotFound, "Path not found", callback);
+        return;
+    }
+
+    if (!fs::exists(path))
+    {
+        GetLogger(session_id)->Error("GetIncludeDocument error: No such document: {}", name);
+        SendError(k404NotFound, "No such document", callback);
+        return;
+    }
+
+    SendLibraryDocument(path.c_str(), callback);
 }
 
 void ServiceController::DeleteDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
@@ -1625,12 +1675,12 @@ void ServiceController::SolverAction(const HttpRequestPtr& req, std::function<vo
     }
 
     std::string guid;
-    if (!json->isMember("guid") || !(*json)["guid"].isString())
+    if (!json->isMember("solver_guid") || !(*json)["solver_guid"].isString())
     {
         SendError(k400BadRequest, "Guid not found in the request", callback);
         return;
     }
-    guid = (*json)["guid"].asString();
+    guid = (*json)["solver_guid"].asString();
 
     SessionPtr session = req->session();
     if (session->get<std::string>("solver_id") != guid)
@@ -1723,6 +1773,52 @@ void ServiceController::SolverAction(const HttpRequestPtr& req, std::function<vo
     }
 
     SendOk(callback);
+}
+
+void ServiceController::SendLibraryDocument(const std::string& document, std::function<void (const HttpResponsePtr &)>& callback)
+{
+    fs::path path;
+    try
+    {
+        //check if the path is inside library_path
+        path = fs::canonical(fs::path(document));
+        if (!std::string(path.c_str()).starts_with(library_path))
+        {
+            GetLogger(session_id)->Error("LoadLibraryDocument error: Path not found: {}", path.c_str());
+            SendError(k404NotFound, "Path not found", callback);
+            return;
+        }
+
+        std::ifstream file(path.string().c_str());
+        if (!file.is_open())
+        {
+            GetLogger(session_id)->Error("LoadLibraryDocument error: Path not found: {}", path.c_str());
+            SendError(k500InternalServerError, "Error loading file", callback);
+            return;
+        }
+
+        try
+        {
+            //try to open as compressed file
+            boost::iostreams::filtering_streambuf<boost::iostreams::input> in;
+            in.push(boost::iostreams::gzip_decompressor());
+            in.push(file);
+            std::stringstream json;
+            boost::iostreams::copy(in, json);
+            SendJson(callback, json.str());
+            return;
+        }
+        catch (const std::ios_base::failure& ex)
+        {
+        }
+
+        SendFile(callback, path); //send as decompressed file
+    }
+    catch (const std::exception& ex)
+    {
+        GetLogger(session_id)->Error("LoadLibraryDocument error: file not open");
+        SendError(k404NotFound, "File not open", callback);
+    }
 }
 
 };
