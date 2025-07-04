@@ -963,14 +963,21 @@ void ServiceController::LoadIncludeDocument(const HttpRequestPtr& req, std::func
     }
 
     //otherwise find document in the library
-    if (name.starts_with('/'))
-        name.erase(name.begin());
     std::string path;
     try
     {
-        fs::path p(library_path + language + current_document);
-        if (!current_document.empty())
-            p = p.parent_path();
+        fs::path p;
+        if (name.starts_with('/'))
+        {
+            p = fs::path(library_path + language);
+            name.erase(name.begin());
+        }
+        else
+        {
+            p = fs::path(library_path + language + current_document);
+            if (!current_document.empty())
+                p = p.parent_path();
+        }
         p /= name;
         path = fs::canonical(p);
     }
