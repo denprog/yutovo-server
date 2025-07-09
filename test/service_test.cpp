@@ -14,6 +14,8 @@ TEST_F(ServiceTest, library1)
     auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
 
+    StartPage(client);
+
     auto req = HttpRequest::newHttpRequest();
     req->setMethod(drogon::Post);
     req->setPath("/service/get-library-documents");
@@ -32,6 +34,8 @@ TEST_F(ServiceTest, library2)
     auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
 
+    StartPage(client);
+
     Json::Value body;
     body["document"] = "/Physics/Dynamics/Kinetic energy";
     auto req = HttpRequest::newHttpJsonRequest(body);
@@ -43,7 +47,7 @@ TEST_F(ServiceTest, library2)
     HttpResponsePtr& r = resp.second;
     ASSERT_TRUE(res == ReqResult::Ok) << res;
     ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
-    ASSERT_TRUE(r->getContentType() == CT_APPLICATION_OCTET_STREAM) << r->getContentType();
+    ASSERT_TRUE(r->getContentType() == CT_APPLICATION_JSON) << r->getContentType();
 }
 
 //Wrong library document path
@@ -51,6 +55,8 @@ TEST_F(ServiceTest, library3)
 {
     auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
+
+    StartPage(client);
 
     Json::Value body;
     body["document"] = "/Physics/Dynamics/../Kinetic energy";
@@ -81,6 +87,8 @@ TEST_F(ServiceTest, service1)
     auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
 
+    StartPage(client);
+
     Json::Value body;
     body["guid"] = "ac28c4aa-de4b-42da-b8c5-47aca826b608";
     body["code_id"] = 1;
@@ -107,13 +115,13 @@ TEST_F(ServiceTest, document1)
     auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
 
-    Register(client, "User1", "user1@mail.com", "11");
-
     auto req = HttpRequest::newHttpRequest();
     req->setMethod(drogon::Get);
     req->setPath("/");
-
     auto resp = client->sendRequest(req);
+
+    Register(client, "User1", "user1@mail.com", "11");
+
     ReqResult& res = resp.first;
     HttpResponsePtr& r = resp.second;
     ASSERT_TRUE(res == ReqResult::Ok) << res;
@@ -153,7 +161,7 @@ TEST_F(ServiceTest, document1)
     ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
     ASSERT_TRUE(r->getContentType() == CT_APPLICATION_JSON) << r->getContentType();
     const auto load_json = r->jsonObject();
-    ASSERT_TRUE(save_body == *load_json);
+    ASSERT_TRUE(save_body == *load_json) << save_body << "\n" << *load_json;
 
     UnRegister(client, "User1", access_token);
 }
@@ -163,6 +171,8 @@ TEST_F(ServiceTest, document2)
 {
     auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
+
+    StartPage(client);
 
     Register(client, "User1", "user1@mail.com", "11");
 
@@ -233,6 +243,8 @@ TEST_F(ServiceTest, document3)
     auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
 
+    StartPage(client);
+
     auto req = HttpRequest::newHttpRequest();
     req->setMethod(drogon::Get);
     req->setPath("/");
@@ -289,6 +301,7 @@ TEST_F(ServiceTest, document4)
     {
         auto client = HttpClient::newHttpClient(address);
         client->enableCookies(true);
+        StartPage(client);
 
         Register(client, "User1", "user1@mail.com", "11");
 
@@ -317,6 +330,7 @@ TEST_F(ServiceTest, document4)
 
     auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
+    StartPage(client);
 
     //load the last document
     Json::Value s;
@@ -339,6 +353,8 @@ TEST_F(ServiceTest, document5)
 {
     auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
+
+    StartPage(client);
 
     Register(client, "User1", "user1@mail.com", "11");
 
@@ -454,6 +470,7 @@ TEST_F(ServiceTest, document6)
     {
         auto client = HttpClient::newHttpClient(address);
         client->enableCookies(true);
+        StartPage(client);
 
         Register(client, "User1", "user1@mail.com", "11");
 
@@ -482,6 +499,7 @@ TEST_F(ServiceTest, document6)
     {
         auto client = HttpClient::newHttpClient(address);
         client->enableCookies(true);
+        StartPage(client);
 
         Register(client, "User2", "user2@mail.com", "22");
 
@@ -528,6 +546,7 @@ TEST_F(ServiceTest, document7)
 {
     auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
+    StartPage(client);
 
     Register(client, "User1", "user1@mail.com", "11");
 
@@ -578,6 +597,7 @@ TEST_F(ServiceTest, document8)
 {
     auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
+    StartPage(client);
 
     Register(client, "User1", "user1@mail.com", "11");
 
@@ -614,6 +634,7 @@ TEST_F(ServiceTest, document9)
 {
     auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
+    StartPage(client);
 
     Register(client, "User1", "user1@mail.com", "11");
 
@@ -658,6 +679,7 @@ TEST_F(ServiceTest, document10)
 {
     auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
+    StartPage(client);
 
     Register(client, "User1", "user1@mail.com", "11");
 
@@ -689,6 +711,7 @@ TEST_F(ServiceTest, document11)
 {
     auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
+    StartPage(client);
 
     Register(client, "User1", "user1@mail.com", "11");
 
@@ -717,6 +740,7 @@ TEST_F(ServiceTest, document12)
 {
     auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
+    StartPage(client);
 
     Register(client, "User1", "user1@mail.com", "11");
 
@@ -747,6 +771,7 @@ TEST_F(ServiceTest, document13)
 {
     auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
+    StartPage(client);
 
     Register(client, "User1", "user1@mail.com", "11");
 
@@ -810,6 +835,7 @@ TEST_F(ServiceTest, document14)
     {
         auto client = HttpClient::newHttpClient(address);
         client->enableCookies(true);
+        StartPage(client);
 
         Register(client, "User1", "user1@mail.com", "11");
 
@@ -845,6 +871,8 @@ TEST_F(ServiceTest, document15)
 {
     auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
+    StartPage(client);
+
     Register(client, "User1", "user1@mail.com", "11");
 
     Locate(client, "/");
@@ -873,6 +901,8 @@ TEST_F(ServiceTest, document16)
 {
     auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
+    StartPage(client);
+
     Register(client, "User1", "user1@mail.com", "11");
 
     Locate(client, "/");
@@ -899,6 +929,8 @@ TEST_F(ServiceTest, document17)
 {
     auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
+    StartPage(client);
+
     Register(client, "User1", "user1@mail.com", "11");
 
     drogon::orm::DbClientPtr db = drogon::app().getDbClient();
@@ -985,6 +1017,7 @@ TEST_F(ServiceTest, document18)
 {
     auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
+    StartPage(client);
 
     Register(client, "User1", "user1@mail.com", "11");
 
@@ -1059,6 +1092,7 @@ TEST_F(ServiceTest, document19)
 {
     auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
+    StartPage(client);
 
     Register(client, "User1", "user1@mail.com", "11");
 

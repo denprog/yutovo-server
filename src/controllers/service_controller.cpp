@@ -54,8 +54,10 @@ ServiceController::ServiceController()
 
 void ServiceController::GetLibraryDocuments(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
-    if (!GetSessionId(req, callback))
+    std::string session_id;
+    if (!GetSessionId(req, callback, session_id))
         return;
+
     GetLogger(session_id)->Debug("GetLibraryDocuments request");
 
     auto json_object = req->getJsonObject();
@@ -192,13 +194,15 @@ void ServiceController::GetLibraryDocuments(const HttpRequestPtr& req, std::func
 
 void ServiceController::LoadLibraryDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
-    if (!GetSessionId(req, callback))
+    std::string session_id;
+    if (!GetSessionId(req, callback, session_id))
         return;
+
     auto json = req->getJsonObject();
     if (!json || !json->isObject())
     {
         GetLogger(session_id)->Error("LoadLibraryDocument error: Json not found in the request");
-        SendError(k400BadRequest, "Json not found in the request", callback);
+        SendError(k400BadRequest, "Json not found in the request", session_id, callback);
         return;
     }
 
@@ -210,7 +214,7 @@ void ServiceController::LoadLibraryDocument(const HttpRequestPtr& req, std::func
     if (!json->isMember("document") || !(*json)["document"].isString())
     {
         GetLogger(session_id)->Error("LoadLibraryDocument error: Wrong request: empty document");
-        SendError(k400BadRequest, "Wrong request: empty document", callback);
+        SendError(k400BadRequest, "Wrong request: empty document", session_id, callback);
         return;
     }
     document = (*json)["document"].asString();
@@ -220,18 +224,20 @@ void ServiceController::LoadLibraryDocument(const HttpRequestPtr& req, std::func
     if (!document.ends_with(".yut"))
         document += fs::path(".yut");
 
-    SendLibraryDocument(document, callback);
+    SendLibraryDocument(req, document, callback);
 }
 
 void ServiceController::SaveLibraryDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
-    if (!GetSessionId(req, callback))
+    std::string session_id;
+    if (!GetSessionId(req, callback, session_id))
         return;
+
     auto json = req->getJsonObject();
     if (!json || !json->isObject())
     {
         GetLogger(session_id)->Error("SaveLibraryDocument error: Json not found in the request");
-        SendError(k400BadRequest, "Json not found in the request", callback);
+        SendError(k400BadRequest, "Json not found in the request", session_id, callback);
         return;
     }
 
@@ -243,7 +249,7 @@ void ServiceController::SaveLibraryDocument(const HttpRequestPtr& req, std::func
     if (!json->isMember("document") || !(*json)["document"].isString())
     {
         GetLogger(session_id)->Error("SaveLibraryDocument error: Wrong request: empty document");
-        SendError(k400BadRequest, "Wrong request: empty document", callback);
+        SendError(k400BadRequest, "Wrong request: empty document", session_id, callback);
         return;
     }
     document = (*json)["document"].asString();
@@ -251,7 +257,7 @@ void ServiceController::SaveLibraryDocument(const HttpRequestPtr& req, std::func
     if (p == std::string::npos || p >= document.length())
     {
         GetLogger(session_id)->Error("SaveLibraryDocument error: Wrong document name");
-        SendError(k400BadRequest, "Wrong document name", callback);
+        SendError(k400BadRequest, "Wrong document name", session_id, callback);
         return;
     }
     
@@ -261,12 +267,6 @@ void ServiceController::SaveLibraryDocument(const HttpRequestPtr& req, std::func
     std::string user_id = session->get<std::string>("user_id");
     if (user_id.empty())
         user_id = "-1";
-    if (session_id.empty())
-    {
-        GetLogger(session_id)->Error("SaveLibraryDocument error: Wrong request: empty session_id");
-        SendError(k400BadRequest, "Wrong request: empty session_id", callback);
-        return;
-    }
 
     std::string document_id;
 
@@ -276,10 +276,10 @@ void ServiceController::SaveLibraryDocument(const HttpRequestPtr& req, std::func
 
     try
     {
-        if (!AddDocument(user_id, document_id, name))
+        if (!AddDocument(req, user_id, document_id, name))
         {
             GetLogger(session_id)->Error("Database error: Error inserting a document: {}, {}", document_id, name);
-            SendError(k500InternalServerError, "Error inserting a document", callback);
+            SendError(k500InternalServerError, "Error inserting a document", session_id, callback);
             return;
         }
 
@@ -292,7 +292,7 @@ void ServiceController::SaveLibraryDocument(const HttpRequestPtr& req, std::func
             if (result.affectedRows() == 0)
             {
                 GetLogger(session_id)->Error("Database error: Error inserting a document");
-                SendError(k500InternalServerError, "Error inserting a document", callback);
+                SendError(k500InternalServerError, "Error inserting a document", session_id, callback);
                 return;
             }
         }
@@ -312,7 +312,7 @@ void ServiceController::SaveLibraryDocument(const HttpRequestPtr& req, std::func
                 if (!std::string(path.c_str()).starts_with(library_path))
                 {
                     GetLogger(session_id)->Error("SaveLibraryDocument error: Path not found: {}", path.c_str());
-                    SendError(k404NotFound, "Path not found", callback);
+                    SendError(k404NotFound, "Path not found", session_id, callback);
                     return;
                 }
 
@@ -321,7 +321,7 @@ void ServiceController::SaveLibraryDocument(const HttpRequestPtr& req, std::func
             }
             catch (const std::exception& ex)
             {
-                SendError(k404NotFound, "Path not found", callback);
+                SendError(k404NotFound, "Path not found", session_id, callback);
                 return;
             }
 
@@ -329,18 +329,18 @@ void ServiceController::SaveLibraryDocument(const HttpRequestPtr& req, std::func
             if (result.affectedRows() == 0)
             {
                 GetLogger(session_id)->Error("Database error: Error inserting a document");
-                SendError(k500InternalServerError, "Error inserting a document", callback);
+                SendError(k500InternalServerError, "Error inserting a document", session_id, callback);
                 return;
             }
         }
 
         db->execSqlSync("update user_sessions set document_id=$1 where session_id=$2", document_id, session_id);
-        SendOk(callback, document_id, name);
+        SendOkDocumentName(callback, document_id, session_id, name);
     }
     catch (const orm::DrogonDbException& e)
     {
         GetLogger(session_id)->Error("Database error: {}", e.base().what());
-        SendError(k500InternalServerError, e.base().what(), callback);
+        SendError(k500InternalServerError, e.base().what(), session_id, callback);
     }
 }
 
@@ -350,7 +350,7 @@ void ServiceController::ListIdentifiers(const HttpRequestPtr& req, std::function
     if (!solver_client || !solver_client->getConnection())
     {
         GetLogger(session_id)->Error("ListIdentifiers error: Solver socket not open");
-        SendError(k500InternalServerError, "Solver socket not open", callback);
+        SendError(k500InternalServerError, "Solver socket not open", session_id, callback);
         return;
     }
     
@@ -358,7 +358,7 @@ void ServiceController::ListIdentifiers(const HttpRequestPtr& req, std::function
     if (!json || !json->isObject())
     {
         GetLogger(session_id)->Error("ListIdentifiers error: Json not found in the request");
-        SendError(k400BadRequest, "Json not found in the request", callback);
+        SendError(k400BadRequest, "Json not found in the request", session_id, callback);
         return;
     }
 
@@ -374,33 +374,35 @@ void ServiceController::ListIdentifiers(const HttpRequestPtr& req, std::function
         if (time(nullptr) - now >= solver_timeout)
         {
             GetLogger(session_id)->Error("ListIdentifiers error: Solver not response");
-            SendError(k500InternalServerError, "Solver not response", callback);
+            SendError(k500InternalServerError, "Solver not response", session_id, callback);
             return;
         }
         std::this_thread::sleep_for(1ms);
     }
     
-    SendJson(callback, solver_response);
+    SendJson(callback, solver_response, session_id);
 }
 #endif
 
 void ServiceController::NewDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
-    if (!GetSessionId(req, callback))
+    std::string session_id;
+    if (!GetSessionId(req, callback, session_id))
         return;
+
     GetLogger(session_id)->Info("NewDocument request");
 
     auto json = req->getJsonObject();
     if (!json || !json->isObject())
     {
         GetLogger(session_id)->Error("NewDocument error: Json not found in the request");
-        SendError(k400BadRequest, "Json not found in the request", callback);
+        SendError(k400BadRequest, "Json not found in the request", session_id, callback);
         return;
     }
     if (session_id.empty())
     {
         GetLogger(session_id)->Error("NewDocument error: Wrong request: empty session_id");
-        SendError(k400BadRequest, "Wrong request: empty session_id", callback);
+        SendError(k400BadRequest, "Wrong request: empty session_id", session_id, callback);
         return;
     }
 
@@ -421,7 +423,7 @@ void ServiceController::NewDocument(const HttpRequestPtr& req, std::function<voi
         {
             //for unregistered user reset his document to empty
             db->execSqlSync("update user_documents set document='{}' where document_id=$1", document_id);
-            SendOk(callback, document_id);
+            SendOk(callback, document_id, session_id);
         }
         else
         {
@@ -431,14 +433,14 @@ void ServiceController::NewDocument(const HttpRequestPtr& req, std::function<voi
             if (result.affectedRows() == 0)
             {
                 GetLogger(session_id)->Error("Database error: Error getting count of documents");
-                SendError(k500InternalServerError, "Error inserting a document", callback);
+                SendError(k500InternalServerError, "Error inserting a document", session_id, callback);
                 return;
             }
 
             if (result[0]["count"].as<int>() >= max_files)
             {
                 GetLogger(session_id)->Error("Max files count exceed");
-                SendError(k403Forbidden, "Max files count exceed", callback);
+                SendError(k403Forbidden, "Max files count exceed", session_id, callback);
                 return;
             }
 
@@ -448,10 +450,10 @@ void ServiceController::NewDocument(const HttpRequestPtr& req, std::function<voi
             
             //for registered user create a new document
             add_doc = true;
-            if (!AddDocument(user_id, document_id, name))
+            if (!AddDocument(req, user_id, document_id, name))
             {
                 GetLogger(session_id)->Error("Database error: Error inserting a document");
-                SendError(k500InternalServerError, "Error inserting a document", callback);
+                SendError(k500InternalServerError, "Error inserting a document", session_id, callback);
                 return;
             }
 
@@ -465,7 +467,7 @@ void ServiceController::NewDocument(const HttpRequestPtr& req, std::function<voi
                 {
                     db->execSqlSync("delete from user_documents where document_id=$1", document_id);
                     GetLogger(session_id)->Error("Document size is more then limit");
-                    SendError(k400BadRequest, "Document size is more then limit", callback);
+                    SendError(k400BadRequest, "Document size is more then limit", session_id, callback);
                     return;
                 }
     
@@ -474,7 +476,7 @@ void ServiceController::NewDocument(const HttpRequestPtr& req, std::function<voi
                 {
                     db->execSqlSync("delete from user_documents where document_id=$1", document_id);
                     GetLogger(session_id)->Error("Database error: Error inserting a document: document_id={}", document_id);
-                    SendError(k500InternalServerError, "Error inserting a document", callback);
+                    SendError(k500InternalServerError, "Error inserting a document", session_id, callback);
                     return;
                 }
             }
@@ -486,7 +488,7 @@ void ServiceController::NewDocument(const HttpRequestPtr& req, std::function<voi
                 {
                     db->execSqlSync("delete from user_documents where document_id=$1", document_id);
                     GetLogger(session_id)->Error("Document size is more then limit");
-                    SendError(k400BadRequest, "Document size is more then limit", callback);
+                    SendError(k400BadRequest, "Document size is more then limit", session_id, callback);
                     return;
                 }
 
@@ -496,14 +498,14 @@ void ServiceController::NewDocument(const HttpRequestPtr& req, std::function<voi
                 {
                     db->execSqlSync("delete from user_documents where document_id=$1", document_id);
                     GetLogger(session_id)->Error("Database error: Error inserting a document: document_id={}", document_id);
-                    SendError(k500InternalServerError, "Error inserting a document", callback);
+                    SendError(k500InternalServerError, "Error inserting a document", session_id, callback);
                     return;
                 }
             }
 
             db->execSqlSync("update user_sessions set document_id=$1 where session_id=$2", document_id, session_id);
 
-            SendOk(callback, document_id, name);
+            SendOkDocumentName(callback, document_id, session_id, name);
         }
     }
     catch (const orm::DrogonDbException& e)
@@ -511,26 +513,28 @@ void ServiceController::NewDocument(const HttpRequestPtr& req, std::function<voi
         if (add_doc)
             db->execSqlSync("delete from user_documents where document_id=$1", document_id);
         GetLogger(session_id)->Error("Database error: {}", e.base().what());
-        SendError(k500InternalServerError, "Error inserting a document", callback);
+        SendError(k500InternalServerError, "Error inserting a document", session_id, callback);
     }
 }
 
 void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
-    if (!GetSessionId(req, callback))
+    std::string session_id;
+    if (!GetSessionId(req, callback, session_id))
         return;
+
     GetLogger(session_id)->Debug("SaveDocument request");
     auto json = req->getJsonObject();
     if (!json || !json->isObject())
     {
         GetLogger(session_id)->Error("SaveDocument error: Wrong request: Json not found in the request");
-        SendError(k400BadRequest, "Json not found in the request", callback);
+        SendError(k400BadRequest, "Json not found in the request", session_id, callback);
         return;
     }
     if (session_id.empty())
     {
         GetLogger(session_id)->Error("SaveDocument error: Wrong request: empty session_id");
-        SendError(k400BadRequest, "Wrong request: empty session_id", callback);
+        SendError(k400BadRequest, "Wrong request: empty session_id", session_id, callback);
         return;
     }
 
@@ -538,7 +542,7 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
     if (!doc.isMember("text"))
     {
         GetLogger(session_id)->Error("SaveDocument error: Text field not found in the request");
-        SendError(k400BadRequest, "Text field not found in the request", callback);
+        SendError(k400BadRequest, "Text field not found in the request", session_id, callback);
         return;
     }
 
@@ -548,7 +552,7 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
     if (!text.isMember("id") || text["id"].asString().empty())
     {
         GetLogger(session_id)->Error("SaveDocument error: Wrong request: empty id");
-        SendError(k400BadRequest, "Wrong request: empty id", callback);
+        SendError(k400BadRequest, "Wrong request: empty id", session_id, callback);
         return;
     }
 
@@ -566,7 +570,7 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
         if (result.size() == 0)
         {
             GetLogger(session_id)->Error("Database error: document not found");
-            SendError(k500InternalServerError, "Document not found", callback);
+            SendError(k500InternalServerError, "Document not found", session_id, callback);
             return;
         }
 
@@ -579,7 +583,7 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
             if (result.size() == 0)
             {
                 GetLogger(session_id)->Error("Database error: document not found");
-                SendError(k500InternalServerError, "Document not found", callback);
+                SendError(k500InternalServerError, "Document not found", session_id, callback);
                 return;
             }
 
@@ -588,7 +592,7 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
             {
                 //saving this foreign document is prohibited
                 GetLogger(session_id)->Error("SaveDocument error: Document saving is prohibited: document_id={}", document_id);
-                SendError(k403Forbidden, "Document saving is prohibited", callback);
+                SendError(k403Forbidden, "Document saving is prohibited", session_id, callback);
                 return;
             }
             document_size = row["pg_column_size"].as<int>();
@@ -597,7 +601,7 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
     catch (const orm::DrogonDbException& e)
     {
         GetLogger(session_id)->Error("Database error: {}", e.base().what());
-        SendError(k500InternalServerError, e.base().what(), callback);
+        SendError(k500InternalServerError, e.base().what(), session_id, callback);
         return;
     }
 
@@ -611,7 +615,7 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
             if (document.size() > max_file_size)
             {
                 GetLogger(session_id)->Error("Document size is more then limit");
-                SendError(k400BadRequest, "Document size is more then limit", callback);
+                SendError(k400BadRequest, "Document size is more then limit", session_id, callback);
                 return;
             }
 
@@ -619,10 +623,10 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
             if (document_id == "-1")
             {
                 //insert new document
-                if (!AddDocument(user_id, document_id, name))
+                if (!AddDocument(req, user_id, document_id, name))
                 {
                     GetLogger(session_id)->Error("Database error: Error inserting a document");
-                    SendError(k500InternalServerError, "Error inserting a document", callback);
+                    SendError(k500InternalServerError, "Error inserting a document", session_id, callback);
                     return;
                 }
             }
@@ -630,21 +634,21 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
             orm::Result result = db->execSqlSync("update user_documents set document=$1 where document_id=$2", document, document_id);
             if (result.affectedRows() == 0)
             {
-                if (!AddDocument(user_id, document_id, name))
+                if (!AddDocument(req, user_id, document_id, name))
                 {
                     GetLogger(session_id)->Error("Database error: Error inserting a document");
-                    SendError(k500InternalServerError, "Error inserting a document", callback);
+                    SendError(k500InternalServerError, "Error inserting a document", session_id, callback);
                     return;
                 }
             }
 
             db->execSqlSync("update user_sessions set document_id=$1 where session_id=$2", document_id, session_id);
-            SendOk(callback, document_id, name);
+            SendOkDocumentName(callback, document_id, session_id, name);
         }
         catch (const orm::DrogonDbException& e)
         {
             GetLogger(session_id)->Error("Database error: {}", e.base().what());
-            SendError(k500InternalServerError, e.base().what(), callback);
+            SendError(k500InternalServerError, e.base().what(), session_id, callback);
         }
         return;
     }
@@ -655,7 +659,7 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
         if (document_id == "-1")
         {
             GetLogger(session_id)->Error("Wrong document id for session_id={}", session_id);
-            SendError(k400BadRequest, "Wrong document id", callback);
+            SendError(k400BadRequest, "Wrong document id", session_id, callback);
             return;
         }
 
@@ -663,7 +667,7 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
         std::vector<int> _id;
         if (!ParseId(id, _id))
         {
-            SendError(k400BadRequest, "Wrong Id", callback);
+            SendError(k400BadRequest, "Wrong Id", session_id, callback);
             return;
         }
 
@@ -678,7 +682,7 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
         if (document_size + document.size() > max_file_size)
         {
             GetLogger(session_id)->Error("Document size is more then limit");
-            SendError(k400BadRequest, "Document size is more then limit", callback);
+            SendError(k400BadRequest, "Document size is more then limit", session_id, callback);
             return;
         }
 
@@ -690,21 +694,23 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
     catch (const orm::DrogonDbException& e)
     {
         GetLogger(session_id)->Error("Database error: {}", e.base().what());
-        SendError(k500InternalServerError, e.base().what(), callback);
+        SendError(k500InternalServerError, e.base().what(), session_id, callback);
     }
 }
 
 void ServiceController::SaveAsDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
-    if (!GetSessionId(req, callback))
+    std::string session_id;
+    if (!GetSessionId(req, callback, session_id))
         return;
+
     GetLogger(session_id)->Debug("SaveAsDocument request");
 
     auto json = req->getJsonObject();
     if (!json || !json->isObject())
     {
         GetLogger(session_id)->Error("SaveAsDocument error: Wrong request: Json not found in the request");
-        SendError(k400BadRequest, "Json not found in the request", callback);
+        SendError(k400BadRequest, "Json not found in the request", session_id, callback);
         return;
     }
 
@@ -715,7 +721,7 @@ void ServiceController::SaveAsDocument(const HttpRequestPtr& req, std::function<
     if (document_id.empty() || document_id == "-1")
     {
         GetLogger(session_id)->Error("SaveAsDocument error: Wrong request: document_id field not found in the request");
-        SendError(k400BadRequest, "document_id field not found in the request", callback);
+        SendError(k400BadRequest, "document_id field not found in the request", session_id, callback);
         return;
     }
 
@@ -725,7 +731,7 @@ void ServiceController::SaveAsDocument(const HttpRequestPtr& req, std::function<
     if (name.empty())
     {
         GetLogger(session_id)->Error("Empty name field");
-        SendError(k400BadRequest, "name field not found in the request", callback);
+        SendError(k400BadRequest, "name field not found in the request", session_id, callback);
         return;
     }
 
@@ -736,7 +742,7 @@ void ServiceController::SaveAsDocument(const HttpRequestPtr& req, std::function<
     if (user_id.empty())
     {
         GetLogger(session_id)->Error("SaveAsDocument error: Wrong user_id");
-        SendError(k400BadRequest, "Wrong user_id", callback);
+        SendError(k400BadRequest, "Wrong user_id", session_id, callback);
         return;
     }
 
@@ -749,7 +755,7 @@ void ServiceController::SaveAsDocument(const HttpRequestPtr& req, std::function<
         if (result.size() == 0)
         {
             GetLogger(session_id)->Error("Database error: document not found");
-            SendError(k500InternalServerError, "Document not found", callback);
+            SendError(k500InternalServerError, "Document not found", session_id, callback);
             return;
         }
 
@@ -759,16 +765,16 @@ void ServiceController::SaveAsDocument(const HttpRequestPtr& req, std::function<
         if (result.size() > 0)
         {
             GetLogger(session_id)->Error("Database error: document with such name already exists");
-            SendError(k409Conflict, "Document with such name already exists", callback);
+            SendError(k409Conflict, "Document with such name already exists", session_id, callback);
             return;
         }
 
         auto doc = row["document"].as<std::string>();
 
-        if (!AddDocument(user_id, document_id, name))
+        if (!AddDocument(req, user_id, document_id, name))
         {
             GetLogger(session_id)->Error("Database error: Error inserting a document");
-            SendError(k500InternalServerError, "Error inserting a document", callback);
+            SendError(k500InternalServerError, "Error inserting a document", session_id, callback);
             return;
         }
 
@@ -776,30 +782,32 @@ void ServiceController::SaveAsDocument(const HttpRequestPtr& req, std::function<
         if (result.affectedRows() == 0)
         {
             GetLogger(session_id)->Error("Database error: Error inserting a document");
-            SendError(k500InternalServerError, "Error inserting a document", callback);
+            SendError(k500InternalServerError, "Error inserting a document", session_id, callback);
             return;
         }
 
-        SendOk(callback, document_id);
+        SendOk(callback, document_id, session_id);
     }
     catch (const orm::DrogonDbException& e)
     {
         GetLogger(session_id)->Error("Database error: {}", e.base().what());
-        SendError(k500InternalServerError, e.base().what(), callback);
+        SendError(k500InternalServerError, e.base().what(), session_id, callback);
     }
 }
 
 void ServiceController::LoadDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
-    if (!GetSessionId(req, callback))
+    std::string session_id;
+    if (!GetSessionId(req, callback, session_id))
         return;
+
     GetLogger(session_id)->Debug("LoadDocument request");
 
     auto json = req->getJsonObject();
     if (!json || !json->isObject())
     {
         GetLogger(session_id)->Error("LoadDocument error: Wrong request: Json not found in the request");
-        SendError(k400BadRequest, "Json not found in the request", callback);
+        SendError(k400BadRequest, "Json not found in the request", session_id, callback);
         return;
     }
 
@@ -814,7 +822,7 @@ void ServiceController::LoadDocument(const HttpRequestPtr& req, std::function<vo
     if (document_id.empty())
     {
         GetLogger(session_id)->Error("LoadDocument error: Wrong request: empty document_id");
-        SendError(k400BadRequest, "Wrong request: empty document_id", callback);
+        SendError(k400BadRequest, "Wrong request: empty document_id", session_id, callback);
         return;
     }
 
@@ -837,7 +845,7 @@ void ServiceController::LoadDocument(const HttpRequestPtr& req, std::function<vo
         if (result.size() == 0)
         {
             GetLogger(session_id)->Error("LoadDocument error: No such document: document_id={}", document_id);
-            SendError(k404NotFound, "No such document", callback);
+            SendError(k404NotFound, "No such document", session_id, callback);
             return;
         }
 
@@ -847,7 +855,7 @@ void ServiceController::LoadDocument(const HttpRequestPtr& req, std::function<vo
             if (!row["public"].as<bool>())
             {
                 GetLogger(session_id)->Error("LoadDocument error: This document is not public: document_id={}", document_id);
-                SendError(k403Forbidden, "This document is not public", callback);
+                SendError(k403Forbidden, "This document is not public", session_id, callback);
                 return;
             }
         }
@@ -857,7 +865,7 @@ void ServiceController::LoadDocument(const HttpRequestPtr& req, std::function<vo
             //get the whole document
             result = db->execSqlSync("select document from user_documents where document_id=$1", document_id);
             auto row = result[0];
-            SendJson(callback, row["document"].as<std::string>());
+            SendJson(callback, row["document"].as<std::string>(), session_id);
         }
         else
         {
@@ -866,7 +874,7 @@ void ServiceController::LoadDocument(const HttpRequestPtr& req, std::function<vo
             if (!ParseId(id, _id))
             {
                 GetLogger(session_id)->Error("LoadDocument error: Wrong Id: document_id={}", document_id);
-                SendError(k400BadRequest, "Wrong Id", callback);
+                SendError(k400BadRequest, "Wrong Id", session_id, callback);
                 return;
             }
 
@@ -878,12 +886,12 @@ void ServiceController::LoadDocument(const HttpRequestPtr& req, std::function<vo
             if (result.size() == 0)
             {
                 GetLogger(session_id)->Error("LoadDocument error: No such session: document_id={}", document_id);
-                SendError(k400BadRequest, "No such session", callback);
+                SendError(k400BadRequest, "No such session", session_id, callback);
                 return;
             }
 
             auto row = result[0];
-            SendJson(callback, row["document"].as<std::string>());
+            SendJson(callback, row["document"].as<std::string>(), session_id);
         }
 
         if (!session_id.empty())
@@ -896,21 +904,23 @@ void ServiceController::LoadDocument(const HttpRequestPtr& req, std::function<vo
     catch (const orm::DrogonDbException& e)
     {
         GetLogger(session_id)->Error("Database error: {}", e.base().what());
-        SendError(k500InternalServerError, e.base().what(), callback);
+        SendError(k500InternalServerError, e.base().what(), session_id, callback);
     }
 }
 
 void ServiceController::LoadIncludeDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
-    if (!GetSessionId(req, callback))
+    std::string session_id;
+    if (!GetSessionId(req, callback, session_id))
         return;
+
     GetLogger(session_id)->Debug("LoadIncludeDocument request");
 
     auto json = req->getJsonObject();
     if (!json || !json->isObject())
     {
         GetLogger(session_id)->Error("LoadIncludeDocument error: Wrong request: Json not found in the request");
-        SendError(k400BadRequest, "Json not found in the request", callback);
+        SendError(k400BadRequest, "Json not found in the request", session_id, callback);
         return;
     }
 
@@ -922,7 +932,7 @@ void ServiceController::LoadIncludeDocument(const HttpRequestPtr& req, std::func
     if (!json->isMember("name") || !(*json)["name"].isString())
     {
         GetLogger(session_id)->Error("LoadLibraryDocument error: Wrong request: empty document name");
-        SendError(k400BadRequest, "Wrong request: empty document name", callback);
+        SendError(k400BadRequest, "Wrong request: empty document name", session_id, callback);
         return;
     }
     name = (*json)["name"].asString();
@@ -950,14 +960,14 @@ void ServiceController::LoadIncludeDocument(const HttpRequestPtr& req, std::func
             if (result.size() != 0)
             {
                 auto row = result[0];
-                SendJson(callback, row["document"].as<std::string>());
+                SendJson(callback, row["document"].as<std::string>(), session_id);
                 return;
             }
         }
         catch (const orm::DrogonDbException& e)
         {
             GetLogger(session_id)->Error("Database error: {}", e.base().what());
-            SendError(k500InternalServerError, e.base().what(), callback);
+            SendError(k500InternalServerError, e.base().what(), session_id, callback);
             return;
         }
     }
@@ -984,24 +994,26 @@ void ServiceController::LoadIncludeDocument(const HttpRequestPtr& req, std::func
     catch (const std::exception& ex)
     {
         GetLogger(session_id)->Error("GetIncludeDocument error: Path not found: {}", name);
-        SendError(k404NotFound, "Path not found", callback);
+        SendError(k404NotFound, "Path not found", session_id, callback);
         return;
     }
 
     if (!fs::exists(path))
     {
         GetLogger(session_id)->Error("GetIncludeDocument error: No such document: {}", name);
-        SendError(k404NotFound, "No such document", callback);
+        SendError(k404NotFound, "No such document", session_id, callback);
         return;
     }
 
-    SendLibraryDocument(path.c_str(), callback);
+    SendLibraryDocument(req, path.c_str(), callback);
 }
 
 void ServiceController::DeleteDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
-    if (!GetSessionId(req, callback))
+    std::string session_id;
+    if (!GetSessionId(req, callback, session_id))
         return;
+
     GetLogger(session_id)->Debug("DeleteDocument request");
 
     auto json = req->getJsonObject();
@@ -1013,7 +1025,7 @@ void ServiceController::DeleteDocument(const HttpRequestPtr& req, std::function<
     if (document_id.empty())
     {
         GetLogger(session_id)->Error("DeleteDocument error: Wrong request: empty document_id");
-        SendError(k400BadRequest, "Wrong request: empty document_id", callback);
+        SendError(k400BadRequest, "Wrong request: empty document_id", session_id, callback);
         return;
     }
 
@@ -1023,7 +1035,7 @@ void ServiceController::DeleteDocument(const HttpRequestPtr& req, std::function<
     std::string user_id = session->get<std::string>("user_id");
     if (session_id.empty())
     {
-        SendError(k400BadRequest, "Wrong request: empty session_id", callback);
+        SendError(k400BadRequest, "Wrong request: empty session_id", session_id, callback);
         return;
     }
 
@@ -1038,7 +1050,7 @@ void ServiceController::DeleteDocument(const HttpRequestPtr& req, std::function<
         if (result.size() == 0)
         {
             GetLogger(session_id)->Error("DeleteDocument error: Cannot delete document: document_id={}", document_id);
-            SendError(k403Forbidden, "Cannot delete document", callback);
+            SendError(k403Forbidden, "Cannot delete document", session_id, callback);
             return;
         }
 
@@ -1049,14 +1061,16 @@ void ServiceController::DeleteDocument(const HttpRequestPtr& req, std::function<
     catch (const orm::DrogonDbException& e)
     {
         GetLogger(session_id)->Error("Database error: {}", e.base().what());
-        SendError(k500InternalServerError, e.base().what(), callback);
+        SendError(k500InternalServerError, e.base().what(), session_id, callback);
     }
 }
 
 void ServiceController::ListDocuments(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
-    if (!GetSessionId(req, callback))
+    std::string session_id;
+    if (!GetSessionId(req, callback, session_id))
         return;
+
     GetLogger(session_id)->Debug("ListDocuments request");
 
     ClearDbTurnOff t; //skip the clear db circles for a while
@@ -1084,21 +1098,23 @@ void ServiceController::ListDocuments(const HttpRequestPtr& req, std::function<v
     catch (const orm::DrogonDbException& e)
     {
         GetLogger(session_id)->Error("Database error: {}", e.base().what());
-        SendError(k500InternalServerError, e.base().what(), callback);
+        SendError(k500InternalServerError, e.base().what(), session_id, callback);
     }
 }
 
 void ServiceController::GetDocumentId(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
-    if (!GetSessionId(req, callback))
+    std::string session_id;
+    if (!GetSessionId(req, callback, session_id))
         return;
+
     GetLogger(session_id)->Debug("GetDocumentId request");
 
     auto json = req->getJsonObject();
     if (!json || !json->isObject())
     {
         GetLogger(session_id)->Error("GetDocumentId error: Wrong request: Json not found in the request");
-        SendError(k400BadRequest, "Json not found in the request", callback);
+        SendError(k400BadRequest, "Json not found in the request", session_id, callback);
         return;
     }
 
@@ -1109,7 +1125,7 @@ void ServiceController::GetDocumentId(const HttpRequestPtr& req, std::function<v
     if (!json->isMember("name") || !(*json)["name"].isString())
     {
         GetLogger(session_id)->Error("GetDocumentId error: Wrong request: name not found in the request");
-        SendError(k400BadRequest, "Name not found in the request", callback);
+        SendError(k400BadRequest, "Name not found in the request", session_id, callback);
         return;
     }
 
@@ -1123,7 +1139,7 @@ void ServiceController::GetDocumentId(const HttpRequestPtr& req, std::function<v
             if (result.size() == 0)
             {
                 GetLogger(session_id)->Error("LoadDocument error: No such document: {}", name);
-                SendError(k404NotFound, "No such document", callback);
+                SendError(k404NotFound, "No such document", session_id, callback);
                 return;
             }
     
@@ -1136,22 +1152,24 @@ void ServiceController::GetDocumentId(const HttpRequestPtr& req, std::function<v
         catch (const orm::DrogonDbException& e)
         {
             GetLogger(session_id)->Error("Database error: {}", e.base().what());
-            SendError(k500InternalServerError, e.base().what(), callback);
+            SendError(k500InternalServerError, e.base().what(), session_id, callback);
         }
     }
 }
 
 void ServiceController::GetDocumentName(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
-    if (!GetSessionId(req, callback))
+    std::string session_id;
+    if (!GetSessionId(req, callback, session_id))
         return;
+
     GetLogger(session_id)->Debug("GetDocumentName request");
 
     auto json = req->getJsonObject();
     if (!json || !json->isObject())
     {
         GetLogger(session_id)->Error("GetDocumentName error: Wrong request: Json not found in the request");
-        SendError(k400BadRequest, "Json not found in the request", callback);
+        SendError(k400BadRequest, "Json not found in the request", session_id, callback);
         return;
     }
 
@@ -1165,7 +1183,7 @@ void ServiceController::GetDocumentName(const HttpRequestPtr& req, std::function
     if (document_id.empty() && name.empty())
     {
         GetLogger(session_id)->Error("GetDocumentName error: Wrong request: empty document_id or name");
-        SendError(k400BadRequest, "Wrong request: empty document_id or name", callback);
+        SendError(k400BadRequest, "Wrong request: empty document_id or name", session_id, callback);
         return;
     }
 
@@ -1188,14 +1206,14 @@ void ServiceController::GetDocumentName(const HttpRequestPtr& req, std::function
         catch (const std::exception& ex)
         {
             GetLogger(session_id)->Error("GetDocumentName error: Path not found: {}", document);
-            SendError(k404NotFound, "Path not found", callback);
+            SendError(k404NotFound, "Path not found", session_id, callback);
             return;
         }
     
         if (!fs::exists(path))
         {
             GetLogger(session_id)->Error("GetDocumentName error: No such document: {}", name);
-            SendError(k404NotFound, "No such document", callback);
+            SendError(k404NotFound, "No such document", session_id, callback);
             return;
         }
 
@@ -1222,7 +1240,7 @@ void ServiceController::GetDocumentName(const HttpRequestPtr& req, std::function
         if (result.size() == 0)
         {
             GetLogger(session_id)->Error("GetDocumentName error: No such document: {}", document_id);
-            SendError(k404NotFound, "No such document", callback);
+            SendError(k404NotFound, "No such document", session_id, callback);
             return;
         }
 
@@ -1232,7 +1250,7 @@ void ServiceController::GetDocumentName(const HttpRequestPtr& req, std::function
             if (!row["public"].as<bool>())
             {
                 GetLogger(session_id)->Error("GetDocumentName error: This document is not public: {}", document_id);
-                SendError(k403Forbidden, "This document is not public", callback);
+                SendError(k403Forbidden, "This document is not public", session_id, callback);
                 return;
             }
         }
@@ -1245,21 +1263,23 @@ void ServiceController::GetDocumentName(const HttpRequestPtr& req, std::function
     catch (const orm::DrogonDbException& e)
     {
         GetLogger(session_id)->Error("Database error: {}", e.base().what());
-        SendError(k500InternalServerError, e.base().what(), callback);
+        SendError(k500InternalServerError, e.base().what(), session_id, callback);
     }
 }
 
 void ServiceController::RenameDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
-    if (!GetSessionId(req, callback))
+    std::string session_id;
+    if (!GetSessionId(req, callback, session_id))
         return;
+
     GetLogger(session_id)->Debug("RenameDocument request");
 
     auto json = req->getJsonObject();
     if (!json || !json->isObject())
     {
         GetLogger(session_id)->Error("RenameDocument error: Json not found in the request");
-        SendError(k400BadRequest, "Json not found in the request", callback);
+        SendError(k400BadRequest, "Json not found in the request", session_id, callback);
         return;
     }
 
@@ -1271,7 +1291,7 @@ void ServiceController::RenameDocument(const HttpRequestPtr& req, std::function<
     if (document_id.empty())
     {
         GetLogger(session_id)->Error("RenameDocument error: Wrong request: empty document_id");
-        SendError(k400BadRequest, "Wrong request: empty document_id", callback);
+        SendError(k400BadRequest, "Wrong request: empty document_id", session_id, callback);
         return;
     }
 
@@ -1280,7 +1300,7 @@ void ServiceController::RenameDocument(const HttpRequestPtr& req, std::function<
         name = (*json)["name"].asString();
     if (name.empty())
     {
-        SendError(k400BadRequest, "Wrong request: empty name", callback);
+        SendError(k400BadRequest, "Wrong request: empty name", session_id, callback);
         return;
     }
 
@@ -1297,7 +1317,7 @@ void ServiceController::RenameDocument(const HttpRequestPtr& req, std::function<
         if (result.affectedRows() == 0)
         {
             GetLogger(session_id)->Error("Database error: Error updaing a document");
-            SendError(k500InternalServerError, "Error updating a document", callback);
+            SendError(k500InternalServerError, "Error updating a document", session_id, callback);
             return;
         }
 
@@ -1306,21 +1326,23 @@ void ServiceController::RenameDocument(const HttpRequestPtr& req, std::function<
     catch (const orm::DrogonDbException& e)
     {
         GetLogger(session_id)->Error("Database error: {}", e.base().what());
-        SendError(k500InternalServerError, e.base().what(), callback);
+        SendError(k500InternalServerError, e.base().what(), session_id, callback);
     }
 }
 
 void ServiceController::SetUserSettings(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
-    if (!GetSessionId(req, callback))
+    std::string session_id;
+    if (!GetSessionId(req, callback, session_id))
         return;
+
     GetLogger(session_id)->Debug("SetUserSettings request");
 
     auto json = req->getJsonObject();
     if (!json || !json->isObject())
     {
         GetLogger(session_id)->Error("SetUserSettings error: Json not found in the request");
-        SendError(k400BadRequest, "Json not found in the request", callback);
+        SendError(k400BadRequest, "Json not found in the request", session_id, callback);
         return;
     }
 
@@ -1330,7 +1352,7 @@ void ServiceController::SetUserSettings(const HttpRequestPtr& req, std::function
     if (user_id.empty())
     {
         GetLogger(session_id)->Error("SetUserSettings error: Empty user_id");
-        SendError(k500InternalServerError, "Empty user_id", callback);
+        SendError(k500InternalServerError, "Empty user_id", session_id, callback);
         return;
     }
 
@@ -1353,7 +1375,7 @@ void ServiceController::SetUserSettings(const HttpRequestPtr& req, std::function
     if (settings.empty() && name.empty() && email.empty() && (password.empty() || old_password.empty()))
     {
         GetLogger(session_id)->Error("SetUserSettings error: Wrong request: empty request");
-        SendError(k400BadRequest, "Wrong request: empty request", callback);
+        SendError(k400BadRequest, "Wrong request: empty request", session_id, callback);
         return;
     }
 
@@ -1366,7 +1388,7 @@ void ServiceController::SetUserSettings(const HttpRequestPtr& req, std::function
         if (!reader.parse(settings, settings_val))
         {
             GetLogger(session_id)->Error("Database error: Error updating settings");
-            SendError(k500InternalServerError, "Error updating settings", callback);
+            SendError(k500InternalServerError, "Error updating settings", session_id, callback);
             return;
         }
 
@@ -1377,7 +1399,7 @@ void ServiceController::SetUserSettings(const HttpRequestPtr& req, std::function
             if (result.affectedRows() == 0)
             {
                 GetLogger(session_id)->Error("Database error: Error updating settings");
-                SendError(k500InternalServerError, "Error updating settings", callback);
+                SendError(k500InternalServerError, "Error updating settings", session_id, callback);
                 return;
             }
     
@@ -1393,7 +1415,7 @@ void ServiceController::SetUserSettings(const HttpRequestPtr& req, std::function
                 if (!reader.parse(s, s_val))
                 {
                     GetLogger(session_id)->Error("Database error: Error updating settings");
-                    SendError(k500InternalServerError, "Error updating settings", callback);
+                    SendError(k500InternalServerError, "Error updating settings", session_id, callback);
                     return;
                 }
     
@@ -1418,14 +1440,14 @@ void ServiceController::SetUserSettings(const HttpRequestPtr& req, std::function
             if (result.affectedRows() == 0)
             {
                 GetLogger(session_id)->Error("Database error: Error updating settings");
-                SendError(k500InternalServerError, "Error updating settings", callback);
+                SendError(k500InternalServerError, "Error updating settings", session_id, callback);
                 return;
             }
         }
         catch (const orm::DrogonDbException& e)
         {
             GetLogger(session_id)->Error("Database error: {}", e.base().what());
-            SendError(k500InternalServerError, e.base().what(), callback);
+            SendError(k500InternalServerError, e.base().what(), session_id, callback);
             return;
         }
     }
@@ -1438,14 +1460,14 @@ void ServiceController::SetUserSettings(const HttpRequestPtr& req, std::function
             if (result.affectedRows() == 0)
             {
                 GetLogger(session_id)->Error("Database error: Error updating name");
-                SendError(k500InternalServerError, "Error updating name", callback);
+                SendError(k500InternalServerError, "Error updating name", session_id, callback);
                 return;
             }
         }
         catch (const orm::DrogonDbException& e)
         {
             GetLogger(session_id)->Error("Database error: {}", e.base().what());
-            SendError(k500InternalServerError, e.base().what(), callback);
+            SendError(k500InternalServerError, e.base().what(), session_id, callback);
             return;
         }
     }
@@ -1459,7 +1481,7 @@ void ServiceController::SetUserSettings(const HttpRequestPtr& req, std::function
             if (result.affectedRows() != 0)
             {
                 GetLogger(session_id)->Error("e-mail already exists: {}", email);
-                SendError(k409Conflict, "e-mail already exists", callback);
+                SendError(k409Conflict, "e-mail already exists", session_id, callback);
                 return;
             }
 
@@ -1467,14 +1489,14 @@ void ServiceController::SetUserSettings(const HttpRequestPtr& req, std::function
             if (result.affectedRows() == 0)
             {
                 GetLogger(session_id)->Error("Database error: Error updating email");
-                SendError(k500InternalServerError, "Error updating email", callback);
+                SendError(k500InternalServerError, "Error updating email", session_id, callback);
                 return;
             }
         }
         catch (const orm::DrogonDbException& e)
         {
             GetLogger(session_id)->Error("Database error: {}", e.base().what());
-            SendError(k500InternalServerError, e.base().what(), callback);
+            SendError(k500InternalServerError, e.base().what(), session_id, callback);
             return;
         }
     }
@@ -1485,13 +1507,13 @@ void ServiceController::SetUserSettings(const HttpRequestPtr& req, std::function
         auto captcha = (*json)["captcha"].asString();
         if (captcha.empty() || session->get<std::string>("captcha") != captcha)
         {
-            SendError(k400BadRequest, "Wrong captcha", callback);
+            SendError(k400BadRequest, "Wrong captcha", session_id, callback);
             return;
         }
         auto email_code = (*json)["email_code"].asString();
         if (email_code.empty() || session->get<std::string>("email_code") != email_code)
         {
-            SendError(k400BadRequest, "Wrong email code", callback);
+            SendError(k400BadRequest, "Wrong email code", session_id, callback);
             return;
         }
         session->erase("email_code");
@@ -1504,7 +1526,7 @@ void ServiceController::SetUserSettings(const HttpRequestPtr& req, std::function
             if (result.size() == 0)
             {
                 GetLogger(session_id)->Error("Login is incorrect");
-                SendError(k401Unauthorized, "Login is incorrect", callback);
+                SendError(k401Unauthorized, "Login is incorrect", session_id, callback);
                 return;
             }
     
@@ -1515,7 +1537,7 @@ void ServiceController::SetUserSettings(const HttpRequestPtr& req, std::function
             if (salt + h != hash)
             {
                 GetLogger(session_id)->Error("Old password is incorrect");
-                SendError(k401Unauthorized, "Old password is incorrect", callback);
+                SendError(k401Unauthorized, "Old password is incorrect", session_id, callback);
                 return;
             }
     
@@ -1528,14 +1550,14 @@ void ServiceController::SetUserSettings(const HttpRequestPtr& req, std::function
             if (result.affectedRows() == 0)
             {
                 GetLogger(session_id)->Error("Database error: Error updating password");
-                SendError(k500InternalServerError, "Error updating password", callback);
+                SendError(k500InternalServerError, "Error updating password", session_id, callback);
                 return;
             }
         }
         catch (const orm::DrogonDbException& e)
         {
             GetLogger(session_id)->Error("Database error: {}", e.base().what());
-            SendError(k500InternalServerError, e.base().what(), callback);
+            SendError(k500InternalServerError, e.base().what(), session_id, callback);
             return;
         }
     }
@@ -1545,8 +1567,10 @@ void ServiceController::SetUserSettings(const HttpRequestPtr& req, std::function
 
 void ServiceController::GetUserSettings(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
-    if (!GetSessionId(req, callback))
+    std::string session_id;
+    if (!GetSessionId(req, callback, session_id))
         return;
+
     GetLogger(session_id)->Debug("GetUserSettings request");
 
     orm::DbClientPtr db = app().getDbClient();
@@ -1555,7 +1579,7 @@ void ServiceController::GetUserSettings(const HttpRequestPtr& req, std::function
     if (user_id.empty())
     {
         GetLogger(session_id)->Error("GetUserSettings error: Empty user_id");
-        SendError(k500InternalServerError, "Empty user_id", callback);
+        SendError(k500InternalServerError, "Empty user_id", session_id, callback);
         return;
     }
 
@@ -1566,7 +1590,7 @@ void ServiceController::GetUserSettings(const HttpRequestPtr& req, std::function
         if (result.affectedRows() == 0)
         {
             GetLogger(session_id)->Error("Database error: Error updating settings");
-            SendError(k500InternalServerError, "Error updating settings", callback);
+            SendError(k500InternalServerError, "Error updating settings", session_id, callback);
             return;
         }
 
@@ -1578,7 +1602,7 @@ void ServiceController::GetUserSettings(const HttpRequestPtr& req, std::function
         Json::Reader reader;
         if (!reader.parse(settings.c_str(), s))
         {
-            SendError(k500InternalServerError, "Json error", callback);
+            SendError(k500InternalServerError, "Json error", session_id, callback);
             return;
         }
         Json::Value v(Json::objectValue);
@@ -1591,28 +1615,30 @@ void ServiceController::GetUserSettings(const HttpRequestPtr& req, std::function
     catch (const orm::DrogonDbException& e)
     {
         GetLogger(session_id)->Error("Database error: {}", e.base().what());
-        SendError(k500InternalServerError, e.base().what(), callback);
+        SendError(k500InternalServerError, e.base().what(), session_id, callback);
     }
 }
 
 void ServiceController::RecoverPassword(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
-    if (!GetSessionId(req, callback))
+    std::string session_id;
+    if (!GetSessionId(req, callback, session_id))
         return;
+
     GetLogger(session_id)->Debug("RecoverPassword request");
 
     auto json = req->getJsonObject();
     if (!json || !json->isObject())
     {
         GetLogger(session_id)->Error("RecoverPassword error: Wrong request: Json not found in the request");
-        SendError(k400BadRequest, "Json not found in the request", callback);
+        SendError(k400BadRequest, "Json not found in the request", session_id, callback);
         return;
     }
 
     if (!json->isMember("password") || !(*json)["password"].isString() || !json->isMember("email_code") || !(*json)["email_code"].isString())
     {
         GetLogger(session_id)->Error("RecoverPassword error: Wrong request: empty request");
-        SendError(k400BadRequest, "Wrong request: empty request", callback);
+        SendError(k400BadRequest, "Wrong request: empty request", session_id, callback);
         return;
     }
 
@@ -1625,7 +1651,7 @@ void ServiceController::RecoverPassword(const HttpRequestPtr& req, std::function
     if (password.empty() || email_code.empty())
     {
         GetLogger(session_id)->Error("RecoverPassword error: Wrong request: empty request");
-        SendError(k400BadRequest, "Wrong request: empty request", callback);
+        SendError(k400BadRequest, "Wrong request: empty request", session_id, callback);
         return;
     }
 
@@ -1633,7 +1659,7 @@ void ServiceController::RecoverPassword(const HttpRequestPtr& req, std::function
 #ifndef TEST
     if (session->get<std::string>("email_code") != email_code)
     {
-        SendError(k400BadRequest, "Wrong email code", callback);
+        SendError(k400BadRequest, "Wrong email code", session_id, callback);
         return;
     }
 #endif
@@ -1654,14 +1680,14 @@ void ServiceController::RecoverPassword(const HttpRequestPtr& req, std::function
         if (result.affectedRows() == 0)
         {
             GetLogger(session_id)->Error("Database error: Error updating password");
-            SendError(k500InternalServerError, "Error updating password", callback);
+            SendError(k500InternalServerError, "Error updating password", session_id, callback);
             return;
         }
     }
     catch (const orm::DrogonDbException& e)
     {
         GetLogger(session_id)->Error("Database error: {}", e.base().what());
-        SendError(k500InternalServerError, e.base().what(), callback);
+        SendError(k500InternalServerError, e.base().what(), session_id, callback);
         return;
     }
 
@@ -1670,21 +1696,22 @@ void ServiceController::RecoverPassword(const HttpRequestPtr& req, std::function
 
 void ServiceController::SolverAction(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
-    if (!GetSessionId(req, callback))
+    std::string session_id;
+    if (!GetSessionId(req, callback, session_id))
         return;
 
     auto json = req->getJsonObject();
     if (!json || !json->isObject())
     {
         GetLogger(session_id)->Error("SolverAction error: Wrong request: Json not found in the request");
-        SendError(k400BadRequest, "Json not found in the request", callback);
+        SendError(k400BadRequest, "Json not found in the request", session_id, callback);
         return;
     }
 
     std::string guid;
     if (!json->isMember("solver_guid") || !(*json)["solver_guid"].isString())
     {
-        SendError(k400BadRequest, "Guid not found in the request", callback);
+        SendError(k400BadRequest, "Guid not found in the request", session_id, callback);
         return;
     }
     guid = (*json)["solver_guid"].asString();
@@ -1782,8 +1809,12 @@ void ServiceController::SolverAction(const HttpRequestPtr& req, std::function<vo
     SendOk(callback);
 }
 
-void ServiceController::SendLibraryDocument(const std::string& document, std::function<void (const HttpResponsePtr &)>& callback)
+void ServiceController::SendLibraryDocument(const HttpRequestPtr& req, const std::string& document, std::function<void (const HttpResponsePtr &)>& callback)
 {
+    std::string session_id;
+    if (!GetSessionId(req, callback, session_id))
+        return;
+
     fs::path path;
     try
     {
@@ -1792,7 +1823,7 @@ void ServiceController::SendLibraryDocument(const std::string& document, std::fu
         if (!std::string(path.c_str()).starts_with(library_path))
         {
             GetLogger(session_id)->Error("LoadLibraryDocument error: Path not found: {}", path.c_str());
-            SendError(k404NotFound, "Path not found", callback);
+            SendError(k404NotFound, "Path not found", session_id, callback);
             return;
         }
 
@@ -1800,7 +1831,7 @@ void ServiceController::SendLibraryDocument(const std::string& document, std::fu
         if (!file.is_open())
         {
             GetLogger(session_id)->Error("LoadLibraryDocument error: Path not found: {}", path.c_str());
-            SendError(k500InternalServerError, "Error loading file", callback);
+            SendError(k500InternalServerError, "Error loading file", session_id, callback);
             return;
         }
 
@@ -1812,7 +1843,7 @@ void ServiceController::SendLibraryDocument(const std::string& document, std::fu
             in.push(file);
             std::stringstream json;
             boost::iostreams::copy(in, json);
-            SendJson(callback, json.str());
+            SendJson(callback, json.str(), session_id);
             return;
         }
         catch (const std::ios_base::failure& ex)
@@ -1824,7 +1855,7 @@ void ServiceController::SendLibraryDocument(const std::string& document, std::fu
     catch (const std::exception& ex)
     {
         GetLogger(session_id)->Error("LoadLibraryDocument error: file not open");
-        SendError(k404NotFound, "File not open", callback);
+        SendError(k404NotFound, "File not open", session_id, callback);
     }
 }
 

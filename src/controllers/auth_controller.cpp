@@ -27,7 +27,8 @@ AuthController::AuthController()
 
 void AuthController::GetCaptcha(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
-    if (!GetSessionId(req, callback))
+    std::string session_id;
+    if (!GetSessionId(req, callback, session_id))
         return;
     GetLogger(session_id)->Debug("Get captcha request");
 
@@ -129,16 +130,20 @@ void AuthController::GetCaptcha(const HttpRequestPtr& req, std::function<void (c
 
 void AuthController::SendEmailCode(const HttpRequestPtr &req, std::function<void(const HttpResponsePtr &)> &&callback)
 {
+    std::string session_id;
+    if (!GetSessionId(req, callback, session_id))
+        return;
+
     SessionPtr session = req->session();
     auto json = req->getJsonObject();
     if (!json || !json->isObject())
     {
-        SendError(k400BadRequest, "Json not found in the request", callback);
+        SendError(k400BadRequest, "Json not found in the request", session_id, callback);
         return;
     }
 
     auto send_email = 
-        [this, session](const std::string& email, std::string& subject, std::string& message)
+        [this, session_id, session](const std::string& email, std::string& subject, std::string& message)
         {
             std::random_device dev;
             std::mt19937 rng(dev());
@@ -176,7 +181,7 @@ void AuthController::SendEmailCode(const HttpRequestPtr &req, std::function<void
         if (!json->isMember("subject") || !(*json)["subject"].isString() || !json->isMember("message") || !(*json)["message"].isString() || 
             !json->isMember("captcha") || !(*json)["captcha"].isString())
         {
-            SendError(k400BadRequest, "Wrong json in the request", callback);
+            SendError(k400BadRequest, "Wrong json in the request", session_id, callback);
             return;
         }
 
@@ -185,7 +190,7 @@ void AuthController::SendEmailCode(const HttpRequestPtr &req, std::function<void
         GetLogger(session_id)->Info("SendEmailCode request: subject={}", subject);
         if (subject.empty() || message.empty())
         {
-            SendError(k400BadRequest, "Fields must not be empty", callback);
+            SendError(k400BadRequest, "Fields must not be empty", session_id, callback);
             return;
         }
 
@@ -193,7 +198,7 @@ void AuthController::SendEmailCode(const HttpRequestPtr &req, std::function<void
         auto captcha = (*json)["captcha"].asString();
         if (captcha.empty() || session->get<std::string>("captcha") != captcha)
         {
-            SendError(k400BadRequest, "Wrong captcha", callback);
+            SendError(k400BadRequest, "Wrong captcha", session_id, callback);
             return;
         }
 #endif
@@ -203,7 +208,7 @@ void AuthController::SendEmailCode(const HttpRequestPtr &req, std::function<void
             email = (*json)["email"].asString();
             if (email.empty())
             {
-                SendError(k400BadRequest, "Fields must not be empty", callback);
+                SendError(k400BadRequest, "Fields must not be empty", session_id, callback);
                 return;
             }
         }
@@ -212,7 +217,7 @@ void AuthController::SendEmailCode(const HttpRequestPtr &req, std::function<void
             login = (*json)["login"].asString();
             if (login.empty())
             {
-                SendError(k400BadRequest, "Fields must not be empty", callback);
+                SendError(k400BadRequest, "Fields must not be empty", session_id, callback);
                 return;
             }
 
@@ -226,7 +231,7 @@ void AuthController::SendEmailCode(const HttpRequestPtr &req, std::function<void
                     result = db->execSqlSync("select email from users where login=$1", login);
                     if (result.size() == 0)
                     {
-                        SendError(k401Unauthorized, "Login or email are incorrect", callback);
+                        SendError(k401Unauthorized, "Login or email are incorrect", session_id, callback);
                         return;
                     }
                     auto row = result[0];
@@ -240,7 +245,7 @@ void AuthController::SendEmailCode(const HttpRequestPtr &req, std::function<void
             catch (const orm::DrogonDbException& e)
             {
                 GetLogger(req->getCookie("session_id"))->Error("Database error: {}", e.base().what());
-                SendError(k500InternalServerError, e.base().what(), callback);
+                SendError(k500InternalServerError, e.base().what(), session_id, callback);
                 return;
             }
         }
@@ -254,7 +259,7 @@ void AuthController::SendEmailCode(const HttpRequestPtr &req, std::function<void
                 orm::Result result = db->execSqlSync("select email from users where user_id=$1", user_id);
                 if (result.size() == 0)
                 {
-                    SendError(k401Unauthorized, "Login or password are incorrect", callback);
+                    SendError(k401Unauthorized, "Login or password are incorrect", session_id, callback);
                     return;
                 }
                 auto row = result[0];
@@ -263,7 +268,7 @@ void AuthController::SendEmailCode(const HttpRequestPtr &req, std::function<void
             catch (const orm::DrogonDbException& e)
             {
                 GetLogger(req->getCookie("session_id"))->Error("Database error: {}", e.base().what());
-                SendError(k500InternalServerError, e.base().what(), callback);
+                SendError(k500InternalServerError, e.base().what(), session_id, callback);
                 return;
             }
         }
@@ -274,7 +279,7 @@ void AuthController::SendEmailCode(const HttpRequestPtr &req, std::function<void
             !json->isMember("subject") || !(*json)["subject"].isString() || !json->isMember("message") || !(*json)["message"].isString() || 
             !json->isMember("captcha") || !(*json)["captcha"].isString())
         {
-            SendError(k400BadRequest, "Wrong json in the request", callback);
+            SendError(k400BadRequest, "Wrong json in the request", session_id, callback);
             return;
         }
 
@@ -285,7 +290,7 @@ void AuthController::SendEmailCode(const HttpRequestPtr &req, std::function<void
         GetLogger(session_id)->Info("SendEmailCode request: login={}, email={}", login, email);
         if (login.empty() || email.empty() || subject.empty() || message.empty())
         {
-            SendError(k400BadRequest, "Fields must not be empty", callback);
+            SendError(k400BadRequest, "Fields must not be empty", session_id, callback);
             return;
         }
 
@@ -293,7 +298,7 @@ void AuthController::SendEmailCode(const HttpRequestPtr &req, std::function<void
         auto captcha = (*json)["captcha"].asString();
         if (captcha.empty() || session->get<std::string>("captcha") != captcha)
         {
-            SendError(k400BadRequest, "Wrong captcha", callback);
+            SendError(k400BadRequest, "Wrong captcha", session_id, callback);
             return;
         }
 #endif
@@ -308,14 +313,14 @@ void AuthController::SendEmailCode(const HttpRequestPtr &req, std::function<void
             if (result.size() > 0)
             {
                 GetLogger(req->getCookie("session_id"))->Error("Login or e-mail already exists: {}, {}", login, email);
-                SendError(k409Conflict, "Login or e-mail already exists", callback);
+                SendError(k409Conflict, "Login or e-mail already exists", session_id, callback);
                 return;
             }
         } 
         catch (const orm::DrogonDbException& e)
         {
             GetLogger(req->getCookie("session_id"))->Error("Database error: {}", e.base().what());
-            SendError(k500InternalServerError, e.base().what(), callback);
+            SendError(k500InternalServerError, e.base().what(), session_id, callback);
         }
     }
 
@@ -325,36 +330,38 @@ void AuthController::SendEmailCode(const HttpRequestPtr &req, std::function<void
 
 void AuthController::Register(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, User&& user)
 {
-    if (!GetSessionId(req, callback))
+    std::string session_id;
+    if (!GetSessionId(req, callback, session_id))
         return;
+
     GetLogger(session_id)->Info("Register request: login={}, email={}, name={}", user.login, user.email, user.name);
 
     SessionPtr session = req->session();
     auto json = req->getJsonObject();
     if (!json || !json->isObject())
     {
-        SendError(k400BadRequest, "Json not found in the request", callback);
+        SendError(k400BadRequest, "Json not found in the request", session_id, callback);
         return;
     }
 
 #ifndef TEST
     if (!json->isMember("email_code") || !(*json)["email_code"].isString() || !json->isMember("captcha") || !(*json)["captcha"].isString())
     {
-        SendError(k400BadRequest, "Wrong json in the request", callback);
+        SendError(k400BadRequest, "Wrong json in the request", session_id, callback);
         return;
     }
 
     auto email_code = (*json)["email_code"].asString();
     if (email_code.empty() || session->get<std::string>("email_code") != email_code)
     {
-        SendError(k400BadRequest, "Wrong email code", callback);
+        SendError(k400BadRequest, "Wrong email code", session_id, callback);
         return;
     }
 
     auto captcha = (*json)["captcha"].asString();
     if (captcha.empty() || session->get<std::string>("captcha") != captcha)
     {
-        SendError(k400BadRequest, "Wrong captcha", callback);
+        SendError(k400BadRequest, "Wrong captcha", session_id, callback);
         return;
     }
 #endif
@@ -362,7 +369,7 @@ void AuthController::Register(const HttpRequestPtr& req, std::function<void (con
     orm::DbClientPtr db = app().getDbClient();
     if (user.login.empty() || user.email.empty() || user.password.empty())
     {
-        SendError(k400BadRequest, "Fields must not be empty", callback);
+        SendError(k400BadRequest, "Fields must not be empty", session_id, callback);
         return;
     }
 
@@ -372,7 +379,7 @@ void AuthController::Register(const HttpRequestPtr& req, std::function<void (con
         orm::Result result = db->execSqlSync("select 1 from users where login=$1 or email=$2", user.login, user.email);
         if (result.size() > 0)
         {
-            SendError(k409Conflict, "Login or e-mail already exists", callback);
+            SendError(k409Conflict, "Login or e-mail already exists", session_id, callback);
             return;
         }
 
@@ -391,30 +398,31 @@ void AuthController::Register(const HttpRequestPtr& req, std::function<void (con
         else
         {
             GetLogger(req->getCookie("session_id"))->Error("Database error: {}", "Error of insert");
-            SendError(k500InternalServerError, "Error of insert", callback);
+            SendError(k500InternalServerError, "Error of insert", session_id, callback);
         }
     } 
     catch (const orm::DrogonDbException& e)
     {
         GetLogger(req->getCookie("session_id"))->Error("Database error: {}", e.base().what());
-        SendError(k500InternalServerError, e.base().what(), callback);
+        SendError(k500InternalServerError, e.base().what(), session_id, callback);
     }
 }
 
 void AuthController::UnRegister(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
-    if (!GetSessionId(req, callback))
+    std::string session_id;
+    if (!GetSessionId(req, callback, session_id))
         return;
     auto json = req->getJsonObject();
     if (!json || !json->isObject())
     {
-        SendError(k400BadRequest, "Json not found in the request", callback);
+        SendError(k400BadRequest, "Json not found in the request", session_id, callback);
         return;
     }
 
     if (!json->isMember("login") || !(*json)["login"].isString())
     {
-        SendError(k400BadRequest, "Wrong json in the request", callback);
+        SendError(k400BadRequest, "Wrong json in the request", session_id, callback);
         return;
     }
 
@@ -425,7 +433,7 @@ void AuthController::UnRegister(const HttpRequestPtr& req, std::function<void (c
     std::string user_id = session->get<std::string>("user_id");
     if (user_id.empty() || user_id == "-1")
     {
-        SendError(k400BadRequest, "User not found", callback);
+        SendError(k400BadRequest, "User not found", session_id, callback);
         return;
     }
 
@@ -434,7 +442,7 @@ void AuthController::UnRegister(const HttpRequestPtr& req, std::function<void (c
         orm::Result result = db->execSqlSync("delete from users where login=$1", login);
         if (result.affectedRows() == 0)
         {
-            SendError(k404NotFound, "Login not found", callback);
+            SendError(k404NotFound, "Login not found", session_id, callback);
             return;
         }
         db->execSqlSync("delete from user_sessions where user_id=$1", user_id);
@@ -445,24 +453,25 @@ void AuthController::UnRegister(const HttpRequestPtr& req, std::function<void (c
     catch (const orm::DrogonDbException& e)
     {
         GetLogger(session_id)->Error("Database error: {}", e.base().what());
-        SendError(k500InternalServerError, e.base().what(), callback);
+        SendError(k500InternalServerError, e.base().what(), session_id, callback);
     }
 }
 
 void AuthController::Login(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
-    if (!GetSessionId(req, callback))
+    std::string session_id;
+    if (!GetSessionId(req, callback, session_id))
         return;
     auto json = req->getJsonObject();
     if (!json || !json->isObject())
     {
-        SendError(k400BadRequest, "Json not found in the request", callback);
+        SendError(k400BadRequest, "Json not found in the request", session_id, callback);
         return;
     }
 
     if (!json->isMember("login") || !(*json)["login"].isString() || !json->isMember("password") || !(*json)["password"].isString())
     {
-        SendError(k400BadRequest, "Wrong json in the request", callback);
+        SendError(k400BadRequest, "Wrong json in the request", session_id, callback);
         return;
     }
 
@@ -478,7 +487,7 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
     auto captcha = (*json)["captcha"].asString();
     if (captcha.empty() || session->get<std::string>("captcha") != captcha)
     {
-        SendError(k400BadRequest, "Wrong captcha", callback);
+        SendError(k400BadRequest, "Wrong captcha", session_id, callback);
         return;
     }
 #endif
@@ -494,7 +503,7 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
         orm::Result result = db->execSqlSync("select user_id, password, language, settings from users where login=$1", login);
         if (result.size() == 0)
         {
-            SendError(k401Unauthorized, "Login or password are incorrect", callback);
+            SendError(k401Unauthorized, "Login or password are incorrect", session_id, callback);
             return;
         }
 
@@ -504,7 +513,7 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
         std::string h = GetHash(password, salt);
         if (salt + h != hash)
         {
-            SendError(k401Unauthorized, "Login or password are incorrect", callback);
+            SendError(k401Unauthorized, "Login or password are incorrect", session_id, callback);
             return;
         }
 
@@ -543,10 +552,10 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
                 int d = GetFirstEmptyDocument(user_id);
                 if (d == -1)
                 {
-                    if (!AddDocument(user_id, document_id, name))
+                    if (!AddDocument(req, user_id, document_id, name))
                     {
                         GetLogger(session_id)->Error("Database error: Error inserting a document");
-                        SendError(k500InternalServerError, "Error inserting a document", callback);
+                        SendError(k500InternalServerError, "Error inserting a document", session_id, callback);
                         return;
                     }
                 }
@@ -567,7 +576,7 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
         result = db->execSqlSync("select max_files, max_solving_time, max_file_size from user_plans where plan_id=(select plan_id from users where user_id=$1)", user_id);
         if (result.size() == 0)
         {
-            SendError(k500InternalServerError, "User plan is incorrect", callback);
+            SendError(k500InternalServerError, "User plan is incorrect", session_id, callback);
             return;
         }
         auto r = result[0];
@@ -581,7 +590,7 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
     catch (const orm::DrogonDbException& e)
     {
         GetLogger(req->getCookie("session_id"))->Error("Database error: {}", e.base().what());
-        SendError(k500InternalServerError, e.base().what(), callback);
+        SendError(k500InternalServerError, e.base().what(), session_id, callback);
     }
 
     session->erase("captcha");
@@ -590,27 +599,29 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
 
 void AuthController::Logout(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
+    std::string session_id;
+    if (!GetSessionId(req, callback, session_id))
+        return;
     auto json = req->getJsonObject();
     if (!json || !json->isObject())
     {
-        SendError(k400BadRequest, "Json not found in the request", callback);
+        SendError(k400BadRequest, "Json not found in the request", session_id, callback);
         return;
     }
 
     SessionPtr session = req->session();
     std::string user_id = session->get<std::string>("user_id");
     std::string refresh_token = req->getCookie("refresh_token");
-    std::string session_id = session->get<std::string>("session_id");
 
     if (!json->isMember("login") || !(*json)["login"].isString())
     {
-        SendError(k400BadRequest, "Wrong json in the request", callback);
+        SendError(k400BadRequest, "Wrong json in the request", session_id, callback);
         return;
     }
 
     auto login = (*json)["login"].asString();
     std::string refresh_uuid;
-    if (!ParseRefreshToken(refresh_token, refresh_uuid, login, callback))
+    if (!ParseRefreshToken(refresh_token, refresh_uuid, login, session_id, callback))
         return;
 
     GetLogger(session_id)->Info("Logout request: login={}", login);
@@ -623,13 +634,13 @@ void AuthController::Logout(const HttpRequestPtr& req, std::function<void (const
         if (result.affectedRows() > 0)
             SendOk(callback);
         else
-            SendError(k401Unauthorized, "Login or password are incorrect", callback);
+            SendError(k401Unauthorized, "Login or password are incorrect", session_id, callback);
         session->erase("user_id");
     }
     catch (const orm::DrogonDbException& e)
     {
         GetLogger(session_id)->Error("Database error: {}", e.base().what());
-        SendError(k500InternalServerError, e.base().what(), callback);
+        SendError(k500InternalServerError, e.base().what(), session_id, callback);
     }
 
     auth_logger->Info("Logout: login={}, user_id={}", login, user_id);
@@ -637,7 +648,8 @@ void AuthController::Logout(const HttpRequestPtr& req, std::function<void (const
 
 void AuthController::RefreshToken(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
-    if (!GetSessionId(req, callback))
+    std::string session_id;
+    if (!GetSessionId(req, callback, session_id))
         return;
     std::string refresh_token = req->getCookie("refresh_token");
     orm::DbClientPtr db = app().getDbClient();
@@ -647,7 +659,7 @@ void AuthController::RefreshToken(const HttpRequestPtr& req, std::function<void 
     {
         std::string refresh_uuid;
         std::string login;
-        if (!ParseRefreshToken(refresh_token, refresh_uuid, login, callback))
+        if (!ParseRefreshToken(refresh_token, refresh_uuid, login, session_id, callback))
             return;
 
         GetLogger(session_id)->Info("RefreshToken request: login={}, refresh_uuid={}", login, refresh_uuid);
@@ -655,7 +667,7 @@ void AuthController::RefreshToken(const HttpRequestPtr& req, std::function<void 
         orm::Result result = db->execSqlSync("select user_id from users where login=$1", login);
         if (result.size() == 0)
         {
-            SendError(k401Unauthorized, "User not found", callback);
+            SendError(k401Unauthorized, "User not found", session_id, callback);
             return;
         }
 
@@ -665,7 +677,7 @@ void AuthController::RefreshToken(const HttpRequestPtr& req, std::function<void 
         result = db->execSqlSync("delete from refresh_sessions where refresh_uuid=$1", refresh_uuid);
         if (result.affectedRows() == 0)
         {
-            SendError(k401Unauthorized, "Refresh session is incorrect", callback);
+            SendError(k401Unauthorized, "Refresh session is incorrect", session_id, callback);
             return;
         }
 
@@ -691,7 +703,7 @@ void AuthController::RefreshToken(const HttpRequestPtr& req, std::function<void 
             if (result.size() == 0)
             {
                 GetLogger(session_id)->Error("Database error: user plan not found");
-                SendError(k500InternalServerError, "User plan not found", callback);
+                SendError(k500InternalServerError, "User plan not found", session_id, callback);
                 return;
             }
             auto row = result[0];
@@ -711,19 +723,20 @@ void AuthController::RefreshToken(const HttpRequestPtr& req, std::function<void 
     catch (const orm::DrogonDbException& e)
     {
         GetLogger(session_id)->Error("Database error: {}", e.base().what());
-        SendError(k500InternalServerError, e.base().what(), callback);
+        SendError(k500InternalServerError, e.base().what(), session_id, callback);
     }
 }
 
 void AuthController::SetLanguage(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
-    if (!GetSessionId(req, callback))
+    std::string session_id;
+    if (!GetSessionId(req, callback, session_id))
         return;
 
     auto json = req->getJsonObject();
     if (!json || !json->isObject())
     {
-        SendError(k400BadRequest, "Json not found in the request", callback);
+        SendError(k400BadRequest, "Json not found in the request", session_id, callback);
         return;
     }
 
@@ -732,7 +745,7 @@ void AuthController::SetLanguage(const HttpRequestPtr& req, std::function<void (
 
     if (!json->isMember("language") || !(*json)["language"].isString())
     {
-        SendError(k400BadRequest, "Wrong json in the request", callback);
+        SendError(k400BadRequest, "Wrong json in the request", session_id, callback);
         return;
     }
 
@@ -747,18 +760,19 @@ void AuthController::SetLanguage(const HttpRequestPtr& req, std::function<void (
         if (result.affectedRows() > 0)
             SendOk(callback);
         else
-            SendError(k401Unauthorized, "Login or password are incorrect", callback);
+            SendError(k401Unauthorized, "Login or password are incorrect", session_id, callback);
     }
     catch (const orm::DrogonDbException& e)
     {
         GetLogger(session_id)->Error("Database error: {}", e.base().what());
-        SendError(k500InternalServerError, e.base().what(), callback);
+        SendError(k500InternalServerError, e.base().what(), session_id, callback);
     }
 }
 
 void AuthController::GetLanguage(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
-    if (!GetSessionId(req, callback))
+    std::string session_id;
+    if (!GetSessionId(req, callback, session_id))
         return;
 
     SessionPtr session = req->session();
@@ -774,7 +788,7 @@ void AuthController::GetLanguage(const HttpRequestPtr& req, std::function<void (
         orm::Result result = db->execSqlSync("select language from users where user_id=$1", user_id);
         if (result.size() == 0)
         {
-            SendError(k401Unauthorized, "Login or password are incorrect", callback);
+            SendError(k401Unauthorized, "Login or password are incorrect", session_id, callback);
             return;
         }
 
@@ -788,7 +802,7 @@ void AuthController::GetLanguage(const HttpRequestPtr& req, std::function<void (
     catch (const orm::DrogonDbException& e)
     {
         GetLogger(session_id)->Error("Database error: {}", e.base().what());
-        SendError(k500InternalServerError, e.base().what(), callback);
+        SendError(k500InternalServerError, e.base().what(), session_id, callback);
     }
 }
 

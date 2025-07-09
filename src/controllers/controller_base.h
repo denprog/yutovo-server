@@ -35,36 +35,37 @@ public:
     
 protected:
     void SendOk(std::function<void (const HttpResponsePtr &)>& callback);
-    void SendOk(std::function<void (const HttpResponsePtr &)>& callback, const std::string& document_id);
-    void SendOk(std::function<void (const HttpResponsePtr &)>& callback, const std::string& document_id, const std::string& name);
-
+    void SendOk(std::function<void (const HttpResponsePtr &)>& callback, const std::string& document_id, const std::string& session_id);
+    void SendOkDocumentName(std::function<void (const HttpResponsePtr &)>& callback, const std::string& document_id, const std::string& session_id, 
+        const std::string& name);
     void SendOkTokens(std::function<void (const HttpResponsePtr &)>& callback, const std::string& login, const std::string& access_uuid, 
         const std::string& refresh_uuid, const std::string& session_id, trantor::Date access_expires, trantor::Date refresh_expires, 
         trantor::Date session_expires, const std::string document_id = "", const std::string name = "", const std::string language = "", 
         const std::string settings = "");
     
     void SendJson(std::function<void (const HttpResponsePtr &)>& callback, const Json::Value& json);
-    void SendJson(std::function<void (const HttpResponsePtr &)>& callback, const std::string& json);
+    void SendJson(std::function<void (const HttpResponsePtr &)>& callback, const std::string& json, const std::string& session_id);
     void SendFile(std::function<void (const HttpResponsePtr &)>& callback, const fs::path& path);
     void SendCaptcha(std::function<void (const HttpResponsePtr &)>& callback, const cimg_library::CImg<unsigned char>& image);
-    void SendError(const HttpStatusCode status_code, const char* description, std::function<void (const HttpResponsePtr &)>& callback);
+    void SendError(const HttpStatusCode status_code, const char* description, const std::string& session_id, 
+        std::function<void (const HttpResponsePtr &)>& callback);
 
-    bool ParseRefreshToken(const std::string& refresh_token, std::string& refresh_uuid, std::string& login, 
+    bool ParseRefreshToken(const std::string& refresh_token, std::string& refresh_uuid, std::string& login, const std::string& session_id, 
         std::function<void (const HttpResponsePtr &)>& callback);
     
     bool ParseId(const std::string& id_str, std::vector<int>& id);
 
     void SetSessionCookie(const std::string& session_id, HttpResponsePtr resp);
-    void SetDocumentCookie(const std::string& document_id, HttpResponsePtr resp);
+    void SetDocumentCookie(const std::string& document_id, const std::string& session_id, HttpResponsePtr resp);
 
-    bool AddSession(const std::string& document_id);
-    bool AddDocument(const std::string& user_id, std::string& document_id, std::string& name);
+    bool AddSession(const std::string& document_id, std::string& session_id);
+    bool AddDocument(const HttpRequestPtr& req, const std::string& user_id, std::string& document_id, std::string& name);
 
     int GetFirstEmptyDocument(const std::string& user_id);
 
     std::string GetHash(const std::string& str, const std::string& salt);
 
-    bool GetSessionId(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>& callback);
+    bool GetSessionId(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>& callback, std::string& session_id);
 
     void LogJson(yutovo::Logger* logger, const Json::Value& value);
 
@@ -82,8 +83,6 @@ protected:
 
     std::string library_path;
     inline static const std::string base = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-
-    std::string session_id;
 };
 
 }
