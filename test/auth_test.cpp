@@ -13,6 +13,8 @@ TEST_F(AuthTest, register1)
     auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
 
+    StartPage(client);
+
     Register(client, "User1", "user1@mail.com", "11");
 
     //login
@@ -43,6 +45,9 @@ TEST_F(AuthTest, register2)
     client1->enableCookies(true);
     auto client2 = HttpClient::newHttpClient(address);
     client2->enableCookies(true);
+
+    StartPage(client1);
+    StartPage(client2);
 
     Register(client1, "User1", "user1@mail.com", "11");
     Register(client2, "User2", "user2@mail.com", "22");
@@ -92,6 +97,8 @@ TEST_F(AuthTest, register3)
     auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
 
+    StartPage(client);
+
     auto req = HttpRequest::newHttpJsonRequest(Json::Value{});
     req->setMethod(drogon::Post);
     req->addHeader("access_token", "12345");
@@ -109,6 +116,8 @@ TEST_F(AuthTest, register4)
 {
     auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
+
+    StartPage(client);
 
     Register(client, "User1", "user1@mail.com", "11", "user_name");
 
@@ -130,6 +139,8 @@ TEST_F(AuthTest, login1)
 {
     auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
+
+    StartPage(client);
 
     Register(client, "User1", "user1@mail.com", "11");
 
@@ -203,6 +214,8 @@ TEST_F(AuthTest, login2)
     auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
 
+    StartPage(client);
+
     Register(client, "User1", "user1@mail.com", "11");
 
     //login with wrong login
@@ -249,6 +262,8 @@ TEST_F(AuthTest, login3)
 {
     auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
+
+    StartPage(client);
 
     Register(client, "User1", "user1@mail.com", "11");
 
@@ -297,6 +312,8 @@ TEST_F(AuthTest, login4)
     auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
 
+    StartPage(client);
+
     Register(client, "User1", "user1@mail.com", "11");
 
     Locate(client, "/");
@@ -318,6 +335,8 @@ TEST_F(AuthTest, login5)
 {
     auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
+
+    StartPage(client);
 
     Register(client, "User1", "user1@mail.com", "11");
     Register(client, "User2", "user2@mail.com", "22");
@@ -357,6 +376,8 @@ TEST_F(AuthTest, refresh_session1)
 {
     auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
+
+    StartPage(client);
 
     Register(client, "User1", "user1@mail.com", "11");
 
@@ -399,6 +420,8 @@ TEST_F(AuthTest, refresh_session2)
 {
     auto client = HttpClient::newHttpClient(address);
     client->enableCookies(true);
+
+    StartPage(client);
 
     //set very short expire time for the tokens
     auto req = HttpRequest::newHttpRequest();

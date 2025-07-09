@@ -56,7 +56,7 @@ public:
     void SolverAction(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
 
 private:
-    void SendLibraryDocument(const std::string& document, std::function<void (const HttpResponsePtr &)>& callback);
+    void SendLibraryDocument(const HttpRequestPtr& req, const std::string& document, std::function<void (const HttpResponsePtr &)>& callback);
 
 #ifdef REMOTE_SOLVER
     WebSocketClientPtr solver_client;

@@ -124,7 +124,7 @@ void ControllerBase::SendOk(std::function<void (const HttpResponsePtr &)>& callb
     callback(resp);
 }
 
-void ControllerBase::SendOk(std::function<void (const HttpResponsePtr &)>& callback, const std::string& document_id)
+void ControllerBase::SendOk(std::function<void (const HttpResponsePtr &)>& callback, const std::string& document_id, const std::string& session_id)
 {
     Json::Value r;
     r["document_id"] = document_id;
@@ -134,7 +134,8 @@ void ControllerBase::SendOk(std::function<void (const HttpResponsePtr &)>& callb
     callback(resp);
 }
 
-void ControllerBase::SendOk(std::function<void (const HttpResponsePtr &)>& callback, const std::string& document_id, const std::string& name)
+void ControllerBase::SendOkDocumentName(std::function<void (const HttpResponsePtr &)>& callback, const std::string& document_id, const std::string& session_id, 
+    const std::string& name)
 {
     Json::Value r;
     r["document_id"] = document_id;
@@ -204,13 +205,13 @@ void ControllerBase::SendJson(std::function<void (const HttpResponsePtr &)>& cal
     callback(resp);
 }
 
-void ControllerBase::SendJson(std::function<void (const HttpResponsePtr &)>& callback, const std::string& json)
+void ControllerBase::SendJson(std::function<void (const HttpResponsePtr &)>& callback, const std::string& json, const std::string& session_id)
 {
     Json::Value root;
     Json::Reader reader;
     if (!reader.parse(json.c_str(), root))
     {
-        SendError(k500InternalServerError, "Json error", callback);
+        SendError(k500InternalServerError, "Json error", session_id, callback);
         return;
     }
     SendJson(callback, root);
@@ -255,7 +256,8 @@ void ControllerBase::SendCaptcha(std::function<void (const HttpResponsePtr &)>& 
     callback(resp);
 }
 
-void ControllerBase::SendError(const HttpStatusCode status_code, const char* description, std::function<void (const HttpResponsePtr &)>& callback)
+void ControllerBase::SendError(const HttpStatusCode status_code, const char* description, const std::string& session_id, 
+    std::function<void (const HttpResponsePtr &)>& callback)
 {
     Json::Value r;
     r["error"] = description;
@@ -265,7 +267,7 @@ void ControllerBase::SendError(const HttpStatusCode status_code, const char* des
     GetLogger(session_id)->Error("{}: {}", status_code, description);
 }
 
-bool ControllerBase::ParseRefreshToken(const std::string& refresh_token, std::string& refresh_uuid, std::string& login, 
+bool ControllerBase::ParseRefreshToken(const std::string& refresh_token, std::string& refresh_uuid, std::string& login, const std::string& session_id, 
     std::function<void (const HttpResponsePtr &)>& callback)
 {
     try
@@ -278,17 +280,17 @@ bool ControllerBase::ParseRefreshToken(const std::string& refresh_token, std::st
     }
     catch (std::invalid_argument& ex)
     {
-        SendError(k400BadRequest, ex.what(), callback);
+        SendError(k400BadRequest, ex.what(), session_id, callback);
         return false;
     }
     catch (jwt::error::claim_not_present_exception& ex)
     {
-        SendError(k400BadRequest, ex.what(), callback);
+        SendError(k400BadRequest, ex.what(), session_id, callback);
         return false;
     }
     catch (jwt::token_verification_exception& ex)
     {
-        SendError(k401Unauthorized, ex.what(), callback);
+        SendError(k401Unauthorized, ex.what(), session_id, callback);
         return false;
     }
 
@@ -323,7 +325,7 @@ void ControllerBase::SetSessionCookie(const std::string& session_id, HttpRespons
     resp->addCookie(session_cookie);
 }
 
-void ControllerBase::SetDocumentCookie(const std::string& document_id, HttpResponsePtr resp)
+void ControllerBase::SetDocumentCookie(const std::string& document_id, const std::string& session_id, HttpResponsePtr resp)
 {
     GetLogger(session_id)->Info("SetDocumentCookie document_id={}", document_id);
     drogon::Cookie document_cookie("document_id", document_id);
@@ -333,7 +335,7 @@ void ControllerBase::SetDocumentCookie(const std::string& document_id, HttpRespo
     resp->addCookie(document_cookie);
 }
 
-bool ControllerBase::AddSession(const std::string& document_id)
+bool ControllerBase::AddSession(const std::string& document_id, std::string& session_id)
 {
     session_id = std::string(boost::uuids::to_string(boost::uuids::random_generator()()));
     GetLogger("")->Info("AddSession document_id={}, session_id={}", document_id, session_id);
@@ -347,8 +349,13 @@ bool ControllerBase::AddSession(const std::string& document_id)
     return true;
 }
 
-bool ControllerBase::AddDocument(const std::string& user_id, std::string& document_id, std::string& name)
+bool ControllerBase::AddDocument(const HttpRequestPtr& req, const std::string& user_id, std::string& document_id, std::string& name)
 {
+    SessionPtr session = req->session();
+    std::string session_id = session->get<std::string>("session_id");
+    if (session_id.empty())
+        return false;
+
     if (name.empty())
     {
         //create a unique name
@@ -430,21 +437,22 @@ std::string ControllerBase::GetHash(const std::string& str, const std::string& s
     return std::string(&hash_str[0], MD5_DIGEST_LENGTH * 2);
 }
 
-bool ControllerBase::GetSessionId(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>& callback)
+bool ControllerBase::GetSessionId(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>& callback, std::string& session_id)
 {
+    SessionPtr session = req->session();
+    session_id = session->get<std::string>("session_id");
+    if (!session_id.empty())
+        return true;
+
     session_id = req->getCookie("session_id");
     if (session_id.empty())
-    {
-        SessionPtr session = req->session();
-        session_id = session->get<std::string>("session_id");
-        return true;
-    }
+        return false;
 
     //check the SessionId is valid
     if (!IsGuid(session_id))
     {
         GetLogger("")->Error("SessionId error: {}", session_id);
-        SendError(k403Forbidden, "SessionId error", callback);
+        SendError(k403Forbidden, "SessionId error", session_id, callback);
         return false;
     }
     return true;
