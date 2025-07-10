@@ -1805,6 +1805,14 @@ void ServiceController::SolverAction(const HttpRequestPtr& req, std::function<vo
             real_precision, real_default_angle_measure, real_result_angle_measure, integer_default_notation, integer_result_notation, 
             fraction_form, complex_form, complex_default_angle_measure, complex_exponent_size, complex_precision, complex_result_angle_measure, complex_max_count);
     }
+    else
+    {
+        Json::FastWriter fastWriter;
+        std::string output = fastWriter.write(*json);
+        if (!output.empty() && output[output.size() - 1] == '\n')
+            output.pop_back();
+        GetSolverLogger(guid)->Info("Solve result: {}", output);
+    }
 
     SendOk(callback);
 }
