@@ -325,7 +325,7 @@ void ServiceController::SaveLibraryDocument(const HttpRequestPtr& req, std::func
                 return;
             }
 
-            orm::Result result = db->execSqlSync("update user_documents set document=$1 where document_id=$2", doc.toStyledString(), document_id);
+            orm::Result result = db->execSqlSync("update user_documents set document=$1 where document_id=$2", JsonToString(doc), document_id);
             if (result.affectedRows() == 0)
             {
                 GetLogger(session_id)->Error("Database error: Error inserting a document");
@@ -462,7 +462,7 @@ void ServiceController::NewDocument(const HttpRequestPtr& req, std::function<voi
             Json::Value& doc = *json;
             if (doc.isObject() && doc.isMember("text"))
             {
-                auto d = doc.toStyledString();
+                auto d = JsonToString(doc);
                 if (d.size() > max_file_size)
                 {
                     db->execSqlSync("delete from user_documents where document_id=$1", document_id);
@@ -483,7 +483,7 @@ void ServiceController::NewDocument(const HttpRequestPtr& req, std::function<voi
 
             if (json->isMember("json"))
             {
-                auto d = (*json)["json"].toStyledString();
+                auto d = JsonToString((*json)["json"]);
                 if (d.size() > max_file_size)
                 {
                     db->execSqlSync("delete from user_documents where document_id=$1", document_id);
@@ -611,7 +611,7 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
         //update whole document
         try
         {
-            auto document = doc.toStyledString();
+            auto document = JsonToString(doc);
             if (document.size() > max_file_size)
             {
                 GetLogger(session_id)->Error("Document size is more then limit");
@@ -676,7 +676,7 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
             path += ",\"elements\"," + std::to_string(_id[i]);
         path += "}'";
 
-        auto document = text.toStyledString();
+        auto document = JsonToString(text);
 
         //firstly check the size
         if (document_size + document.size() > max_file_size)
@@ -1435,8 +1435,8 @@ void ServiceController::SetUserSettings(const HttpRequestPtr& req, std::function
                 
                 merge(s_val, settings_val);
             }
-    
-            result = db->execSqlSync("update users set settings=$1 where user_id=$2", s_val.toStyledString(), user_id);
+
+            result = db->execSqlSync("update users set settings=$1 where user_id=$2", JsonToString(s_val), user_id);
             if (result.affectedRows() == 0)
             {
                 GetLogger(session_id)->Error("Database error: Error updating settings");

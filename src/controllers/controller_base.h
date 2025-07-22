@@ -69,6 +69,8 @@ protected:
 
     void LogJson(yutovo::Logger* logger, const Json::Value& value);
 
+    std::string JsonToString(Json::Value& value);
+
 protected:
     int session_expires = 0; //session without user, in seconds, after last using
     std::string public_key, private_key;
