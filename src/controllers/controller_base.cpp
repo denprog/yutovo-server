@@ -411,7 +411,7 @@ int ControllerBase::GetFirstEmptyDocument(const std::string& user_id)
         try
         {
             auto& el = text["elements"][0]["elements"][0]["elements"][0];
-            auto s = el.toStyledString();
+            auto s = JsonToString(el);
             if (el["elements"] == "" || (el["elements"].size() == 1 && el["elements"][0]["elements"].size() == 1 && 
                 el["elements"][0]["elements"][0]["elements"].size() == 1 && el["elements"][0]["elements"][0]["elements"][0]["elements"] == ""))
             {
@@ -465,6 +465,12 @@ void ControllerBase::LogJson(yutovo::Logger* logger, const Json::Value& value)
     if (!output.empty() && output[output.size() - 1] == '\n')
         output.pop_back();
     logger->Info("{}", output);
+}
+
+std::string ControllerBase::JsonToString(Json::Value& value)
+{
+    Json::FastWriter fastWriter;
+    return fastWriter.write(value);
 }
 
 }
