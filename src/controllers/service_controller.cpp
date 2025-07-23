@@ -276,12 +276,8 @@ void ServiceController::SaveLibraryDocument(const HttpRequestPtr& req, std::func
 
     try
     {
-        if (!AddDocument(req, user_id, document_id, name))
-        {
-            GetLogger(session_id)->Error("Database error: Error inserting a document: {}, {}", document_id, name);
-            SendError(k500InternalServerError, "Error inserting a document", session_id, callback);
+        if (!AddDocument(req, user_id, document_id, name, callback))
             return;
-        }
 
         if (json->isMember("json"))
         {
@@ -427,35 +423,14 @@ void ServiceController::NewDocument(const HttpRequestPtr& req, std::function<voi
         }
         else
         {
-            //check count of files
-            int max_files = session->get<int>("max_files");
-            orm::Result result = db->execSqlSync("select count(*) from user_documents where user_id=$1", user_id);
-            if (result.affectedRows() == 0)
-            {
-                GetLogger(session_id)->Error("Database error: Error getting count of documents");
-                SendError(k500InternalServerError, "Error inserting a document", session_id, callback);
-                return;
-            }
-
-            if (result[0]["count"].as<int>() >= max_files)
-            {
-                GetLogger(session_id)->Error("Max files count exceed");
-                SendError(k403Forbidden, "Max files count exceed", session_id, callback);
-                return;
-            }
-
             std::string name;
             if (json->isMember("name") && (*json)["name"].isString())
                 name = (*json)["name"].asString();
             
             //for registered user create a new document
             add_doc = true;
-            if (!AddDocument(req, user_id, document_id, name))
-            {
-                GetLogger(session_id)->Error("Database error: Error inserting a document");
-                SendError(k500InternalServerError, "Error inserting a document", session_id, callback);
+            if (!AddDocument(req, user_id, document_id, name, callback))
                 return;
-            }
 
             int max_file_size = session->get<int>("max_file_size");
             Json::Value text;
@@ -471,7 +446,7 @@ void ServiceController::NewDocument(const HttpRequestPtr& req, std::function<voi
                     return;
                 }
     
-                result = db->execSqlSync("update user_documents set document=$1 where document_id=$2", d, document_id);
+                auto result = db->execSqlSync("update user_documents set document=$1 where document_id=$2", d, document_id);
                 if (result.affectedRows() == 0)
                 {
                     db->execSqlSync("delete from user_documents where document_id=$1", document_id);
@@ -623,23 +598,15 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
             if (document_id == "-1")
             {
                 //insert new document
-                if (!AddDocument(req, user_id, document_id, name))
-                {
-                    GetLogger(session_id)->Error("Database error: Error inserting a document");
-                    SendError(k500InternalServerError, "Error inserting a document", session_id, callback);
+                if (!AddDocument(req, user_id, document_id, name, callback))
                     return;
-                }
             }
 
             orm::Result result = db->execSqlSync("update user_documents set document=$1 where document_id=$2", document, document_id);
             if (result.affectedRows() == 0)
             {
-                if (!AddDocument(req, user_id, document_id, name))
-                {
-                    GetLogger(session_id)->Error("Database error: Error inserting a document");
-                    SendError(k500InternalServerError, "Error inserting a document", session_id, callback);
+                if (!AddDocument(req, user_id, document_id, name, callback))
                     return;
-                }
             }
 
             db->execSqlSync("update user_sessions set document_id=$1 where session_id=$2", document_id, session_id);
@@ -771,12 +738,8 @@ void ServiceController::SaveAsDocument(const HttpRequestPtr& req, std::function<
 
         auto doc = row["document"].as<std::string>();
 
-        if (!AddDocument(req, user_id, document_id, name))
-        {
-            GetLogger(session_id)->Error("Database error: Error inserting a document");
-            SendError(k500InternalServerError, "Error inserting a document", session_id, callback);
+        if (!AddDocument(req, user_id, document_id, name, callback))
             return;
-        }
 
         result = db->execSqlSync("update user_documents set document=$1 where document_id=$2", doc, document_id);
         if (result.affectedRows() == 0)

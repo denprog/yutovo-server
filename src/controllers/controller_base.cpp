@@ -349,19 +349,37 @@ bool ControllerBase::AddSession(const std::string& document_id, std::string& ses
     return true;
 }
 
-bool ControllerBase::AddDocument(const HttpRequestPtr& req, const std::string& user_id, std::string& document_id, std::string& name)
+bool ControllerBase::AddDocument(const HttpRequestPtr& req, const std::string& user_id, std::string& document_id, std::string& name, 
+    std::function<void (const HttpResponsePtr &)>& callback)
 {
     SessionPtr session = req->session();
     std::string session_id = session->get<std::string>("session_id");
     if (session_id.empty())
         return false;
 
+    //check count of files
+    orm::DbClientPtr db = app().getDbClient();
+    int max_files = session->get<int>("max_files");
+    orm::Result result = db->execSqlSync("select count(*) from user_documents where user_id=$1", user_id);
+    if (result.affectedRows() == 0)
+    {
+        GetLogger(session_id)->Error("Database error: Error getting count of documents");
+        SendError(k500InternalServerError, "Error inserting a document", session_id, callback);
+        return false;
+    }
+
+    if (result[0]["count"].as<int>() >= max_files)
+    {
+        GetLogger(session_id)->Error("Max files count exceed");
+        SendError(k403Forbidden, "Max files count exceed", session_id, callback);
+        return false;
+    }
+
     if (name.empty())
     {
         //create a unique name
         int num = 0;
-        orm::DbClientPtr db = app().getDbClient();
-        orm::Result result = db->execSqlSync("select name from user_documents where user_id=$1 and (lower(name) LIKE 'document_%')", user_id);
+        result = db->execSqlSync("select name from user_documents where user_id=$1 and (lower(name) LIKE 'document_%')", user_id);
         for (int i = 0; i < result.size(); ++i)
         {
             auto row = result[i];
@@ -380,11 +398,14 @@ bool ControllerBase::AddDocument(const HttpRequestPtr& req, const std::string& u
         name = "document_" + std::to_string(num + 1);
     }
 
-    orm::DbClientPtr db = app().getDbClient();
-    orm::Result result = db->execSqlSync("insert into user_documents (user_id, name, document) values ($1, $2, $3) returning document_id", 
+    result = db->execSqlSync("insert into user_documents (user_id, name, document) values ($1, $2, $3) returning document_id", 
         user_id, name, empty_document);
     if (result.affectedRows() == 0)
+    {
+        GetLogger(session_id)->Error("Database error: Error inserting a document");
+        SendError(k500InternalServerError, "Error inserting a document", session_id, callback);
         return false;
+    }
 
     auto row = result[0];
     document_id = row["document_id"].as<std::string>();

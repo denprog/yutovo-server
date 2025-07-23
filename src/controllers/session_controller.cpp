@@ -90,12 +90,8 @@ void SessionController::Root(const HttpRequestPtr& req, std::function<void (cons
                 if (d == -1)
                 {
                     //create new document and session for a registered user
-                    if (!AddDocument(req, "-1", document_id, name))
-                    {
-                        GetLogger(session_id)->Error("Database error: Error inserting a document");
-                        SendError(k500InternalServerError, "Error inserting a document", session_id, callback);
+                    if (!AddDocument(req, "-1", document_id, name, callback))
                         return;
-                    }
                 }
                 else
                     document_id = std::to_string(d);
