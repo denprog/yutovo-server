@@ -552,12 +552,8 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
                 int d = GetFirstEmptyDocument(user_id);
                 if (d == -1)
                 {
-                    if (!AddDocument(req, user_id, document_id, name))
-                    {
-                        GetLogger(session_id)->Error("Database error: Error inserting a document");
-                        SendError(k500InternalServerError, "Error inserting a document", session_id, callback);
+                    if (!AddDocument(req, user_id, document_id, name, callback))
                         return;
-                    }
                 }
                 else
                     document_id = std::to_string(d);
