@@ -220,6 +220,15 @@ void ControllerBase::SendJson(std::function<void (const HttpResponsePtr &)>& cal
 void ControllerBase::SendFile(std::function<void (const HttpResponsePtr &)>& callback, const fs::path& path)
 {
     auto resp = HttpResponse::newFileResponse(path.c_str());
+    if (resp->getStatusCode() == k200OK)
+    {
+        std::filesystem::file_time_type ftime = std::filesystem::last_write_time(path);
+        time_t t = std::chrono::system_clock::to_time_t(std::chrono::time_point_cast<std::chrono::system_clock::duration>(ftime - 
+            fs::file_time_type::clock::now() + std::chrono::system_clock::now()));
+        trantor::Date mdate(t * 1000000);
+        std::string last_modified = drogon::utils::getHttpFullDate(mdate);
+        resp->addHeader("Last-Modified", last_modified);
+    }
     callback(resp);
 }
 

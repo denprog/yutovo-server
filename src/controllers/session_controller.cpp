@@ -132,9 +132,30 @@ void SessionController::Root(const HttpRequestPtr& req, std::function<void (cons
         }
     }
 
-    std::string r = HttpAppFramework::instance().getDocumentRoot();
-    auto resp = HttpResponse::newFileResponse(r + param);
-    callback(resp);
+    auto path = HttpAppFramework::instance().getDocumentRoot() + param;
+    auto if_modified = req->getHeader("if-modified-since");
+    if (!if_modified.empty())
+    {
+        std::tm t = {};
+        std::istringstream ss(if_modified);
+        ss >> std::get_time(&t, "%a, %d %b %Y %H:%M:%S GMT");
+        if (!ss.fail())
+        {
+            std::time_t client_time = timegm(&t);
+            std::filesystem::file_time_type ftime = std::filesystem::last_write_time(path);
+            time_t t = std::chrono::system_clock::to_time_t(std::chrono::time_point_cast<std::chrono::system_clock::duration>(ftime - 
+                fs::file_time_type::clock::now() + std::chrono::system_clock::now()));
+            if (client_time >= t)
+            {
+                auto resp = HttpResponse::newHttpResponse();
+                resp->setStatusCode(k304NotModified);
+                callback(resp);
+                return;
+            }
+        }        
+    }
+
+    SendFile(callback, path);
 }
 
 void SessionController::Assets(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, std::string param)
