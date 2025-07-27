@@ -217,8 +217,34 @@ void ControllerBase::SendJson(std::function<void (const HttpResponsePtr &)>& cal
     SendJson(callback, root);
 }
 
-void ControllerBase::SendFile(std::function<void (const HttpResponsePtr &)>& callback, const fs::path& path)
+void ControllerBase::SendFile(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>& callback, const fs::path& path)
 {
+    std::string session_id;
+    GetSessionId(req, callback, session_id);
+    auto if_modified = req->getHeader("if-modified-since");
+    if (!if_modified.empty())
+    {
+        std::tm t = {};
+        std::istringstream ss(if_modified);
+        ss >> std::get_time(&t, "%a, %d %b %Y %H:%M:%S GMT");
+        if (!ss.fail())
+        {
+            std::time_t client_time = timegm(&t);
+            std::filesystem::file_time_type ftime = std::filesystem::last_write_time(path);
+            time_t t = std::chrono::system_clock::to_time_t(std::chrono::time_point_cast<std::chrono::system_clock::duration>(ftime - 
+                fs::file_time_type::clock::now() + std::chrono::system_clock::now()));
+            if (client_time >= t)
+            {
+                std::string session_id;
+                GetLogger(session_id)->Debug("File not changed: path={}", path.string());
+                auto resp = HttpResponse::newHttpResponse();
+                resp->setStatusCode(k304NotModified);
+                callback(resp);
+                return;
+            }
+        }        
+    }
+
     auto resp = HttpResponse::newFileResponse(path.c_str());
     if (resp->getStatusCode() == k200OK)
     {
@@ -228,7 +254,10 @@ void ControllerBase::SendFile(std::function<void (const HttpResponsePtr &)>& cal
         trantor::Date mdate(t * 1000000);
         std::string last_modified = drogon::utils::getHttpFullDate(mdate);
         resp->addHeader("Last-Modified", last_modified);
+        GetLogger(session_id)->Debug("Sending file: path={}", path.string());
     }
+    else
+        GetLogger(session_id)->Error("Sending file error: path={}", path.string());
     callback(resp);
 }
 
