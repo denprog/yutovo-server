@@ -1821,7 +1821,7 @@ void ServiceController::SendLibraryDocument(const HttpRequestPtr& req, const std
         {
         }
 
-        SendFile(callback, path); //send as decompressed file
+        SendFile(req, callback, path); //send as decompressed file
     }
     catch (const std::exception& ex)
     {

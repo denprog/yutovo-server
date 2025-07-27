@@ -45,7 +45,7 @@ protected:
     
     void SendJson(std::function<void (const HttpResponsePtr &)>& callback, const Json::Value& json);
     void SendJson(std::function<void (const HttpResponsePtr &)>& callback, const std::string& json, const std::string& session_id);
-    void SendFile(std::function<void (const HttpResponsePtr &)>& callback, const fs::path& path);
+    void SendFile(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>& callback, const fs::path& path);
     void SendCaptcha(std::function<void (const HttpResponsePtr &)>& callback, const cimg_library::CImg<unsigned char>& image);
     void SendError(const HttpStatusCode status_code, const char* description, const std::string& session_id, 
         std::function<void (const HttpResponsePtr &)>& callback);
