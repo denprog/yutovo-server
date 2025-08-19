@@ -1,8 +1,15 @@
+/*
+ * Yutovo Server
+ * Copyright (C) 2022-2025 Yutovo developers. All rights reserved.
+ * This file is a part of the Yutovo project
+ * SPDX-License-Identifier: GPL-3.0-only
+ */
+
 #ifndef __CLEAR_DB_H__
 #define __CLEAR_DB_H__
 
 #include <thread>
-#include <yutovo_logger/logger.h>
+#include <yutovo-logger/logger.h>
 #include "utils.h"
 
 namespace yutovo_server

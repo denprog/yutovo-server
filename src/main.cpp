@@ -1,6 +1,13 @@
+/*
+ * Yutovo Server
+ * Copyright (C) 2022-2025 Yutovo developers. All rights reserved.
+ * This file is a part of the Yutovo project
+ * SPDX-License-Identifier: GPL-3.0-only
+ */
+
 #include <iostream>
 #include <drogon/HttpAppFramework.h>
-#include <yutovo_logger/logger.h>
+#include <yutovo-logger/logger.h>
 #include "logic/clear_db.h"
 #include "utils.h"
 

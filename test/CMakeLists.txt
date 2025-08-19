@@ -15,7 +15,7 @@ include_directories(${GTEST_INCLUDE_DIR})
 
 find_package(Trantor REQUIRED PATHS ${THIRD_PARTY_PATH}/drogon/lib/cmake/)
 find_package(Drogon REQUIRED PATHS ${THIRD_PARTY_PATH}/drogon/lib/cmake/)
-find_package(yutovo_logger REQUIRED PATHS ${INSTALL_PATH}/lib/cmake/)
+find_package(yutovo-logger REQUIRED PATHS ${INSTALL_PATH}/lib/cmake/)
 
 add_executable(${PROJECT_NAME}_tests
 	main.cpp
@@ -34,7 +34,7 @@ target_link_libraries(${PROJECT_NAME}_tests PUBLIC
 	gmock_main
 	m
 	dl
-    yutovo_logger
+    yutovo-logger
     Drogon::Drogon
 )
 
