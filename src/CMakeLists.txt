@@ -10,7 +10,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(Boost_INCLUDE_DIR "/home/denis/programs/Math/yutovo/deploy/include")
 
 find_package(PkgConfig REQUIRED)
-find_package(yutovo_logger REQUIRED PATHS ${INSTALL_PATH}/lib/cmake/)
+find_package(yutovo-logger REQUIRED PATHS ${INSTALL_PATH}/lib/cmake/)
 find_package(Trantor REQUIRED PATHS ${THIRD_PARTY_PATH}/drogon/lib/cmake/)
 find_package(Drogon REQUIRED PATHS ${THIRD_PARTY_PATH}/drogon/lib/cmake/)
 find_package(jwt-cpp REQUIRED PATHS ${THIRD_PARTY_PATH}/jwt-cpp/lib/cmake/)
@@ -37,7 +37,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     pthread
     crypto
     ssl
-    yutovo_logger
+    yutovo-logger
     Drogon::Drogon
     X11
     jpeg
