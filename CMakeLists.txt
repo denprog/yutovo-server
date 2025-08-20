@@ -11,7 +11,7 @@ add_compile_definitions(TEST)
 # add_compile_definitions(REMOTE_SOLVER)
 
 set(INSTALL_PATH "$ENV{YUTOVO_DEPLOY}")
-set(THIRD_PARTY_PATH "$ENV{YUTOVO_DEPLOY}/../third_party/")
+set(THIRD_PARTY_PATH "$ENV{YUTOVO_DEPLOY}/../third-party/")
 
 add_subdirectory(src)
 add_subdirectory(test)
