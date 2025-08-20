@@ -5,6 +5,10 @@ project(yutovo_server
     LANGUAGES CXX
 )
 
+set(PROJECT_LICENSE "AGPL-3.0-only")
+
+message(STATUS "Project license: ${PROJECT_LICENSE}")
+
 add_compile_definitions(DEBUG)
 add_compile_definitions(TEST)
 # set(REMOTE_SOLVER true)
