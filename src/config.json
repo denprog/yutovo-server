@@ -71,7 +71,7 @@
         //valid value is either 'Null' (default), 'Lax', 'Strict' or 'None'
         "session_same_site" : "Null",
         //document_root: Root path of HTTP document, defaut path is ./
-        "document_root": "/home/denis/programs/Math/yutovo/yutovo_web/src/site/dist/spa/",
+        "document_root": "/home/denis/programs/Math/yutovo/yutovo-web/src/site/dist/spa/",
         //home_page: Set the HTML file of the home page, the default value is "index.html"
         //If there isn't any handler registered to the path "/", the home page file in the "document_root" is send to clients as a response
         //to the request for "/".
@@ -302,7 +302,7 @@
         "session_expire_timeout": 86400,
         "user_session_expire_timeout": 86400,
         "clear_db_timeout": 10,
-        "library_path": "/home/denis/programs/Math/yutovo/yutovo_server/library/",
+        "library_path": "/home/denis/programs/Math/yutovo/yutovo-server/library/",
         "solver_address": "wss://yutovo.ru:8010",
         "email_server": "smtps://smtp.beget.com:465",
         "email_name": "no-reply@yutovo.ru",

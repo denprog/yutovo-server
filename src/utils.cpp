@@ -13,18 +13,18 @@ namespace yutovo_server
 
 extern std::string GetDeployPath();
 
-yutovo::Logger* logger = yutovo::Logger::GetInstance(GetDeployPath() + "/log/yutovo_server", "server", true, true);
+yutovo::Logger* logger = yutovo::Logger::GetInstance(GetDeployPath() + "/log/yutovo-server", "server", true, true);
 
 yutovo::Logger* GetLogger(const std::string& session_id)
 {
     if (session_id.empty())
         return logger;
-    return yutovo::Logger::GetInstance(GetDeployPath() + "/log/yutovo_server/sessions/" + session_id, "server", true, true);
+    return yutovo::Logger::GetInstance(GetDeployPath() + "/log/yutovo-server/sessions/" + session_id, "server", true, true);
 }
 
 yutovo::Logger* GetSolverLogger(const std::string& solver_id)
 {
-    return yutovo::Logger::GetInstance(GetDeployPath() + "/log/yutovo_server/solver/" + solver_id, "solver", true, true);
+    return yutovo::Logger::GetInstance(GetDeployPath() + "/log/yutovo-server/solver/" + solver_id, "solver", true, true);
 }
 
 bool IsGuid(const std::string& str)

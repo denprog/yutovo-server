@@ -6,7 +6,7 @@ After=network.target
 [Service]
 WorkingDirectory=/opt/yutovo
 Environment="YUTOVO_DEPLOY=/opt/yutovo"
-ExecStart=/opt/yutovo/yutovo_server -d /opt/yutovo/spa/
+ExecStart=/opt/yutovo/yutovo-server -d /opt/yutovo/spa/
 Restart=always
 RestartSec=1
 
