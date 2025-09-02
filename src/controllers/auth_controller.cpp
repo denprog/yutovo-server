@@ -399,6 +399,18 @@ void AuthController::Register(const HttpRequestPtr& req, std::function<void (con
         result = db->execSqlSync("insert into users (login, password, email, name) values ($1, $2, $3, $4)", user.login, salt + hash, user.email, user.name);
         if (result.size() == 0)
         {
+            result = db->execSqlSync("select max_files, max_solving_time, max_file_size from user_plans where plan_id=(select plan_id from users where login=$1)", 
+                user.login);
+            if (result.size() == 0)
+            {
+                SendError(k500InternalServerError, "User plan is incorrect", session_id, callback);
+                return;
+            }
+            auto r = result[0];
+            session->insert("max_solving_time", r["max_solving_time"].as<int>());
+            session->insert("max_file_size", r["max_file_size"].as<int>() * 1024);
+            session->insert("max_files", r["max_files"].as<int>());
+
             SendOk(callback);
             register_logger->Info("Register: login={}, ip={}", user.login, drogon::plugin::RealIpResolver::GetRealAddr(req).toIp());
         }
