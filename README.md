@@ -25,6 +25,12 @@ git clone -b develop https://github.com/denprog/yutovo-server.git
 ```
 Create the build directories and build the debug version:
 
+Insert your passwords in CMakeLists.txt:
+```
+add_definitions(-DDB_PASSWORD="")
+add_definitions(-DEMAIL_PASSWORD="")
+```
+
 ```
 mkdir -p build/debug
 cd build/debug
