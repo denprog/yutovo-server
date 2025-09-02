@@ -44,8 +44,8 @@ public:
 private:
     std::map<std::string, HttpClientPtr> cors_clients;
 
-    Logger* ref_logger = Logger::GetInstance(GetDeployPath() + "/log/yutovo_server/references", "server", true, true);
-    Logger* downloads_logger = Logger::GetInstance(GetDeployPath() + "/log/yutovo_server/downloads", "server", true, true);
+    Logger* ref_logger = Logger::GetInstance(GetDeployPath() + "/log/yutovo-server/references", "server", true, true);
+    Logger* downloads_logger = Logger::GetInstance(GetDeployPath() + "/log/yutovo-server/downloads", "server", true, true);
 };
 
 }

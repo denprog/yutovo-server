@@ -96,8 +96,8 @@ private:
 private:
     int session_expires = 0;
 
-    Logger* auth_logger = Logger::GetInstance(GetDeployPath() + "/log/yutovo_server/auth", "server", true, true);
-    Logger* register_logger = Logger::GetInstance(GetDeployPath() + "/log/yutovo_server/register", "server", true, true);
+    Logger* auth_logger = Logger::GetInstance(GetDeployPath() + "/log/yutovo-server/auth", "server", true, true);
+    Logger* register_logger = Logger::GetInstance(GetDeployPath() + "/log/yutovo-server/register", "server", true, true);
 
     std::string email_message;
     upload_status upload_context;
