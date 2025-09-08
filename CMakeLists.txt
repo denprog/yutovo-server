@@ -9,8 +9,16 @@ set(PROJECT_LICENSE "AGPL-3.0-only")
 
 message(STATUS "Project license: ${PROJECT_LICENSE}")
 
-add_compile_definitions(DEBUG)
-add_compile_definitions(TEST)
+if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+    add_compile_definitions(DEBUG)
+else()
+    add_compile_definitions(RELEASE)
+endif()
+
+if (NOT DEFINED no-test)
+    add_compile_definitions(TEST)
+endif()
+
 # set(REMOTE_SOLVER true)
 # add_compile_definitions(REMOTE_SOLVER)
 

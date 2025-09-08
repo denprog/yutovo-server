@@ -551,6 +551,18 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
         session->erase("user_id");
         session->insert("user_id", user_id);
 
+        result = db->execSqlSync("select max_files, max_solving_time, max_file_size from user_plans where plan_id=(select plan_id from users where user_id=$1)", 
+            user_id);
+        if (result.size() == 0)
+        {
+            SendError(k500InternalServerError, "User plan is incorrect", session_id, callback);
+            return;
+        }
+        auto r = result[0];
+        session->insert("max_solving_time", r["max_solving_time"].as<int>());
+        session->insert("max_file_size", r["max_file_size"].as<int>() * 1024);
+        session->insert("max_files", r["max_files"].as<int>());
+
         std::string document_id = "-1";
         std::string name;
         session->insert("session_id", session_id);
@@ -587,17 +599,6 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
 
         std::string language = row["language"].as<std::string>();
         std::string settings = row["settings"].as<std::string>();
-
-        result = db->execSqlSync("select max_files, max_solving_time, max_file_size from user_plans where plan_id=(select plan_id from users where user_id=$1)", user_id);
-        if (result.size() == 0)
-        {
-            SendError(k500InternalServerError, "User plan is incorrect", session_id, callback);
-            return;
-        }
-        auto r = result[0];
-        session->insert("max_solving_time", r["max_solving_time"].as<int>());
-        session->insert("max_file_size", r["max_file_size"].as<int>() * 1024);
-        session->insert("max_files", r["max_files"].as<int>());
 
         SendOkTokens(callback, login, access_uuid, refresh_uuid, session_id, access_expires, refresh_expires, session_expires_date, 
             document_id, name, language, settings);
