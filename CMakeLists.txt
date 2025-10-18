@@ -15,9 +15,7 @@ else()
     add_compile_definitions(RELEASE)
 endif()
 
-if (NOT DEFINED no-test)
-    add_compile_definitions(TEST)
-endif()
+option(TEST "Build unit tests" OFF)
 
 # set(REMOTE_SOLVER true)
 # add_compile_definitions(REMOTE_SOLVER)
@@ -26,4 +24,6 @@ set(INSTALL_PATH "$ENV{YUTOVO_DEPLOY}")
 set(THIRD_PARTY_PATH "$ENV{YUTOVO_DEPLOY}/../third-party/")
 
 add_subdirectory(src)
-add_subdirectory(test)
+if(TEST)
+    add_subdirectory(test)
+endif()
