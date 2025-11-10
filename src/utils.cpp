@@ -27,6 +27,11 @@ yutovo::Logger* GetSolverLogger(const std::string& solver_id)
     return yutovo::Logger::GetInstance(GetDeployPath() + "/log/yutovo-server/solver/" + solver_id, "solver", true, true);
 }
 
+yutovo::Logger* GetCalculatorLogger(const std::string& solver_id)
+{
+    return yutovo::Logger::GetInstance(GetDeployPath() + "/log/yutovo-server/calculator/" + solver_id, "calculator", true, true);
+}
+
 bool IsGuid(const std::string& str)
 {
     static std::regex guid("(^([0-9A-Fa-f]{8}[-]?[0-9A-Fa-f]{4}[-]?[0-9A-Fa-f]{4}[-]?[0-9A-Fa-f]{4}[-]?[0-9A-Fa-f]{12})$)");
