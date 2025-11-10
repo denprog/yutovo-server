@@ -1695,6 +1695,10 @@ void ServiceController::SolverAction(const HttpRequestPtr& req, std::function<vo
         GetSolverLogger(guid)->Info("Solver started: ip={}", drogon::plugin::RealIpResolver::GetRealAddr(req).toIp());
     }
     
+    std::string id;
+    if (json->isMember("id"))
+        id = (*json)["id"].asString();
+    
     if (json->isMember("command") && (*json)["command"].isString() && (*json)["command"].asString() == "SOLVE_CODE")
     {
         std::string expression;
@@ -1703,20 +1707,11 @@ void ServiceController::SolverAction(const HttpRequestPtr& req, std::function<vo
         int expression_type = -1;
         if (json->isMember("expression_type") && (*json)["expression_type"].isInt())
             expression_type = (*json)["expression_type"].asInt();
-
-        Json::FastWriter fastWriter;
-        std::string id;
-        if (json->isMember("id"))
-        {
-            id = fastWriter.write((*json)["id"]);
-            if (!id.empty() && id[id.size() - 1] == '\n')
-                id.pop_back();
-        }
-        
         std::string results_order;
         if (json->isMember("results_order"))
         {
-            results_order = fastWriter.write((*json)["results_order"]);
+            Json::FastWriter fast_writer;
+            results_order = fast_writer.write((*json)["results_order"]);
             if (!results_order.empty() && results_order[results_order.size() - 1] == '\n')
                 results_order.pop_back();
         }
@@ -1782,6 +1777,67 @@ void ServiceController::SolverAction(const HttpRequestPtr& req, std::function<vo
         if (!output.empty() && output[output.size() - 1] == '\n')
             output.pop_back();
         GetSolverLogger(guid)->Info("Solve result: {}", output);
+
+        //short calculator log
+        std::string expression, mantissa, exponent, numerator, denomerator, integer, value;
+        if (json->isMember("expression") && (*json)["expression"].isString())
+            expression = (*json)["expression"].asString();
+        if (json->isMember("mantissa") && (*json)["mantissa"].isString())
+            mantissa = (*json)["mantissa"].asString();
+        if (json->isMember("exponent") && (*json)["exponent"].isString())
+            exponent = (*json)["exponent"].asString();
+        if (json->isMember("denomerator") && (*json)["denomerator"].isString())
+            denomerator = (*json)["denomerator"].asString();
+        if (json->isMember("numerator") && (*json)["numerator"].isString())
+            numerator = (*json)["numerator"].asString();
+        if (json->isMember("integer") && (*json)["integer"].isString())
+            integer = (*json)["integer"].asString();
+        if (json->isMember("value") && (*json)["value"].isString())
+            value = (*json)["value"].asString();
+        if (!expression.empty())
+        {
+            if (!mantissa.empty() && !exponent.empty())
+                GetCalculatorLogger(guid)->Info("{}={}, id={}", expression, mantissa + "*10^" + exponent, id);
+            else if (!mantissa.empty())
+                GetCalculatorLogger(guid)->Info("{}={}, id={}", expression, mantissa, id);
+            else if (!integer.empty() && !numerator.empty() && !denomerator.empty())
+                GetCalculatorLogger(guid)->Info("{}={}, id={}", expression, integer + "(" + numerator + ")/(" + denomerator + ")", id);
+            else if (!numerator.empty() && !denomerator.empty())
+                GetCalculatorLogger(guid)->Info("{}={}, id={}", expression, "(" + numerator + ")/(" + denomerator + ")", id);
+            else if (!integer.empty())
+                GetCalculatorLogger(guid)->Info("{}={}, id={}", expression, integer, id);
+            else if (!value.empty())
+                GetCalculatorLogger(guid)->Info("{}={}, id={}", expression, value, id);
+            else
+            {
+                if (json->isMember("results") && (*json)["results"].isArray())
+                {
+                    std::string res = "[";
+                    Json::Value arr = (*json)["results"];
+                    for (Json::ArrayIndex i = 0; i < arr.size(); ++i)
+                    {
+                        const Json::Value& el = arr[i];
+                        if (el.isMember("mantissa") && el["mantissa"].isString())
+                            mantissa = el["mantissa"].asString();
+                        if (el.isMember("exponent") && el["exponent"].isString())
+                            exponent = el["exponent"].asString();
+                        res += mantissa;
+                        if (!exponent.empty())
+                            res += "*10^" + exponent;
+                        if (i < arr.size() - 1)
+                            res += ",";
+                    }                   
+                    res += "]";
+                    GetCalculatorLogger(guid)->Info("{}={}, id={}", expression, res, id);
+                }
+                else
+                    GetCalculatorLogger(guid)->Info("{}=, id={}", expression, id);
+            }
+        }
+        else
+        {
+            GetCalculatorLogger(guid)->Info("{}=", expression);
+        }
     }
 
     SendOk(callback);
