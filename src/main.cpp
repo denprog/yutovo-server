@@ -16,12 +16,14 @@ using namespace std::chrono_literals;
 
 int main(int argc, char *argv[])
 {
+    const char* version = "1.1.7";
+
     Logger* logger = Logger::GetInstance(yutovo_server::GetDeployPath() + "/log/yutovo-server/", "server", true, true);
-    logger->Info("Yutovo server start");
+    logger->Info("Yutovo server start, version: {}", version);
     logger->SetLevel((int)trantor::Logger::logLevel());
 
     Logger* server_logger = Logger::GetInstance(yutovo_server::GetDeployPath() + "/log/yutovo-server/server", "server", true, true);
-    server_logger->Info("Yutovo server start");
+    logger->Info("Yutovo server start, version: {}", version);
 
     std::string document_root;
     for (size_t i = 1; i < argc; ++i)
