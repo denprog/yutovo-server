@@ -1697,13 +1697,20 @@ void ServiceController::SolverAction(const HttpRequestPtr& req, std::function<vo
     
     std::string id;
     if (json->isMember("id"))
-        id = (*json)["id"].asString();
-    
+    {
+        const Json::Value& val = (*json)["id"];
+        Json::FastWriter writer;
+        id = writer.write(val);
+        if (!id.empty() && id.back() == '\n')
+            id.pop_back();
+    }
+
+    std::string expression;
+    if (json->isMember("expression") && (*json)["expression"].isString())
+        expression = (*json)["expression"].asString();
+
     if (json->isMember("command") && (*json)["command"].isString() && (*json)["command"].asString() == "SOLVE_CODE")
     {
-        std::string expression;
-        if (json->isMember("expression") && (*json)["expression"].isString())
-            expression = (*json)["expression"].asString();
         int expression_type = -1;
         if (json->isMember("expression_type") && (*json)["expression_type"].isInt())
             expression_type = (*json)["expression_type"].asInt();
@@ -1779,9 +1786,7 @@ void ServiceController::SolverAction(const HttpRequestPtr& req, std::function<vo
         GetSolverLogger(guid)->Info("Solve result: {}", output);
 
         //short calculator log
-        std::string expression, mantissa, exponent, numerator, denomerator, integer, value;
-        if (json->isMember("expression") && (*json)["expression"].isString())
-            expression = (*json)["expression"].asString();
+        std::string mantissa, exponent, numerator, denomerator, integer, value;
         if (json->isMember("mantissa") && (*json)["mantissa"].isString())
             mantissa = (*json)["mantissa"].asString();
         if (json->isMember("exponent") && (*json)["exponent"].isString())
