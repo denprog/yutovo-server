@@ -173,9 +173,10 @@ void AuthController::SendEmailCode(const HttpRequestPtr &req, std::function<void
                 session->insert("email_code", email_code);
                 session->insert("email_code_email", email);
                 GetLogger(session_id)->Info("Sent email code: {} to {}", email_code, email);
+                return true;
             }
-            else
-                GetLogger(session_id)->Error("Error sending email code: {} to {}: {}", email_code, email, (int)r);
+            GetLogger(session_id)->Error("Error sending email code: {} to {}: {}", email_code, email, (int)r);
+            return false;
         };
 
     std::string login, email, subject, message;
@@ -331,7 +332,12 @@ void AuthController::SendEmailCode(const HttpRequestPtr &req, std::function<void
         }
     }
 
-    send_email(email, subject, message);
+    if (!send_email(email, subject, message))
+    {
+        SendError(k500InternalServerError, "Error sending e-mail", session_id, callback);
+        return;
+    }
+
     SendOk(callback);
 }
 
@@ -868,7 +874,7 @@ CURLcode AuthController::SendEmail(const std::string& from, const std::string& t
     if (!curl)
         return CURLE_FAILED_INIT;
     
-    const char* email_password = std::getenv("DB_NAME");
+    const char* email_password = std::getenv("DB_PASSWORD");
     if (!email_password)
     {
         logger->Error("Enviroment variable not found");
