@@ -23,7 +23,7 @@ ClearDb::ClearDb() :
     clear_db_thread(std::thread(&ClearDb::ClearDbThread, this))
 {
     const Json::Value& v = app().getCustomConfig();
-    clear_db_timeout = v.get("clear_db_timeout", 10).asInt();
+    clear_db_timeout = v.get("clear_db_timeout", 60).asInt();
 }
 
 ClearDb::~ClearDb()
