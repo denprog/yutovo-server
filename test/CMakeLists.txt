@@ -44,8 +44,6 @@ target_include_directories(${PROJECT_NAME}_tests PRIVATE
     /usr/include/jsoncpp
 )
 
-gtest_discover_tests(${PROJECT_NAME}_tests)
-
 install(
     TARGETS ${PROJECT_NAME}_tests
     EXPORT ${PROJECT_NAME}
@@ -60,9 +58,4 @@ add_custom_command(TARGET ${PROJECT_NAME}_tests PRE_BUILD
 
 add_definitions(-DDB_HOST="127.0.0.1")
 add_definitions(-DDB_PORT=5432)
-add_definitions(-DDB_NAME="yutovo")
-add_definitions(-DDB_USER="yutovo")
-add_definitions(-DDB_PASSWORD="nom5Jouv")
 add_definitions(-DDB_TIMEOUT=10.0)
-
-add_definitions(-DEMAIL_PASSWORD="OB*ZCUZ*4IBx")

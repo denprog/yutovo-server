@@ -868,12 +868,19 @@ CURLcode AuthController::SendEmail(const std::string& from, const std::string& t
     if (!curl)
         return CURLE_FAILED_INIT;
     
+    const char* email_password = std::getenv("DB_NAME");
+    if (!email_password)
+    {
+        logger->Error("Enviroment variable not found");
+        return CURLE_FAILED_INIT;
+    }
+
     const Json::Value& v = app().getCustomConfig();
     std::string email_server = v.get("email_server", "").asString();
 
     CURLcode r = curl_easy_setopt(curl, CURLOPT_USERNAME, from.c_str());
     if (r == CURLE_OK)
-        r = curl_easy_setopt(curl, CURLOPT_PASSWORD, EMAIL_PASSWORD);
+        r = curl_easy_setopt(curl, CURLOPT_PASSWORD, email_password);
     if (r == CURLE_OK)
         r = curl_easy_setopt(curl, CURLOPT_URL, email_server.c_str());
     if (r == CURLE_OK)

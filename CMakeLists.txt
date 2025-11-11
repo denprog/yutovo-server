@@ -23,6 +23,10 @@ option(TEST "Build unit tests" OFF)
 set(INSTALL_PATH "$ENV{YUTOVO_DEPLOY}")
 set(THIRD_PARTY_PATH "$ENV{YUTOVO_DEPLOY}/../third-party/")
 
+if(TEST)
+    add_compile_definitions(TEST)
+endif()
+
 add_subdirectory(src)
 if(TEST)
     add_subdirectory(test)

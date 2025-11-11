@@ -25,12 +25,6 @@ git clone -b develop https://github.com/denprog/yutovo-server.git
 ```
 Create the build directories and build the debug version:
 
-Insert your passwords in CMakeLists.txt:
-```
-add_definitions(-DDB_PASSWORD="")
-add_definitions(-DEMAIL_PASSWORD="")
-```
-
 ```
 mkdir -p build/debug
 cd build/debug
@@ -38,8 +32,29 @@ cmake -DCMAKE_BUILD_TYPE=Debug ../..
 make -sj && make install
 ```
 
+Add yutovo-server.env file with your credentials in the ./yutovo-server folder:
+
+```
+DB_NAME=yutovo
+DB_USER=yutovo
+DB_PASSWORD=your_db_password
+EMAIL_PASSWORD=your_email_password
+```
+
+Run the server:
+
+```
+env $(grep -v '^#' ../../yutovo-server.env | xargs) ./src/yutovo-serverd
+```
+
 Run the tests:
 
 ```
-./test/yutovo-server_tests
+env $(grep -v '^#' ../../yutovo-server.env | xargs) ./test/yutovo-server_tests
+```
+
+Or one test:
+
+```
+env $(grep -v '^#' ../../yutovo-server.env | xargs) ./test/yutovo-server_tests --gtest_filter=AuthTest.register1
 ```

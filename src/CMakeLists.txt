@@ -112,9 +112,4 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
 
 add_definitions(-DDB_HOST="127.0.0.1")
 add_definitions(-DDB_PORT=5432)
-add_definitions(-DDB_NAME="yutovo")
-add_definitions(-DDB_USER="yutovo")
-add_definitions(-DDB_PASSWORD="hiKySTI7OwhFyy38")
 add_definitions(-DDB_TIMEOUT=10.0)
-
-add_definitions(-DEMAIL_PASSWORD="OsddWXg7GL53UQvj!")
