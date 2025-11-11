@@ -18,11 +18,20 @@ int main(int argc, char** argv)
 	yutovo_server_test::argc = argc;
 	yutovo_server_test::argv = argv;
 
+    const char* db_name = std::getenv("DB_NAME");
+    const char* db_user = std::getenv("DB_USER");
+    const char* db_password = std::getenv("DB_PASSWORD");
+    if (!db_name || !db_user || !db_password)
+    {
+        printf("Enviroment variables not found");
+        return 1;
+    }
+
     std::thread app_thread = std::thread(
         [&]()
         {
             drogon::app().
-                createDbClient("postgresql", DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASSWORD, 1, "", "default", false, "", DB_TIMEOUT, false).
+                createDbClient("postgresql", DB_HOST, DB_PORT, db_name, db_user, db_password, 1, "", "default", false, "", DB_TIMEOUT, false).
                 loadConfigFile("config.json");
             drogon::app().run();
         });
