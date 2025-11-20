@@ -874,7 +874,7 @@ CURLcode AuthController::SendEmail(const std::string& from, const std::string& t
     if (!curl)
         return CURLE_FAILED_INIT;
     
-    const char* email_password = std::getenv("DB_PASSWORD");
+    const char* email_password = std::getenv("EMAIL_PASSWORD");
     if (!email_password)
     {
         logger->Error("Enviroment variable not found");
