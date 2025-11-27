@@ -7,8 +7,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-set(Boost_INCLUDE_DIR "/home/denis/programs/Math/yutovo/deploy/include")
-
 find_package(PkgConfig REQUIRED)
 find_package(yutovo-logger REQUIRED PATHS ${INSTALL_PATH}/lib/cmake/)
 find_package(Trantor REQUIRED PATHS ${THIRD_PARTY_PATH}/drogon/lib/cmake/)
@@ -110,6 +108,4 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/../keys/yutovo_service.pub ${CMAKE_CURRENT_BINARY_DIR}/../
 )
 
-add_definitions(-DDB_HOST="127.0.0.1")
-add_definitions(-DDB_PORT=5432)
 add_definitions(-DDB_TIMEOUT=10.0)
