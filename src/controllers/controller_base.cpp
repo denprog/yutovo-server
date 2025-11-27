@@ -265,6 +265,7 @@ void ControllerBase::SendFile(const HttpRequestPtr& req, std::function<void (con
     }
     else
         GetLogger(session_id)->Error("Sending file error: path={}", path.string());
+    SetSessionCookie(session_id, resp);
     callback(resp);
 }
 
@@ -512,7 +513,16 @@ bool ControllerBase::GetSessionId(const HttpRequestPtr& req, std::function<void 
 
     session_id = req->getCookie("session_id");
     if (session_id.empty())
-        return false;
+    {
+        if (!AddSession("-1", session_id))
+        {
+            GetLogger(session_id)->Error("Database error: Error inserting a session");
+            SendError(k500InternalServerError, "Error inserting a session", session_id, callback);
+            return false;
+        }
+        session->insert("session_id", session_id);
+        return true;
+    }
 
     //check the SessionId is valid
     if (!IsGuid(session_id))

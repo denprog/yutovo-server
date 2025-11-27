@@ -146,7 +146,11 @@ void SessionController::Assets(const HttpRequestPtr& req, std::function<void (co
 {
     std::string session_id;
     if (!GetSessionId(req, callback, session_id))
+    {
+        GetLogger("")->Error("Session error");
+        SendError(k500InternalServerError, "session_id error", "", callback);
         return;
+    }
 
     auto p = req->path();
     GetLogger(session_id)->Debug("Request assets: path={}", p);
@@ -158,7 +162,11 @@ void SessionController::Icons(const HttpRequestPtr& req, std::function<void (con
 {
     std::string session_id;
     if (!GetSessionId(req, callback, session_id))
+    {
+        GetLogger("")->Error("Session error");
+        SendError(k500InternalServerError, "session_id error", "", callback);
         return;
+    }
 
     auto p = req->path();
     GetLogger(session_id)->Debug("Request icons: path={}", p);
@@ -170,7 +178,11 @@ void SessionController::Images(const HttpRequestPtr& req, std::function<void (co
 {
     std::string session_id;
     if (!GetSessionId(req, callback, session_id))
+    {
+        GetLogger("")->Error("Session error");
+        SendError(k500InternalServerError, "session_id error", "", callback);
         return;
+    }
 
     auto p = req->path();
     GetLogger(session_id)->Debug("Request images: path={}", p);
@@ -182,7 +194,11 @@ void SessionController::UserDocument(const HttpRequestPtr& req, std::function<vo
 {
     std::string session_id;
     if (!GetSessionId(req, callback, session_id))
+    {
+        GetLogger("")->Error("Session error");
+        SendError(k500InternalServerError, "session_id error", "", callback);
         return;
+    }
 
     auto p = req->path();
     GetLogger(session_id)->Info("Request user document: path={}", p);
@@ -249,7 +265,11 @@ void SessionController::LibraryDocument(const HttpRequestPtr& req, std::function
 {
     std::string session_id;
     if (!GetSessionId(req, callback, session_id))
+    {
+        GetLogger("")->Error("Session error");
+        SendError(k500InternalServerError, "session_id error", "", callback);
         return;
+    }
 
     GetLogger(session_id)->Debug("Request library document: path={}", path);
 
@@ -305,7 +325,11 @@ void SessionController::Downloads(const HttpRequestPtr& req, std::function<void 
 {
     std::string session_id;
     if (!GetSessionId(req, callback, session_id))
+    {
+        GetLogger("")->Error("Session error");
+        SendError(k500InternalServerError, "session_id error", "", callback);
         return;
+    }
 
     auto p = req->path();
     GetLogger(session_id)->Info("Request downloads: path={}", p);
