@@ -25,6 +25,10 @@ int main(int argc, char *argv[])
     Logger* server_logger = Logger::GetInstance(yutovo_server::GetDeployPath() + "/log/yutovo-server/server", "server", true, true);
     logger->Info("Yutovo server start, version: {}", version);
 
+    const char* db_host = std::getenv("DB_HOST");
+    int db_port = 5432;
+    if (std::getenv("DB_PORT"))
+        db_port = std::stoi(std::getenv("DB_PORT"));
     const char* db_name = std::getenv("DB_NAME");
     const char* db_user = std::getenv("DB_USER");
     const char* db_password = std::getenv("DB_PASSWORD");
@@ -58,7 +62,7 @@ int main(int argc, char *argv[])
             [&]()
             {
                 drogon::app().
-                    createDbClient("postgresql", DB_HOST, DB_PORT, db_name, db_user, db_password, 1, "", "default", false, "", DB_TIMEOUT, false).
+                    createDbClient("postgresql", db_host, db_port, db_name, db_user, db_password, 1, "", "default", false, "", DB_TIMEOUT, false).
                     addListener("0.0.0.0", 9001).
                     loadConfigFile("config.json");
                 if (!document_root.empty())
