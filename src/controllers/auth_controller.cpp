@@ -37,7 +37,16 @@ void AuthController::GetCaptcha(const HttpRequestPtr& req, std::function<void (c
     std::string session_id;
     if (!GetSessionId(req, callback, session_id))
         return;
-    GetLogger(session_id)->Debug("Get captcha request");
+
+    std::string action;
+    auto json = req->getJsonObject();
+    if (json && json->isObject())
+    {
+        if (json->isMember("action") && (*json)["action"].isString())
+            action = (*json)["action"].asString();
+    }
+
+    GetLogger(session_id)->Info("Get captcha request: {}", action);
 
     //generate captcha text (6 char max).
     const char *predef_words[] = 
@@ -183,6 +192,9 @@ void AuthController::SendEmailCode(const HttpRequestPtr &req, std::function<void
 
     orm::DbClientPtr db = app().getDbClient();
     ClearDbTurnOff t; //skip the clear db circles for a while
+    std::string action;
+    if (json->isMember("action") && (*json)["action"].isString())
+        action = (*json)["action"].asString();
 
     if (!json->isMember("login") || !(*json)["login"].isString() || !json->isMember("email") || !(*json)["email"].isString())
     {
@@ -195,7 +207,7 @@ void AuthController::SendEmailCode(const HttpRequestPtr &req, std::function<void
 
         subject = (*json)["subject"].asString();
         message = (*json)["message"].asString();
-        GetLogger(session_id)->Info("SendEmailCode request: subject={}", subject);
+        GetLogger(session_id)->Info("SendEmailCode request: subject={}, action={}", subject, action);
         if (subject.empty() || message.empty())
         {
             SendError(k400BadRequest, "Fields must not be empty", session_id, callback);
@@ -295,7 +307,7 @@ void AuthController::SendEmailCode(const HttpRequestPtr &req, std::function<void
         email = (*json)["email"].asString();
         subject = (*json)["subject"].asString();
         message = (*json)["message"].asString();
-        GetLogger(session_id)->Info("SendEmailCode request: login={}, email={}", login, email);
+        GetLogger(session_id)->Info("SendEmailCode request: login={}, email={}, action={}", login, email, action);
         if (login.empty() || email.empty() || subject.empty() || message.empty())
         {
             SendError(k400BadRequest, "Fields must not be empty", session_id, callback);
@@ -312,7 +324,7 @@ void AuthController::SendEmailCode(const HttpRequestPtr &req, std::function<void
 #endif
     }
 
-    if (!json->isMember("recover") || !(*json)["recover"].isBool() || !(*json)["recover"].asBool())
+    if (!json->isMember("recover") || !(*json)["recover"].isBool())
     {
         try
         {
@@ -518,6 +530,11 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
 #endif
 
     logger->Info("Login request: login={}, load_last={}", login, load_last);
+#ifdef TEST
+    GetLogger(session_id)->Info("Login request: login={}, load_last={}", login, load_last);
+#else
+    GetLogger(session_id)->Info("Login request: login={}, captcha={}, load_last={}", login, captcha, load_last);
+#endif
     orm::DbClientPtr db = app().getDbClient();
 
     std::string user_id;
@@ -617,6 +634,7 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
 
     session->erase("captcha");
     auth_logger->Info("Login: login={}, user_id={}, ip={}", login, user_id, drogon::plugin::RealIpResolver::GetRealAddr(req).toIp());
+    GetLogger(session_id)->Info("Login: login={}, user_id={}, ip={}", login, user_id, drogon::plugin::RealIpResolver::GetRealAddr(req).toIp());
 }
 
 void AuthController::Logout(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
