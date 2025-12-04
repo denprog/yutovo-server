@@ -20,10 +20,9 @@ int main(int argc, char *argv[])
 
     Logger* logger = Logger::GetInstance(yutovo_server::GetDeployPath() + "/log/yutovo-server/", "server", true, true);
     logger->Info("Yutovo server start, version: {}", version);
-    logger->SetLevel((int)trantor::Logger::logLevel());
 
     Logger* server_logger = Logger::GetInstance(yutovo_server::GetDeployPath() + "/log/yutovo-server/server", "server", true, true);
-    logger->Info("Yutovo server start, version: {}", version);
+    server_logger->Info("Yutovo server start, version: {}", version);
 
     const char* db_host = std::getenv("DB_HOST");
     int db_port = 5432;
