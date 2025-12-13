@@ -28,7 +28,7 @@ void SessionController::Root(const HttpRequestPtr& req, std::function<void (cons
     GetSessionId(req, callback, session_id);
 
     auto p = req->path();
-    GetLogger(session_id)->SetLevel((int)trantor::Logger::logLevel());
+    GetLogger(session_id)->SetLevel(yutovo::LogLevel::LEVEL_DEBUG);
     if (!ref.empty())
     {
         GetLogger(session_id)->Debug("Request root: path={}, ref={}, ip={}", p, ref, drogon::plugin::RealIpResolver::GetRealAddr(req).toIp());

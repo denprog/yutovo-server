@@ -20,6 +20,7 @@ int main(int argc, char *argv[])
 
     Logger* logger = Logger::GetInstance(yutovo_server::GetDeployPath() + "/log/yutovo-server/", "server", true, true);
     logger->Info("Yutovo server start, version: {}", version);
+    logger->SetLevel(yutovo::LogLevel::LEVEL_DEBUG);
 
     Logger* server_logger = Logger::GetInstance(yutovo_server::GetDeployPath() + "/log/yutovo-server/server", "server", true, true);
     server_logger->Info("Yutovo server start, version: {}", version);
