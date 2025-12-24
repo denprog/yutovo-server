@@ -1786,7 +1786,7 @@ void ServiceController::SolverAction(const HttpRequestPtr& req, std::function<vo
         GetSolverLogger(guid)->Info("Solve result: {}", output);
 
         //short calculator log
-        std::string mantissa, exponent, numerator, denomerator, integer, value;
+        std::string mantissa, exponent, numerator, denomerator, integer, value, unit, error;
         if (json->isMember("mantissa") && (*json)["mantissa"].isString())
             mantissa = (*json)["mantissa"].asString();
         if (json->isMember("exponent") && (*json)["exponent"].isString())
@@ -1799,20 +1799,53 @@ void ServiceController::SolverAction(const HttpRequestPtr& req, std::function<vo
             integer = (*json)["integer"].asString();
         if (json->isMember("value") && (*json)["value"].isString())
             value = (*json)["value"].asString();
+        if (json->isMember("unit") && (*json)["unit"].isObject())
+        {
+            Json::Value& u = (*json)["unit"];
+            if (u.isMember("value") && u["value"].isArray())
+            {
+                Json::Value arr = u["value"];
+                unit = "[";
+                for (Json::ArrayIndex i = 0; i < arr.size(); ++i)
+                {
+                    const Json::Value& v = arr[i];
+                    if (v.isMember("name") && v["name"].isString())
+                        unit += v["name"].asString();
+                    if (v.isMember("power") && v["power"].isInt())
+                    {
+                        unit += "^";
+                        unit += v["power"].asString();
+                    }
+                    if (i < arr.size() - 1)
+                        unit += ",";
+                }                   
+                unit += "]";
+            }
+            if (u.isMember("system") && u["system"].isString())
+                unit += "{" + u["system"].asString() + "}";
+        }
+        if (json->isMember("error") && (*json)["error"].isObject())
+        {
+            Json::Value& err = (*json)["error"];
+            if (err.isMember("description") && err["description"].isString())
+                error += err["description"].asString();
+            else if (err.isMember("error_code") && err["error_code"].isInt())
+                error += "error_code:" + err["error_code"].asString();
+        }
         if (!expression.empty())
         {
             if (!mantissa.empty() && !exponent.empty())
-                GetCalculatorLogger(guid)->Info("{}={}, id={}", expression, mantissa + "*10^" + exponent, id);
+                GetCalculatorLogger(guid)->Info("{}={}{}{}, id={}", expression, mantissa + "*10^" + exponent, unit, error, id);
             else if (!mantissa.empty())
-                GetCalculatorLogger(guid)->Info("{}={}, id={}", expression, mantissa, id);
+                GetCalculatorLogger(guid)->Info("{}={}{}{}, id={}", expression, mantissa, unit, error, id);
             else if (!integer.empty() && !numerator.empty() && !denomerator.empty())
-                GetCalculatorLogger(guid)->Info("{}={}, id={}", expression, integer + "(" + numerator + ")/(" + denomerator + ")", id);
+                GetCalculatorLogger(guid)->Info("{}={}{}{}, id={}", expression, integer + "(" + numerator + ")/(" + denomerator + ")", unit, error, id);
             else if (!numerator.empty() && !denomerator.empty())
-                GetCalculatorLogger(guid)->Info("{}={}, id={}", expression, "(" + numerator + ")/(" + denomerator + ")", id);
+                GetCalculatorLogger(guid)->Info("{}={}{}{}, id={}", expression, "(" + numerator + ")/(" + denomerator + ")", unit, error, id);
             else if (!integer.empty())
-                GetCalculatorLogger(guid)->Info("{}={}, id={}", expression, integer, id);
+                GetCalculatorLogger(guid)->Info("{}={}{}{}, id={}", expression, integer, unit, error, id);
             else if (!value.empty())
-                GetCalculatorLogger(guid)->Info("{}={}, id={}", expression, value, id);
+                GetCalculatorLogger(guid)->Info("{}={}{}{}, id={}", expression, value, unit, error, id);
             else
             {
                 if (json->isMember("results") && (*json)["results"].isArray())
@@ -1821,22 +1854,39 @@ void ServiceController::SolverAction(const HttpRequestPtr& req, std::function<vo
                     Json::Value arr = (*json)["results"];
                     for (Json::ArrayIndex i = 0; i < arr.size(); ++i)
                     {
-                        const Json::Value& el = arr[i];
-                        if (el.isMember("mantissa") && el["mantissa"].isString())
-                            mantissa = el["mantissa"].asString();
-                        if (el.isMember("exponent") && el["exponent"].isString())
-                            exponent = el["exponent"].asString();
-                        res += mantissa;
-                        if (!exponent.empty())
-                            res += "*10^" + exponent;
-                        if (i < arr.size() - 1)
-                            res += ",";
+                        const Json::Value& num = arr[i];
+                        if (num.isMember("re") && num["re"].isObject())
+                        {
+                            const Json::Value& u = num["re"];
+                            if (u.isMember("mantissa") && u["mantissa"].isString())
+                                mantissa = u["mantissa"].asString();
+                            if (u.isMember("exponent") && u["exponent"].isString())
+                                exponent = u["exponent"].asString();
+                            res += mantissa;
+                            if (!exponent.empty())
+                                res += "*10^" + exponent;
+                            if (i < arr.size() - 1)
+                                res += ",";
+                        }
+                        if (num.isMember("im") && num["im"].isObject())
+                        {
+                            const Json::Value& u = num["im"];
+                            if (u.isMember("mantissa") && u["mantissa"].isString())
+                                mantissa = u["mantissa"].asString();
+                            if (u.isMember("exponent") && u["exponent"].isString())
+                                exponent = u["exponent"].asString();
+                            res += "+i*" + mantissa;
+                            if (!exponent.empty())
+                                res += "*10^" + exponent;
+                            if (i < arr.size() - 1)
+                                res += ",";
+                        }
                     }                   
                     res += "]";
-                    GetCalculatorLogger(guid)->Info("{}={}, id={}", expression, res, id);
+                    GetCalculatorLogger(guid)->Info("{}={}{}{}, id={}", expression, res, unit, error, id);
                 }
                 else
-                    GetCalculatorLogger(guid)->Info("{}=, id={}", expression, id);
+                    GetCalculatorLogger(guid)->Info("{}={}, id={}", expression, error, id);
             }
         }
         else
