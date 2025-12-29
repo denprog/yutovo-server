@@ -353,6 +353,80 @@ void AuthController::SendEmailCode(const HttpRequestPtr &req, std::function<void
     SendOk(callback);
 }
 
+void AuthController::SendEmailMessage(const HttpRequestPtr &req, std::function<void (const HttpResponsePtr &)> &&callback)
+{
+    std::string session_id;
+    if (!GetSessionId(req, callback, session_id))
+        return;
+
+    SessionPtr session = req->session();
+    auto json = req->getJsonObject();
+    if (!json || !json->isObject())
+    {
+        SendError(k400BadRequest, "Json not found in the request", session_id, callback);
+        return;
+    }
+
+    auto send_email = 
+        [this, session_id, session](const std::string& email, std::string& subject, std::string& message)
+        {
+            const Json::Value& v = app().getCustomConfig();
+            std::string email_name = v.get("email_name", "").asString();
+            CURLcode r = SendEmail(email_name, email, subject, message);
+            if (r == CURLE_OK)
+            {
+                GetLogger(session_id)->Info("Sent email to {}", email);
+                return true;
+            }
+            GetLogger(session_id)->Error("Error sending email to {}: {}", email, (int)r);
+            return false;
+        };
+
+    orm::DbClientPtr db = app().getDbClient();
+    ClearDbTurnOff t; //skip the clear db circles for a while
+
+    if (!json->isMember("subject") || !(*json)["subject"].isString() || !json->isMember("message") || !(*json)["message"].isString())
+    {
+        SendError(k400BadRequest, "Wrong json in the request", session_id, callback);
+        return;
+    }
+
+    std::string user_id = session->get<std::string>("user_id");
+    std::string subject = (*json)["subject"].asString();
+    std::string message = (*json)["message"].asString();
+    std::string email;
+
+    GetLogger(session_id)->Info("SendEmail request: subject={}", subject);
+    
+    try
+    {
+        //get the user email
+        orm::Result result = db->execSqlSync("select email from users where user_id=$1", user_id);
+        if (result.size() == 0)
+        {
+            SendError(k401Unauthorized, "Login or email are incorrect", session_id, callback);
+            return;
+        }
+        auto row = result[0];
+        email = row["email"].as<std::string>();
+    } 
+    catch (const orm::DrogonDbException& e)
+    {
+        GetLogger(req->getCookie("session_id"))->Error("Database error: {}", e.base().what());
+        SendError(k500InternalServerError, e.base().what(), session_id, callback);
+        return;
+    }
+
+    if (!send_email(email, subject, message))
+    {
+        SendError(k500InternalServerError, "Error sending e-mail", session_id, callback);
+        return;
+    }
+
+    GetLogger(session_id)->Info("Sent email: user_id={}, email={}, subject={}", user_id, email, subject);
+    SendOk(callback);
+}
+
 void AuthController::Register(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, User&& user)
 {
     std::string session_id;
@@ -457,6 +531,10 @@ void AuthController::UnRegister(const HttpRequestPtr& req, std::function<void (c
         return;
     }
 
+    SessionPtr session = req->session();
+    std::string user_id = session->get<std::string>("user_id");
+    std::string refresh_token = req->getCookie("refresh_token");
+
     if (!json->isMember("login") || !(*json)["login"].isString())
     {
         SendError(k400BadRequest, "Wrong json in the request", session_id, callback);
@@ -464,34 +542,41 @@ void AuthController::UnRegister(const HttpRequestPtr& req, std::function<void (c
     }
 
     auto login = (*json)["login"].asString();
-    SessionPtr session = req->session();
-    GetLogger(session_id)->Info("UnRegister request: login={}", login);
-    orm::DbClientPtr db = app().getDbClient();
-    std::string user_id = session->get<std::string>("user_id");
-    if (user_id.empty() || user_id == "-1")
-    {
-        SendError(k400BadRequest, "User not found", session_id, callback);
+    std::string refresh_uuid;
+    if (!ParseRefreshToken(refresh_token, refresh_uuid, login, session_id, callback))
         return;
-    }
+
+    GetLogger(session_id)->Info("Remove request: login={}", login);
+    orm::DbClientPtr db = app().getDbClient();
 
     try
     {
-        orm::Result result = db->execSqlSync("delete from users where login=$1", login);
+        orm::Result result = db->execSqlSync("update user_sessions set user_id=-1 where session_id=$1", session_id);
+        result = db->execSqlSync("delete from refresh_sessions where user_id=$1 and refresh_uuid=$2", user_id, refresh_uuid);
         if (result.affectedRows() == 0)
         {
-            SendError(k404NotFound, "Login not found", session_id, callback);
+            SendError(k401Unauthorized, "Login or password are incorrect", session_id, callback);
             return;
         }
-        db->execSqlSync("delete from user_sessions where user_id=$1", user_id);
+        db->execSqlSync("delete from user_documents where user_id=$1", user_id);
+        result = db->execSqlSync("delete from users where user_id=$1", user_id);
+        if (result.affectedRows() == 0)
+        {
+            SendError(k500InternalServerError, "Account deleting error", session_id, callback);
+            return;
+        }
         session->erase("user_id");
-        SendOk(callback);
         register_logger->Info("Unregister: user_id={}, ip={}", user_id, drogon::plugin::RealIpResolver::GetRealAddr(req).toIp());
     }
     catch (const orm::DrogonDbException& e)
     {
         GetLogger(session_id)->Error("Database error: {}", e.base().what());
         SendError(k500InternalServerError, e.base().what(), session_id, callback);
+        return;
     }
+
+    auth_logger->Info("Unregister: login={}, user_id={}", login, user_id);
+    SendOk(callback);
 }
 
 void AuthController::Login(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
@@ -930,16 +1015,32 @@ CURLcode AuthController::SendEmail(const std::string& from, const std::string& t
     std::ostringstream oss;
     oss << std::put_time(&tm, "%a, %d %b %Y %H:%M:%S %z");
     auto date = oss.str();
-    std::string message_id(boost::uuids::to_string(boost::uuids::random_generator()()));
+    std::string boundary = "boundary_" + boost::uuids::to_string(boost::uuids::random_generator()());
+    std::string message_id = "<" + boost::uuids::to_string(boost::uuids::random_generator()()) + "@yutovo.com>";
 
-    email_message = "Date: " + date + "\r\n"\
-        "To: " + to + "\r\n"\
-        "From: " + from + "\r\n"\
-        "Message-ID: <" + message_id + ">\r\n"\
-        "Subject: " + subject + "\r\n"\
-        "\r\n" + 
-        message + 
-        "\r\n";
+    email_message =
+        "Date: " + date + "\r\n"
+        "From: " + from + "\r\n"
+        "To: " + to + "\r\n"
+        "Message-ID: " + message_id + "\r\n"
+        "Subject: " + subject + "\r\n"
+        "MIME-Version: 1.0\r\n"
+        "Content-Type: multipart/alternative; boundary=\"" + boundary + "\"\r\n"
+        "\r\n"
+
+        "--" + boundary + "\r\n"
+        "Content-Type: text/plain; charset=UTF-8\r\n"
+        "\r\n"
+        "Это письмо содержит HTML-версию. Пожалуйста, включите отображение HTML в вашем почтовом клиенте.\r\n"  // fallback текстовая версия
+        "\r\n"
+
+        "--" + boundary + "\r\n"
+        "Content-Type: text/html; charset=UTF-8\r\n"
+        "\r\n"
+        + message + 
+        "\r\n"
+
+        "--" + boundary + "--\r\n";
 
     r = curl_easy_setopt(curl, CURLOPT_READDATA, this);
     if (r == CURLE_OK)
