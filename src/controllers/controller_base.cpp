@@ -395,7 +395,7 @@ bool ControllerBase::AddSession(const std::string& document_id, std::string& ses
     return true;
 }
 
-bool ControllerBase::AddDocument(const HttpRequestPtr& req, const std::string& user_id, std::string& document_id, std::string& name, 
+bool ControllerBase::AddDocument(const HttpRequestPtr& req, const std::string& user_id, std::string& document_id, std::string& name, int language, 
     std::function<void (const HttpResponsePtr &)>& callback)
 {
     SessionPtr session = req->session();
@@ -444,8 +444,18 @@ bool ControllerBase::AddDocument(const HttpRequestPtr& req, const std::string& u
         name = "document_" + std::to_string(num + 1);
     }
 
-    result = db->execSqlSync("insert into user_documents (user_id, name, document) values ($1, $2, $3) returning document_id", 
-        user_id, name, empty_document);
+    if (language != 0)
+    {
+        auto _empty_document = empty_document;
+        _empty_document.insert(1, "\"config\":{\"language\":" + std::to_string(language) + "},");
+        result = db->execSqlSync("insert into user_documents (user_id, name, document) values ($1, $2, $3) returning document_id", 
+            user_id, name, _empty_document);
+    }
+    else
+    {
+        result = db->execSqlSync("insert into user_documents (user_id, name, document) values ($1, $2, $3) returning document_id", 
+            user_id, name, empty_document);
+    }
     if (result.affectedRows() == 0)
     {
         GetLogger(session_id)->Error("Database error: Error inserting a document");
