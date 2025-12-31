@@ -97,7 +97,7 @@ void SessionController::Root(const HttpRequestPtr& req, std::function<void (cons
                 if (d == -1)
                 {
                     //create new document and session for a registered user
-                    if (!AddDocument(req, "-1", document_id, name, callback))
+                    if (!AddDocument(req, "-1", document_id, name, 0, callback))
                         return;
                 }
                 else

@@ -691,7 +691,7 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
                 int d = GetFirstEmptyDocument(user_id);
                 if (d == -1)
                 {
-                    if (!AddDocument(req, user_id, document_id, name, callback))
+                    if (!AddDocument(req, user_id, document_id, name, 0, callback))
                         return;
                 }
                 else

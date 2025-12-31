@@ -283,7 +283,7 @@ void ServiceController::SaveLibraryDocument(const HttpRequestPtr& req, std::func
 
     try
     {
-        if (!AddDocument(req, user_id, document_id, name, callback))
+        if (!AddDocument(req, user_id, document_id, name, 0, callback))
             return;
 
         if (json->isMember("json"))
@@ -433,10 +433,13 @@ void ServiceController::NewDocument(const HttpRequestPtr& req, std::function<voi
             std::string name;
             if (json->isMember("name") && (*json)["name"].isString())
                 name = (*json)["name"].asString();
+            int language = 0;
+            if (json->isMember("language") && (*json)["language"].isInt())
+                language = (*json)["language"].asInt();
             
             //for registered user create a new document
             add_doc = true;
-            if (!AddDocument(req, user_id, document_id, name, callback))
+            if (!AddDocument(req, user_id, document_id, name, language, callback))
                 return;
 
             int max_file_size = session->get<int>("max_file_size");
@@ -605,14 +608,14 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
             if (document_id == "-1")
             {
                 //insert new document
-                if (!AddDocument(req, user_id, document_id, name, callback))
+                if (!AddDocument(req, user_id, document_id, name, 0, callback))
                     return;
             }
 
             orm::Result result = db->execSqlSync("update user_documents set document=$1 where document_id=$2", document, document_id);
             if (result.affectedRows() == 0)
             {
-                if (!AddDocument(req, user_id, document_id, name, callback))
+                if (!AddDocument(req, user_id, document_id, name, 0, callback))
                     return;
             }
 
@@ -745,7 +748,7 @@ void ServiceController::SaveAsDocument(const HttpRequestPtr& req, std::function<
 
         auto doc = row["document"].as<std::string>();
 
-        if (!AddDocument(req, user_id, document_id, name, callback))
+        if (!AddDocument(req, user_id, document_id, name, 0, callback))
             return;
 
         result = db->execSqlSync("update user_documents set document=$1 where document_id=$2", doc, document_id);
