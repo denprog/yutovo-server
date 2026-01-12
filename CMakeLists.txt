@@ -6,7 +6,7 @@ project(yutovo-server
 )
 
 set(PROJECT_LICENSE "AGPL-3.0-only")
-
+message(STATUS "CXX Compiler ID: ${CMAKE_CXX_COMPILER_ID}")
 message(STATUS "Project license: ${PROJECT_LICENSE}")
 
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
