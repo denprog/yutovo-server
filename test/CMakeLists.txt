@@ -38,6 +38,13 @@ target_link_libraries(${PROJECT_NAME}_tests PUBLIC
     Drogon::Drogon
 )
 
+if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+	add_compile_options(-Og -g -fsanitize=undefined -fsanitize=address -fno-omit-frame-pointer)
+    add_definitions(-D_LIBCPP_HARDENING_MODE=_LIBCPP_HARDENING_MODE_EXTENSIVE)
+    add_definitions(-D_LIBCPP_ENABLE_ASSERTIONS)
+	target_link_options(${PROJECT_NAME} PRIVATE -fsanitize=undefined -fsanitize=address)
+endif()
+
 target_include_directories(${PROJECT_NAME}_tests PRIVATE
     ${THIRD_PARTY_PATH}
     ${THIRD_PARTY_PATH}/drogon/include
