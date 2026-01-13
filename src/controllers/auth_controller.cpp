@@ -824,7 +824,8 @@ void AuthController::RefreshToken(const HttpRequestPtr& req, std::function<void 
 
         if (user_id != "-1" && session->get<int>("max_file_size") == 0)
         {
-            result = db->execSqlSync("select max_files, max_solving_time, max_file_size from user_plans where plan_id=(select plan_id from users where user_id=$1)", user_id);
+            result = db->execSqlSync("select max_files, max_solving_time, max_file_size from user_plans where plan_id=(select plan_id from users where user_id=$1)", 
+                user_id);
             if (result.size() == 0)
             {
                 GetLogger(session_id)->Error("Database error: user plan not found");

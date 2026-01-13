@@ -83,7 +83,7 @@ protected:
     int session_expires = 0; //session without user, in seconds, after last using
     std::string public_key, private_key;
     int access_token_expires = 60 * 2; //seconds
-    int refresh_token_expires = 60 * 60 * 24; //seconds
+    int refresh_token_expires = 30 * 60 * 60 * 24; //seconds
 
     inline static const std::string empty_document = "{\"text\": {\"id\": \"0\", \"type\": 1, \"elements\": [{\"id\": \"0,0\", \"type\": 2,\
         \"elements\": [{\"id\": \"0,0,0\", \"type\": 3, \"elements\": [{\"id\": \"0,0,0,0\", \"type\": 5, \"elements\": [{\"id\": \"0,0,0,0,0\",\

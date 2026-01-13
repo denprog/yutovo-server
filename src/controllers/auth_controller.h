@@ -96,8 +96,6 @@ private:
     CURLcode SendEmail(const std::string& from, const std::string& to, const std::string& subject, const std::string& message);
 
 private:
-    int session_expires = 0;
-
     Logger* auth_logger = Logger::GetInstance(GetDeployPath() + "/log/yutovo-server/auth", "server", true, true);
     Logger* register_logger = Logger::GetInstance(GetDeployPath() + "/log/yutovo-server/register", "server", true, true);
 
