@@ -163,7 +163,7 @@ void ControllerBase::SendOkTokens(std::function<void (const HttpResponsePtr &)>&
         set_id("yutovo-server").
         set_issued_at(std::chrono::system_clock::now()).
         set_expires_at(std::chrono::system_clock::from_time_t(access_expires.secondsSinceEpoch())).
-        set_payload_claim("access-uuid", jwt::claim(std::string(access_uuid))).
+        set_payload_claim("access_uuid", jwt::claim(std::string(access_uuid))).
         set_payload_claim("login", jwt::claim(login)).
         sign(jwt::algorithm::rs256(public_key, private_key, "", ""));
 
