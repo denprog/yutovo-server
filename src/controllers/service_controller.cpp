@@ -1692,10 +1692,16 @@ void ServiceController::SolverAction(const HttpRequestPtr& req, std::function<vo
     SessionPtr session = req->session();
     if (session->get<std::string>("solver_id") != guid)
     {
-        GetLogger(session_id)->Info("Solver started: {}", guid);
         session->erase("solver_id");
         session->insert("solver_id", guid);
-        GetSolverLogger(guid)->Info("Solver started: ip={}", drogon::plugin::RealIpResolver::GetRealAddr(req).toIp());
+        
+        auto login = session->get<std::string>("login");
+        if (!login.empty())
+            GetCalculatorLogger(guid)->Info("Calculator started: {}, login: {}", guid, login);
+        if (!login.empty())
+            GetSolverLogger(guid)->Info("Solver started: ip={}, guid={}, login: {}", drogon::plugin::RealIpResolver::GetRealAddr(req).toIp(), guid, login);
+        else
+            GetSolverLogger(guid)->Info("Solver started: ip={}, guid={}", drogon::plugin::RealIpResolver::GetRealAddr(req).toIp(), guid);
     }
     
     std::string id;
