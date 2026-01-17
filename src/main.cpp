@@ -16,7 +16,7 @@ using namespace std::chrono_literals;
 
 int main(int argc, char *argv[])
 {
-    const char* version = "1.1.9";
+    const char* version = "1.1.10";
 
     Logger* logger = Logger::GetInstance(yutovo_server::GetDeployPath() + "/log/yutovo-server/", "server", true, true);
     logger->Info("Yutovo server start, version: {}", version);
