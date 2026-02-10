@@ -1,7 +1,7 @@
 # Yutovo project
 Yutovo is a powerful calculator with graphical representation of mathematics operations inside a text editor.
 
-Yutovo server provides data, library of documents and other resources for the [Yutovo web site](https://github.com/denprog/yutovo-web). It is based on [drogon](https://github.com/drogonframework/drogon/) and uses Postgresql database store user info and their documents.
+Yutovo server provides data for the [Yutovo web site](https://github.com/denprog/yutovo-web). It is based on [drogon](https://github.com/drogonframework/drogon/) and uses Postgresql database store user info and their documents.
 
 ## Building for Ubuntu
 
