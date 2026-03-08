@@ -302,7 +302,7 @@
         "session_expire_timeout": 86400,
         "user_session_expire_timeout": 86400,
         "clear_db_timeout": 10,
-        "library_path": "/home/denis/programs/Math/yutovo/yutovo-library/",
+        "library_path": "/home/denis/programs/Math/yutovo/yutovo-library/library/",
         "solver_address": "wss://yutovo.ru:8010",
         "email_server": "smtps://smtp.beget.com:465",
         "email_name": "no-reply@yutovo.ru",
