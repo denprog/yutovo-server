@@ -295,8 +295,6 @@ void SessionController::LibraryDocument(const HttpRequestPtr& req, std::function
         }
         
         std::replace(path.begin(), path.end(), '\\', '/');
-        if (!path.ends_with(".yut"))
-            path += fs::path(".yut");
         if (!fs::exists(fs::path(library_path + path)))
         {
             GetLogger(session_id)->Error("Library document not found: {}", path);
