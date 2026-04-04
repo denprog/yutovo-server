@@ -188,7 +188,7 @@ void ServiceController::GetLibraryDocuments(const HttpRequestPtr& req, std::func
             {
                 if (entry.empty())
                     continue;
-                files.append(entry.stem().c_str());
+                files.append(entry.filename().c_str());
             }
             json["files"] = files;
         };
@@ -228,8 +228,6 @@ void ServiceController::LoadLibraryDocument(const HttpRequestPtr& req, std::func
     
     GetLogger(session_id)->Info("LoadLibraryDocument request document={}", "/" + language + document);
     document = library_path + language + document;
-    if (!document.ends_with(".yut"))
-        document += fs::path(".yut");
 
     SendLibraryDocument(req, document, callback);
 }
@@ -303,8 +301,6 @@ void ServiceController::SaveLibraryDocument(const HttpRequestPtr& req, std::func
         {
             //save from the file
             document = library_path + language + document;
-            if (!document.ends_with(".yut"))
-                document += fs::path(".yut");
             fs::path path;
             Json::Value doc;
 
@@ -1166,9 +1162,6 @@ void ServiceController::GetDocumentName(const HttpRequestPtr& req, std::function
         if (json->isMember("lang") && (*json)["lang"].isString())
             lang = (*json)["lang"].asString();
         std::string document = library_path + lang + name;
-        if (!document.ends_with(".yut"))
-            document += fs::path(".yut");
-
         GetLogger(session_id)->Info("Get document name: name={}, lang={}", name, lang);
 
         fs::path path;
