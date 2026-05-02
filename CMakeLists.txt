@@ -15,7 +15,7 @@ else()
     add_compile_definitions(RELEASE)
 endif()
 
-option(TEST "Build unit tests" OFF)
+option(TEST "Build unit tests" ON)
 
 # set(REMOTE_SOLVER true)
 # add_compile_definitions(REMOTE_SOLVER)
