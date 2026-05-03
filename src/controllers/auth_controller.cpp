@@ -609,6 +609,7 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
     auto captcha = (*json)["captcha"].asString();
     if (captcha.empty() || session->get<std::string>("captcha") != captcha)
     {
+        logger->Error("Wrong captcha: {}", captcha);
         SendError(k400BadRequest, "Wrong captcha", session_id, callback);
         return;
     }
