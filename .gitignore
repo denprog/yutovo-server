@@ -1,4 +1,5 @@
 .vscode
 build
 cert
+keys
 yutovo-server.env
