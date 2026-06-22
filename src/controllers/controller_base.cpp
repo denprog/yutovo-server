@@ -52,6 +52,9 @@ void LoginFilter::doFilter(const HttpRequestPtr& req, FilterCallback&& not_valid
     try
     {
         auto decoded = jwt::decode(access_token);
+        auto verifier = jwt::verify().allow_algorithm(jwt::algorithm::rs256("", private_key, "", "")).with_issuer("auth0");
+        verifier.verify(decoded);
+
         auto login = decoded.get_payload_claim("login").to_json().to_str();
         if (login != session->get<std::string>("login"))
         {
@@ -62,8 +65,6 @@ void LoginFilter::doFilter(const HttpRequestPtr& req, FilterCallback&& not_valid
             return;
         }
 
-        auto verifier = jwt::verify().allow_algorithm(jwt::algorithm::rs256("", private_key, "", "")).with_issuer("auth0");
-        verifier.verify(decoded);
         valid_callback();
         return;
     }
