@@ -936,6 +936,15 @@ void AuthController::GetLanguage(const HttpRequestPtr& req, std::function<void (
 #ifdef TEST
 void AuthController::SetParams(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
+    std::string session_id;
+    if (!GetSessionId(req, callback, session_id))
+        return;
+    if (!req->getOptionalParameter<int>("access_token_expires").has_value() || 
+        !req->getOptionalParameter<int>("refresh_token_expires").has_value())
+    {
+        SendError(k400BadRequest, "Wrong optional parameter", session_id, callback);
+        return;
+    }
     access_token_expires = req->getOptionalParameter<int>("access_token_expires").value();
     refresh_token_expires = req->getOptionalParameter<int>("refresh_token_expires").value();
     SendOk(callback);
