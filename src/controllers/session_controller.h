@@ -42,8 +42,6 @@ public:
     void Downloads(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, std::string param);
 
 private:
-    std::map<std::string, HttpClientPtr> cors_clients;
-
     Logger* ref_logger = Logger::GetInstance(GetDeployPath() + "/log/yutovo-server/references", "server", true, true);
     Logger* downloads_logger = Logger::GetInstance(GetDeployPath() + "/log/yutovo-server/downloads", "server", true, true);
 };
