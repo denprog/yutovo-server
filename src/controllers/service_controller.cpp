@@ -659,8 +659,8 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
             return;
         }
 
-        orm::Result result = db->execSqlSync("update user_documents set document=jsonb_set(document," + path + 
-            ",jsonb '" + document + "') where document_id=$1", document_id);
+        orm::Result result = db->execSqlSync("update user_documents set document=jsonb_set(document,$1::text[], $2::jsonb)"
+            ") where document_id=$3", path, document, document_id);
         result = db->execSqlSync("update user_sessions set document_id=$1 where session_id=$2", document_id, session_id);
         SendOk(callback);
     }
