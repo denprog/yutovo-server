@@ -42,6 +42,9 @@ public:
     void Downloads(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, std::string param);
 
 private:
+    bool SendStaticFile(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>& callback,
+        const std::string& session_id, const fs::path& root, const std::string& relative);
+
     Logger* ref_logger = Logger::GetInstance(GetDeployPath() + "/log/yutovo-server/references", "server", true, true);
     Logger* downloads_logger = Logger::GetInstance(GetDeployPath() + "/log/yutovo-server/downloads", "server", true, true);
 };

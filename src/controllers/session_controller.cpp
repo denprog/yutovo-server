@@ -139,7 +139,8 @@ void SessionController::Root(const HttpRequestPtr& req, std::function<void (cons
         }
     }
 
-    SendFile(req, callback, HttpAppFramework::instance().getDocumentRoot() + param);
+    std::string r = HttpAppFramework::instance().getDocumentRoot();
+    SendStaticFile(req, callback, session_id, r, param);
 }
 
 void SessionController::Assets(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, std::string param)
@@ -155,7 +156,7 @@ void SessionController::Assets(const HttpRequestPtr& req, std::function<void (co
     auto p = req->path();
     GetLogger(session_id)->Debug("Request assets: path={}", p);
     std::string r = HttpAppFramework::instance().getDocumentRoot();
-    SendFile(req, callback, r + p);
+    SendStaticFile(req, callback, session_id, r, p);
 }
 
 void SessionController::Icons(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, std::string param)
@@ -171,7 +172,7 @@ void SessionController::Icons(const HttpRequestPtr& req, std::function<void (con
     auto p = req->path();
     GetLogger(session_id)->Debug("Request icons: path={}", p);
     std::string r = HttpAppFramework::instance().getDocumentRoot();
-    SendFile(req, callback, r + p);
+    SendStaticFile(req, callback, session_id, r, p);
 }
 
 void SessionController::Images(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, std::string param)
@@ -187,7 +188,7 @@ void SessionController::Images(const HttpRequestPtr& req, std::function<void (co
     auto p = req->path();
     GetLogger(session_id)->Debug("Request images: path={}", p);
     std::string r = HttpAppFramework::instance().getDocumentRoot();
-    SendFile(req, callback, r + p);
+    SendStaticFile(req, callback, session_id, r, p);
 }
 
 void SessionController::UserDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, std::string param)
@@ -342,10 +343,64 @@ void SessionController::Downloads(const HttpRequestPtr& req, std::function<void 
     auto p = req->path();
     GetLogger(session_id)->Info("Request downloads: path={}", p);
     std::string r = HttpAppFramework::instance().getDocumentRoot();
-    auto resp = HttpResponse::newFileResponse(r + p);
-    downloads_logger->Info("Request download: path={}, session_id={}, ip={}, result={}", p, session_id, drogon::plugin::RealIpResolver::GetRealAddr(req).toIp(), 
-        resp->getStatusCode());
-    callback(resp);
+
+    try
+    {
+        fs::path canonical_root = fs::canonical(r);
+        std::string rel = p;
+        if (!rel.empty() && rel.front() == '/')
+            rel.erase(0, 1);
+        fs::path file_path = fs::canonical(canonical_root / rel);
+        std::string root_prefix = canonical_root.string();
+        if (root_prefix.empty() || root_prefix.back() != '/')
+            root_prefix += '/';
+        if (!file_path.string().starts_with(root_prefix))
+        {
+            GetLogger(session_id)->Error("Download path not allowed: {}", p);
+            SendError(k404NotFound, "Path not found", session_id, callback);
+            return;
+        }
+
+        auto resp = HttpResponse::newFileResponse(file_path.c_str());
+        downloads_logger->Info("Request download: path={}, session_id={}, ip={}, result={}", p, session_id, drogon::plugin::RealIpResolver::GetRealAddr(req).toIp(),
+            resp->getStatusCode());
+        callback(resp);
+    }
+    catch (const std::exception& ex)
+    {
+        GetLogger(session_id)->Error("Download file path not found: {}", p);
+        SendError(k404NotFound, "Path not found", session_id, callback);
+    }
+}
+
+bool SessionController::SendStaticFile(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>& callback,
+    const std::string& session_id, const fs::path& root, const std::string& relative)
+{
+    try
+    {
+        fs::path canonical_root = fs::canonical(root);
+        std::string rel = relative;
+        if (!rel.empty() && rel.front() == '/')
+            rel.erase(0, 1);
+        fs::path file_path = fs::canonical(canonical_root / rel);
+        std::string root_prefix = canonical_root.string();
+        if (root_prefix.empty() || root_prefix.back() != '/')
+            root_prefix += '/';
+        if (!file_path.string().starts_with(root_prefix))
+        {
+            GetLogger(session_id)->Error("Static file path not allowed: {}", relative);
+            SendError(k404NotFound, "Path not found", session_id, callback);
+            return false;
+        }
+        SendFile(req, callback, file_path);
+        return true;
+    }
+    catch (const std::exception& ex)
+    {
+        GetLogger(session_id)->Error("Static file path not found: {}", relative);
+        SendError(k404NotFound, "Path not found", session_id, callback);
+        return false;
+    }
 }
 
 }

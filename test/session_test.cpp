@@ -122,4 +122,48 @@ TEST_F(SessionTest, library_path_traversal)
     }
 }
 
+//Path traversal in static file requests must be rejected
+TEST_F(SessionTest, static_path_traversal)
+{
+    auto client = HttpClient::newHttpClient(address);
+
+    auto expect_ok = [&](const std::string& path)
+    {
+        auto req = HttpRequest::newHttpRequest();
+        req->setMethod(drogon::Get);
+        req->setPath(path);
+
+        auto resp = client->sendRequest(req);
+        ReqResult& res = resp.first;
+        HttpResponsePtr& r = resp.second;
+        ASSERT_TRUE(res == ReqResult::Ok) << path << ": " << res;
+        ASSERT_TRUE(r->getStatusCode() == k200OK) << path << ": " << r->getStatusCode();
+    };
+
+    auto expect_not_found = [&](const std::string& path)
+    {
+        auto req = HttpRequest::newHttpRequest();
+        req->setMethod(drogon::Get);
+        req->setPath(path);
+
+        auto resp = client->sendRequest(req);
+        ReqResult& res = resp.first;
+        HttpResponsePtr& r = resp.second;
+        ASSERT_TRUE(res == ReqResult::Ok) << path << ": " << res;
+        ASSERT_TRUE(r->getStatusCode() == k404NotFound) << path << ": " << r->getStatusCode();
+    };
+
+    //valid static files
+    expect_ok("/yutovo.png");
+    expect_ok("/icons/favicon-16x16.png");
+    expect_ok("/images/logical/not.png");
+
+    //path traversal attempts
+    expect_not_found("/%2e%2e%2fetc%2fpasswd");
+    expect_not_found("/assets/%2e%2e%2f%2e%2e%2fetc%2fpasswd");
+    expect_not_found("/icons/%2e%2e%2f%2e%2e%2fetc%2fpasswd");
+    expect_not_found("/images/%2e%2e%2f%2e%2e%2fetc%2fpasswd");
+    expect_not_found("/downloads/%2e%2e%2f%2e%2e%2fetc%2fpasswd");
+}
+
 }
