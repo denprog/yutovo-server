@@ -76,4 +76,50 @@ TEST_F(SessionTest, session2)
     ASSERT_TRUE(result.size() == 0);
 }
 
+//Path traversal in library document request must be rejected
+TEST_F(SessionTest, library_path_traversal)
+{
+    auto client = HttpClient::newHttpClient(address);
+    client->enableCookies(true);
+
+    //valid library document returns the SPA homepage (200)
+    {
+        auto req = HttpRequest::newHttpRequest();
+        req->setMethod(drogon::Get);
+        req->setPath("/library/en/Units/Force.yut");
+
+        auto resp = client->sendRequest(req);
+        ReqResult& res = resp.first;
+        HttpResponsePtr& r = resp.second;
+        ASSERT_TRUE(res == ReqResult::Ok) << res;
+        ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
+    }
+
+    //path traversal with ".." must return 404
+    {
+        auto req = HttpRequest::newHttpRequest();
+        req->setMethod(drogon::Get);
+        req->setPath("/library/../../etc/passwd");
+
+        auto resp = client->sendRequest(req);
+        ReqResult& res = resp.first;
+        HttpResponsePtr& r = resp.second;
+        ASSERT_TRUE(res == ReqResult::Ok) << res;
+        ASSERT_TRUE(r->getStatusCode() == k404NotFound) << r->getStatusCode();
+    }
+
+    //URL-encoded traversal must also return 404
+    {
+        auto req = HttpRequest::newHttpRequest();
+        req->setMethod(drogon::Get);
+        req->setPath("/library/..%2f..%2fetc%2fpasswd");
+
+        auto resp = client->sendRequest(req);
+        ReqResult& res = resp.first;
+        HttpResponsePtr& r = resp.second;
+        ASSERT_TRUE(res == ReqResult::Ok) << res;
+        ASSERT_TRUE(r->getStatusCode() == k404NotFound) << r->getStatusCode();
+    }
+}
+
 }

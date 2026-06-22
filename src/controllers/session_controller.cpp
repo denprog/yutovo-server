@@ -279,44 +279,54 @@ void SessionController::LibraryDocument(const HttpRequestPtr& req, std::function
     GetLogger(session_id)->Info("Request library document: request={}, path={}", p, path);
     p = inst.getHomePage();
 
-    if (path.find(".yut") != std::string::npos || path.find("..") != std::string::npos || path.find(".") == std::string::npos)
-    {
-        if (session_id.empty())
-        {
-            if (!AddSession("-1", session_id))
-            {
-                GetLogger(session_id)->Error("Database error: Error inserting a session");
-                SendError(k500InternalServerError, "Error inserting a session", session_id, callback);
-                return;
-            }
+    std::replace(path.begin(), path.end(), '\\', '/');
 
-            SessionPtr session = req->session();
-            session->insert("session_id", session_id);
-        }
-        
-        std::replace(path.begin(), path.end(), '\\', '/');
-        if (!fs::exists(fs::path(library_path + path)))
+    fs::path file_path;
+    try
+    {
+        fs::path canonical_lib = fs::canonical(library_path);
+        file_path = fs::canonical(canonical_lib / path);
+        if (!file_path.string().starts_with(canonical_lib.string()))
         {
-            GetLogger(session_id)->Error("Library document not found: {}", path);
-            auto resp = HttpResponse::newFileResponse(r + p);
-            SetDocumentCookie(path, session_id, resp);
-            SetSessionCookie(session_id, resp);
-            resp->setStatusCode(k404NotFound);
-            callback(resp);
+            GetLogger(session_id)->Error("Library document path not allowed: {}", path);
+            SendError(k404NotFound, "Path not found", session_id, callback);
+            return;
+        }
+    }
+    catch (const std::exception& ex)
+    {
+        GetLogger(session_id)->Error("Library document path not found: {}", path);
+        SendError(k404NotFound, "Path not found", session_id, callback);
+        return;
+    }
+
+    if (!fs::exists(file_path))
+    {
+        GetLogger(session_id)->Error("Library document not found: {}", path);
+        SendError(k404NotFound, "Path not found", session_id, callback);
+        return;
+    }
+
+    if (session_id.empty())
+    {
+        if (!AddSession("-1", session_id))
+        {
+            GetLogger(session_id)->Error("Database error: Error inserting a session");
+            SendError(k500InternalServerError, "Error inserting a session", session_id, callback);
             return;
         }
 
         SessionPtr session = req->session();
         session->insert("session_id", session_id);
-
-        auto resp = HttpResponse::newFileResponse(r + p);
-        SetSessionCookie(session_id, resp);
-        callback(resp);
-        return;
     }
 
-    auto f = fs::path(path);
-    SendFile(req, callback, r + f.filename().c_str());
+    SessionPtr session = req->session();
+    session->insert("session_id", session_id);
+
+    auto resp = HttpResponse::newFileResponse(r + p);
+    SetSessionCookie(session_id, resp);
+    SetDocumentCookie(path, session_id, resp);
+    callback(resp);
 }
 
 void SessionController::Downloads(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, std::string param)
