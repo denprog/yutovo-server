@@ -14,7 +14,7 @@ namespace yutovo_server_test
 int argc = 0;
 char** argv = nullptr;
 
-std::string address = "http://yutovo.ru:9001";
+std::string address = "http://www.yutovo.ru:9001";
 
 //TestBase
 
