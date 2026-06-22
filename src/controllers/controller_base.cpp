@@ -352,7 +352,11 @@ bool ControllerBase::ParseId(const std::string& id_str, std::vector<int>& id)
         getline(s, substr, ',');
         try
         {
-            id.push_back(std::stoi(substr));
+            size_t pos = 0;
+            int value = std::stoi(substr, &pos);
+            if (pos != substr.size() || value < 0)
+                return false;
+            id.push_back(value);
         }
         catch (std::exception const& ex)
         {
