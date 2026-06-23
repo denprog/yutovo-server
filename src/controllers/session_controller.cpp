@@ -290,21 +290,30 @@ void SessionController::LibraryDocument(const HttpRequestPtr& req, std::function
         if (!file_path.string().starts_with(canonical_lib.string()))
         {
             GetLogger(session_id)->Error("Library document path not allowed: {}", path);
-            SendError(k404NotFound, "Path not found", session_id, callback);
+            auto resp = HttpResponse::newFileResponse(r + p);
+            resp->setStatusCode(k404NotFound);
+            SetSessionCookie(session_id, resp);
+            callback(resp);
             return;
         }
     }
     catch (const std::exception& ex)
     {
         GetLogger(session_id)->Error("Library document path not found: {}", path);
-        SendError(k404NotFound, "Path not found", session_id, callback);
+        auto resp = HttpResponse::newFileResponse(r + p);
+        resp->setStatusCode(k404NotFound);
+        SetSessionCookie(session_id, resp);
+        callback(resp);
         return;
     }
 
     if (!fs::exists(file_path))
     {
         GetLogger(session_id)->Error("Library document not found: {}", path);
-        SendError(k404NotFound, "Path not found", session_id, callback);
+        auto resp = HttpResponse::newFileResponse(r + p);
+        resp->setStatusCode(k404NotFound);
+        SetSessionCookie(session_id, resp);
+        callback(resp);
         return;
     }
 
