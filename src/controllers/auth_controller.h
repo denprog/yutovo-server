@@ -93,6 +93,7 @@ public:
 private:
     void UpdateSessionTime(const std::string& session_id);
     static size_t EmailPayload(char *ptr, size_t size, size_t nmemb, void *userp);
+    static unsigned int SecureRandomUInt(unsigned int max);
     CURLcode SendEmail(const std::string& from, const std::string& to, const std::string& subject, const std::string& message);
 
 private:

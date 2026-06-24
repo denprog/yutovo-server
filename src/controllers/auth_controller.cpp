@@ -17,6 +17,9 @@
 #include <boost/lexical_cast.hpp>
 #include <functional>
 #include <random>
+#include <limits>
+#include <stdexcept>
+#include <openssl/rand.h>
 #include <drogon/plugins/RealIpResolver.h>
 
 namespace yutovo_server
@@ -85,8 +88,12 @@ void AuthController::GetCaptcha(const HttpRequestPtr& req, std::function<void (c
             "zincky", "zinebs", "zinged", "zinger", "zinnia", "zipped", "zipper", "zirams", "zircon"
         };
     
-    cimg::srand();
-    const char *const captcha_text = predef_words[std::rand() % (sizeof(predef_words) / sizeof(char *))];
+    cimg_uint64 rng;
+    if (RAND_bytes(reinterpret_cast<unsigned char*>(&rng), sizeof(rng)) != 1)
+        throw std::runtime_error("Failed to seed captcha RNG");
+
+    const unsigned int word_count = static_cast<unsigned int>(sizeof(predef_words) / sizeof(char *));
+    const char *const captcha_text = predef_words[SecureRandomUInt(word_count)];
 
     //create captcha image, write colored and distorted text
     CImg<unsigned char> captcha(256, 64, 1, 3, 0), color(3);
@@ -97,18 +104,18 @@ void AuthController::GetCaptcha(const HttpRequestPtr& req, std::function<void (c
         *letter = captcha_text[k];
         if (*letter)
         {
-            cimg_forX(color, i) color[i] = (unsigned char)(128 + (std::rand() % 127));
-            tmp.draw_text((int)(2 + 8 * cimg::rand()), (int)(12 * cimg::rand()), letter, color.data(), 0, 1, std::rand() % 2 ? 38 : 57).resize(-100, -100, 1, 3);
-            const unsigned int dir = std::rand() % 4, wph = tmp.width() + tmp.height();
+            cimg_forX(color, i) color[i] = (unsigned char)(128 + SecureRandomUInt(127));
+            tmp.draw_text((int)(2 + 8 * cimg::rand(1, &rng)), (int)(12 * cimg::rand(1, &rng)), letter, color.data(), 0, 1, SecureRandomUInt(2) ? 38 : 57).resize(-100, -100, 1, 3);
+            const unsigned int dir = SecureRandomUInt(4), wph = tmp.width() + tmp.height();
             cimg_forXYC(tmp, x, y, v)
             {
                 const int val = dir == 0 ? x + y : (dir == 1 ? x + tmp.height() - y : (dir == 2 ? y + tmp.width() - x : tmp.width() - x + tmp.height() - y));
                 tmp(x, y, v) = (unsigned char)std::max(0.0f, std::min(255.0f, 1.5f * tmp(x, y, v) * val / wph));
             }
-            if (std::rand() % 2)
+            if (SecureRandomUInt(2))
                 tmp = (tmp.get_dilate(3) -= tmp);
-            tmp.blur((float)cimg::rand() * 0.8f).normalize(0, 255);
-            const float sin_offset = (float)cimg::rand(-1, 1) * 3, sin_freq = (float)cimg::rand(-1, 1) / 7;
+            tmp.blur((float)cimg::rand(1, &rng) * 0.8f).normalize(0, 255);
+            const float sin_offset = (float)cimg::rand(-1, 1, &rng) * 3, sin_freq = (float)cimg::rand(-1, 1, &rng) / 7;
             cimg_forYC(captcha, y, v) captcha.get_shared_row(y, 0, v).shift((int)(4 * std::cos(y * sin_freq + sin_offset)));
             captcha.draw_image(6 + 40 * k, tmp);
         }
@@ -122,12 +129,12 @@ void AuthController::GetCaptcha(const HttpRequestPtr& req, std::function<void (c
             copy.blur(0.5f).normalize(0, 148);
         for (unsigned int k = 0; k < 10; ++k)
         {
-            cimg_forX(color, i) color[i] = (unsigned char)(128 + cimg::rand() * 127);
-            if (cimg::rand() < 0.5f)
-                copy.draw_circle((int)(cimg::rand() * captcha.width()), (int)(cimg::rand() * captcha.height()), (int)(cimg::rand() * 30), color.data(), 0.6f, ~0U);
+            cimg_forX(color, i) color[i] = (unsigned char)(128 + cimg::rand(1, &rng) * 127);
+            if (cimg::rand(1, &rng) < 0.5f)
+                copy.draw_circle((int)(cimg::rand(1, &rng) * captcha.width()), (int)(cimg::rand(1, &rng) * captcha.height()), (int)(cimg::rand(1, &rng) * 30), color.data(), 0.6f, ~0U);
             else
-                copy.draw_line((int)(cimg::rand() * captcha.width()), (int)(cimg::rand() * captcha.height()), (int)(cimg::rand() * captcha.width()),
-                    (int)(cimg::rand() * captcha.height()), color.data(), 0.6f);
+                copy.draw_line((int)(cimg::rand(1, &rng) * captcha.width()), (int)(cimg::rand(1, &rng) * captcha.height()), (int)(cimg::rand(1, &rng) * captcha.width()),
+                    (int)(cimg::rand(1, &rng) * captcha.height()), color.data(), 0.6f);
         }
     }
 
@@ -142,6 +149,24 @@ void AuthController::GetCaptcha(const HttpRequestPtr& req, std::function<void (c
     SendCaptcha(callback, captcha);
 
     GetLogger(session_id)->Debug("Sent captcha: {}", captcha_text);
+}
+
+unsigned int AuthController::SecureRandomUInt(unsigned int max)
+{
+    if (max == 0)
+        return 0;
+
+    //rejection sampling eliminates modulo bias
+    const unsigned int limit = std::numeric_limits<unsigned int>::max() - std::numeric_limits<unsigned int>::max() % max;
+    unsigned int value = 0;
+    do
+    {
+        if (RAND_bytes(reinterpret_cast<unsigned char*>(&value), sizeof(value)) != 1)
+            throw std::runtime_error("RAND_bytes failed");
+    }
+    while (value >= limit);
+
+    return value % max;
 }
 
 void AuthController::SendEmailCode(const HttpRequestPtr &req, std::function<void(const HttpResponsePtr &)> &&callback)
