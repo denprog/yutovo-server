@@ -13,6 +13,14 @@
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid/uuid_io.hpp>
 #include <openssl/md5.h>
+#include <openssl/rand.h>
+#include <openssl/sha.h>
+#include <openssl/evp.h>
+#include <openssl/hmac.h>
+#include <stdexcept>
+#include <vector>
+#include <cstdio>
+#include <cctype>
 
 namespace yutovo_server
 {
@@ -508,15 +516,135 @@ int ControllerBase::GetFirstEmptyDocument(const std::string& user_id)
     return -1;
 }
 
-std::string ControllerBase::GetHash(const std::string& str, const std::string& salt)
+std::string ControllerBase::Base64Encode(const unsigned char* data, size_t len)
+{
+    std::string out;
+    out.resize(4 * ((len + 2) / 3));
+    int encoded = EVP_EncodeBlock(reinterpret_cast<unsigned char*>(&out[0]), data, static_cast<int>(len));
+    if (encoded < 0)
+        throw std::runtime_error("Base64 encoding failed");
+    out.resize(static_cast<size_t>(encoded));
+    return out;
+}
+
+std::vector<unsigned char> ControllerBase::Base64Decode(const std::string& in)
+{
+    std::vector<unsigned char> out;
+    out.resize(in.size());
+    int decoded = EVP_DecodeBlock(out.data(), reinterpret_cast<const unsigned char*>(in.data()), static_cast<int>(in.size()));
+    if (decoded < 0)
+        return {};
+    //EVP_DecodeBlock may add padding zeros; strip them
+    while (decoded > 0 && out[static_cast<size_t>(decoded) - 1] == 0)
+        --decoded;
+    out.resize(static_cast<size_t>(decoded));
+    return out;
+}
+
+std::string ControllerBase::BytesToHex(const unsigned char* data, size_t len)
+{
+    std::string out(len * 2, '0');
+    for (size_t i = 0; i < len; ++i)
+        snprintf(&out[i * 2], 3, "%02x", data[i]);
+    return out;
+}
+
+bool ControllerBase::IsHexString(const std::string& s)
+{
+    for (char c : s)
+    {
+        if (!std::isxdigit(static_cast<unsigned char>(c)))
+            return false;
+    }
+    return true;
+}
+
+std::string ControllerBase::GetMd5Hash(const std::string& str, const std::string& salt)
 {
     unsigned char hash[MD5_DIGEST_LENGTH];
     std::string s = str + salt;
-    MD5((const unsigned char*)s.c_str(), s.size(), hash);
-    char hash_str[MD5_DIGEST_LENGTH * 2 + 1];
-    for(int i = 0; i < MD5_DIGEST_LENGTH; i++)
-        sprintf(&hash_str[i * 2], "%02x", (unsigned int)hash[i]);
-    return std::string(&hash_str[0], MD5_DIGEST_LENGTH * 2);
+    MD5(reinterpret_cast<const unsigned char*>(s.c_str()), s.size(), hash);
+    return BytesToHex(hash, MD5_DIGEST_LENGTH);
+}
+
+std::string ControllerBase::HashPassword(const std::string& password)
+{
+    unsigned char salt[salt_bytes];
+    if (RAND_bytes(salt, sizeof(salt)) != 1)
+        throw std::runtime_error("Failed to generate random salt");
+
+    unsigned char hash[hash_bytes];
+    if (PKCS5_PBKDF2_HMAC(password.c_str(), static_cast<int>(password.size()), salt, sizeof(salt), pbkdf_iterations, EVP_sha256(), sizeof(hash), hash) != 1)
+        throw std::runtime_error("PBKDF2 failed");
+
+    return "$pbkdf2-sha256$" + std::to_string(pbkdf_iterations) + "$" + Base64Encode(salt, sizeof(salt)) + "$" + Base64Encode(hash, sizeof(hash));
+}
+
+bool ControllerBase::VerifyPassword(const std::string& password, const std::string& stored_hash, std::string* new_hash)
+{
+    if (stored_hash.empty())
+        return false;
+
+    //password format: $pbkdf2-sha256$<iterations>$<salt_b64>$<hash_b64>
+    if (stored_hash.rfind("$pbkdf2-sha256$", 0) == 0)
+    {
+        std::vector<std::string> parts;
+        std::string current;
+        for (size_t i = 1; i < stored_hash.size(); ++i)
+        {
+            if (stored_hash[i] == '$')
+            {
+                parts.push_back(current);
+                current.clear();
+            }
+            else
+            {
+                current.push_back(stored_hash[i]);
+            }
+        }
+        
+        parts.push_back(current);
+        if (parts.size() != 4 || parts[0] != "pbkdf2-sha256")
+            return false;
+
+        int iterations = 0;
+        try
+        {
+            iterations = std::stoi(parts[1]);
+        }
+        catch (...)
+        {
+            return false;
+        }
+
+        std::vector<unsigned char> salt = Base64Decode(parts[2]);
+        std::vector<unsigned char> expected_hash = Base64Decode(parts[3]);
+        if (salt.size() != salt_bytes || expected_hash.size() != hash_bytes)
+            return false;
+
+        unsigned char hash[hash_bytes];
+        if (PKCS5_PBKDF2_HMAC(password.c_str(), static_cast<int>(password.size()), salt.data(), static_cast<int>(salt.size()), iterations,
+            EVP_sha256(), sizeof(hash), hash) != 1)
+            return false;
+
+        return CRYPTO_memcmp(hash, expected_hash.data(), sizeof(hash)) == 0;
+    }
+
+    //legacy MD5 format: 32 hex chars of salt followed by 32 hex chars of MD5 hash
+    if (stored_hash.size() == 64 && IsHexString(stored_hash))
+    {
+        std::string salt = stored_hash.substr(0, 32);
+        std::string h = GetMd5Hash(password, salt);
+        if (salt + h == stored_hash)
+        {
+            //migrate to the new secure format on successful authentication
+            if (new_hash)
+                *new_hash = HashPassword(password);
+            return true;
+        }
+    }
+
+    return false;
 }
 
 bool ControllerBase::GetSessionId(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>& callback, std::string& session_id)

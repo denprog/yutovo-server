@@ -13,10 +13,6 @@
 #include <boost/iostreams/filtering_streambuf.hpp>
 #include <boost/iostreams/copy.hpp>
 #include <boost/iostreams/filter/gzip.hpp>
-#include <boost/lexical_cast.hpp>
-#include <boost/uuid/uuid.hpp>
-#include <boost/uuid/uuid_generators.hpp>
-#include <boost/uuid/uuid_io.hpp>
 #include <drogon/plugins/RealIpResolver.h>
 
 namespace yutovo_server
@@ -1497,10 +1493,8 @@ void ServiceController::SetUserSettings(const HttpRequestPtr& req, std::function
             }
     
             auto row = result[0];
-            std::string hash = row["password"].as<std::string>();
-            std::string salt = hash.substr(0, 32);
-            std::string h = GetHash(old_password, salt);
-            if (salt + h != hash)
+            std::string stored_hash = row["password"].as<std::string>();
+            if (!VerifyPassword(old_password, stored_hash))
             {
                 GetLogger(session_id)->Error("Old password is incorrect");
                 SendError(k401Unauthorized, "Old password is incorrect", session_id, callback);
@@ -1508,11 +1502,9 @@ void ServiceController::SetUserSettings(const HttpRequestPtr& req, std::function
             }
     
             //generate the hash of the password with salt
-            salt = std::string(boost::lexical_cast<std::string>(boost::uuids::random_generator()()));
-            salt.erase(std::remove(salt.begin(), salt.end(), '-'), salt.end());
-            hash = GetHash(password, salt);
+            std::string hash = HashPassword(password);
 
-            result = db->execSqlSync("update users set password=$1 where user_id=$2", salt + hash, user_id);
+            result = db->execSqlSync("update users set password=$1 where user_id=$2", hash, user_id);
             if (result.affectedRows() == 0)
             {
                 GetLogger(session_id)->Error("Database error: Error updating password");
@@ -1636,13 +1628,11 @@ void ServiceController::RecoverPassword(const HttpRequestPtr& req, std::function
     auto email = session->get<std::string>("email_code_email");
 
     //generate the hash of the password with salt
-    std::string salt(boost::lexical_cast<std::string>(boost::uuids::random_generator()()));
-    salt.erase(std::remove(salt.begin(), salt.end(), '-'), salt.end());
-    std::string hash = GetHash(password, salt);
+    std::string hash = HashPassword(password);
 
     try
     {
-        orm::Result result = db->execSqlSync("update users set password=$1 where email=$2", salt + hash, email);
+        orm::Result result = db->execSqlSync("update users set password=$1 where email=$2", hash, email);
         if (result.affectedRows() == 0)
         {
             GetLogger(session_id)->Error("Database error: Error updating password");
