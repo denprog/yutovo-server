@@ -483,12 +483,10 @@ void AuthController::Register(const HttpRequestPtr& req, std::function<void (con
         }
 
         //generate the hash of the password with salt
-        std::string salt(boost::lexical_cast<std::string>(boost::uuids::random_generator()()));
-        salt.erase(std::remove(salt.begin(), salt.end(), '-'), salt.end());
-        std::string hash = GetHash(user.password, salt);
+        std::string hash = HashPassword(user.password);
 
         //insert new user
-        result = db->execSqlSync("insert into users (login, password, email, name) values ($1, $2, $3, $4)", user.login, salt + hash, user.email, user.name);
+        result = db->execSqlSync("insert into users (login, password, email, name) values ($1, $2, $3, $4)", user.login, hash, user.email, user.name);
         if (result.size() == 0)
         {
             result = db->execSqlSync("select max_files, max_solving_time, max_file_size from user_plans where plan_id=(select plan_id from users where login=$1)", 
@@ -636,14 +634,17 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
         }
 
         auto row = result[0];
-        std::string hash = row["password"].as<std::string>();
-        std::string salt = hash.substr(0, 32);
-        std::string h = GetHash(password, salt);
-        if (salt + h != hash)
+        std::string stored_hash = row["password"].as<std::string>();
+        std::string new_hash;
+        if (!VerifyPassword(password, stored_hash, &new_hash))
         {
             SendError(k401Unauthorized, "Login or password are incorrect", session_id, callback);
             return;
         }
+
+        //migrate legacy MD5 hashes to the new format on successful login
+        if (!new_hash.empty())
+            db->execSqlSync("update users set password=$1 where login=$2", new_hash, login);
 
         //create a session with refresh and access tokens
         session->erase("login");

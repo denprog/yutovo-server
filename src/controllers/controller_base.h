@@ -71,7 +71,8 @@ protected:
 
     int GetFirstEmptyDocument(const std::string& user_id);
 
-    std::string GetHash(const std::string& str, const std::string& salt);
+    std::string HashPassword(const std::string& password);
+    bool VerifyPassword(const std::string& password, const std::string& stored_hash, std::string* new_hash = nullptr);
 
     bool GetSessionId(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>& callback, std::string& session_id);
 
@@ -93,6 +94,17 @@ protected:
 
     std::string library_path;
     inline static const std::string base = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+
+private:
+    static constexpr int pbkdf_iterations = 100000;
+    static constexpr int salt_bytes = 16;
+    static constexpr int hash_bytes = 32;
+
+    static std::string Base64Encode(const unsigned char* data, size_t len);
+    static std::vector<unsigned char> Base64Decode(const std::string& in);
+    static std::string BytesToHex(const unsigned char* data, size_t len);
+    static bool IsHexString(const std::string& s);
+    static std::string GetMd5Hash(const std::string& str, const std::string& salt);
 };
 
 }
