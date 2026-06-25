@@ -428,7 +428,7 @@ bool ControllerBase::AddDocument(const HttpRequestPtr& req, const std::string& u
     orm::DbClientPtr db = app().getDbClient();
     int max_files = session->get<int>("max_files");
     orm::Result result = db->execSqlSync("select count(*) from user_documents where user_id=$1", user_id);
-    if (result.affectedRows() == 0)
+    if (result.size() == 0)
     {
         GetLogger(session_id)->Error("Database error: Error getting count of documents");
         SendError(k500InternalServerError, "Error inserting a document", session_id, callback);
