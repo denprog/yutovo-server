@@ -199,6 +199,8 @@ void ControllerBase::SendOkTokens(std::function<void (const HttpResponsePtr &)>&
     refresh_cookie.setHttpOnly(false);
     refresh_cookie.setPath("/");
     refresh_cookie.setExpiresDate(refresh_expires);
+    refresh_cookie.setSecure(true);
+    refresh_cookie.setSameSite(Cookie::SameSite::kStrict);
     resp->addCookie(refresh_cookie);
 
     if (!session_id.empty())
@@ -207,6 +209,8 @@ void ControllerBase::SendOkTokens(std::function<void (const HttpResponsePtr &)>&
         session_cookie.setHttpOnly(true);
         session_cookie.setPath("/");
         session_cookie.setExpiresDate(session_expires);
+        session_cookie.setSecure(true);
+        session_cookie.setSameSite(Cookie::SameSite::kStrict);
         resp->addCookie(session_cookie);
     }
 
@@ -381,6 +385,8 @@ void ControllerBase::SetSessionCookie(const std::string& session_id, HttpRespons
     session_cookie.setHttpOnly(false);
     session_cookie.setPath("/");
     session_cookie.setExpiresDate(trantor::Date::now().after(session_expires));
+    session_cookie.setSecure(true);
+    session_cookie.setSameSite(Cookie::SameSite::kStrict);
     resp->addCookie(session_cookie);
 }
 
@@ -391,6 +397,8 @@ void ControllerBase::SetDocumentCookie(const std::string& document_id, const std
     document_cookie.setHttpOnly(false);
     document_cookie.setPath("/");
     document_cookie.setExpiresDate(trantor::Date::now().after(session_expires));
+    document_cookie.setSecure(true);
+    document_cookie.setSameSite(Cookie::SameSite::kStrict);
     resp->addCookie(document_cookie);
 }
 
