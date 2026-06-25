@@ -1358,7 +1358,7 @@ void ServiceController::SetUserSettings(const HttpRequestPtr& req, std::function
         {
             //update the existing json, load it, change and save
             orm::Result result = db->execSqlSync("select settings from users where user_id=$1", user_id);
-            if (result.affectedRows() == 0)
+            if (result.size() == 0)
             {
                 GetLogger(session_id)->Error("Database error: Error updating settings");
                 SendError(k500InternalServerError, "Error updating settings", session_id, callback);
@@ -1440,7 +1440,7 @@ void ServiceController::SetUserSettings(const HttpRequestPtr& req, std::function
         {
             //check the e-mail doesn't exist
             orm::Result result = db->execSqlSync("select 1 from users where email=$1", email);
-            if (result.affectedRows() != 0)
+            if (result.size() != 0)
             {
                 GetLogger(session_id)->Error("e-mail already exists: {}", email);
                 SendError(k409Conflict, "e-mail already exists", session_id, callback);
@@ -1545,7 +1545,7 @@ void ServiceController::GetUserSettings(const HttpRequestPtr& req, std::function
     {
         //update the existing json, load it, change and save
         orm::Result result = db->execSqlSync("select login, name, email, settings from users where user_id=$1", user_id);
-        if (result.affectedRows() == 0)
+        if (result.size() == 0)
         {
             GetLogger(session_id)->Error("Database error: Error updating settings");
             SendError(k500InternalServerError, "Error updating settings", session_id, callback);
