@@ -25,4 +25,4 @@ From `build/debug`, run tests with environment variables from `yutovo-server.env
 env $(grep -v '^#' ../../yutovo-server.env | xargs) ./test/yutovo-server_tests
 ```
 
-For tests to work, `config.json` must have an HTTP listener enabled (for example, on `127.0.0.1:9001`). The default `src/config.json` has the `listeners` section commented out; enable it before running tests.
+The test executable starts an in-process Drogon instance, so you do not need to run the server beforehand. It adds the listener on `127.0.0.1:9001` (make sure the port is free) and configures the database client programmatically, so no manual changes to `config.json` are required.
