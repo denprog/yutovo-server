@@ -49,12 +49,16 @@ env $(grep -v '^#' ../../yutovo-server.env | xargs) ./src/yutovo-serverd
 
 Run the tests:
 
-```
+The tests start their own in-process Drogon instance, so **you do not need to start the server beforehand**. Make sure port `9001` is free, then run:
+
+```bash
 env $(grep -v '^#' ../../yutovo-server.env | xargs) ./test/yutovo-server_tests
 ```
 
-Or one test:
+The listener and database client are configured programmatically in `test/main.cpp`; you do not need to edit `config.json`.
 
-```
+To run a single test:
+
+```bash
 env $(grep -v '^#' ../../yutovo-server.env | xargs) ./test/yutovo-server_tests --gtest_filter=AuthTest.register1
 ```
