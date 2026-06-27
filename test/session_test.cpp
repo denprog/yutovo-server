@@ -69,7 +69,9 @@ TEST_F(SessionTest, session2)
 
     UnRegister(client, "User1", access_token);
     result = db->execSqlSync("select user_id from user_sessions where session_id=$1", c.value());
-    ASSERT_TRUE(result.size() == 0);
+    ASSERT_TRUE(result.size() != 0);
+    auto unregistered_user_id = result[0]["user_id"].as<int>();
+    ASSERT_TRUE(unregistered_user_id == -1);
     result = db->execSqlSync("select 1 from user_sessions where user_id=$1", user_id);
     ASSERT_TRUE(result.size() == 0);
     result = db->execSqlSync("select 1 from users where user_id=$1", user_id);
