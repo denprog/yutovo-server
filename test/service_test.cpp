@@ -44,7 +44,7 @@ TEST_F(ServiceTest, library2)
     StartPage(client);
 
     Json::Value body;
-    body["document"] = "/Physics/Dynamics/Kinetic energy";
+    body["document"] = "/Physics/Dynamics/Kinetic energy.yut";
     auto req = HttpRequest::newHttpJsonRequest(body);
     req->setMethod(drogon::Post);
     req->setPath("/service/load-library-document");
@@ -66,7 +66,7 @@ TEST_F(ServiceTest, library3)
     StartPage(client);
 
     Json::Value body;
-    body["document"] = "/Physics/Dynamics/../Kinetic energy";
+    body["document"] = "/Physics/Dynamics/../Kinetic energy.yut";
     auto req = HttpRequest::newHttpJsonRequest(body);
     req->setMethod(drogon::Post);
     req->setPath("/service/load-library-document");
