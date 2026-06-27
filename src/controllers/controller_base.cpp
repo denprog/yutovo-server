@@ -88,7 +88,7 @@ void LoginFilter::doFilter(const HttpRequestPtr& req, FilterCallback&& not_valid
         resp = HttpResponse::newHttpResponse();
         resp->setStatusCode(k400BadRequest);
     }
-    catch (jwt::token_verification_exception& ex)
+    catch (jwt::error::token_verification_exception& ex)
     {
         GetLogger(session_id)->Error("Wrong access token: {}", ex.what());
         resp = HttpResponse::newHttpResponse();
@@ -199,7 +199,11 @@ void ControllerBase::SendOkTokens(std::function<void (const HttpResponsePtr &)>&
     refresh_cookie.setHttpOnly(false);
     refresh_cookie.setPath("/");
     refresh_cookie.setExpiresDate(refresh_expires);
+#ifdef TEST
+    refresh_cookie.setSecure(false);
+#else
     refresh_cookie.setSecure(true);
+#endif
     refresh_cookie.setSameSite(Cookie::SameSite::kStrict);
     resp->addCookie(refresh_cookie);
 
@@ -209,7 +213,11 @@ void ControllerBase::SendOkTokens(std::function<void (const HttpResponsePtr &)>&
         session_cookie.setHttpOnly(true);
         session_cookie.setPath("/");
         session_cookie.setExpiresDate(session_expires);
+#ifdef TEST
+        session_cookie.setSecure(false);
+#else
         session_cookie.setSecure(true);
+#endif
         session_cookie.setSameSite(Cookie::SameSite::kStrict);
         resp->addCookie(session_cookie);
     }
@@ -347,7 +355,7 @@ bool ControllerBase::ParseRefreshToken(const std::string& refresh_token, std::st
         SendError(k400BadRequest, ex.what(), session_id, callback);
         return false;
     }
-    catch (jwt::token_verification_exception& ex)
+    catch (jwt::error::token_verification_exception& ex)
     {
         SendError(k401Unauthorized, ex.what(), session_id, callback);
         return false;
@@ -537,14 +545,22 @@ std::string ControllerBase::Base64Encode(const unsigned char* data, size_t len)
 
 std::vector<unsigned char> ControllerBase::Base64Decode(const std::string& in)
 {
+    if (in.empty())
+        return {};
     std::vector<unsigned char> out;
     out.resize(in.size());
     int decoded = EVP_DecodeBlock(out.data(), reinterpret_cast<const unsigned char*>(in.data()), static_cast<int>(in.size()));
     if (decoded < 0)
         return {};
-    //EVP_DecodeBlock may add padding zeros; strip them
-    while (decoded > 0 && out[static_cast<size_t>(decoded) - 1] == 0)
-        --decoded;
+    //EVP_DecodeBlock adds padding zeros; strip only the padding characters
+    int padding = 0;
+    if (in[in.size() - 1] == '=')
+        ++padding;
+    if (in.size() > 1 && in[in.size() - 2] == '=')
+        ++padding;
+    decoded -= padding;
+    if (decoded < 0)
+        decoded = 0;
     out.resize(static_cast<size_t>(decoded));
     return out;
 }
