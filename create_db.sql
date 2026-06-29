@@ -59,4 +59,4 @@ CREATE TABLE IF NOT EXISTS user_plans
     max_solving_time int not null --in seconds
 );
 
-INSERT INTO user_plans (plan_id, max_files, max_file_size, max_solving_time) VALUES (1, 10, 100, 10)
+INSERT INTO user_plans (plan_id, max_files, max_file_size, max_solving_time) VALUES (1, 50, 1024, 10)

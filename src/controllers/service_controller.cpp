@@ -13,6 +13,7 @@
 #include <boost/iostreams/filtering_streambuf.hpp>
 #include <boost/iostreams/copy.hpp>
 #include <boost/iostreams/filter/gzip.hpp>
+#include <boost/iostreams/device/array.hpp>
 #include <drogon/plugins/RealIpResolver.h>
 
 namespace yutovo_server
@@ -640,10 +641,10 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
             return;
         }
 
-        std::string path = "'{\"text\"";
+        std::string path = "{\"text\"";
         for (size_t i = 1; i < _id.size(); ++i)
             path += ",\"elements\"," + std::to_string(_id[i]);
-        path += "}'";
+        path += "}";
 
         auto document = JsonToString(text);
 
@@ -655,8 +656,8 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
             return;
         }
 
-        orm::Result result = db->execSqlSync("update user_documents set document=jsonb_set(document,$1::text[], $2::jsonb)"
-            ") where document_id=$3", path, document, document_id);
+        orm::Result result = db->execSqlSync("update user_documents set document=jsonb_set(document,$1::text[], $2::jsonb) "
+            "where document_id=$3", path, document, document_id);
         result = db->execSqlSync("update user_sessions set document_id=$1 where session_id=$2", document_id, session_id);
         SendOk(callback);
     }
@@ -1908,7 +1909,7 @@ void ServiceController::SendLibraryDocument(const HttpRequestPtr& req, const std
             return;
         }
 
-        std::ifstream file(path.string().c_str());
+        std::ifstream file(path.string(), std::ios::binary);
         if (!file.is_open())
         {
             GetLogger(session_id)->Error("LoadLibraryDocument error: Path not found: {}", path.c_str());
@@ -1916,22 +1917,25 @@ void ServiceController::SendLibraryDocument(const HttpRequestPtr& req, const std
             return;
         }
 
+        std::string content((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+
         try
         {
             //try to open as compressed file
+            boost::iostreams::array_source src(content.data(), content.size());
             boost::iostreams::filtering_streambuf<boost::iostreams::input> in;
             in.push(boost::iostreams::gzip_decompressor());
-            in.push(file);
+            in.push(src);
             std::stringstream json;
             boost::iostreams::copy(in, json);
             SendJson(callback, json.str(), session_id);
             return;
         }
-        catch (const std::ios_base::failure& ex)
+        catch (const std::ios_base::failure&)
         {
         }
 
-        SendFile(req, callback, path); //send as decompressed file
+        SendJson(callback, content, session_id);
     }
     catch (const std::exception& ex)
     {
