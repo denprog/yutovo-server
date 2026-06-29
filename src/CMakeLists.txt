@@ -14,22 +14,12 @@ find_package(Drogon REQUIRED PATHS ${THIRD_PARTY_PATH}/drogon/lib/cmake/)
 find_package(jwt-cpp REQUIRED PATHS ${THIRD_PARTY_PATH}/jwt-cpp/lib/cmake/)
 find_package(Boost 1.81.0 REQUIRED PATHS ${INSTALL_PATH}/lib/cmake/)
 
-add_executable(${PROJECT_NAME}
-    main.cpp
-    utils.cpp
-    logic/clear_db.cpp
-)
-
-set_target_properties(${PROJECT_NAME} PROPERTIES DEBUG_POSTFIX ${CMAKE_DEBUG_POSTFIX})
-
 aux_source_directory(controllers CTL_SRC)
 aux_source_directory(filters FILTER_SRC)
 aux_source_directory(plugins PLUGIN_SRC)
 aux_source_directory(models MODEL_SRC)
 
-target_compile_options(${PROJECT_NAME} PUBLIC -Wno-deprecated-declarations)
-
-target_link_libraries(${PROJECT_NAME} PRIVATE 
+set(SERVER_LIBS
     stdc++
     stdc++fs
     pthread
@@ -43,13 +33,33 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     boost_iostreams
 )
 
-target_sources(${PROJECT_NAME} PRIVATE
-    ${SRC_DIR}
+set(SERVER_INCLUDE_DIRS
+    ${INSTALL_PATH}/include
+    ${THIRD_PARTY_PATH}
+    ${THIRD_PARTY_PATH}/drogon/include
+    ${THIRD_PARTY_PATH}/jwt-cpp/lib/include/
+    /usr/include/jsoncpp
+)
+
+add_library(${PROJECT_NAME}_lib OBJECT
+    utils.cpp
+    logic/clear_db.cpp
     ${CTL_SRC}
     ${FILTER_SRC}
     ${PLUGIN_SRC}
     ${MODEL_SRC}
 )
+
+target_compile_options(${PROJECT_NAME}_lib PUBLIC -Wno-deprecated-declarations)
+
+target_include_directories(${PROJECT_NAME}_lib PUBLIC ${SERVER_INCLUDE_DIRS})
+
+add_executable(${PROJECT_NAME} main.cpp $<TARGET_OBJECTS:${PROJECT_NAME}_lib>)
+
+set_target_properties(${PROJECT_NAME} PROPERTIES DEBUG_POSTFIX ${CMAKE_DEBUG_POSTFIX})
+
+target_link_libraries(${PROJECT_NAME} PRIVATE ${SERVER_LIBS})
+target_include_directories(${PROJECT_NAME} PRIVATE ${SERVER_INCLUDE_DIRS})
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
     add_compile_options(-Og -g -fsanitize=undefined -fsanitize=address -fno-omit-frame-pointer)
@@ -60,17 +70,6 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0 -fhardened -Wimplicit-fallthrough -U_FORTIFY_SOURCE -fstrict-flex-arrays=3 -Wtrampolines \
         -Werror=format-security -Wno-hardened")
 endif()
-
-target_include_directories(${PROJECT_NAME} PUBLIC
-    ${INSTALL_PATH}/include
-)
-
-target_include_directories(${PROJECT_NAME} PRIVATE
-    ${THIRD_PARTY_PATH}
-    ${THIRD_PARTY_PATH}/drogon/include
-    ${THIRD_PARTY_PATH}/jwt-cpp/lib/include/
-    /usr/include/jsoncpp
-)
 
 install(
     TARGETS ${PROJECT_NAME}

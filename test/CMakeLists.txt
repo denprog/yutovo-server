@@ -23,11 +23,15 @@ add_executable(${PROJECT_NAME}_tests
     auth_test.cpp
     session_test.cpp
     service_test.cpp
+    $<TARGET_OBJECTS:${PROJECT_NAME}_lib>
 )
 
 target_link_libraries(${PROJECT_NAME}_tests PUBLIC
 	stdc++
+    stdc++fs
     pthread
+    crypto
+    ssl
 	gtest
 	gtest_main
 	gmock
@@ -36,6 +40,10 @@ target_link_libraries(${PROJECT_NAME}_tests PUBLIC
 	dl
     yutovo-logger
     Drogon::Drogon
+    X11
+    jpeg
+    curl
+    boost_iostreams
 )
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
@@ -46,8 +54,10 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
 endif()
 
 target_include_directories(${PROJECT_NAME}_tests PRIVATE
+    ${INSTALL_PATH}/include
     ${THIRD_PARTY_PATH}
     ${THIRD_PARTY_PATH}/drogon/include
+    ${THIRD_PARTY_PATH}/jwt-cpp/lib/include/
     /usr/include/jsoncpp
 )
 

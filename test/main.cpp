@@ -32,7 +32,10 @@ int main(int argc, char** argv)
         {
             drogon::app().
                 createDbClient("postgresql", DB_HOST, DB_PORT, db_name, db_user, db_password, 1, "", "default", false, "", DB_TIMEOUT, false).
+                addListener("127.0.0.1", 9001).
                 loadConfigFile("config.json");
+            drogon::app().enableSession();
+            drogon::app().setThreadNum(1);
             drogon::app().run();
         });
     

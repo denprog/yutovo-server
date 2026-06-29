@@ -44,7 +44,7 @@ TEST_F(ServiceTest, library2)
     StartPage(client);
 
     Json::Value body;
-    body["document"] = "/Physics/Dynamics/Kinetic energy";
+    body["document"] = "/Physics/Dynamics/Kinetic energy.yut";
     auto req = HttpRequest::newHttpJsonRequest(body);
     req->setMethod(drogon::Post);
     req->setPath("/service/load-library-document");
@@ -66,7 +66,7 @@ TEST_F(ServiceTest, library3)
     StartPage(client);
 
     Json::Value body;
-    body["document"] = "/Physics/Dynamics/../Kinetic energy";
+    body["document"] = "/Physics/Dynamics/../Kinetic energy.yut";
     auto req = HttpRequest::newHttpJsonRequest(body);
     req->setMethod(drogon::Post);
     req->setPath("/service/load-library-document");
@@ -887,7 +887,14 @@ TEST_F(ServiceTest, document15)
     std::string access_token, document_id, name, language;
     Login(client, "User1", "11", access_token, document_id, name, language);
 
-    for (int i = 0; i < 9; ++i)
+    orm::DbClientPtr db = app().getDbClient();
+    orm::Result plan_result = db->execSqlSync(
+        "select max_files from user_plans where plan_id=(select plan_id from users where login=$1)",
+        "User1");
+    ASSERT_TRUE(plan_result.size() != 0);
+    int max_files = plan_result[0]["max_files"].as<int>();
+
+    for (int i = 0; i < max_files - 1; ++i)
         NewDocument(client, access_token, document_id);
 
     Json::Value s;
