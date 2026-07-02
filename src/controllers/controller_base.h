@@ -10,6 +10,8 @@
 
 #include <drogon/HttpController.h>
 #include <filesystem>
+#include <curl/curl.h>
+#include <vector>
 #include <jpeglib.h>
 #include <jerror.h>
 #define cimg_plugin "plugins/jpeg_buffer.h"
@@ -81,6 +83,26 @@ protected:
     std::string JsonToString(Json::Value& value);
 
 protected:
+    struct EmailAttachment
+    {
+        std::string filename;
+        std::string content_type;
+        std::string data;
+    };
+
+    struct EmailReadContext
+    {
+        std::string* message;
+        size_t offset;
+    };
+
+    static std::string HtmlEscape(const std::string& value);
+    static size_t EmailPayload(char* ptr, size_t size, size_t nmemb, void* userp);
+    static std::string WrapBase64(const std::string& base64);
+
+    CURLcode SendEmail(const std::string& from, const std::string& to, const std::string& subject, const std::string& message_html,
+        const std::vector<EmailAttachment>& attachments = {});
+
     int session_expires = 0; //session without user, in seconds, after last using
     std::string public_key, private_key;
     int access_token_expires = 60 * 2; //seconds

@@ -1944,4 +1944,83 @@ void ServiceController::SendLibraryDocument(const HttpRequestPtr& req, const std
     }
 }
 
+void ServiceController::SendFeedback(const HttpRequestPtr& req, std::function<void(const HttpResponsePtr&)>&& callback)
+{
+    std::string session_id;
+    if (!GetSessionId(req, callback, session_id))
+        return;
+
+    auto json = req->getJsonObject();
+    if (!json || !json->isObject())
+    {
+        SendError(k400BadRequest, "Json not found in the SendFeedback request", session_id, callback);
+        return;
+    }
+
+    std::string name, email, topic, message, version, platform;
+    if (json->isMember("name") && (*json)["name"].isString())
+        name = (*json)["name"].asString();
+    if (json->isMember("email") && (*json)["email"].isString())
+        email = (*json)["email"].asString();
+    if (json->isMember("topic") && (*json)["topic"].isString())
+        topic = (*json)["topic"].asString();
+    if (json->isMember("message") && (*json)["message"].isString())
+        message = (*json)["message"].asString();
+    if (json->isMember("version") && (*json)["version"].isString())
+        version = (*json)["version"].asString();
+    if (json->isMember("platform") && (*json)["platform"].isString())
+        platform = (*json)["platform"].asString();
+
+    GetLogger(session_id)->Info("SendFeedback request name: {}, email: {}, topic: {}, message: {}", name, email, topic, message);
+
+    if (email.empty() || topic.empty() || message.empty())
+    {
+        SendError(k400BadRequest, "Required fields are empty", session_id, callback);
+        return;
+    }
+
+    std::vector<EmailAttachment> attachments;
+    if (json->isMember("attachments") && (*json)["attachments"].isArray())
+    {
+        const Json::Value& arr = (*json)["attachments"];
+        for (const auto& item : arr)
+        {
+            if (!item.isObject())
+                continue;
+            EmailAttachment at;
+            if (item.isMember("filename") && item["filename"].isString())
+                at.filename = item["filename"].asString();
+            if (item.isMember("content_type") && item["content_type"].isString())
+                at.content_type = item["content_type"].asString();
+            if (item.isMember("data") && item["data"].isString())
+                at.data = item["data"].asString();
+            if (!at.filename.empty() && !at.data.empty())
+                attachments.push_back(std::move(at));
+        }
+    }
+
+    std::string subject = "[Feedback] " + topic;
+    std::string body = "<html><body>"
+        "<p><b>Name:</b> " + HtmlEscape(name) + "</p>"
+        "<p><b>Email:</b> " + HtmlEscape(email) + "</p>"
+        "<p><b>Topic:</b> " + HtmlEscape(topic) + "</p>"
+        "<p><b>Version:</b> " + HtmlEscape(version) + "</p>"
+        "<p><b>Platform:</b> " + HtmlEscape(platform) + "</p>"
+        "<p>" + HtmlEscape(message) + "</p>"
+        "</body></html>";
+
+    const Json::Value& cfg = app().getCustomConfig();
+    std::string from = cfg.get("email_name", "no-reply@yutovo.ru").asString();
+    std::string to = cfg.get("feedback_email", "support@yutovo.ru").asString();
+
+    CURLcode r = SendEmail(from, to, subject, body, attachments);
+    if (r != CURLE_OK)
+    {
+        SendError(k500InternalServerError, "Failed to send feedback", session_id, callback);
+        return;
+    }
+
+    SendOk(callback);
+}
+
 };

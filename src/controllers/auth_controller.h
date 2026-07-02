@@ -9,7 +9,6 @@
 #define __API_CONTROLLER_H__
 
 #include "controller_base.h"
-#include <curl/curl.h>
 
 using namespace drogon;
 using namespace yutovo;
@@ -49,11 +48,6 @@ inline yutovo_server::User fromRequest(const HttpRequest &req)
 namespace yutovo_server
 {
 
-struct upload_status
-{
-    size_t bytes_read;
-};
-
 class AuthController : public drogon::HttpController<AuthController>, public ControllerBase
 {
 public:
@@ -92,16 +86,11 @@ public:
 
 private:
     void UpdateSessionTime(const std::string& session_id);
-    static size_t EmailPayload(char *ptr, size_t size, size_t nmemb, void *userp);
     static unsigned int SecureRandomUInt(unsigned int max);
-    CURLcode SendEmail(const std::string& from, const std::string& to, const std::string& subject, const std::string& message);
 
 private:
     Logger* auth_logger = Logger::GetInstance(GetDeployPath() + "/log/yutovo-server/auth", "server", true, true);
     Logger* register_logger = Logger::GetInstance(GetDeployPath() + "/log/yutovo-server/register", "server", true, true);
-
-    std::string email_message;
-    upload_status upload_context;
 };
 
 }
