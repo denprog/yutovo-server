@@ -26,3 +26,9 @@ env $(grep -v '^#' ../../yutovo-server.env | xargs) ./test/yutovo-server_tests
 ```
 
 The test executable starts an in-process Drogon instance, so you do not need to run the server beforehand. It adds the listener on `127.0.0.1:9001` (make sure the port is free) and configures the database client programmatically, so no manual changes to `config.json` are required.
+
+## Style rules
+
+- Functions must be inside classes.
+- Continuation lines use only one indentation level.
+- `break` after `case` is always on a new line.

@@ -41,6 +41,7 @@ public:
     ADD_METHOD_TO(ServiceController::GetUserSettings, "/service/get-user-settings", Post, "yutovo_server::LoginFilter"); //get user config
     ADD_METHOD_TO(ServiceController::RecoverPassword, "/service/recover-password", Post); //recover user password
     ADD_METHOD_TO(ServiceController::SolverAction, "/service/solver-action", Post); //solver ation
+    ADD_METHOD_TO(ServiceController::SendFeedback, "/service/send-feedback", Post);
     METHOD_LIST_END
 
     void GetLibraryDocuments(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
@@ -61,6 +62,7 @@ public:
     void GetUserSettings(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
     void RecoverPassword(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
     void SolverAction(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
+    void SendFeedback(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr&)>&& callback);
 
 private:
     void SendLibraryDocument(const HttpRequestPtr& req, const std::string& document, std::function<void (const HttpResponsePtr &)>& callback);

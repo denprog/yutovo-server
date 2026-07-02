@@ -716,4 +716,133 @@ std::string ControllerBase::JsonToString(Json::Value& value)
     return fastWriter.write(value);
 }
 
+std::string ControllerBase::HtmlEscape(const std::string& value)
+{
+    std::string result;
+    result.reserve(value.size());
+    for (char c : value)
+    {
+        switch (c)
+        {
+        case '&':
+            result += "&amp;";
+            break;
+        case '<':
+            result += "&lt;";
+            break;
+        case '>':
+            result += "&gt;";
+            break;
+        case '"':
+            result += "&quot;";
+            break;
+        case '\'':
+            result += "&#39;";
+            break;
+        default:
+            result += c;
+            break;
+        }
+    }
+    return result;
+}
+
+std::string ControllerBase::WrapBase64(const std::string& base64)
+{
+    std::string result;
+    const size_t line_length = 76;
+    for (size_t i = 0; i < base64.size(); i += line_length)
+    {
+        if (i > 0)
+            result += "\r\n";
+        result += base64.substr(i, line_length);
+    }
+    return result;
+}
+
+size_t ControllerBase::EmailPayload(char* ptr, size_t size, size_t nmemb, void* userp)
+{
+    auto* ctx = static_cast<EmailReadContext*>(userp);
+    size_t room = size * nmemb;
+    if (room == 0 || !ctx || !ctx->message)
+        return 0;
+    const char* data = ctx->message->c_str() + ctx->offset;
+    size_t len = strlen(data);
+    if (len > room)
+        len = room;
+    memcpy(ptr, data, len);
+    ctx->offset += len;
+    return len;
+}
+
+CURLcode ControllerBase::SendEmail(const std::string& from, const std::string& to, const std::string& subject, const std::string& message_html,
+    const std::vector<EmailAttachment>& attachments)
+{
+    CURL* curl = curl_easy_init();
+    if (!curl)
+        return CURLE_FAILED_INIT;
+
+    const char* email_password = std::getenv("EMAIL_PASSWORD");
+    if (!email_password)
+        return CURLE_FAILED_INIT;
+
+    const Json::Value& v = app().getCustomConfig();
+    std::string email_server = v.get("email_server", "").asString();
+
+    curl_slist* recipients = curl_slist_append(nullptr, to.c_str());
+
+    curl_easy_setopt(curl, CURLOPT_USERNAME, from.c_str());
+    curl_easy_setopt(curl, CURLOPT_PASSWORD, email_password);
+    curl_easy_setopt(curl, CURLOPT_URL, email_server.c_str());
+    curl_easy_setopt(curl, CURLOPT_USE_SSL, (long)CURLUSESSL_ALL);
+    curl_easy_setopt(curl, CURLOPT_MAIL_FROM, from.c_str());
+    curl_easy_setopt(curl, CURLOPT_MAIL_RCPT, recipients);
+
+    std::string boundary = "----YutovoFeedbackBoundary";
+    std::string alt_boundary = "----YutovoAltBoundary";
+
+    std::string email_message;
+    email_message += "From: " + from + "\r\n";
+    email_message += "To: " + to + "\r\n";
+    email_message += "Subject: " + subject + "\r\n";
+    email_message += "MIME-Version: 1.0\r\n";
+    email_message += "Content-Type: multipart/mixed; boundary=\"" + boundary + "\"\r\n";
+    email_message += "\r\n";
+    email_message += "--" + boundary + "\r\n";
+    email_message += "Content-Type: multipart/alternative; boundary=\"" + alt_boundary + "\"\r\n";
+    email_message += "\r\n";
+    email_message += "--" + alt_boundary + "\r\n";
+    email_message += "Content-Type: text/html; charset=utf-8\r\n";
+    email_message += "Content-Transfer-Encoding: quoted-printable\r\n";
+    email_message += "\r\n";
+    email_message += message_html + "\r\n";
+    email_message += "\r\n";
+    email_message += "--" + alt_boundary + "--\r\n";
+
+    for (const auto& at : attachments)
+    {
+        email_message += "\r\n";
+        email_message += "--" + boundary + "\r\n";
+        email_message += "Content-Type: " + at.content_type + "; name=\"" + at.filename + "\"\r\n";
+        email_message += "Content-Disposition: at; filename=\"" + at.filename + "\"\r\n";
+        email_message += "Content-Transfer-Encoding: base64\r\n";
+        email_message += "\r\n";
+        email_message += WrapBase64(at.data) + "\r\n";
+    }
+
+    email_message += "\r\n";
+    email_message += "--" + boundary + "--\r\n";
+
+    EmailReadContext context{&email_message, 0};
+    curl_easy_setopt(curl, CURLOPT_READFUNCTION, EmailPayload);
+    curl_easy_setopt(curl, CURLOPT_READDATA, &context);
+    curl_easy_setopt(curl, CURLOPT_UPLOAD, 1L);
+    curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT, 5);
+
+    CURLcode r = curl_easy_perform(curl);
+    curl_slist_free_all(recipients);
+    curl_easy_cleanup(curl);
+    return r;
+}
+
 }
