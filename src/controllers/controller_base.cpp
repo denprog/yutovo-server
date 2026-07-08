@@ -331,7 +331,7 @@ void ControllerBase::SendError(const HttpStatusCode status_code, const char* des
     auto resp = HttpResponse::newHttpJsonResponse(r);
     resp->setStatusCode(status_code);
     callback(resp);
-    GetLogger(session_id)->Error("{}: {}", status_code, description);
+    GetLogger(session_id)->Error("{}: {}", (int)status_code, description);
 }
 
 bool ControllerBase::ParseRefreshToken(const std::string& refresh_token, std::string& refresh_uuid, std::string& login, const std::string& session_id, 
