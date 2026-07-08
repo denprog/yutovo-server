@@ -372,7 +372,7 @@ void SessionController::Downloads(const HttpRequestPtr& req, std::function<void 
 
         auto resp = HttpResponse::newFileResponse(file_path.c_str());
         downloads_logger->Info("Request download: path={}, session_id={}, ip={}, result={}", p, session_id, drogon::plugin::RealIpResolver::GetRealAddr(req).toIp(),
-            resp->getStatusCode());
+            (int)resp->getStatusCode());
         callback(resp);
     }
     catch (const std::exception& ex)
