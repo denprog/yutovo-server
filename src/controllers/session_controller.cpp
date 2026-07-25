@@ -274,6 +274,15 @@ void SessionController::LibraryDocument(const HttpRequestPtr& req, std::function
 
     GetLogger(session_id)->Debug("Request library document: path={}", path);
 
+    auto ref = req->getParameter("ref");
+    if (!ref.empty())
+    {
+        GetLogger(session_id)->Debug("Request library document: path={}, ref={}, ip={}", path, ref, drogon::plugin::RealIpResolver::GetRealAddr(req).toIp());
+        ref_logger->Info("Request: ref={}, session_id={}, ip={}, Accept-Language={}, Host={}, Referer={}, User-Agent={}", ref, session_id,
+            drogon::plugin::RealIpResolver::GetRealAddr(req).toIp(), req->getHeader("Accept-Language"), req->getHeader("Host"), req->getHeader("Referer"),
+            req->getHeader("User-Agent"));
+    }
+
     auto p = req->path();
     std::string r = HttpAppFramework::instance().getDocumentRoot();
     HttpAppFramework& inst = HttpAppFramework::instance();
