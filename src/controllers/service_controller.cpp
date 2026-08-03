@@ -14,6 +14,7 @@
 #include <boost/iostreams/copy.hpp>
 #include <boost/iostreams/filter/gzip.hpp>
 #include <boost/iostreams/device/array.hpp>
+#include <drogon/HttpAppFramework.h>
 #include <drogon/plugins/RealIpResolver.h>
 
 namespace yutovo_server
@@ -2021,6 +2022,126 @@ void ServiceController::SendFeedback(const HttpRequestPtr& req, std::function<vo
     }
 
     SendOk(callback);
+}
+
+int ServiceController::CompareVersions(const std::string& a, const std::string& b)
+{
+    size_t i = 0;
+    size_t j = 0;
+    while (i < a.size() || j < b.size())
+    {
+        int num_a = 0;
+        int num_b = 0;
+        while (i < a.size() && std::isdigit(static_cast<unsigned char>(a[i])))
+            num_a = num_a * 10 + (a[i++] - '0');
+        while (j < b.size() && std::isdigit(static_cast<unsigned char>(b[j])))
+            num_b = num_b * 10 + (b[j++] - '0');
+        if (num_a != num_b)
+            return num_a - num_b;
+        if (i < a.size() && a[i] == '.')
+            ++i;
+        if (j < b.size() && b[j] == '.')
+            ++j;
+    }
+    return 0;
+}
+
+std::string ServiceController::MakeAbsoluteUrl(const HttpRequestPtr& req, const std::string& url)
+{
+    if (url.empty() || url[0] != '/')
+        return url;
+
+    std::string proto = "http";
+    if (req->getHeader("X-Forwarded-Proto") == "https")
+        proto = "https";
+    else if (req->getLocalAddr().toPort() == 443)
+        proto = "https";
+    return proto + "://" + req->getHeader("Host") + url;
+}
+
+void ServiceController::GetUpdates(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr&)>&& callback)
+{
+    std::string session_id;
+    if (!GetSessionId(req, callback, session_id))
+        return;
+
+    auto json = req->getJsonObject();
+    if (!json || !json->isObject())
+    {
+        SendError(k400BadRequest, "Json not found in the GetUpdates request", session_id, callback);
+        return;
+    }
+
+    std::string language, version, system;
+    if (json->isMember("version") && (*json)["version"].isString())
+        version = (*json)["version"].asString();
+    if (json->isMember("system") && (*json)["system"].isString())
+        system = (*json)["system"].asString();
+    if (json->isMember("language") && (*json)["language"].isString())
+        language = (*json)["language"].asString();
+
+    std::string ip = drogon::plugin::RealIpResolver::GetRealAddr(req).toIp();
+    GetUpdatesLogger(session_id)->Info("GetUpdates request version: {}, system: {}, language: {}, ip: {}", version, system, language, ip);
+
+    if (version.empty() || system.empty() || language.empty())
+    {
+        SendError(k400BadRequest, "Required fields are empty", session_id, callback);
+        return;
+    }
+
+    std::string document_root = HttpAppFramework::instance().getDocumentRoot();
+    std::string downloads_path = document_root + "/downloads/downloads.json";
+    std::ifstream downloads_file(downloads_path);
+    if (!downloads_file.is_open())
+    {
+        SendError(k500InternalServerError, "downloads.json not found", session_id, callback);
+        return;
+    }
+
+    Json::Value downloads;
+    Json::Reader reader;
+    if (!reader.parse(downloads_file, downloads))
+    {
+        SendError(k500InternalServerError, "downloads.json parse error", session_id, callback);
+        return;
+    }
+
+    if (!downloads.isArray())
+    {
+        SendError(k500InternalServerError, "downloads.json format error", session_id, callback);
+        return;
+    }
+
+    std::string new_version;
+    std::string new_url;
+    for (const auto& item : downloads)
+    {
+        if (!item.isObject())
+            continue;
+        std::string item_system = item.get("system", "").asString();
+        if (item_system != system)
+            continue;
+        std::string item_version = item.get("version", "").asString();
+        std::string item_link = item.get("link", "").asString();
+        if (item_version.empty() || CompareVersions(version, item_version) >= 0)
+            continue;
+        new_version = item_version;
+        new_url = item_link;
+        break;
+    }
+
+    Json::Value response;
+    if (!new_version.empty())
+    {
+        response["hasUpdate"] = true;
+        response["version"] = new_version;
+        response["url"] = MakeAbsoluteUrl(req, new_url);
+    }
+    else
+    {
+        response["hasUpdate"] = false;
+    }
+    SendJson(callback, response);
 }
 
 };

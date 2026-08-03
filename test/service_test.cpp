@@ -1155,4 +1155,83 @@ TEST_F(ServiceTest, document19)
     ASSERT_TRUE(r->getStatusCode() == k403Forbidden) << r->getStatusCode();
 }
 
+//Check for desktop application updates
+TEST_F(ServiceTest, get_updates)
+{
+    auto client = HttpClient::newHttpClient(address);
+    client->enableCookies(true);
+    StartPage(client);
+
+    //update is available, local link must be converted to absolute URL
+    {
+        Json::Value body;
+        body["version"] = "1.6.2";
+        body["system"] = "Windows";
+        body["language"] = "en";
+        auto req = HttpRequest::newHttpJsonRequest(body);
+        req->setMethod(drogon::Post);
+        req->setPath("/service/get-updates");
+
+        auto resp = client->sendRequest(req);
+        ReqResult& res = resp.first;
+        HttpResponsePtr& r = resp.second;
+        ASSERT_TRUE(res == ReqResult::Ok) << res;
+        ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
+        ASSERT_TRUE(r->getContentType() == CT_APPLICATION_JSON) << r->getContentType();
+        const auto json = r->jsonObject();
+        ASSERT_TRUE((*json)["hasUpdate"].asBool());
+        ASSERT_EQ((*json)["version"].asString(), "1.7.1");
+        ASSERT_EQ((*json)["url"].asString(), "http://www.yutovo.ru:9001/downloads/yutovo-1.7.1.exe");
+    }
+
+    //no update for the current version
+    {
+        Json::Value body;
+        body["version"] = "1.7.1";
+        body["system"] = "Windows";
+        body["language"] = "en";
+        auto req = HttpRequest::newHttpJsonRequest(body);
+        req->setMethod(drogon::Post);
+        req->setPath("/service/get-updates");
+
+        auto resp = client->sendRequest(req);
+        HttpResponsePtr& r = resp.second;
+        ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
+        const auto json = r->jsonObject();
+        ASSERT_FALSE((*json)["hasUpdate"].asBool());
+    }
+
+    //external link is returned as is
+    {
+        Json::Value body;
+        body["version"] = "1.6.2";
+        body["system"] = "Linux";
+        body["language"] = "en";
+        auto req = HttpRequest::newHttpJsonRequest(body);
+        req->setMethod(drogon::Post);
+        req->setPath("/service/get-updates");
+
+        auto resp = client->sendRequest(req);
+        HttpResponsePtr& r = resp.second;
+        ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
+        const auto json = r->jsonObject();
+        ASSERT_TRUE((*json)["hasUpdate"].asBool());
+        ASSERT_EQ((*json)["url"].asString(), "https://yutovo.com/yutovo-1.7.1.deb");
+    }
+
+    //missing required field
+    {
+        Json::Value body;
+        body["version"] = "1.6.2";
+        body["system"] = "Windows";
+        auto req = HttpRequest::newHttpJsonRequest(body);
+        req->setMethod(drogon::Post);
+        req->setPath("/service/get-updates");
+
+        auto resp = client->sendRequest(req);
+        HttpResponsePtr& r = resp.second;
+        ASSERT_TRUE(r->getStatusCode() == k400BadRequest) << r->getStatusCode();
+    }
+}
+
 }
