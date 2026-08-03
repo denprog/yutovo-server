@@ -69,8 +69,8 @@ install(
 )
 
 add_custom_command(TARGET ${PROJECT_NAME}_tests PRE_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/../src/config.json ${CMAKE_CURRENT_BINARY_DIR}/../
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/../src/config.json ${CMAKE_CURRENT_BINARY_DIR}/../test/
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/../config.json ${CMAKE_CURRENT_BINARY_DIR}/../
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/../config.json ${CMAKE_CURRENT_BINARY_DIR}/../test/
 )
 
 add_definitions(-DDB_HOST="127.0.0.1")

@@ -92,7 +92,7 @@ install(
 )
 
 install(
-    FILES ${CMAKE_CURRENT_SOURCE_DIR}/config.json
+    FILES ${CMAKE_CURRENT_SOURCE_DIR}/../config.json
     DESTINATION ${INSTALL_PATH}/bin
     COMPONENT ${PROJECT_NAME}
 )
@@ -110,7 +110,7 @@ install(
 )
 
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/config.json ${CMAKE_CURRENT_BINARY_DIR}/../
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/../config.json ${CMAKE_CURRENT_BINARY_DIR}/../
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/../keys/yutovo_service.crt ${CMAKE_CURRENT_BINARY_DIR}/../
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/../keys/yutovo_service.key ${CMAKE_CURRENT_BINARY_DIR}/../
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/../keys/yutovo_service.pub ${CMAKE_CURRENT_BINARY_DIR}/../
