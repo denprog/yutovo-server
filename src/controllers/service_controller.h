@@ -42,6 +42,7 @@ public:
     ADD_METHOD_TO(ServiceController::RecoverPassword, "/service/recover-password", Post); //recover user password
     ADD_METHOD_TO(ServiceController::SolverAction, "/service/solver-action", Post); //solver ation
     ADD_METHOD_TO(ServiceController::SendFeedback, "/service/send-feedback", Post);
+    ADD_METHOD_TO(ServiceController::GetUpdates, "/service/get-updates", Post);
     METHOD_LIST_END
 
     void GetLibraryDocuments(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
@@ -63,9 +64,12 @@ public:
     void RecoverPassword(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
     void SolverAction(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
     void SendFeedback(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr&)>&& callback);
+    void GetUpdates(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr&)>&& callback);
 
 private:
     void SendLibraryDocument(const HttpRequestPtr& req, const std::string& document, std::function<void (const HttpResponsePtr &)>& callback);
+    static int CompareVersions(const std::string& a, const std::string& b);
+    static std::string MakeAbsoluteUrl(const HttpRequestPtr& req, const std::string& url);
 
 #ifdef REMOTE_SOLVER
     WebSocketClientPtr solver_client;
