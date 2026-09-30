@@ -70,6 +70,11 @@ private:
     void SendLibraryDocument(const HttpRequestPtr& req, const std::string& document, std::function<void (const HttpResponsePtr &)>& callback);
     static int CompareVersions(const std::string& a, const std::string& b);
     static std::string MakeAbsoluteUrl(const HttpRequestPtr& req, const std::string& url);
+    static std::string UnitToString(const Json::Value& unit);
+    static std::string NumberToString(const Json::Value& obj);
+    static std::string ResultsToString(const Json::Value& results);
+    static std::string SymbolicJsonToString(const std::string& json);
+    static std::string SymbolicNodeToString(const Json::Value& node);
 
 #ifdef REMOTE_SOLVER
     WebSocketClientPtr solver_client;

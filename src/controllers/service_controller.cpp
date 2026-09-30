@@ -463,6 +463,13 @@ void ServiceController::NewDocument(const HttpRequestPtr& req, std::function<voi
             if (json->isMember("json"))
             {
                 auto d = JsonToString((*json)["json"]);
+                if ((*json)["json"].isString())
+                {
+                    Json::Value check;
+                    Json::Reader reader;
+                    if (reader.parse((*json)["json"].asString(), check))
+                        d = (*json)["json"].asString();
+                }
                 if (d.size() > max_file_size)
                 {
                     db->execSqlSync("delete from user_documents where document_id=$1", document_id);
@@ -472,7 +479,7 @@ void ServiceController::NewDocument(const HttpRequestPtr& req, std::function<voi
                 }
 
                 orm::Result result = db->execSqlSync("update user_documents set document=$1 where document_id=$2", 
-                    (*json)["json"].isString() ? (*json)["json"].asString() : d, document_id);
+                    d, document_id);
                 if (result.affectedRows() == 0)
                 {
                     db->execSqlSync("delete from user_documents where document_id=$1", document_id);
@@ -1652,6 +1659,144 @@ void ServiceController::RecoverPassword(const HttpRequestPtr& req, std::function
     SendOk(callback);
 }
 
+std::string ServiceController::UnitToString(const Json::Value& unit)
+{
+    if (!unit.isObject())
+        return "";
+
+    std::string result;
+    if (unit.isMember("value") && unit["value"].isArray())
+    {
+        const Json::Value& arr = unit["value"];
+        result = "[";
+        for (Json::ArrayIndex i = 0; i < arr.size(); ++i)
+        {
+            const Json::Value& v = arr[i];
+            if (v.isMember("name") && v["name"].isString())
+                result += v["name"].asString();
+            if (v.isMember("power") && v["power"].isInt())
+            {
+                result += "^";
+                result += v["power"].asString();
+            }
+            if (i < arr.size() - 1)
+                result += ",";
+        }
+        result += "]";
+    }
+    if (unit.isMember("system") && unit["system"].isString())
+        result += "{" + unit["system"].asString() + "}";
+    return result;
+}
+
+//A number object with mantissa, exponent and unit members (a result value or an element of the results array)
+std::string ServiceController::NumberToString(const Json::Value& obj)
+{
+    if (!obj.isObject() || !obj.isMember("mantissa") || !obj["mantissa"].isString())
+        return "";
+
+    std::string result = obj["mantissa"].asString();
+    if (obj.isMember("exponent") && obj["exponent"].isString() && !obj["exponent"].asString().empty())
+        result += "*10^" + obj["exponent"].asString();
+    if (obj.isMember("unit") && obj["unit"].isObject())
+        result += UnitToString(obj["unit"]);
+    return result;
+}
+
+//The results array: complex elements with re and im members, trigonometric elements with module and argument
+//members and array elements as flat number objects
+std::string ServiceController::ResultsToString(const Json::Value& results)
+{
+    std::vector<std::string> items;
+    for (Json::ArrayIndex i = 0; i < results.size(); ++i)
+    {
+        const Json::Value& num = results[i];
+        std::string item;
+        if (num.isMember("re") || num.isMember("im"))
+        {
+            if (num.isMember("re"))
+                item = NumberToString(num["re"]);
+            if (num.isMember("im"))
+            {
+                if (!item.empty())
+                    item += "+";
+                item += "i*" + NumberToString(num["im"]);
+            }
+        }
+        else if (num.isMember("module") && num.isMember("argument"))
+            item = NumberToString(num["module"]) + "∠" + NumberToString(num["argument"]);
+        else
+            item = NumberToString(num);
+        if (!item.empty())
+            items.push_back(item);
+    }
+    if (items.empty())
+        return "";
+
+    std::string result = "[";
+    for (size_t i = 0; i < items.size(); ++i)
+    {
+        if (i > 0)
+            result += ",";
+        result += items[i];
+    }
+    result += "]";
+    return result;
+}
+
+std::string ServiceController::SymbolicJsonToString(const std::string& json)
+{
+    Json::CharReaderBuilder builder;
+    std::unique_ptr<Json::CharReader> reader(builder.newCharReader());
+    Json::Value root;
+    std::string errors;
+    if (!reader->parse(json.c_str(), json.c_str() + json.size(), &root, &errors))
+        return "";
+    return SymbolicNodeToString(root);
+}
+
+//A node of the symbolic result tree: types 14, 15, 16 and 17 keep an empty shape element between their operands
+std::string ServiceController::SymbolicNodeToString(const Json::Value& node)
+{
+    if (!node.isObject())
+        return "";
+
+    if (node.isMember("symbol") && node["symbol"].isString())
+    {
+        std::string symbol = node["symbol"].asString();
+        if (symbol == "·")
+            symbol = "*";
+        return symbol;
+    }
+
+    const int type = node.isMember("type") && node["type"].isInt() ? node["type"].asInt() : 0;
+    if (type == 8 && node.isMember("elements") && node["elements"].isString())
+        return node["elements"].asString();
+    if (type == 10)
+        return "";
+    if (!node.isMember("elements") || !node["elements"].isArray())
+        return "";
+
+    std::vector<std::string> parts;
+    const Json::Value& arr = node["elements"];
+    for (Json::ArrayIndex i = 0; i < arr.size(); ++i)
+        parts.push_back(SymbolicNodeToString(arr[i]));
+
+    if (type == 14 && parts.size() == 3)
+        return "(" + parts[0] + ")/(" + parts[2] + ")";
+    if (type == 15 && parts.size() == 3)
+        return parts[0] + "^" + parts[2];
+    if (type == 16 && parts.size() == 2)
+        return "sqrt(" + parts[1] + ")";
+    if (type == 17 && parts.size() == 3)
+        return "root(" + parts[2] + "," + parts[0] + ")";
+
+    std::string result;
+    for (const std::string& part : parts)
+        result += part;
+    return result;
+}
+
 void ServiceController::SolverAction(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
 {
     std::string session_id;
@@ -1794,30 +1939,7 @@ void ServiceController::SolverAction(const HttpRequestPtr& req, std::function<vo
         if (json->isMember("value") && (*json)["value"].isString())
             value = (*json)["value"].asString();
         if (json->isMember("unit") && (*json)["unit"].isObject())
-        {
-            Json::Value& u = (*json)["unit"];
-            if (u.isMember("value") && u["value"].isArray())
-            {
-                Json::Value arr = u["value"];
-                unit = "[";
-                for (Json::ArrayIndex i = 0; i < arr.size(); ++i)
-                {
-                    const Json::Value& v = arr[i];
-                    if (v.isMember("name") && v["name"].isString())
-                        unit += v["name"].asString();
-                    if (v.isMember("power") && v["power"].isInt())
-                    {
-                        unit += "^";
-                        unit += v["power"].asString();
-                    }
-                    if (i < arr.size() - 1)
-                        unit += ",";
-                }                   
-                unit += "]";
-            }
-            if (u.isMember("system") && u["system"].isString())
-                unit += "{" + u["system"].asString() + "}";
-        }
+            unit = UnitToString((*json)["unit"]);
         if (json->isMember("error") && (*json)["error"].isObject())
         {
             Json::Value& err = (*json)["error"];
@@ -1828,64 +1950,30 @@ void ServiceController::SolverAction(const HttpRequestPtr& req, std::function<vo
         }
         if (!expression.empty())
         {
+            std::string result;
             if (!mantissa.empty() && !exponent.empty())
-                GetCalculatorLogger(guid)->Info("{}={}{}{}, id={}", expression, mantissa + "*10^" + exponent, unit, error, id);
+                result = mantissa + "*10^" + exponent;
             else if (!mantissa.empty())
-                GetCalculatorLogger(guid)->Info("{}={}{}{}, id={}", expression, mantissa, unit, error, id);
+                result = mantissa;
             else if (!integer.empty() && !numerator.empty() && !denomerator.empty())
-                GetCalculatorLogger(guid)->Info("{}={}{}{}, id={}", expression, integer + "(" + numerator + ")/(" + denomerator + ")", unit, error, id);
+                result = integer + "(" + numerator + ")/(" + denomerator + ")";
             else if (!numerator.empty() && !denomerator.empty())
-                GetCalculatorLogger(guid)->Info("{}={}{}{}, id={}", expression, "(" + numerator + ")/(" + denomerator + ")", unit, error, id);
+                result = "(" + numerator + ")/(" + denomerator + ")";
             else if (!integer.empty())
-                GetCalculatorLogger(guid)->Info("{}={}{}{}, id={}", expression, integer, unit, error, id);
+                result = integer;
             else if (!value.empty())
-                GetCalculatorLogger(guid)->Info("{}={}{}{}, id={}", expression, value, unit, error, id);
+                result = value;
+            else if (json->isMember("results") && (*json)["results"].isArray())
+                result = ResultsToString((*json)["results"]);
+            else if (json->isMember("json") && (*json)["json"].isString())
+                result = SymbolicJsonToString((*json)["json"].asString());
+
+            //definitions and graphs have no result to log, so they are written without '='
+            std::string tail = result + unit + error;
+            if (!tail.empty())
+                GetCalculatorLogger(guid)->Info("{}={}, id={}", expression, tail, id);
             else
-            {
-                if (json->isMember("results") && (*json)["results"].isArray())
-                {
-                    std::string res = "[";
-                    Json::Value arr = (*json)["results"];
-                    for (Json::ArrayIndex i = 0; i < arr.size(); ++i)
-                    {
-                        const Json::Value& num = arr[i];
-                        if (num.isMember("re") && num["re"].isObject())
-                        {
-                            const Json::Value& u = num["re"];
-                            if (u.isMember("mantissa") && u["mantissa"].isString())
-                                mantissa = u["mantissa"].asString();
-                            if (u.isMember("exponent") && u["exponent"].isString())
-                                exponent = u["exponent"].asString();
-                            res += mantissa;
-                            if (!exponent.empty())
-                                res += "*10^" + exponent;
-                            if (i < arr.size() - 1)
-                                res += ",";
-                        }
-                        if (num.isMember("im") && num["im"].isObject())
-                        {
-                            const Json::Value& u = num["im"];
-                            if (u.isMember("mantissa") && u["mantissa"].isString())
-                                mantissa = u["mantissa"].asString();
-                            if (u.isMember("exponent") && u["exponent"].isString())
-                                exponent = u["exponent"].asString();
-                            res += "+i*" + mantissa;
-                            if (!exponent.empty())
-                                res += "*10^" + exponent;
-                            if (i < arr.size() - 1)
-                                res += ",";
-                        }
-                    }                   
-                    res += "]";
-                    GetCalculatorLogger(guid)->Info("{}={}{}{}, id={}", expression, res, unit, error, id);
-                }
-                else
-                    GetCalculatorLogger(guid)->Info("{}={}, id={}", expression, error, id);
-            }
-        }
-        else
-        {
-            GetCalculatorLogger(guid)->Info("{}=", expression);
+                GetCalculatorLogger(guid)->Info("{}, id={}", expression, id);
         }
     }
 
@@ -1936,7 +2024,13 @@ void ServiceController::SendLibraryDocument(const HttpRequestPtr& req, const std
         {
         }
 
-        SendJson(callback, content, session_id);
+        //the library files are json documents; a file that is not json is sent as a string value
+        Json::Value root;
+        Json::Reader reader;
+        if (reader.parse(content.c_str(), root))
+            SendJson(callback, root);
+        else
+            SendJson(callback, Json::Value(content));
     }
     catch (const std::exception& ex)
     {

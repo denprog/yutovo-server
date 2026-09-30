@@ -6,7 +6,6 @@
  */
 
 #include <gtest/gtest.h>
-#include <fstream>
 #include "mock.h"
 
 namespace yutovo_server_test
@@ -888,9 +887,7 @@ TEST_F(ServiceTest, document15)
     Login(client, "User1", "11", access_token, document_id, name, language);
 
     orm::DbClientPtr db = app().getDbClient();
-    orm::Result plan_result = db->execSqlSync(
-        "select max_files from user_plans where plan_id=(select plan_id from users where login=$1)",
-        "User1");
+    orm::Result plan_result = db->execSqlSync("select max_files from user_plans where plan_id=(select plan_id from users where login=$1)", "User1");
     ASSERT_TRUE(plan_result.size() != 0);
     int max_files = plan_result[0]["max_files"].as<int>();
 
@@ -1232,6 +1229,415 @@ TEST_F(ServiceTest, get_updates)
         HttpResponsePtr& r = resp.second;
         ASSERT_TRUE(r->getStatusCode() == k400BadRequest) << r->getStatusCode();
     }
+}
+
+//Variable definition has no result and is logged without '='
+TEST_F(SolverActionTest, solver_action1)
+{
+    auto client = HttpClient::newHttpClient(address);
+    client->enableCookies(true);
+
+    StartPage(client);
+
+    Json::Value body;
+    body["solver_guid"] = "test-calculator-log-1";
+    body["result_type"] = 0;
+    body["expression"] = "length=1m;";
+    body["id"] = "0,2,0,1,0,0";
+
+    EXPECT_EQ(PostSolverAction(client, body, "length=1m;"), "length=1m;, id=\"0,2,0,1,0,0\"");
+}
+
+//Graph reply is stripped by the client to guid, expression and id and is logged without '='
+TEST_F(SolverActionTest, solver_action2)
+{
+    auto client = HttpClient::newHttpClient(address);
+    client->enableCookies(true);
+
+    StartPage(client);
+
+    Json::Value body;
+    body["solver_guid"] = "test-calculator-log-2";
+    body["expression"] = "graph_line(sin(x),x,-π,π,-1,1,493);";
+    body["id"] = "0,29,0,0,0,0,1,0";
+    EXPECT_EQ(PostSolverAction(client, body, "graph_line(sin(x),x,-π,π,-1,1,493);"), "graph_line(sin(x),x,-π,π,-1,1,493);, id=\"0,29,0,0,0,0,1,0\"");
+}
+
+//Array result is logged as a list of its elements
+TEST_F(SolverActionTest, solver_action3)
+{
+    auto client = HttpClient::newHttpClient(address);
+    client->enableCookies(true);
+
+    StartPage(client);
+
+    Json::Value body;
+    body["solver_guid"] = "test-calculator-log-3";
+    body["result_type"] = 6;
+    body["expression"] = "[1,3,4]+[3,4,(5/4)];";
+    body["id"] = "0,21,0,0,0,0,2,0";
+
+    Json::Value results(Json::arrayValue);
+    Json::Value element;
+    element["mantissa"] = "4";
+    results.append(element);
+    element = Json::Value();
+    element["mantissa"] = "7";
+    results.append(element);
+    element = Json::Value();
+    element["mantissa"] = "5.25";
+    results.append(element);
+    body["results"] = results;
+    EXPECT_EQ(PostSolverAction(client, body, "[1,3,4]+[3,4,(5/4)];"), "[1,3,4]+[3,4,(5/4)];=[4,7,5.25], id=\"0,21,0,0,0,0,2,0\"");
+}
+
+//Complex results with re and im members are separated between elements only
+TEST_F(SolverActionTest, solver_action4)
+{
+    auto client = HttpClient::newHttpClient(address);
+    client->enableCookies(true);
+
+    StartPage(client);
+
+    Json::Value body;
+    body["solver_guid"] = "test-calculator-log-4";
+    body["result_type"] = 4;
+    body["expression"] = "solve(x^2+4,x);";
+    body["id"] = "0,4,0,0,0,0";
+
+    Json::Value results(Json::arrayValue);
+    Json::Value element;
+    Json::Value re;
+    re["mantissa"] = "0";
+    Json::Value im;
+    im["mantissa"] = "2";
+    element["re"] = re;
+    element["im"] = im;
+    results.append(element);
+    element = Json::Value();
+    re = Json::Value();
+    re["mantissa"] = "0";
+    im = Json::Value();
+    im["mantissa"] = "-2";
+    element["re"] = re;
+    element["im"] = im;
+    results.append(element);
+    body["results"] = results;
+    EXPECT_EQ(PostSolverAction(client, body, "solve(x^2+4,x);"), "solve(x^2+4,x);=[0+i*2,0+i*-2], id=\"0,4,0,0,0,0\"");
+}
+
+//Symbolic result is rendered from the json tree of elements
+TEST_F(SolverActionTest, solver_action5)
+{
+    auto client = HttpClient::newHttpClient(address);
+    client->enableCookies(true);
+
+    StartPage(client);
+
+    Json::Value body;
+    body["solver_guid"] = "test-calculator-log-5";
+    body["result_type"] = 7;
+    body["expression"] = "indefinite_integral(4*sin(x)+pow(e,x),x);";
+    body["id"] = "0,27,0,3,0,0,2,0";
+    body["json"] = "{\"type\":45,\"elements\":[{\"type\":7,\"elements\":[{\"type\":12,\"symbol\":\"-\"},"
+        "{\"type\":8,\"elements\":\"4\"},{\"type\":13,\"symbol\":\"·\"},{\"type\":8,\"elements\":\"cos\"},"
+        "{\"type\":19,\"symbol\":\"(\"},{\"type\":8,\"elements\":\"x\"},{\"type\":20,\"symbol\":\")\"},"
+        "{\"type\":11,\"symbol\":\"+\"},{\"type\":15,\"elements\":[{\"type\":7,\"elements\":"
+        "[{\"type\":8,\"elements\":\"e\"}]},{\"type\":10,\"elements\":[]},{\"type\":7,\"elements\":"
+        "[{\"type\":8,\"elements\":\"x\"}]}]}]}]}";
+    EXPECT_EQ(PostSolverAction(client, body, "indefinite_integral(4*sin(x)+pow(e,x),x);"),
+        "indefinite_integral(4*sin(x)+pow(e,x),x);=-4*cos(x)+e^x, id=\"0,27,0,3,0,0,2,0\"");
+}
+
+//Error without a result is logged after '='
+TEST_F(SolverActionTest, solver_action6)
+{
+    auto client = HttpClient::newHttpClient(address);
+    client->enableCookies(true);
+
+    StartPage(client);
+
+    Json::Value body;
+    body["solver_guid"] = "test-calculator-log-6";
+    body["result_type"] = 0;
+    body["expression"] = "1/0;";
+    body["id"] = "0,0,0,1,0,0";
+    body["error"]["description"] = "Division by zero";
+    EXPECT_EQ(PostSolverAction(client, body, "1/0;"), "1/0;=Division by zero, id=\"0,0,0,1,0,0\"");
+}
+
+//Real result with exponent and unit is logged as before
+TEST_F(SolverActionTest, solver_action7)
+{
+    auto client = HttpClient::newHttpClient(address);
+    client->enableCookies(true);
+
+    StartPage(client);
+
+    Json::Value body;
+    body["solver_guid"] = "test-calculator-log-7";
+    body["result_type"] = 1;
+    body["expression"] = "L;";
+    body["id"] = "0,2,0,1,0,0";
+    body["mantissa"] = "1.55";
+    body["exponent"] = "-2";
+    Json::Value unit_name;
+    unit_name["name"] = "m";
+    Json::Value unit_value(Json::arrayValue);
+    unit_value.append(unit_name);
+    body["unit"]["value"] = unit_value;
+    body["unit"]["system"] = "SI";
+    EXPECT_EQ(PostSolverAction(client, body, "L;"), "L;=1.55*10^-2[m]{SI}, id=\"0,2,0,1,0,0\"");
+}
+
+//Real result without exponent
+TEST_F(SolverActionTest, solver_action8)
+{
+    auto client = HttpClient::newHttpClient(address);
+    client->enableCookies(true);
+
+    StartPage(client);
+
+    Json::Value body;
+    body["solver_guid"] = "test-calculator-log-8";
+    body["result_type"] = 1;
+    body["expression"] = "2+2;";
+    body["id"] = "0,1,0,0,0,0";
+    body["mantissa"] = "4";
+    EXPECT_EQ(PostSolverAction(client, body, "2+2;"), "2+2;=4, id=\"0,1,0,0,0,0\"");
+}
+
+//Mixed fraction, rational, integer and value results
+TEST_F(SolverActionTest, solver_action9)
+{
+    auto client = HttpClient::newHttpClient(address);
+    client->enableCookies(true);
+
+    StartPage(client);
+
+    //mixed fraction
+    Json::Value body;
+    body["solver_guid"] = "test-calculator-log-9";
+    body["result_type"] = 3;
+    body["expression"] = "5+1/3;";
+    body["id"] = "0,3,0,1,0,0";
+    body["integer"] = "5";
+    body["numerator"] = "1";
+    body["denomerator"] = "3";
+    EXPECT_EQ(PostSolverAction(client, body, "5+1/3;"), "5+1/3;=5(1)/(3), id=\"0,3,0,1,0,0\"");
+
+    //rational number
+    body = Json::Value();
+    body["solver_guid"] = "test-calculator-log-9";
+    body["result_type"] = 3;
+    body["expression"] = "2/3;";
+    body["id"] = "0,3,0,2,0,0";
+    body["numerator"] = "2";
+    body["denomerator"] = "3";
+    EXPECT_EQ(PostSolverAction(client, body, "2/3;"), "2/3;=(2)/(3), id=\"0,3,0,2,0,0\"");
+
+    //integer number
+    body = Json::Value();
+    body["solver_guid"] = "test-calculator-log-9";
+    body["result_type"] = 2;
+    body["expression"] = "6*7;";
+    body["id"] = "0,2,0,1,0,0";
+    body["integer"] = "42";
+    EXPECT_EQ(PostSolverAction(client, body, "6*7;"), "6*7;=42, id=\"0,2,0,1,0,0\"");
+
+    //integer value
+    body = Json::Value();
+    body["solver_guid"] = "test-calculator-log-9";
+    body["result_type"] = 2;
+    body["expression"] = "pow(2,10);";
+    body["id"] = "0,2,0,2,0,0";
+    body["value"] = "1024";
+    EXPECT_EQ(PostSolverAction(client, body, "pow(2,10);"), "pow(2,10);=1024, id=\"0,2,0,2,0,0\"");
+}
+
+//Array elements with exponent and unit, im only, re only, single complex pair, trigonometric form and empty elements
+TEST_F(SolverActionTest, solver_action10)
+{
+    auto client = HttpClient::newHttpClient(address);
+    client->enableCookies(true);
+
+    StartPage(client);
+
+    Json::Value body;
+    body["solver_guid"] = "test-calculator-log-10";
+    body["result_type"] = 6;
+    body["id"] = "0,21,0,0,0,0,2,0";
+
+    //elements with exponent and unit
+    body["expression"] = "[1.5*10^3,2];";
+    Json::Value results(Json::arrayValue);
+    Json::Value element = MakeNumber("1.5", "3");
+    Json::Value unit_name;
+    unit_name["name"] = "m";
+    element["unit"]["value"].append(unit_name);
+    results.append(element);
+    results.append(MakeNumber("2"));
+    body["results"] = results;
+    EXPECT_EQ(PostSolverAction(client, body, "[1.5*10^3,2];"), "[1.5*10^3,2];=[1.5*10^3[m],2], id=\"0,21,0,0,0,0,2,0\"");
+
+    //element with im only
+    body["expression"] = "arr2;";
+    results = Json::Value(Json::arrayValue);
+    element = Json::Value();
+    element["im"] = MakeNumber("2");
+    results.append(element);
+    body["results"] = results;
+    EXPECT_EQ(PostSolverAction(client, body, "arr2;"), "arr2;=[i*2], id=\"0,21,0,0,0,0,2,0\"");
+
+    //element with re only
+    body["expression"] = "arr3;";
+    results = Json::Value(Json::arrayValue);
+    element = Json::Value();
+    element["re"] = MakeNumber("2");
+    results.append(element);
+    body["results"] = results;
+    EXPECT_EQ(PostSolverAction(client, body, "arr3;"), "arr3;=[2], id=\"0,21,0,0,0,0,2,0\"");
+
+    //single element with re and im
+    body["expression"] = "arr4;";
+    results = Json::Value(Json::arrayValue);
+    element = Json::Value();
+    element["re"] = MakeNumber("1");
+    element["im"] = MakeNumber("2");
+    results.append(element);
+    body["results"] = results;
+    EXPECT_EQ(PostSolverAction(client, body, "arr4;"), "arr4;=[1+i*2], id=\"0,21,0,0,0,0,2,0\"");
+
+    //trigonometric form
+    body["expression"] = "arr5;";
+    results = Json::Value(Json::arrayValue);
+    element = Json::Value();
+    element["module"] = MakeNumber("2");
+    element["argument"] = MakeNumber("0.5236");
+    results.append(element);
+    body["results"] = results;
+    EXPECT_EQ(PostSolverAction(client, body, "arr5;"), "arr5;=[2∠0.5236], id=\"0,21,0,0,0,0,2,0\"");
+
+    //all elements are empty, so the log has no result
+    body["expression"] = "arr6;";
+    results = Json::Value(Json::arrayValue);
+    results.append(Json::Value());
+    body["results"] = results;
+    EXPECT_EQ(PostSolverAction(client, body, "arr6;"), "arr6;, id=\"0,21,0,0,0,0,2,0\"");
+}
+
+//Symbolic result with division, roots and powers and a broken json tree
+TEST_F(SolverActionTest, solver_action11)
+{
+    auto client = HttpClient::newHttpClient(address);
+    client->enableCookies(true);
+
+    StartPage(client);
+
+    Json::Value body;
+    body["solver_guid"] = "test-calculator-log-11";
+    body["result_type"] = 7;
+    body["id"] = "0,27,0,3,0,0,2,0";
+    body["expression"] = "simplify(root(x,3)+sqrt(x)+sin(x)/x+x^2);";
+    body["json"] = "{\"type\":45,\"elements\":[{\"type\":7,\"elements\":["
+        "{\"type\":17,\"elements\":[{\"type\":8,\"elements\":\"3\"},{\"type\":10,\"elements\":[]},"
+        "{\"type\":7,\"elements\":[{\"type\":8,\"elements\":\"x\"}]}]},"
+        "{\"type\":11,\"symbol\":\"+\"},"
+        "{\"type\":16,\"elements\":[{\"type\":10,\"elements\":[]},{\"type\":7,\"elements\":[{\"type\":8,\"elements\":\"x\"}]}]},"
+        "{\"type\":11,\"symbol\":\"+\"},"
+        "{\"type\":14,\"elements\":[{\"type\":7,\"elements\":[{\"type\":8,\"elements\":\"sin\"},{\"type\":19,\"symbol\":\"(\"},"
+        "{\"type\":8,\"elements\":\"x\"},{\"type\":20,\"symbol\":\")\"}]},{\"type\":10,\"elements\":[]},"
+        "{\"type\":7,\"elements\":[{\"type\":8,\"elements\":\"x\"}]}]},"
+        "{\"type\":11,\"symbol\":\"+\"},"
+        "{\"type\":15,\"elements\":[{\"type\":7,\"elements\":[{\"type\":8,\"elements\":\"x\"}]},{\"type\":10,\"elements\":[]},"
+        "{\"type\":7,\"elements\":[{\"type\":8,\"elements\":\"2\"}]}]}]}]}";
+    EXPECT_EQ(PostSolverAction(client, body, "simplify(root(x,3)+sqrt(x)+sin(x)/x+x^2);"),
+        "simplify(root(x,3)+sqrt(x)+sin(x)/x+x^2);=root(x,3)+sqrt(x)+(sin(x))/(x)+x^2, id=\"0,27,0,3,0,0,2,0\"");
+
+    //broken json tree is logged without a result
+    body["expression"] = "sum(x);";
+    body["json"] = "{\"type\":45, broken";
+    EXPECT_EQ(PostSolverAction(client, body, "sum(x);"), "sum(x);, id=\"0,27,0,3,0,0,2,0\"");
+}
+
+//Error code without description and a result together with an error
+TEST_F(SolverActionTest, solver_action12)
+{
+    auto client = HttpClient::newHttpClient(address);
+    client->enableCookies(true);
+
+    StartPage(client);
+
+    //error code only
+    Json::Value body;
+    body["solver_guid"] = "test-calculator-log-12";
+    body["result_type"] = 0;
+    body["expression"] = "e1;";
+    body["id"] = "0,0,0,1,0,0";
+    body["error"]["error_code"] = 5;
+    EXPECT_EQ(PostSolverAction(client, body, "e1;"), "e1;=error_code:5, id=\"0,0,0,1,0,0\"");
+
+    //result and error
+    body = Json::Value();
+    body["solver_guid"] = "test-calculator-log-12";
+    body["result_type"] = 1;
+    body["expression"] = "2+2;";
+    body["id"] = "0,1,0,0,0,0";
+    body["mantissa"] = "4";
+    body["error"]["description"] = "Division by zero";
+    EXPECT_EQ(PostSolverAction(client, body, "2+2;"), "2+2;=4Division by zero, id=\"0,1,0,0,0,0\"");
+}
+
+//SOLVE_CODE request is logged to the solver log
+TEST_F(SolverActionTest, solver_action13)
+{
+    auto client = HttpClient::newHttpClient(address);
+    client->enableCookies(true);
+
+    StartPage(client);
+
+    Json::Value body;
+    body["solver_guid"] = "test-calculator-log-13";
+    body["command"] = "SOLVE_CODE";
+    body["expression"] = "2+2;";
+    body["id"] = "0,1,0,0,0,0";
+    body["expression_type"] = 1;
+    body["result_type"] = 5;
+    Json::Value order(Json::arrayValue);
+    order.append(1);
+    order.append(2);
+    order.append(3);
+    body["results_order"] = order;
+
+    PostSolverReply(client, body);
+    std::string line = LastLogLine("solver", "test-calculator-log-13", "SOLVE_CODE");
+    EXPECT_TRUE(line.find("expression=2+2;") != std::string::npos) << line;
+    EXPECT_TRUE(line.find("expression_type=1") != std::string::npos) << line;
+    EXPECT_TRUE(line.find("id=\"0,1,0,0,0,0\"") != std::string::npos) << line;
+    EXPECT_TRUE(line.find("results_order=[1,2,3]") != std::string::npos) << line;
+    EXPECT_TRUE(line.find("result_type=5") != std::string::npos) << line;
+}
+
+//Empty expression writes nothing to the calculator log
+TEST_F(SolverActionTest, solver_action14)
+{
+    auto client = HttpClient::newHttpClient(address);
+    client->enableCookies(true);
+
+    StartPage(client);
+
+    Json::Value body;
+    body["solver_guid"] = "test-calculator-log-14";
+    body["result_type"] = 1;
+    body["expression"] = "2+2;";
+    body["id"] = "0,1,0,0,0,0";
+    body["mantissa"] = "4";
+    PostSolverReply(client, body);
+    size_t count = CountCalculatorLines("test-calculator-log-14");
+
+    body.removeMember("expression");
+    PostSolverReply(client, body);
+    EXPECT_EQ(CountCalculatorLines("test-calculator-log-14"), count);
 }
 
 }
