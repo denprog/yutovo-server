@@ -305,9 +305,6 @@
         "library_path": "/home/denis/programs/Math/yutovo/yutovo-library/library/",
         "solver_address": "wss://yutovo.ru:8010",
         "email_server": "smtps://smtp.beget.com:465",
-        "email_name": "no-reply@yutovo.ru",
-        "email_password": "",
-        "email_ssl_key_path": "../../keys/email_yutovo_service.key",
-        "email_ssl_pub_path": "../../keys/email_yutovo_service.pub"
+        "email_name": "no-reply@yutovo.ru"
     }
 }
