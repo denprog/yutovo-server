@@ -47,7 +47,7 @@ The default build (`TEST` on) is meant for development and Playwright testing of
 web frontend: captcha checks are skipped, matching the frontend test build
 (`YUTOVO_PRODUCTION=false quasar build`, see the yutovo-web README).
 
-Add yutovo-server.env file with your credentials in the ./yutovo-server folder:
+Add a `yutovo-server.env` file with your credentials in the `../keys` folder (outside the repo; `../../../keys/yutovo-server.env` relative to the `build/*` directories):
 
 ```
 DB_NAME=yutovo
@@ -59,7 +59,7 @@ EMAIL_PASSWORD=your_email_password
 Run the server:
 
 ```
-env $(grep -v '^#' ../../yutovo-server.env | xargs) ./src/yutovo-serverd
+env $(grep -v '^#' ../../../keys/yutovo-server.env | xargs) ./src/yutovo-serverd
 ```
 
 Run the tests:
@@ -67,7 +67,7 @@ Run the tests:
 The tests start their own in-process Drogon instance, so **you do not need to start the server beforehand**. Make sure port `9001` is free, then run:
 
 ```bash
-env $(grep -v '^#' ../../yutovo-server.env | xargs) ./test/yutovo-server_tests
+env $(grep -v '^#' ../../../keys/yutovo-server.env | xargs) ./test/yutovo-server_tests
 ```
 
 The listener and database client are configured programmatically in `test/main.cpp`; you do not need to edit `config.json`.
@@ -75,5 +75,5 @@ The listener and database client are configured programmatically in `test/main.c
 To run a single test:
 
 ```bash
-env $(grep -v '^#' ../../yutovo-server.env | xargs) ./test/yutovo-server_tests --gtest_filter=AuthTest.register1
+env $(grep -v '^#' ../../../keys/yutovo-server.env | xargs) ./test/yutovo-server_tests --gtest_filter=AuthTest.register1
 ```
