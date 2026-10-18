@@ -1152,6 +1152,157 @@ TEST_F(ServiceTest, document19)
     ASSERT_TRUE(r->getStatusCode() == k403Forbidden) << r->getStatusCode();
 }
 
+//Access to another user's documents via save or rename is denied
+TEST_F(ServiceTest, document20)
+{
+    auto client1 = HttpClient::newHttpClient(address);
+    client1->enableCookies(true);
+    StartPage(client1);
+
+    auto client2 = HttpClient::newHttpClient(address);
+    client2->enableCookies(true);
+    StartPage(client2);
+
+    Register(client1, "User1", "user1@mail.com", "11");
+    Register(client2, "User2", "user2@mail.com", "22");
+
+    std::string access_token1, document_id1, name1, language1;
+    Login(client1, "User1", "11", access_token1, document_id1, name1, language1);
+
+    std::string access_token2, document_id2, name2, language2;
+    Login(client2, "User2", "22", access_token2, document_id2, name2, language2);
+
+    std::string document_id;
+    SaveDocument(client1, "../../tests/files11.yut", access_token1, document_id);
+    RenameDocument(client1, access_token1, document_id, "user1_secret_name");
+
+    //save-as of another user's document is forbidden
+    Json::Value body;
+    body["document_id"] = document_id;
+    body["name"] = "stolen";
+    auto req = HttpRequest::newHttpJsonRequest(body);
+    req->setMethod(drogon::Post);
+    req->setPath("/service/save-as-document");
+    req->addHeader("access_token", access_token2);
+    auto resp = client2->sendRequest(req, 10);
+    HttpResponsePtr& r = resp.second;
+    ASSERT_TRUE(r->getStatusCode() == k403Forbidden) << r->getStatusCode();
+
+    //get-document-id does not find another user's document by name
+    Json::Value name_body;
+    name_body["name"] = "user1_secret_name";
+    req = HttpRequest::newHttpJsonRequest(name_body);
+    req->setMethod(drogon::Post);
+    req->setPath("/service/get-document-id");
+    resp = client2->sendRequest(req, 10);
+    r = resp.second;
+    ASSERT_TRUE(r->getStatusCode() == k404NotFound) << r->getStatusCode();
+
+    //an anonymous session does not find the document either
+    auto client3 = HttpClient::newHttpClient(address);
+    client3->enableCookies(true);
+    StartPage(client3);
+    req = HttpRequest::newHttpJsonRequest(name_body);
+    req->setMethod(drogon::Post);
+    req->setPath("/service/get-document-id");
+    resp = client3->sendRequest(req, 10);
+    r = resp.second;
+    ASSERT_TRUE(r->getStatusCode() == k404NotFound) << r->getStatusCode();
+
+    //the owner finds the document by name
+    req = HttpRequest::newHttpJsonRequest(name_body);
+    req->setMethod(drogon::Post);
+    req->setPath("/service/get-document-id");
+    resp = client1->sendRequest(req, 10);
+    r = resp.second;
+    ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
+    const auto json = r->jsonObject();
+    ASSERT_TRUE(std::to_string((*json)["document_id"].as<int>()) == document_id);
+
+    //renaming of another user's document is forbidden
+    body["name"] = "hacked";
+    req = HttpRequest::newHttpJsonRequest(body);
+    req->setMethod(drogon::Post);
+    req->setPath("/service/rename-document");
+    req->addHeader("access_token", access_token2);
+    resp = client2->sendRequest(req, 10);
+    r = resp.second;
+    ASSERT_TRUE(r->getStatusCode() == k403Forbidden) << r->getStatusCode();
+
+    //the name of the document is not changed
+    GetDocumentName(client1, document_id, name1);
+    ASSERT_TRUE(name1 == "user1_secret_name") << name1;
+
+    UnRegister(client1, "User1", access_token1);
+    UnRegister(client2, "User2", access_token2);
+}
+
+//All documents are public for reading by default
+TEST_F(ServiceTest, document21)
+{
+    auto client1 = HttpClient::newHttpClient(address);
+    client1->enableCookies(true);
+    StartPage(client1);
+
+    auto client2 = HttpClient::newHttpClient(address);
+    client2->enableCookies(true);
+    StartPage(client2);
+
+    auto client3 = HttpClient::newHttpClient(address);
+    client3->enableCookies(true);
+    StartPage(client3);
+
+    Register(client1, "User1", "user1@mail.com", "11");
+    Register(client2, "User2", "user2@mail.com", "22");
+
+    std::string access_token1, document_id1, name1, language1;
+    Login(client1, "User1", "11", access_token1, document_id1, name1, language1);
+
+    std::string access_token2, document_id2, name2, language2;
+    Login(client2, "User2", "22", access_token2, document_id2, name2, language2);
+
+    std::string document_id;
+    SaveDocument(client1, "../../tests/files11.yut", access_token1, document_id);
+    RenameDocument(client1, access_token1, document_id, "user1_secret_name");
+
+    Json::Value save_body;
+    std::ifstream f("../../tests/files11.yut");
+    f >> save_body;
+
+    //another user loads the whole document
+    Json::Value body;
+    body["document_id"] = document_id;
+    auto req = HttpRequest::newHttpJsonRequest(body);
+    req->setMethod(drogon::Post);
+    req->setPath("/service/load-document");
+    auto resp = client2->sendRequest(req, 10);
+    HttpResponsePtr& r = resp.second;
+    ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
+    const auto json = r->jsonObject();
+    ASSERT_TRUE(save_body == *json);
+
+    //an anonymous session loads the whole document
+    req = HttpRequest::newHttpJsonRequest(body);
+    req->setMethod(drogon::Post);
+    req->setPath("/service/load-document");
+    resp = client3->sendRequest(req, 10);
+    r = resp.second;
+    ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
+
+    //another user gets the document name
+    req = HttpRequest::newHttpJsonRequest(body);
+    req->setMethod(drogon::Post);
+    req->setPath("/service/get-document-name");
+    resp = client2->sendRequest(req, 10);
+    r = resp.second;
+    ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
+    const auto name_json = r->jsonObject();
+    ASSERT_TRUE((*name_json)["name"].asString() == "user1_secret_name");
+
+    UnRegister(client1, "User1", access_token1);
+    UnRegister(client2, "User2", access_token2);
+}
+
 //Check for desktop application updates
 TEST_F(ServiceTest, get_updates)
 {

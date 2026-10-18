@@ -32,6 +32,21 @@ cmake -DCMAKE_BUILD_TYPE=Debug ../..
 make -sj && make install
 ```
 
+For a production build, disable the `TEST` option so that captcha verification is
+compiled in, cookies get the `Secure` attribute, and the test-only `/auth/set-params`
+endpoint is removed:
+
+```
+mkdir -p build/prod
+cd build/prod
+cmake -DCMAKE_BUILD_TYPE=Debug -DTEST=OFF ../..
+make -sj && make install
+```
+
+The default build (`TEST` on) is meant for development and Playwright testing of the
+web frontend: captcha checks are skipped, matching the frontend test build
+(`YUTOVO_PRODUCTION=false quasar build`, see the yutovo-web README).
+
 Add yutovo-server.env file with your credentials in the ./yutovo-server folder:
 
 ```

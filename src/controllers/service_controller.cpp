@@ -704,7 +704,7 @@ void ServiceController::SaveAsDocument(const HttpRequestPtr& req, std::function<
     }
 
     std::string name;
-    if (json->isMember("name") || (*json)["name"].isString())
+    if (json->isMember("name") && (*json)["name"].isString())
         name = (*json)["name"].asString();
     if (name.empty())
     {
@@ -732,12 +732,18 @@ void ServiceController::SaveAsDocument(const HttpRequestPtr& req, std::function<
         orm::Result result = db->execSqlSync("select user_id, document from user_documents where document_id=$1", document_id);
         if (result.size() == 0)
         {
-            GetLogger(session_id)->Error("Database error: document not found");
-            SendError(k500InternalServerError, "Document not found", session_id, callback);
+            GetLogger(session_id)->Error("SaveAsDocument error: No such document: document_id={}", document_id);
+            SendError(k404NotFound, "No such document", session_id, callback);
             return;
         }
 
         auto row = result[0];
+        if (row["user_id"].as<std::string>() != user_id)
+        {
+            GetLogger(session_id)->Error("SaveAsDocument error: Access denied: document_id={}", document_id);
+            SendError(k403Forbidden, "Access to the document is denied", session_id, callback);
+            return;
+        }
         
         result = db->execSqlSync("select 1 from user_documents where user_id=$1 and name=$2", user_id, name); //check the document name is unique
         if (result.size() > 0)
@@ -752,7 +758,7 @@ void ServiceController::SaveAsDocument(const HttpRequestPtr& req, std::function<
         if (!AddDocument(req, user_id, document_id, name, 0, callback))
             return;
 
-        result = db->execSqlSync("update user_documents set document=$1 where document_id=$2", doc, document_id);
+        result = db->execSqlSync("update user_documents set document=$1 where document_id=$2 and user_id=$3", doc, document_id, user_id);
         if (result.affectedRows() == 0)
         {
             GetLogger(session_id)->Error("Database error: Error inserting a document");
@@ -1103,31 +1109,36 @@ void ServiceController::GetDocumentId(const HttpRequestPtr& req, std::function<v
         return;
     }
 
-    //find document by name
+    //find document by name, only among the documents of this user
     std::string name = (*json)["name"].asString();
-    if (!name.empty())
+    std::string user_id = req->session()->get<std::string>("user_id");
+    if (name.empty() || user_id.empty() || user_id == "-1")
     {
-        try
+        GetLogger(session_id)->Error("GetDocumentId error: No such document: {}", name);
+        SendError(k404NotFound, "No such document", session_id, callback);
+        return;
+    }
+
+    try
+    {
+        orm::Result result = db->execSqlSync("select document_id from user_documents where user_id=$1 and name=$2", user_id, name);
+        if (result.size() == 0)
         {
-            orm::Result result = db->execSqlSync("select document_id from user_documents where name=$1", name);
-            if (result.size() == 0)
-            {
-                GetLogger(session_id)->Error("LoadDocument error: No such document: {}", name);
-                SendError(k404NotFound, "No such document", session_id, callback);
-                return;
-            }
-    
-            auto row = result[0];
-            Json::Value v(Json::objectValue);
-            v["document_id"] = row["document_id"].as<int>();
-            GetLogger(session_id)->Debug("DocumentId id={}", row["document_id"].as<std::string>());
-            SendJson(callback, v);
+            GetLogger(session_id)->Error("LoadDocument error: No such document: {}", name);
+            SendError(k404NotFound, "No such document", session_id, callback);
+            return;
         }
-        catch (const orm::DrogonDbException& e)
-        {
-            GetLogger(session_id)->Error("Database error: {}", e.base().what());
-            SendError(k500InternalServerError, e.base().what(), session_id, callback);
-        }
+
+        auto row = result[0];
+        Json::Value v(Json::objectValue);
+        v["document_id"] = row["document_id"].as<int>();
+        GetLogger(session_id)->Debug("DocumentId id={}", row["document_id"].as<std::string>());
+        SendJson(callback, v);
+    }
+    catch (const orm::DrogonDbException& e)
+    {
+        GetLogger(session_id)->Error("Database error: {}", e.base().what());
+        SendError(k500InternalServerError, e.base().what(), session_id, callback);
     }
 }
 
@@ -1255,7 +1266,7 @@ void ServiceController::RenameDocument(const HttpRequestPtr& req, std::function<
     }
 
     std::string document_id;
-    if (json->isMember("document_id") && ((*json)["document_id"].isInt()) || (*json)["document_id"].isString())
+    if (json->isMember("document_id") && ((*json)["document_id"].isInt() || (*json)["document_id"].isString()))
         document_id = (*json)["document_id"].asString();
     else
         document_id = req->getCookie("document_id"); //this request is for current document
@@ -1281,14 +1292,15 @@ void ServiceController::RenameDocument(const HttpRequestPtr& req, std::function<
 
     orm::DbClientPtr db = app().getDbClient();
     SessionPtr session = req->session();
+    std::string user_id = session->get<std::string>("user_id");
 
     try
     {
-        orm::Result result = db->execSqlSync("update user_documents set name=$1 where document_id=$2", name, document_id);
+        orm::Result result = db->execSqlSync("update user_documents set name=$1 where document_id=$2 and user_id=$3", name, document_id, user_id);
         if (result.affectedRows() == 0)
         {
-            GetLogger(session_id)->Error("Database error: Error updaing a document");
-            SendError(k500InternalServerError, "Error updating a document", session_id, callback);
+            GetLogger(session_id)->Error("RenameDocument error: Cannot rename document: document_id={}", document_id);
+            SendError(k403Forbidden, "Cannot rename document", session_id, callback);
             return;
         }
 

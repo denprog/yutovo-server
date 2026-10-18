@@ -3,3 +3,4 @@ build
 cert
 keys
 yutovo-server.env
+.zcode
