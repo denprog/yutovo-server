@@ -98,7 +98,7 @@ install(
 )
 
 install(
-    DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../keys
+    DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../../keys
     DESTINATION ${INSTALL_PATH}
     COMPONENT ${PROJECT_NAME}
 )
@@ -111,9 +111,9 @@ install(
 
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/../config.json ${CMAKE_CURRENT_BINARY_DIR}/../
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/../../../keys/yutovo_service.crt ${CMAKE_CURRENT_BINARY_DIR}/../
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/../../../keys/yutovo_service.key ${CMAKE_CURRENT_BINARY_DIR}/../
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/../../../keys/yutovo_service.pub ${CMAKE_CURRENT_BINARY_DIR}/../
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/../../keys/yutovo_service.crt ${CMAKE_CURRENT_BINARY_DIR}/../
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/../../keys/yutovo_service.key ${CMAKE_CURRENT_BINARY_DIR}/../
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/../../keys/yutovo_service.pub ${CMAKE_CURRENT_BINARY_DIR}/../
 )
 
 add_definitions(-DDB_TIMEOUT=10.0)
