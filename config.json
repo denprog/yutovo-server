@@ -2,8 +2,8 @@
     //ssl:The global SSL settings. "key" and "cert" are the path to the SSL key and certificate. While
     //    "conf" is an array of 1 or 2-element tuples that supplies file style options for `SSL_CONF_cmd`.
     "ssl": {
-        "cert": "../keys/yutovo_service.crt",
-        "key": "../keys/yutovo_service.key",
+        "cert": "../../../keys/yutovo_service.crt",
+        "key": "../../../keys/yutovo_service.key",
         "conf": [
             ["Options", "-SessionTicket"], 
             ["Options", "Compression"]
