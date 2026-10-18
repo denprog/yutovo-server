@@ -1391,7 +1391,7 @@ TEST_F(SolverActionTest, solver_action1)
     StartPage(client);
 
     Json::Value body;
-    body["solver_guid"] = "test-calculator-log-1";
+    body["solver_guid"] = "00000000-0000-0000-0000-000000000001";
     body["result_type"] = 0;
     body["expression"] = "length=1m;";
     body["id"] = "0,2,0,1,0,0";
@@ -1408,7 +1408,7 @@ TEST_F(SolverActionTest, solver_action2)
     StartPage(client);
 
     Json::Value body;
-    body["solver_guid"] = "test-calculator-log-2";
+    body["solver_guid"] = "00000000-0000-0000-0000-000000000002";
     body["expression"] = "graph_line(sin(x),x,-π,π,-1,1,493);";
     body["id"] = "0,29,0,0,0,0,1,0";
     EXPECT_EQ(PostSolverAction(client, body, "graph_line(sin(x),x,-π,π,-1,1,493);"), "graph_line(sin(x),x,-π,π,-1,1,493);, id=\"0,29,0,0,0,0,1,0\"");
@@ -1423,7 +1423,7 @@ TEST_F(SolverActionTest, solver_action3)
     StartPage(client);
 
     Json::Value body;
-    body["solver_guid"] = "test-calculator-log-3";
+    body["solver_guid"] = "00000000-0000-0000-0000-000000000003";
     body["result_type"] = 6;
     body["expression"] = "[1,3,4]+[3,4,(5/4)];";
     body["id"] = "0,21,0,0,0,0,2,0";
@@ -1451,7 +1451,7 @@ TEST_F(SolverActionTest, solver_action4)
     StartPage(client);
 
     Json::Value body;
-    body["solver_guid"] = "test-calculator-log-4";
+    body["solver_guid"] = "00000000-0000-0000-0000-000000000004";
     body["result_type"] = 4;
     body["expression"] = "solve(x^2+4,x);";
     body["id"] = "0,4,0,0,0,0";
@@ -1486,7 +1486,7 @@ TEST_F(SolverActionTest, solver_action5)
     StartPage(client);
 
     Json::Value body;
-    body["solver_guid"] = "test-calculator-log-5";
+    body["solver_guid"] = "00000000-0000-0000-0000-000000000005";
     body["result_type"] = 7;
     body["expression"] = "indefinite_integral(4*sin(x)+pow(e,x),x);";
     body["id"] = "0,27,0,3,0,0,2,0";
@@ -1509,7 +1509,7 @@ TEST_F(SolverActionTest, solver_action6)
     StartPage(client);
 
     Json::Value body;
-    body["solver_guid"] = "test-calculator-log-6";
+    body["solver_guid"] = "00000000-0000-0000-0000-000000000006";
     body["result_type"] = 0;
     body["expression"] = "1/0;";
     body["id"] = "0,0,0,1,0,0";
@@ -1526,7 +1526,7 @@ TEST_F(SolverActionTest, solver_action7)
     StartPage(client);
 
     Json::Value body;
-    body["solver_guid"] = "test-calculator-log-7";
+    body["solver_guid"] = "00000000-0000-0000-0000-000000000007";
     body["result_type"] = 1;
     body["expression"] = "L;";
     body["id"] = "0,2,0,1,0,0";
@@ -1550,7 +1550,7 @@ TEST_F(SolverActionTest, solver_action8)
     StartPage(client);
 
     Json::Value body;
-    body["solver_guid"] = "test-calculator-log-8";
+    body["solver_guid"] = "00000000-0000-0000-0000-000000000008";
     body["result_type"] = 1;
     body["expression"] = "2+2;";
     body["id"] = "0,1,0,0,0,0";
@@ -1568,7 +1568,7 @@ TEST_F(SolverActionTest, solver_action9)
 
     //mixed fraction
     Json::Value body;
-    body["solver_guid"] = "test-calculator-log-9";
+    body["solver_guid"] = "00000000-0000-0000-0000-000000000009";
     body["result_type"] = 3;
     body["expression"] = "5+1/3;";
     body["id"] = "0,3,0,1,0,0";
@@ -1579,7 +1579,7 @@ TEST_F(SolverActionTest, solver_action9)
 
     //rational number
     body = Json::Value();
-    body["solver_guid"] = "test-calculator-log-9";
+    body["solver_guid"] = "00000000-0000-0000-0000-000000000009";
     body["result_type"] = 3;
     body["expression"] = "2/3;";
     body["id"] = "0,3,0,2,0,0";
@@ -1589,7 +1589,7 @@ TEST_F(SolverActionTest, solver_action9)
 
     //integer number
     body = Json::Value();
-    body["solver_guid"] = "test-calculator-log-9";
+    body["solver_guid"] = "00000000-0000-0000-0000-000000000009";
     body["result_type"] = 2;
     body["expression"] = "6*7;";
     body["id"] = "0,2,0,1,0,0";
@@ -1598,7 +1598,7 @@ TEST_F(SolverActionTest, solver_action9)
 
     //integer value
     body = Json::Value();
-    body["solver_guid"] = "test-calculator-log-9";
+    body["solver_guid"] = "00000000-0000-0000-0000-000000000009";
     body["result_type"] = 2;
     body["expression"] = "pow(2,10);";
     body["id"] = "0,2,0,2,0,0";
@@ -1615,7 +1615,7 @@ TEST_F(SolverActionTest, solver_action10)
     StartPage(client);
 
     Json::Value body;
-    body["solver_guid"] = "test-calculator-log-10";
+    body["solver_guid"] = "00000000-0000-0000-0000-000000000010";
     body["result_type"] = 6;
     body["id"] = "0,21,0,0,0,0,2,0";
 
@@ -1686,7 +1686,7 @@ TEST_F(SolverActionTest, solver_action11)
     StartPage(client);
 
     Json::Value body;
-    body["solver_guid"] = "test-calculator-log-11";
+    body["solver_guid"] = "00000000-0000-0000-0000-000000000011";
     body["result_type"] = 7;
     body["id"] = "0,27,0,3,0,0,2,0";
     body["expression"] = "simplify(root(x,3)+sqrt(x)+sin(x)/x+x^2);";
@@ -1721,7 +1721,7 @@ TEST_F(SolverActionTest, solver_action12)
 
     //error code only
     Json::Value body;
-    body["solver_guid"] = "test-calculator-log-12";
+    body["solver_guid"] = "00000000-0000-0000-0000-000000000012";
     body["result_type"] = 0;
     body["expression"] = "e1;";
     body["id"] = "0,0,0,1,0,0";
@@ -1730,7 +1730,7 @@ TEST_F(SolverActionTest, solver_action12)
 
     //result and error
     body = Json::Value();
-    body["solver_guid"] = "test-calculator-log-12";
+    body["solver_guid"] = "00000000-0000-0000-0000-000000000012";
     body["result_type"] = 1;
     body["expression"] = "2+2;";
     body["id"] = "0,1,0,0,0,0";
@@ -1748,7 +1748,7 @@ TEST_F(SolverActionTest, solver_action13)
     StartPage(client);
 
     Json::Value body;
-    body["solver_guid"] = "test-calculator-log-13";
+    body["solver_guid"] = "00000000-0000-0000-0000-000000000013";
     body["command"] = "SOLVE_CODE";
     body["expression"] = "2+2;";
     body["id"] = "0,1,0,0,0,0";
@@ -1761,7 +1761,7 @@ TEST_F(SolverActionTest, solver_action13)
     body["results_order"] = order;
 
     PostSolverReply(client, body);
-    std::string line = LastLogLine("solver", "test-calculator-log-13", "SOLVE_CODE");
+    std::string line = LastLogLine("solver", "00000000-0000-0000-0000-000000000013", "SOLVE_CODE");
     EXPECT_TRUE(line.find("expression=2+2;") != std::string::npos) << line;
     EXPECT_TRUE(line.find("expression_type=1") != std::string::npos) << line;
     EXPECT_TRUE(line.find("id=\"0,1,0,0,0,0\"") != std::string::npos) << line;
@@ -1778,17 +1778,75 @@ TEST_F(SolverActionTest, solver_action14)
     StartPage(client);
 
     Json::Value body;
-    body["solver_guid"] = "test-calculator-log-14";
+    body["solver_guid"] = "00000000-0000-0000-0000-000000000014";
     body["result_type"] = 1;
     body["expression"] = "2+2;";
     body["id"] = "0,1,0,0,0,0";
     body["mantissa"] = "4";
     PostSolverReply(client, body);
-    size_t count = CountCalculatorLines("test-calculator-log-14");
+    size_t count = CountCalculatorLines("00000000-0000-0000-0000-000000000014");
 
     body.removeMember("expression");
     PostSolverReply(client, body);
-    EXPECT_EQ(CountCalculatorLines("test-calculator-log-14"), count);
+    EXPECT_EQ(CountCalculatorLines("00000000-0000-0000-0000-000000000014"), count);
+}
+
+//solver_guid with a path traversal is rejected and writes no files outside the solver log directory
+TEST_F(SolverActionTest, solver_action15)
+{
+    auto client = HttpClient::newHttpClient(address);
+    client->enableCookies(true);
+
+    StartPage(client);
+
+    Json::Value body;
+    body["solver_guid"] = "../../tmp/x";
+    body["result_type"] = 1;
+    body["expression"] = "2+2;";
+    body["id"] = "0,1,0,0,0,0";
+    body["mantissa"] = "4";
+
+    auto req = HttpRequest::newHttpJsonRequest(body);
+    req->setMethod(drogon::Post);
+    req->setPath("/service/solver-action");
+
+    auto resp = client->sendRequest(req);
+    ReqResult& res = resp.first;
+    HttpResponsePtr& r = resp.second;
+    ASSERT_TRUE(res == ReqResult::Ok) << res;
+    ASSERT_TRUE(r->getStatusCode() == k400BadRequest) << r->getStatusCode();
+    const auto json = r->jsonObject();
+    ASSERT_TRUE(json != nullptr);
+    EXPECT_EQ((*json)["error"].asString(), "Guid error");
+
+    //log/yutovo-server/solver/../../tmp/x resolves to log/tmp/x
+    EXPECT_FALSE(std::filesystem::exists("log/tmp"));
+}
+
+//session_id cookie with a path traversal is rejected and writes no files outside the sessions log directory
+TEST_F(SolverActionTest, solver_action16)
+{
+    auto client = HttpClient::newHttpClient(address);
+
+    Json::Value body;
+    body["solver_guid"] = "00000000-0000-0000-0000-000000000016";
+    body["result_type"] = 1;
+    body["expression"] = "2+2;";
+    body["id"] = "0,1,0,0,0,0";
+
+    auto req = HttpRequest::newHttpJsonRequest(body);
+    req->setMethod(drogon::Post);
+    req->setPath("/service/solver-action");
+    req->addHeader("cookie", "session_id=../../evil");
+
+    auto resp = client->sendRequest(req);
+    ReqResult& res = resp.first;
+    HttpResponsePtr& r = resp.second;
+    ASSERT_TRUE(res == ReqResult::Ok) << res;
+    ASSERT_TRUE(r->getStatusCode() == k403Forbidden) << r->getStatusCode();
+
+    //log/yutovo-server/sessions/../../evil resolves to log/evil
+    EXPECT_FALSE(std::filesystem::exists("log/evil"));
 }
 
 }

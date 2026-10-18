@@ -1830,6 +1830,12 @@ void ServiceController::SolverAction(const HttpRequestPtr& req, std::function<vo
         return;
     }
     guid = (*json)["solver_guid"].asString();
+    if (!IsGuid(guid))
+    {
+        GetLogger(session_id)->Error("SolverAction error: Guid error: {}", guid);
+        SendError(k400BadRequest, "Guid error", session_id, callback);
+        return;
+    }
 
     SessionPtr session = req->session();
     if (session->get<std::string>("solver_id") != guid)
