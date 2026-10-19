@@ -196,7 +196,7 @@ void ControllerBase::SendOkTokens(std::function<void (const HttpResponsePtr &)>&
     resp->setStatusCode(k200OK);
 
     drogon::Cookie refresh_cookie("refresh_token", refresh_token);
-    refresh_cookie.setHttpOnly(false);
+    refresh_cookie.setHttpOnly(true);
     refresh_cookie.setPath("/");
     refresh_cookie.setExpiresDate(refresh_expires);
 #ifdef TEST
@@ -390,7 +390,7 @@ bool ControllerBase::ParseId(const std::string& id_str, std::vector<int>& id)
 void ControllerBase::SetSessionCookie(const std::string& session_id, HttpResponsePtr resp)
 {
     drogon::Cookie session_cookie("session_id", session_id);
-    session_cookie.setHttpOnly(false);
+    session_cookie.setHttpOnly(true);
     session_cookie.setPath("/");
     session_cookie.setExpiresDate(trantor::Date::now().after(session_expires));
     session_cookie.setSecure(true);

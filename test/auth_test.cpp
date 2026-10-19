@@ -173,6 +173,7 @@ TEST_F(AuthTest, login1)
     ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
     ASSERT_TRUE(r->getContentType() == CT_APPLICATION_JSON) << r->getContentType();
     ASSERT_TRUE(refresh_token.cookieString() != "") << refresh_token.cookieString();
+    ASSERT_TRUE(refresh_token.isHttpOnly()) << refresh_token.cookieString();
     ASSERT_TRUE(access_token != "") << access_token;
 
     //logout
@@ -183,6 +184,7 @@ TEST_F(AuthTest, login1)
     req->addHeader("access_token", access_token);
     client->addCookie(refresh_token);
     auto c = r->getCookie("session_id");
+    ASSERT_TRUE(c.isHttpOnly()) << c.cookieString();
 
     resp = client->sendRequest(req);
     res = resp.first;
@@ -402,6 +404,7 @@ TEST_F(AuthTest, refresh_session1)
     std::string access_token1 = r->getHeader("access_token");
     const Cookie refresh_token1 = r->getCookie("refresh_token");
     ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
+    ASSERT_TRUE(refresh_token1.isHttpOnly()) << refresh_token1.cookieString();
 
     //refresh session
     req = HttpRequest::newHttpRequest();
@@ -416,6 +419,7 @@ TEST_F(AuthTest, refresh_session1)
     std::string access_token2 = r->getHeader("access_token");
     const Cookie refresh_token2 = r->getCookie("refresh_token");
     ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
+    ASSERT_TRUE(refresh_token2.isHttpOnly()) << refresh_token2.cookieString();
     ASSERT_TRUE(refresh_token1.cookieString() != refresh_token2.cookieString());
     ASSERT_TRUE(access_token1 != access_token2);
 
