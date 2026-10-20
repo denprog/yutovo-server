@@ -23,6 +23,7 @@ add_executable(${PROJECT_NAME}_tests
     auth_test.cpp
     session_test.cpp
     service_test.cpp
+    utils_test.cpp
     $<TARGET_OBJECTS:${PROJECT_NAME}_lib>
 )
 

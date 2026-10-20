@@ -6,6 +6,7 @@
  */
 
 #include "controller_base.h"
+#include "utils.h"
 #include <jwt-cpp/jwt.h>
 #include <fstream>
 #include <system_error>
@@ -778,6 +779,10 @@ size_t ControllerBase::EmailPayload(char* ptr, size_t size, size_t nmemb, void* 
 CURLcode ControllerBase::SendEmail(const std::string& from, const std::string& to, const std::string& subject, const std::string& message_html,
     const std::vector<EmailAttachment>& attachments)
 {
+    //only validated addresses reach the SMTP commands and the headers
+    if (!MailUtils::IsEmail(from) || !MailUtils::IsEmail(to))
+        return CURLE_BAD_FUNCTION_ARGUMENT;
+
     CURL* curl = curl_easy_init();
     if (!curl)
         return CURLE_FAILED_INIT;
@@ -798,13 +803,26 @@ CURLcode ControllerBase::SendEmail(const std::string& from, const std::string& t
     curl_easy_setopt(curl, CURLOPT_MAIL_FROM, from.c_str());
     curl_easy_setopt(curl, CURLOPT_MAIL_RCPT, recipients);
 
-    std::string boundary = "----YutovoFeedbackBoundary";
-    std::string alt_boundary = "----YutovoAltBoundary";
+    //random boundaries so that the body cannot forge MIME parts
+    unsigned char random_bytes[8];
+    if (RAND_bytes(random_bytes, sizeof(random_bytes)) != 1)
+        return CURLE_FAILED_INIT;
+    static const char hex[] = "0123456789ABCDEF";
+    std::string random_hex;
+    for (unsigned char b : random_bytes)
+    {
+        random_hex += hex[b >> 4];
+        random_hex += hex[b & 0x0F];
+    }
+    std::string boundary = "----Yutovo_" + random_hex;
+    std::string alt_boundary = "----YutovoAlt_" + random_hex;
+
+    std::string encoded_subject = MailUtils::EncodeSubject(subject);
 
     std::string email_message;
     email_message += "From: " + from + "\r\n";
     email_message += "To: " + to + "\r\n";
-    email_message += "Subject: " + subject + "\r\n";
+    email_message += "Subject: " + encoded_subject + "\r\n";
     email_message += "MIME-Version: 1.0\r\n";
     email_message += "Content-Type: multipart/mixed; boundary=\"" + boundary + "\"\r\n";
     email_message += "\r\n";
@@ -815,16 +833,33 @@ CURLcode ControllerBase::SendEmail(const std::string& from, const std::string& t
     email_message += "Content-Type: text/html; charset=utf-8\r\n";
     email_message += "Content-Transfer-Encoding: quoted-printable\r\n";
     email_message += "\r\n";
-    email_message += message_html + "\r\n";
+    email_message += MailUtils::QuotedPrintableEncode(message_html) + "\r\n";
     email_message += "\r\n";
     email_message += "--" + alt_boundary + "--\r\n";
 
     for (const auto& at : attachments)
     {
+        //header values must not break the MIME structure
+        std::string filename = MailUtils::StripHeaderNewlines(at.filename);
+        std::string content_type = MailUtils::StripHeaderNewlines(at.content_type);
+        auto escape_quotes = [](std::string value)
+        {
+            std::string result;
+            result.reserve(value.size());
+            for (char c : value)
+            {
+                if (c == '"' || c == '\\')
+                    result += '\\';
+                result += c;
+            }
+            return result;
+        };
+        filename = escape_quotes(filename);
+
         email_message += "\r\n";
         email_message += "--" + boundary + "\r\n";
-        email_message += "Content-Type: " + at.content_type + "; name=\"" + at.filename + "\"\r\n";
-        email_message += "Content-Disposition: at; filename=\"" + at.filename + "\"\r\n";
+        email_message += "Content-Type: " + content_type + "; name=\"" + filename + "\"\r\n";
+        email_message += "Content-Disposition: attachment; filename=\"" + filename + "\"\r\n";
         email_message += "Content-Transfer-Encoding: base64\r\n";
         email_message += "\r\n";
         email_message += WrapBase64(at.data) + "\r\n";
