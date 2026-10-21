@@ -121,6 +121,57 @@ TEST(MailUtilsTest, QuotedPrintableSoftBreaks)
     EXPECT_EQ(unfolded, long_line);
 }
 
+TEST(MailUtilsTest, EmailCodeCheckAcceptsLiveCode)
+{
+    using yutovo_server::MailUtils;
+    auto verdict = 
+        [](const std::string& stored, const std::string& submitted, int attempts, int64_t age)
+        {
+            return (int)MailUtils::Check(stored, submitted, attempts, age);
+        };
+
+    //the correct code is accepted while it is live, even next to the attempt limit
+    EXPECT_EQ(verdict("123456", "123456", 0, 0), (int)MailUtils::Verdict::kAccepted);
+    EXPECT_EQ(verdict("123456", "123456", MailUtils::max_attempts - 1, 10), (int)MailUtils::Verdict::kAccepted);
+    //the boundary age is still live
+    EXPECT_EQ(verdict("123456", "123456", 0, MailUtils::ttl_seconds), (int)MailUtils::Verdict::kAccepted);
+}
+
+TEST(MailUtilsTest, EmailCodeCheckCountsAttempts)
+{
+    using yutovo_server::MailUtils;
+    auto verdict = 
+        [](const std::string& stored, const std::string& submitted, int attempts, int64_t age)
+        {
+            return (int)MailUtils::Check(stored, submitted, attempts, age);
+        };
+
+    //a wrong code is rejected while the attempt limit is not reached
+    for (int attempts = 0; attempts < MailUtils::max_attempts - 1; attempts++)
+        EXPECT_EQ(verdict("123456", "654321", attempts, 10), (int)MailUtils::Verdict::kRejected) << attempts;
+
+    //the wrong try that reaches the limit invalidates the code
+    EXPECT_EQ(verdict("123456", "654321", MailUtils::max_attempts - 1, 10), (int)MailUtils::Verdict::kInvalidated);
+    EXPECT_EQ(verdict("123456", "654321", MailUtils::max_attempts, 10), (int)MailUtils::Verdict::kInvalidated);
+}
+
+TEST(MailUtilsTest, EmailCodeCheckInvalidatesDeadCode)
+{
+    using yutovo_server::MailUtils;
+    auto verdict = 
+        [](const std::string& stored, const std::string& submitted, int attempts, int64_t age)
+        {
+            return (int)MailUtils::Check(stored, submitted, attempts, age);
+        };
+
+    //an expired, absent or not yet issued code is dead regardless of the submitted value
+    EXPECT_EQ(verdict("123456", "123456", 0, MailUtils::ttl_seconds + 1), (int)MailUtils::Verdict::kInvalidated);
+    EXPECT_EQ(verdict("123456", "654321", 0, MailUtils::ttl_seconds + 1), (int)MailUtils::Verdict::kInvalidated);
+    EXPECT_EQ(verdict("123456", "123456", 0, -1), (int)MailUtils::Verdict::kInvalidated);
+    EXPECT_EQ(verdict("", "123456", 0, 10), (int)MailUtils::Verdict::kInvalidated);
+    EXPECT_EQ(verdict("123456", "", 0, 10), (int)MailUtils::Verdict::kInvalidated);
+}
+
 TEST(EmailTemplatesTest, VerificationTemplates)
 {
     yutovo_server::EmailTemplate t = yutovo_server::EmailTemplates::GetVerificationEmailTemplate("register", "ru");

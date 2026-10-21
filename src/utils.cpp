@@ -198,6 +198,17 @@ std::string MailUtils::QuotedPrintableEncode(const std::string& value)
     return res;
 }
 
+MailUtils::Verdict MailUtils::Check(const std::string& stored, const std::string& submitted, int failed_attempts, int64_t age_seconds)
+{
+    if (stored.empty() || submitted.empty() || age_seconds < 0 || age_seconds > ttl_seconds)
+        return Verdict::kInvalidated;
+    if (stored == submitted)
+        return Verdict::kAccepted;
+    if (failed_attempts + 1 >= max_attempts)
+        return Verdict::kInvalidated;
+    return Verdict::kRejected;
+}
+
 std::string GetDeployPath()
 {
     char* p = std::getenv("YUTOVO_DEPLOY");

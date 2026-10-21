@@ -702,6 +702,40 @@ bool ControllerBase::GetSessionId(const HttpRequestPtr& req, std::function<void 
     return true;
 }
 
+bool ControllerBase::VerifyEmailCode(const SessionPtr& session, const std::string& email_code)
+{
+    const std::string stored = session->get<std::string>("email_code");
+    const int64_t sent_time = session->get<int64_t>("email_code_time");
+    const int64_t age_seconds = sent_time == 0 ? -1 : trantor::Date::now().secondsSinceEpoch() - sent_time;
+    const int failed_attempts = session->get<int>("email_code_attempts");
+
+    switch (MailUtils::Check(stored, email_code, failed_attempts, age_seconds))
+    {
+    case MailUtils::Verdict::kAccepted:
+        //the code is one-time, it is consumed by a successful verification
+        EraseEmailCode(session);
+        return true;
+    case MailUtils::Verdict::kRejected:
+        session->modify<int>("email_code_attempts", 
+            [](int& attempts)
+            {
+                attempts++;
+            });
+        return false;
+    case MailUtils::Verdict::kInvalidated:
+        EraseEmailCode(session);
+        return false;
+    }
+    return false;
+}
+
+void ControllerBase::EraseEmailCode(const SessionPtr& session)
+{
+    session->erase("email_code");
+    session->erase("email_code_time");
+    session->erase("email_code_attempts");
+}
+
 void ControllerBase::LogJson(yutovo::Logger* logger, const Json::Value& value)
 {
     Json::FastWriter fastWriter;

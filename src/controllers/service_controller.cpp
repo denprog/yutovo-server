@@ -1494,12 +1494,11 @@ void ServiceController::SetUserSettings(const HttpRequestPtr& req, std::function
             return;
         }
         auto email_code = (*json)["email_code"].asString();
-        if (email_code.empty() || session->get<std::string>("email_code") != email_code)
+        if (email_code.empty() || !VerifyEmailCode(session, email_code))
         {
             SendError(k400BadRequest, "Wrong email code", session_id, callback);
             return;
         }
-        session->erase("email_code");
 #endif
     
         try
@@ -1621,11 +1620,13 @@ void ServiceController::RecoverPassword(const HttpRequestPtr& req, std::function
         return;
     }
 
-    std::string password, email_code;
+    std::string password, email_code, captcha;
     if (json->isMember("password") && (*json)["password"].isString())
         password = (*json)["password"].asString();
     if (json->isMember("email_code") && (*json)["email_code"].isString())
         email_code = (*json)["email_code"].asString();
+    if (json->isMember("captcha") && (*json)["captcha"].isString())
+        captcha = (*json)["captcha"].asString();
 
     if (password.empty() || email_code.empty())
     {
@@ -1636,13 +1637,17 @@ void ServiceController::RecoverPassword(const HttpRequestPtr& req, std::function
 
     SessionPtr session = req->session();
 #ifndef TEST
-    if (session->get<std::string>("email_code") != email_code)
+    if (captcha.empty() || session->get<std::string>("captcha") != captcha)
+    {
+        SendError(k400BadRequest, "Wrong captcha", session_id, callback);
+        return;
+    }
+    if (!VerifyEmailCode(session, email_code))
     {
         SendError(k400BadRequest, "Wrong email code", session_id, callback);
         return;
     }
 #endif
-    session->erase("email_code");
 
     ClearDbTurnOff t; //skip the clear db circles for a while
     orm::DbClientPtr db = app().getDbClient();

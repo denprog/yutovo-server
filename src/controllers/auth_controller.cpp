@@ -17,7 +17,6 @@
 #include <boost/uuid/uuid_io.hpp>
 #include <boost/lexical_cast.hpp>
 #include <functional>
-#include <random>
 #include <limits>
 #include <stdexcept>
 #include <openssl/rand.h>
@@ -194,12 +193,9 @@ void AuthController::SendEmailCode(const HttpRequestPtr &req, std::function<void
     auto send_email =
         [this, session_id, session, action, language](const std::string& email)
         {
-            std::random_device dev;
-            std::mt19937 rng(dev());
-            std::uniform_int_distribution<std::mt19937::result_type> dist6(0, 9);
             std::string email_code;
             for (int i = 0; i < 6; ++i)
-                email_code += std::to_string(dist6(rng));
+                email_code += std::to_string(SecureRandomUInt(10));
 
             //the subject and the body come from server-side templates only
             EmailTemplate email_template = EmailTemplates::GetVerificationEmailTemplate(action, language);
@@ -212,11 +208,19 @@ void AuthController::SendEmailCode(const HttpRequestPtr &req, std::function<void
 
             session->erase("email_code");
             session->erase("email_code_email");
+            session->erase("email_code_time");
+            session->erase("email_code_attempts");
+#ifdef TEST
+            //the test build does not send real e-mails, but still issues the code
+            CURLcode r = CURLE_OK;
+#else
             CURLcode r = SendEmail(email_name, email, email_template.subject, message);
+#endif
             if (r == CURLE_OK)
             {
                 session->insert("email_code", email_code);
                 session->insert("email_code_email", email);
+                session->insert("email_code_time", trantor::Date::now().secondsSinceEpoch());
                 GetLogger(session_id)->Info("Sent email code: {} to {}", email_code, email);
                 return true;
             }
@@ -483,7 +487,7 @@ void AuthController::Register(const HttpRequestPtr& req, std::function<void (con
     }
 
     auto email_code = (*json)["email_code"].asString();
-    if (email_code.empty() || session->get<std::string>("email_code") != email_code)
+    if (email_code.empty() || !VerifyEmailCode(session, email_code))
     {
         SendError(k400BadRequest, "Wrong email code", session_id, callback);
         return;

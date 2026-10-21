@@ -78,6 +78,9 @@ protected:
 
     bool GetSessionId(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>& callback, std::string& session_id);
 
+    bool VerifyEmailCode(const SessionPtr& session, const std::string& email_code);
+    static void EraseEmailCode(const SessionPtr& session);
+
     void LogJson(yutovo::Logger* logger, const Json::Value& value);
 
     std::string JsonToString(Json::Value& value);
