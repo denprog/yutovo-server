@@ -906,7 +906,7 @@ CURLcode ControllerBase::SendEmail(const std::string& from, const std::string& t
     curl_easy_setopt(curl, CURLOPT_READFUNCTION, EmailPayload);
     curl_easy_setopt(curl, CURLOPT_READDATA, &context);
     curl_easy_setopt(curl, CURLOPT_UPLOAD, 1L);
-    curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT, 5);
+    curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT, 15);
 
     CURLcode r = curl_easy_perform(curl);
     curl_slist_free_all(recipients);
