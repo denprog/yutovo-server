@@ -1152,7 +1152,7 @@ TEST_F(ServiceTest, document19)
     ASSERT_TRUE(r->getStatusCode() == k403Forbidden) << r->getStatusCode();
 }
 
-//Access to another user's documents via save or rename is denied
+//Save-as of another user's public document is allowed
 TEST_F(ServiceTest, document20)
 {
     auto client1 = HttpClient::newHttpClient(address);
@@ -1176,7 +1176,11 @@ TEST_F(ServiceTest, document20)
     SaveDocument(client1, "../../tests/files11.yut", access_token1, document_id);
     RenameDocument(client1, access_token1, document_id, "user1_secret_name");
 
-    //save-as of another user's document is forbidden
+    //save-as of another user's public document creates an own copy
+    Json::Value save_body;
+    std::ifstream f("../../tests/files11.yut");
+    f >> save_body;
+
     Json::Value body;
     body["document_id"] = document_id;
     body["name"] = "stolen";
@@ -1186,7 +1190,41 @@ TEST_F(ServiceTest, document20)
     req->addHeader("access_token", access_token2);
     auto resp = client2->sendRequest(req, 10);
     HttpResponsePtr& r = resp.second;
+    ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
+    std::string copy_id = (*r->jsonObject())["document_id"].asString();
+    ASSERT_TRUE(copy_id != document_id);
+
+    //the copy belongs to User2 and has the same content
+    Json::Value copy_body;
+    copy_body["document_id"] = copy_id;
+    req = HttpRequest::newHttpJsonRequest(copy_body);
+    req->setMethod(drogon::Post);
+    req->setPath("/service/load-document");
+    resp = client2->sendRequest(req, 10);
+    r = resp.second;
+    ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
+    ASSERT_TRUE(save_body == *(r->jsonObject()));
+
+    //save-as of another user's private document is forbidden
+    app().getDbClient()->execSqlSync("update user_documents set public=false where document_id=$1", document_id);
+    body["name"] = "stolen2";
+    req = HttpRequest::newHttpJsonRequest(body);
+    req->setMethod(drogon::Post);
+    req->setPath("/service/save-as-document");
+    req->addHeader("access_token", access_token2);
+    resp = client2->sendRequest(req, 10);
+    r = resp.second;
     ASSERT_TRUE(r->getStatusCode() == k403Forbidden) << r->getStatusCode();
+
+    //the owner saves a copy of the own private document
+    body["name"] = "own_copy";
+    req = HttpRequest::newHttpJsonRequest(body);
+    req->setMethod(drogon::Post);
+    req->setPath("/service/save-as-document");
+    req->addHeader("access_token", access_token1);
+    resp = client1->sendRequest(req, 10);
+    r = resp.second;
+    ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
 
     //get-document-id does not find another user's document by name
     Json::Value name_body;

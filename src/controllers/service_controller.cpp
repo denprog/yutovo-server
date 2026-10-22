@@ -729,7 +729,7 @@ void ServiceController::SaveAsDocument(const HttpRequestPtr& req, std::function<
 
     try
     {
-        orm::Result result = db->execSqlSync("select user_id, document from user_documents where document_id=$1", document_id);
+        orm::Result result = db->execSqlSync("select user_id, public, document from user_documents where document_id=$1", document_id);
         if (result.size() == 0)
         {
             GetLogger(session_id)->Error("SaveAsDocument error: No such document: document_id={}", document_id);
@@ -738,10 +738,10 @@ void ServiceController::SaveAsDocument(const HttpRequestPtr& req, std::function<
         }
 
         auto row = result[0];
-        if (row["user_id"].as<std::string>() != user_id)
+        if (row["user_id"].as<std::string>() != user_id && !row["public"].as<bool>())
         {
-            GetLogger(session_id)->Error("SaveAsDocument error: Access denied: document_id={}", document_id);
-            SendError(k403Forbidden, "Access to the document is denied", session_id, callback);
+            GetLogger(session_id)->Error("SaveAsDocument error: This document is not public: document_id={}", document_id);
+            SendError(k403Forbidden, "This document is not public", session_id, callback);
             return;
         }
         
