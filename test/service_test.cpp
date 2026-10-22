@@ -1303,6 +1303,44 @@ TEST_F(ServiceTest, document21)
     UnRegister(client2, "User2", access_token2);
 }
 
+//Load-document with no document_id in the body and no document_id cookie falls back to the
+//value that the logged-in start page put into the server-side session
+TEST_F(ServiceTest, document22)
+{
+    auto client = HttpClient::newHttpClient(address);
+    client->enableCookies(true);
+    StartPage(client);
+
+    Register(client, "User22", "user22@mail.com", "22");
+
+    std::string access_token, document_id, name, language;
+    Login(client, "User22", "22", access_token, document_id, name, language);
+
+    //the logged-in start page puts the user's document into the session and answers with a
+    //redirect; the redirect is not followed, so the client holds no document_id cookie
+    auto start_req = HttpRequest::newHttpRequest();
+    start_req->setMethod(drogon::Get);
+    start_req->setPath("/");
+    auto start_resp = client->sendRequest(start_req, 10);
+    ASSERT_TRUE(start_resp.first == ReqResult::Ok) << start_resp.first;
+    ASSERT_TRUE(start_resp.second->getStatusCode() == k302Found) << start_resp.second->getStatusCode();
+
+    //the session value alone must serve the load; the body is an empty json object
+    Json::Value body(Json::objectValue);
+    auto req = HttpRequest::newHttpJsonRequest(body);
+    req->setMethod(drogon::Post);
+    req->setPath("/service/load-document");
+    auto resp = client->sendRequest(req, 10);
+    ReqResult& res = resp.first;
+    HttpResponsePtr& r = resp.second;
+    ASSERT_TRUE(res == ReqResult::Ok) << res;
+    ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
+    const auto json = r->jsonObject();
+    ASSERT_TRUE(json != nullptr);
+
+    UnRegister(client, "User22", access_token);
+}
+
 //Check for desktop application updates
 TEST_F(ServiceTest, get_updates)
 {

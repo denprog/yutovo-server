@@ -798,8 +798,12 @@ void ServiceController::LoadDocument(const HttpRequestPtr& req, std::function<vo
     if (document_id.empty() || document_id == "-1")
         document_id = req->getCookie("document_id");
     if (document_id.empty() || document_id == "-1")
-        session->get<std::string>("document_id");
-    if (document_id.empty())
+    {
+        const std::string session_document_id = session->get<std::string>("document_id");
+        if (!session_document_id.empty() && session_document_id != "-1")
+            document_id = session_document_id;
+    }
+    if (document_id.empty() || document_id == "-1")
     {
         GetLogger(session_id)->Error("LoadDocument error: Wrong request: empty document_id");
         SendError(k400BadRequest, "Wrong request: empty document_id", session_id, callback);
