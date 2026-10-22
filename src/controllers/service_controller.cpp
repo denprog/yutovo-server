@@ -729,7 +729,7 @@ void ServiceController::SaveAsDocument(const HttpRequestPtr& req, std::function<
 
     try
     {
-        orm::Result result = db->execSqlSync("select user_id, public, document from user_documents where document_id=$1", document_id);
+        orm::Result result = db->execSqlSync("select user_id, document from user_documents where document_id=$1", document_id);
         if (result.size() == 0)
         {
             GetLogger(session_id)->Error("SaveAsDocument error: No such document: document_id={}", document_id);
@@ -738,10 +738,10 @@ void ServiceController::SaveAsDocument(const HttpRequestPtr& req, std::function<
         }
 
         auto row = result[0];
-        if (row["user_id"].as<std::string>() != user_id && !row["public"].as<bool>())
+        if (row["user_id"].as<std::string>() != user_id)
         {
-            GetLogger(session_id)->Error("SaveAsDocument error: This document is not public: document_id={}", document_id);
-            SendError(k403Forbidden, "This document is not public", session_id, callback);
+            GetLogger(session_id)->Error("SaveAsDocument error: Access denied: document_id={}", document_id);
+            SendError(k403Forbidden, "Access to the document is denied", session_id, callback);
             return;
         }
         
@@ -1494,11 +1494,12 @@ void ServiceController::SetUserSettings(const HttpRequestPtr& req, std::function
             return;
         }
         auto email_code = (*json)["email_code"].asString();
-        if (email_code.empty() || !VerifyEmailCode(session, email_code))
+        if (email_code.empty() || session->get<std::string>("email_code") != email_code)
         {
             SendError(k400BadRequest, "Wrong email code", session_id, callback);
             return;
         }
+        session->erase("email_code");
 #endif
     
         try
@@ -1620,13 +1621,11 @@ void ServiceController::RecoverPassword(const HttpRequestPtr& req, std::function
         return;
     }
 
-    std::string password, email_code, captcha;
+    std::string password, email_code;
     if (json->isMember("password") && (*json)["password"].isString())
         password = (*json)["password"].asString();
     if (json->isMember("email_code") && (*json)["email_code"].isString())
         email_code = (*json)["email_code"].asString();
-    if (json->isMember("captcha") && (*json)["captcha"].isString())
-        captcha = (*json)["captcha"].asString();
 
     if (password.empty() || email_code.empty())
     {
@@ -1637,17 +1636,13 @@ void ServiceController::RecoverPassword(const HttpRequestPtr& req, std::function
 
     SessionPtr session = req->session();
 #ifndef TEST
-    if (captcha.empty() || session->get<std::string>("captcha") != captcha)
-    {
-        SendError(k400BadRequest, "Wrong captcha", session_id, callback);
-        return;
-    }
-    if (!VerifyEmailCode(session, email_code))
+    if (session->get<std::string>("email_code") != email_code)
     {
         SendError(k400BadRequest, "Wrong email code", session_id, callback);
         return;
     }
 #endif
+    session->erase("email_code");
 
     ClearDbTurnOff t; //skip the clear db circles for a while
     orm::DbClientPtr db = app().getDbClient();
@@ -1763,19 +1758,40 @@ std::string ServiceController::ResultsToString(const Json::Value& results)
 
 std::string ServiceController::SymbolicJsonToString(const std::string& json)
 {
+    //the string comes from an unauthenticated request, reject deep nesting before recursive parsing
+    int depth = 0;
+    bool in_string = false;
+    for (const char c : json)
+    {
+        if (in_string)
+        {
+            if (c == '"')
+                in_string = false;
+            continue;
+        }
+        if (c == '"')
+            in_string = true;
+        else if (c == '[' || c == '{')
+            ++depth;
+        else if (c == ']' || c == '}')
+            --depth;
+        if (depth > max_symbolic_json_depth)
+            return "";
+    }
+
     Json::CharReaderBuilder builder;
     std::unique_ptr<Json::CharReader> reader(builder.newCharReader());
     Json::Value root;
     std::string errors;
     if (!reader->parse(json.c_str(), json.c_str() + json.size(), &root, &errors))
         return "";
-    return SymbolicNodeToString(root);
+    return SymbolicNodeToString(root, 0);
 }
 
 //A node of the symbolic result tree: types 14, 15, 16 and 17 keep an empty shape element between their operands
-std::string ServiceController::SymbolicNodeToString(const Json::Value& node)
+std::string ServiceController::SymbolicNodeToString(const Json::Value& node, int depth)
 {
-    if (!node.isObject())
+    if (!node.isObject() || depth > max_symbolic_json_depth)
         return "";
 
     if (node.isMember("symbol") && node["symbol"].isString())
@@ -1797,7 +1813,7 @@ std::string ServiceController::SymbolicNodeToString(const Json::Value& node)
     std::vector<std::string> parts;
     const Json::Value& arr = node["elements"];
     for (Json::ArrayIndex i = 0; i < arr.size(); ++i)
-        parts.push_back(SymbolicNodeToString(arr[i]));
+        parts.push_back(SymbolicNodeToString(arr[i], depth + 1));
 
     if (type == 14 && parts.size() == 3)
         return "(" + parts[0] + ")/(" + parts[2] + ")";
