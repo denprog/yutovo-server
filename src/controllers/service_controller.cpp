@@ -729,7 +729,7 @@ void ServiceController::SaveAsDocument(const HttpRequestPtr& req, std::function<
 
     try
     {
-        orm::Result result = db->execSqlSync("select user_id, document from user_documents where document_id=$1", document_id);
+        orm::Result result = db->execSqlSync("select user_id, public, document from user_documents where document_id=$1", document_id);
         if (result.size() == 0)
         {
             GetLogger(session_id)->Error("SaveAsDocument error: No such document: document_id={}", document_id);
@@ -738,10 +738,10 @@ void ServiceController::SaveAsDocument(const HttpRequestPtr& req, std::function<
         }
 
         auto row = result[0];
-        if (row["user_id"].as<std::string>() != user_id)
+        if (row["user_id"].as<std::string>() != user_id && !row["public"].as<bool>())
         {
-            GetLogger(session_id)->Error("SaveAsDocument error: Access denied: document_id={}", document_id);
-            SendError(k403Forbidden, "Access to the document is denied", session_id, callback);
+            GetLogger(session_id)->Error("SaveAsDocument error: This document is not public: document_id={}", document_id);
+            SendError(k403Forbidden, "This document is not public", session_id, callback);
             return;
         }
         
@@ -798,8 +798,12 @@ void ServiceController::LoadDocument(const HttpRequestPtr& req, std::function<vo
     if (document_id.empty() || document_id == "-1")
         document_id = req->getCookie("document_id");
     if (document_id.empty() || document_id == "-1")
-        session->get<std::string>("document_id");
-    if (document_id.empty())
+    {
+        const std::string session_document_id = session->get<std::string>("document_id");
+        if (!session_document_id.empty() && session_document_id != "-1")
+            document_id = session_document_id;
+    }
+    if (document_id.empty() || document_id == "-1")
     {
         GetLogger(session_id)->Error("LoadDocument error: Wrong request: empty document_id");
         SendError(k400BadRequest, "Wrong request: empty document_id", session_id, callback);
@@ -1758,19 +1762,40 @@ std::string ServiceController::ResultsToString(const Json::Value& results)
 
 std::string ServiceController::SymbolicJsonToString(const std::string& json)
 {
+    //the string comes from an unauthenticated request, reject deep nesting before recursive parsing
+    int depth = 0;
+    bool in_string = false;
+    for (const char c : json)
+    {
+        if (in_string)
+        {
+            if (c == '"')
+                in_string = false;
+            continue;
+        }
+        if (c == '"')
+            in_string = true;
+        else if (c == '[' || c == '{')
+            ++depth;
+        else if (c == ']' || c == '}')
+            --depth;
+        if (depth > max_symbolic_json_depth)
+            return "";
+    }
+
     Json::CharReaderBuilder builder;
     std::unique_ptr<Json::CharReader> reader(builder.newCharReader());
     Json::Value root;
     std::string errors;
     if (!reader->parse(json.c_str(), json.c_str() + json.size(), &root, &errors))
         return "";
-    return SymbolicNodeToString(root);
+    return SymbolicNodeToString(root, 0);
 }
 
 //A node of the symbolic result tree: types 14, 15, 16 and 17 keep an empty shape element between their operands
-std::string ServiceController::SymbolicNodeToString(const Json::Value& node)
+std::string ServiceController::SymbolicNodeToString(const Json::Value& node, int depth)
 {
-    if (!node.isObject())
+    if (!node.isObject() || depth > max_symbolic_json_depth)
         return "";
 
     if (node.isMember("symbol") && node["symbol"].isString())
@@ -1792,7 +1817,7 @@ std::string ServiceController::SymbolicNodeToString(const Json::Value& node)
     std::vector<std::string> parts;
     const Json::Value& arr = node["elements"];
     for (Json::ArrayIndex i = 0; i < arr.size(); ++i)
-        parts.push_back(SymbolicNodeToString(arr[i]));
+        parts.push_back(SymbolicNodeToString(arr[i], depth + 1));
 
     if (type == 14 && parts.size() == 3)
         return "(" + parts[0] + ")/(" + parts[2] + ")";

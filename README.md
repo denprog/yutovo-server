@@ -23,12 +23,14 @@ Clone the project in the yutovo dir (select another branch if you want):
 cd yutovo
 git clone -b develop https://github.com/denprog/yutovo-server.git
 ```
-Create the build directories and build the debug version:
+Create the build directories and build the debug version. The `TEST` parameter is
+**mandatory**: `cmake` refuses to configure without an explicit `-DTEST=ON` or
+`-DTEST=OFF`, so no build silently picks an insecure default:
 
 ```
 mkdir -p build/debug
 cd build/debug
-cmake -DCMAKE_BUILD_TYPE=Debug ../..
+cmake -DCMAKE_BUILD_TYPE=Debug -DTEST=ON ../..
 make -sj && make install
 ```
 
@@ -43,9 +45,10 @@ cmake -DCMAKE_BUILD_TYPE=Debug -DTEST=OFF ../..
 make -sj && make install
 ```
 
-The default build (`TEST` on) is meant for development and Playwright testing of the
-web frontend: captcha checks are skipped, matching the frontend test build
-(`YUTOVO_PRODUCTION=false quasar build`, see the yutovo-web README).
+The `TEST=ON` build is meant for development and Playwright testing of the web
+frontend: captcha and email-code checks are skipped, matching the frontend test build
+(`YUTOVO_PRODUCTION=false quasar build`, see the yutovo-web README). **Never deploy a
+`TEST=ON` build publicly** — CMake prints a warning about this at configure time.
 
 Add a `yutovo-server.env` file with your credentials in the `../keys` folder (outside the repo; `../../../keys/yutovo-server.env` relative to the `build/*` directories):
 

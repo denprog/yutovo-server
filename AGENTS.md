@@ -2,10 +2,13 @@
 
 ## Build
 
-Build the project in `build/debug`:
+Build the project in `build/debug`. The `TEST` parameter is mandatory at configure time
+(`cmake` fails without an explicit `-DTEST=ON` or `-DTEST=OFF`); `build/debug` uses
+`TEST=ON` because it also builds the test suite:
 
 ```bash
 cd build/debug
+cmake -DCMAKE_BUILD_TYPE=Debug -DTEST=ON ../..
 make -j$(nproc)
 ```
 

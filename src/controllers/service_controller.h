@@ -74,7 +74,9 @@ private:
     static std::string NumberToString(const Json::Value& obj);
     static std::string ResultsToString(const Json::Value& results);
     static std::string SymbolicJsonToString(const std::string& json);
-    static std::string SymbolicNodeToString(const Json::Value& node);
+    static std::string SymbolicNodeToString(const Json::Value& node, int depth);
+
+    static constexpr int max_symbolic_json_depth = 100;
 
 #ifdef REMOTE_SOLVER
     WebSocketClientPtr solver_client;
@@ -82,6 +84,7 @@ private:
     const int solver_timeout = 5;
 #endif
 };
+
 };
 
 #endif

@@ -8,6 +8,7 @@
 #include "auth_controller.h"
 #include "../logic/clear_db.h"
 #include "utils.h"
+#include "email_templates.h"
 #include <jwt-cpp/jwt.h>
 #include <fstream>
 #include <system_error>
@@ -16,7 +17,6 @@
 #include <boost/uuid/uuid_io.hpp>
 #include <boost/lexical_cast.hpp>
 #include <functional>
-#include <random>
 #include <limits>
 #include <stdexcept>
 #include <openssl/rand.h>
@@ -183,16 +183,23 @@ void AuthController::SendEmailCode(const HttpRequestPtr &req, std::function<void
         return;
     }
 
-    auto send_email = 
-        [this, session_id, session](const std::string& email, std::string& subject, std::string& message)
+    std::string action;
+    if (json->isMember("action") && (*json)["action"].isString())
+        action = (*json)["action"].asString();
+    std::string language = "en";
+    if (json->isMember("language") && (*json)["language"].isString() && !(*json)["language"].asString().empty())
+        language = (*json)["language"].asString();
+
+    auto send_email =
+        [this, session_id, session, action, language](const std::string& email)
         {
-            std::random_device dev;
-            std::mt19937 rng(dev());
-            std::uniform_int_distribution<std::mt19937::result_type> dist6(0, 9);
             std::string email_code;
             for (int i = 0; i < 6; ++i)
-                email_code += std::to_string(dist6(rng));
-        
+                email_code += std::to_string(SecureRandomUInt(10));
+
+            //the subject and the body come from server-side templates only
+            EmailTemplate email_template = EmailTemplates::GetVerificationEmailTemplate(action, language);
+            std::string message = email_template.body_html;
             size_t p = message.find("EMAIL_CODE");
             if (p != std::string::npos)
                 message.replace(p, strlen("EMAIL_CODE"), email_code);
@@ -201,11 +208,19 @@ void AuthController::SendEmailCode(const HttpRequestPtr &req, std::function<void
 
             session->erase("email_code");
             session->erase("email_code_email");
-            CURLcode r = SendEmail(email_name, email, subject, message);
+            session->erase("email_code_time");
+            session->erase("email_code_attempts");
+#ifdef TEST
+            //the test build does not send real e-mails, but still issues the code
+            CURLcode r = CURLE_OK;
+#else
+            CURLcode r = SendEmail(email_name, email, email_template.subject, message);
+#endif
             if (r == CURLE_OK)
             {
                 session->insert("email_code", email_code);
                 session->insert("email_code_email", email);
+                session->insert("email_code_time", trantor::Date::now().secondsSinceEpoch());
                 GetLogger(session_id)->Info("Sent email code: {} to {}", email_code, email);
                 return true;
             }
@@ -213,31 +228,20 @@ void AuthController::SendEmailCode(const HttpRequestPtr &req, std::function<void
             return false;
         };
 
-    std::string login, email, subject, message;
+    std::string login, email;
 
     orm::DbClientPtr db = app().getDbClient();
     ClearDbTurnOff t; //skip the clear db circles for a while
-    std::string action;
-    if (json->isMember("action") && (*json)["action"].isString())
-        action = (*json)["action"].asString();
 
     if (!json->isMember("login") || !(*json)["login"].isString() || !json->isMember("email") || !(*json)["email"].isString())
     {
-        if (!json->isMember("subject") || !(*json)["subject"].isString() || !json->isMember("message") || !(*json)["message"].isString() || 
-            !json->isMember("captcha") || !(*json)["captcha"].isString())
+        if (!json->isMember("captcha") || !(*json)["captcha"].isString())
         {
             SendError(k400BadRequest, "Wrong json in the request", session_id, callback);
             return;
         }
 
-        subject = (*json)["subject"].asString();
-        message = (*json)["message"].asString();
-        GetLogger(session_id)->Info("SendEmailCode request: subject={}, action={}", subject, action);
-        if (subject.empty() || message.empty())
-        {
-            SendError(k400BadRequest, "Fields must not be empty", session_id, callback);
-            return;
-        }
+        GetLogger(session_id)->Info("SendEmailCode request: action={}, language={}", action, language);
 
 #ifndef TEST
         auto captcha = (*json)["captcha"].asString();
@@ -254,6 +258,11 @@ void AuthController::SendEmailCode(const HttpRequestPtr &req, std::function<void
             if (email.empty())
             {
                 SendError(k400BadRequest, "Fields must not be empty", session_id, callback);
+                return;
+            }
+            if (!MailUtils::IsEmail(email))
+            {
+                SendError(k400BadRequest, "Wrong e-mail", session_id, callback);
                 return;
             }
         }
@@ -321,7 +330,6 @@ void AuthController::SendEmailCode(const HttpRequestPtr &req, std::function<void
     else
     {
         if (!json->isMember("login") || !(*json)["login"].isString() || !json->isMember("email") || !(*json)["email"].isString() || 
-            !json->isMember("subject") || !(*json)["subject"].isString() || !json->isMember("message") || !(*json)["message"].isString() || 
             !json->isMember("captcha") || !(*json)["captcha"].isString())
         {
             SendError(k400BadRequest, "Wrong json in the request", session_id, callback);
@@ -330,12 +338,15 @@ void AuthController::SendEmailCode(const HttpRequestPtr &req, std::function<void
 
         login = (*json)["login"].asString();
         email = (*json)["email"].asString();
-        subject = (*json)["subject"].asString();
-        message = (*json)["message"].asString();
         GetLogger(session_id)->Info("SendEmailCode request: login={}, email={}, action={}", login, email, action);
-        if (login.empty() || email.empty() || subject.empty() || message.empty())
+        if (login.empty() || email.empty())
         {
             SendError(k400BadRequest, "Fields must not be empty", session_id, callback);
+            return;
+        }
+        if (!MailUtils::IsEmail(email))
+        {
+            SendError(k400BadRequest, "Wrong e-mail", session_id, callback);
             return;
         }
 
@@ -369,7 +380,7 @@ void AuthController::SendEmailCode(const HttpRequestPtr &req, std::function<void
         }
     }
 
-    if (!send_email(email, subject, message))
+    if (!send_email(email))
     {
         SendError(k500InternalServerError, "Error sending e-mail", session_id, callback);
         return;
@@ -476,7 +487,7 @@ void AuthController::Register(const HttpRequestPtr& req, std::function<void (con
     }
 
     auto email_code = (*json)["email_code"].asString();
-    if (email_code.empty() || session->get<std::string>("email_code") != email_code)
+    if (email_code.empty() || !VerifyEmailCode(session, email_code))
     {
         SendError(k400BadRequest, "Wrong email code", session_id, callback);
         return;
