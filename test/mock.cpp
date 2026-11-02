@@ -252,4 +252,111 @@ void TestBase::GetDocumentName(HttpClientPtr client, const std::string& document
     name = (*json)["name"].asString();
 }
 
+//SsrTest
+
+Json::Value SsrTest::MakeString(const std::string& text)
+{
+    Json::Value element;
+    element["type"] = 4;
+    element["elements"] = text;
+    element["format_id"] = "02546dfa-a44e-4781-8924-23b0f7a49fb0";
+    return element;
+}
+
+Json::Value SsrTest::MakeRow(const Json::Value& child)
+{
+    Json::Value element;
+    element["type"] = 3;
+    element["elements"].append(child);
+    return element;
+}
+
+Json::Value SsrTest::MakeParagraph(const std::string& format_name, const Json::Value& row, const std::string& marker)
+{
+    Json::Value element;
+    element["type"] = 2;
+    element["elements"].append(row);
+    element["format_name"] = format_name;
+    element["format_alignment"] = 0;
+    if (!marker.empty())
+        element["marker"] = marker;
+    return element;
+}
+
+Json::Value SsrTest::MakeDocument(const Json::Value& paragraphs)
+{
+    Json::Value format;
+    format["id"] = "02546dfa-a44e-4781-8924-23b0f7a49fb0";
+    format["family"] = "Arial";
+    format["size"] = 14;
+
+    Json::Value document;
+    document["config"]["language"] = 2;
+    document["string_formats"].append(format);
+    document["text"]["type"] = 1;
+    document["text"]["elements"] = paragraphs;
+    return document;
+}
+
+Json::Value SsrTest::MakeCodeString(const std::string& text)
+{
+    Json::Value element;
+    element["type"] = 8;
+    element["elements"] = text;
+    element["can_merge"] = true;
+    return element;
+}
+
+Json::Value SsrTest::MakeShape()
+{
+    Json::Value element;
+    element["type"] = 10;
+    return element;
+}
+
+Json::Value SsrTest::MakeOperator(int type, const std::string& symbol)
+{
+    Json::Value element;
+    element["type"] = type;
+    element["elements"].append(MakeShape());
+    element["symbol"] = symbol;
+    return element;
+}
+
+Json::Value SsrTest::MakeCodeRow(const Json::Value& first)
+{
+    Json::Value element;
+    element["type"] = 7;
+    element["elements"].append(first);
+    return element;
+}
+
+Json::Value SsrTest::MakeLeftRight(int type, const Json::Value& first, const Json::Value& second)
+{
+    Json::Value element;
+    element["type"] = type;
+    element["elements"].append(first);
+    element["elements"].append(MakeShape());
+    element["elements"].append(second);
+    return element;
+}
+
+Json::Value SsrTest::MakeCodeParagraph(const Json::Value& child)
+{
+    Json::Value element;
+    element["type"] = 6;
+    element["format_name"] = "Код";
+    element["elements"].append(child);
+    return element;
+}
+
+Json::Value SsrTest::MakeCodeBlock(const Json::Value& paragraph)
+{
+    Json::Value element;
+    element["type"] = 5;
+    element["code_id"] = 1;
+    element["elements"].append(paragraph);
+    return element;
+}
+
 }

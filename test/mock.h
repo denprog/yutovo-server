@@ -63,6 +63,25 @@ struct ServiceTest : public testing::Test, TestBase
 {
 };
 
+struct MailUtilsTest : public testing::Test, TestBase
+{
+};
+
+struct SsrTest : public testing::Test
+{
+    Json::Value MakeString(const std::string& text);
+    Json::Value MakeRow(const Json::Value& child);
+    Json::Value MakeParagraph(const std::string& format_name, const Json::Value& row, const std::string& marker = "");
+    Json::Value MakeDocument(const Json::Value& paragraphs);
+    Json::Value MakeCodeString(const std::string& text);
+    Json::Value MakeShape();
+    Json::Value MakeOperator(int type, const std::string& symbol);
+    Json::Value MakeCodeRow(const Json::Value& first);
+    Json::Value MakeLeftRight(int type, const Json::Value& first, const Json::Value& second);
+    Json::Value MakeCodeParagraph(const Json::Value& child);
+    Json::Value MakeCodeBlock(const Json::Value& paragraph);
+};
+
 //Post a solver request or reply to the service
 struct SolverActionTest : public ServiceTest
 {

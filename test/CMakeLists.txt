@@ -24,6 +24,7 @@ add_executable(${PROJECT_NAME}_tests
     session_test.cpp
     service_test.cpp
     utils_test.cpp
+    ssr_test.cpp
     $<TARGET_OBJECTS:${PROJECT_NAME}_lib>
 )
 

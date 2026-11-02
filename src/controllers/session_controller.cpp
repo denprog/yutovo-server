@@ -7,6 +7,7 @@
 
 #include "session_controller.h"
 #include "../logic/clear_db.h"
+#include "../logic/ssr_html.h"
 #include <drogon/Session.h>
 #include <drogon/plugins/RealIpResolver.h>
 #include <boost/uuid/uuid.hpp>
@@ -223,10 +224,12 @@ void SessionController::UserDocument(const HttpRequestPtr& req, std::function<vo
         }
         
         orm::DbClientPtr db = app().getDbClient();
+        std::string document_name, document_json;
+        bool document_public = false;
         try
         {
-            //check if the document exists
-            orm::Result result = db->execSqlSync("select document_id from user_documents where document_id=$1", param);
+            //check if the document exists; the document json is read only for public ones
+            orm::Result result = db->execSqlSync("select name, public from user_documents where document_id=$1", param);
             if (result.size() == 0)
             {
                 GetLogger(session_id)->Error("Document not found: {}", param);
@@ -237,6 +240,15 @@ void SessionController::UserDocument(const HttpRequestPtr& req, std::function<vo
                 SetSessionCookie(session_id, resp);
                 callback(resp);
                 return;
+            }
+
+            auto row = result[0];
+            document_name = row["name"].as<std::string>();
+            document_public = row["public"].as<bool>();
+            if (document_public)
+            {
+                result = db->execSqlSync("select document from user_documents where document_id=$1", param);
+                document_json = result[0]["document"].as<std::string>();
             }
 
             db->execSqlSync("update user_sessions set document_id=$1 where session_id=$2", param, session_id);
@@ -251,6 +263,22 @@ void SessionController::UserDocument(const HttpRequestPtr& req, std::function<vo
         SessionPtr session = req->session();
         session->insert("document_id", param);
         session->insert("session_id", session_id);
+
+        //generate the SEO version of the page with the document content
+        if (document_public)
+        {
+            std::string page = MakeDocumentPage(document_json, document_name, session_id);
+            if (!page.empty())
+            {
+                auto resp = HttpResponse::newHttpResponse();
+                resp->setContentTypeString("text/html; charset=utf-8");
+                resp->setBody(page);
+                SetDocumentCookie(param, session_id, resp);
+                SetSessionCookie(session_id, resp);
+                callback(resp);
+                return;
+            }
+        }
 
         auto resp = HttpResponse::newFileResponse(r + p);
         SetDocumentCookie(param, session_id, resp);
@@ -289,6 +317,9 @@ void SessionController::LibraryDocument(const HttpRequestPtr& req, std::function
     GetLogger(session_id)->Info("Request library document: request={}, path={}", p, path);
     p = inst.getHomePage();
 
+    //the route capture keeps the percent encoding, while crawlers always encode
+    //spaces and non-ascii names; decode before resolving the file
+    path = utils::urlDecode(path);
     std::replace(path.begin(), path.end(), '\\', '/');
 
     fs::path file_path;
@@ -342,6 +373,19 @@ void SessionController::LibraryDocument(const HttpRequestPtr& req, std::function
     SessionPtr session = req->session();
     session->insert("session_id", session_id);
 
+    //generate the SEO version of the page with the document content
+    std::string page;
+    if (SsrCache::GetInstance().GetLibraryPage(file_path.string(), file_path.stem().string(), page))
+    {
+        auto resp = HttpResponse::newHttpResponse();
+        resp->setContentTypeString("text/html; charset=utf-8");
+        resp->setBody(page);
+        SetSessionCookie(session_id, resp);
+        SetDocumentCookie(path, session_id, resp);
+        callback(resp);
+        return;
+    }
+
     auto resp = HttpResponse::newFileResponse(r + p);
     SetSessionCookie(session_id, resp);
     SetDocumentCookie(path, session_id, resp);
@@ -389,6 +433,25 @@ void SessionController::Downloads(const HttpRequestPtr& req, std::function<void 
         GetLogger(session_id)->Error("Download file path not found: {}", p);
         SendError(k404NotFound, "Path not found", session_id, callback);
     }
+}
+
+//Build the SPA page with the document content injected, empty on any error
+std::string SessionController::MakeDocumentPage(const std::string& document_json, const std::string& name, const std::string& session_id)
+{
+    Json::Value document;
+    Json::Reader reader;
+    if (!reader.parse(document_json, document) || !document.isObject())
+    {
+        GetLogger(session_id)->Error("Document not parsed for the SEO page");
+        return "";
+    }
+
+    std::string index_html;
+    if (!SsrCache::GetInstance().GetIndexPage(index_html))
+        return "";
+
+    SsrDocument ssr(document);
+    return SsrPage::MakePage(index_html, name, ssr.FirstParagraphText(160), SsrDocument::LangFromLanguage(ssr.Language()), ssr.GenerateArticle(name));
 }
 
 bool SessionController::SendStaticFile(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>& callback,

@@ -38,7 +38,15 @@ int main(int argc, char** argv)
 
     {
         std::ofstream f(test_docroot / "index.html");
-        f << "<html></html>\n";
+        f <<
+            "<html>"
+                "<head>"
+                    "<title>Yutovo - visual online calculator</title>"
+                "</head>"
+                "<body>"
+                    "<div id=q-app></div>"
+                "</body>"
+            "</html>\n";
     }
     std::ofstream(test_docroot / "yutovo.png").close();
     std::ofstream(test_docroot / "icons" / "favicon-16x16.png").close();

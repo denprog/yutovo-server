@@ -45,6 +45,7 @@ add_library(${PROJECT_NAME}_lib OBJECT
     utils.cpp
     email_templates.cpp
     logic/clear_db.cpp
+    logic/ssr_html.cpp
     ${CTL_SRC}
     ${FILTER_SRC}
     ${PLUGIN_SRC}
