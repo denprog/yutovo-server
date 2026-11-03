@@ -8,6 +8,10 @@
 #include "session_controller.h"
 #include "../logic/clear_db.h"
 #include "../logic/ssr_html.h"
+#include <ctime>
+#include <vector>
+#include <functional>
+#include <algorithm>
 #include <drogon/Session.h>
 #include <drogon/plugins/RealIpResolver.h>
 #include <boost/uuid/uuid.hpp>
@@ -390,6 +394,109 @@ void SessionController::LibraryDocument(const HttpRequestPtr& req, std::function
     SetSessionCookie(session_id, resp);
     SetDocumentCookie(path, session_id, resp);
     callback(resp);
+}
+
+void SessionController::Sitemap(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
+{
+    //no session is created: the sitemap is fetched by crawlers only; the urls belong to the requested host, the scheme comes from the proxy
+    std::string scheme = req->getHeader("X-Forwarded-Proto");
+    if (scheme.empty())
+        scheme = "https";
+    std::string host = req->getHeader("Host");
+    if (host.empty())
+        host = "yutovo.ru";
+
+    std::string sitemap = MakeSitemap(scheme + "://" + host);
+    auto resp = HttpResponse::newHttpResponse();
+    resp->setContentTypeString("application/xml; charset=utf-8");
+    if (sitemap.empty())
+        resp->setStatusCode(k404NotFound);
+    else
+        resp->setBody(sitemap);
+    callback(resp);
+}
+
+std::string SessionController::MakeSitemap(const std::string& base_url)
+{
+    {
+        std::lock_guard<std::mutex> lock(sitemap_mutex);
+        auto now = std::chrono::steady_clock::now();
+        auto it = sitemaps.find(base_url);
+        if (it != sitemaps.end() && now - it->second.time < std::chrono::hours(1))
+            return it->second.sitemap;
+    }
+
+    std::vector<fs::path> files;
+    std::function<void(const fs::path&)> collect_files =
+        [&](const fs::path& dir) -> void
+        {
+            std::error_code ec;
+            std::vector<fs::path> children;
+            for (fs::directory_iterator it(dir, ec), end; !ec && it != end; it.increment(ec))
+                children.push_back(it->path());
+            if (ec)
+                return;
+
+            //sorted names give a stable sitemap
+            std::sort(children.begin(), children.end());
+            for (const auto& child : children)
+            {
+                if (fs::is_directory(child))
+                    collect_files(child);
+                else if (child.extension() == ".yut")
+                    files.push_back(child);
+            }
+        };
+    collect_files(fs::path(library_path));
+
+    std::string sitemap =
+        "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+        "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
+    sitemap += "<url><loc>" + base_url + "/</loc></url>\n";
+
+    const char* hex = "0123456789ABCDEF";
+    for (const auto& file : files)
+    {
+        std::string relative = file.lexically_relative(library_path).string();
+
+        //the document path is percent encoded, only the url unreserved characters are kept
+        std::string url;
+        for (char c : relative)
+        {
+            unsigned char u = static_cast<unsigned char>(c);
+            bool unreserved = (u >= 'A' && u <= 'Z') || (u >= 'a' && u <= 'z') || (u >= '0' && u <= '9') ||
+                c == '-' || c == '.' || c == '_' || c == '~' || c == '/';
+            if (unreserved)
+                url += c;
+            else
+            {
+                url += '%';
+                url += hex[u >> 4];
+                url += hex[u & 0xf];
+            }
+        }
+
+        //the modification date of the document file, empty on an error
+        std::string lastmod;
+        std::error_code ec;
+        auto file_time = fs::last_write_time(file, ec);
+        if (!ec)
+        {
+            std::time_t time = std::chrono::system_clock::to_time_t(std::chrono::clock_cast<std::chrono::system_clock>(file_time));
+            std::tm tm = {};
+            gmtime_r(&time, &tm);
+            char buffer[16];
+            std::strftime(buffer, sizeof(buffer), "%Y-%m-%d", &tm);
+            lastmod = buffer;
+        }
+
+        sitemap += "<url><loc>" + base_url + "/library/" + url + "</loc><lastmod>" + lastmod + "</lastmod></url>\n";
+    }
+    sitemap += "</urlset>\n";
+
+    std::lock_guard<std::mutex> lock(sitemap_mutex);
+    sitemaps[base_url] = {std::chrono::steady_clock::now(), sitemap};
+    return sitemap;
 }
 
 void SessionController::Downloads(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, std::string param)

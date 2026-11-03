@@ -540,6 +540,37 @@ TEST_F(SessionTest, library_ssr_page_no_includes)
     ASSERT_TRUE(count == 2) << count << " " << body.substr(0, 300);
 }
 
+//The sitemap is generated from the library files with working document urls
+TEST_F(SessionTest, sitemap)
+{
+    auto client = HttpClient::newHttpClient(address);
+    client->enableCookies(true);
+
+    auto req = HttpRequest::newHttpRequest();
+    req->setMethod(drogon::Get);
+    req->setPath("/sitemap.xml");
+
+    auto resp = client->sendRequest(req);
+    ReqResult& res = resp.first;
+    HttpResponsePtr& r = resp.second;
+    ASSERT_TRUE(res == ReqResult::Ok) << res;
+    ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
+    ASSERT_TRUE(r->getContentType() == CT_APPLICATION_XML) << r->getContentType();
+
+    //the test server host is www.yutovo.ru:9001 and the scheme defaults to https;
+    std::string body(r->getBody());
+    std::string header =
+        "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+        "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n"
+        "<url><loc>https://www.yutovo.ru:9001/</loc></url>\n";
+    ASSERT_TRUE(body.compare(0, header.size(), header) == 0) << body.substr(0, 300);
+    ASSERT_TRUE(body.find("<loc>https://www.yutovo.ru:9001/library/de/") != std::string::npos) << body.substr(0, 300);
+    ASSERT_TRUE(body.find("<loc>https://www.yutovo.ru:9001/library/en/Units/Force.yut</loc>") != std::string::npos) << body.substr(0, 300);
+    //non-ascii names and spaces are percent encoded, the extension is kept
+    ASSERT_TRUE(body.find("%D0%9E%20%D0%AE%D1%82%D0%BE%D0%B2%D0%BE.yut</loc>") != std::string::npos) << body.substr(0, 300);
+    ASSERT_TRUE(body.find("<lastmod>") != std::string::npos) << body.substr(0, 300);
+}
+
 //A public user document page contains the article, a private one does not
 TEST_F(SessionTest, user_document_ssr_page)
 {

@@ -9,6 +9,10 @@
 #define __SESSION_CONTROLLER_H__
 
 #include <map>
+#include <mutex>
+#include <chrono>
+#include <vector>
+#include <unordered_map>
 #include <drogon/HttpClient.h>
 #include "controller_base.h"
 
@@ -30,6 +34,7 @@ public:
     ADD_METHOD_TO(SessionController::Images, "/images/{1}", Get);
     ADD_METHOD_TO(SessionController::UserDocument, "/document/{1}", Get);
     ADD_METHOD_VIA_REGEX(SessionController::LibraryDocument, "/library/(.*)", Get);
+    ADD_METHOD_TO(SessionController::Sitemap, "/sitemap.xml", Get);
     ADD_METHOD_TO(SessionController::Downloads, "/downloads/{1}", Get);
     METHOD_LIST_END
 
@@ -39,6 +44,7 @@ public:
     void Images(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, std::string param);
     void UserDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, std::string param);
     void LibraryDocument(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, std::string path);
+    void Sitemap(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback);
     void Downloads(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback, std::string param);
 
 private:
@@ -47,8 +53,19 @@ private:
 
     static std::string MakeDocumentPage(const std::string& document_json, const std::string& name, const std::string& session_id);
 
+    std::string MakeSitemap(const std::string& base_url);
+
     Logger* ref_logger = Logger::GetInstance(GetDeployPath() + "/log/yutovo-server/references", "server", true, true);
     Logger* downloads_logger = Logger::GetInstance(GetDeployPath() + "/log/yutovo-server/downloads", "server", true, true);
+
+    struct SitemapEntry
+    {
+        std::chrono::steady_clock::time_point time;
+        std::string sitemap;
+    };
+
+    std::mutex sitemap_mutex;
+    std::unordered_map<std::string, SitemapEntry> sitemaps;
 };
 
 }
