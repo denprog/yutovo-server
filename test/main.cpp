@@ -76,9 +76,11 @@ int main(int argc, char** argv)
     std::thread app_thread = std::thread(
         [&]()
         {
+            const char* test_port = std::getenv("TEST_PORT");
+            uint16_t port = test_port ? (uint16_t)std::stoi(test_port) : 9001;
             drogon::app().
                 createDbClient("postgresql", DB_HOST, DB_PORT, db_name, db_user, db_password, 1, "", "default", false, "", DB_TIMEOUT, false).
-                addListener("127.0.0.1", 9001).
+                addListener("127.0.0.1", port).
                 loadConfigFile("config.json");
             std::string doc_root = fs::absolute(test_docroot).string();
             if (!doc_root.empty() && doc_root.back() != '/')
