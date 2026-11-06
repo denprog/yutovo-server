@@ -165,6 +165,84 @@ TEST_F(SsrTest, article_equation)
     ) << ssr.GenerateArticle("Уравнение");
 }
 
+//Matrices and determinants are generated as mtable grids
+TEST_F(SsrTest, article_matrix)
+{
+    auto make_matrix =
+        [this](int type) -> Json::Value
+        {
+            Json::Value matrix;
+            matrix["type"] = type;
+            matrix["rows"] = 2;
+            matrix["columns"] = 2;
+            matrix["elements"].append(MakeShape());
+            matrix["elements"].append(MakeCodeRow(MakeCodeString("1")));
+            matrix["elements"].append(MakeCodeRow(MakeCodeString("2")));
+            matrix["elements"].append(MakeCodeRow(MakeCodeString("3")));
+            matrix["elements"].append(MakeCodeRow(MakeCodeString("4")));
+            matrix["elements"].append(MakeShape());
+            return matrix;
+        };
+
+    const std::string grid =
+        "<mtable>"
+            "<mtr>"
+                "<mtd><mrow><mi>1</mi></mrow></mtd>"
+                "<mtd><mrow><mi>2</mi></mrow></mtd>"
+            "</mtr>"
+            "<mtr>"
+                "<mtd><mrow><mi>3</mi></mrow></mtd>"
+                "<mtd><mrow><mi>4</mi></mrow></mtd>"
+            "</mtr>"
+        "</mtable>";
+
+    Json::Value paragraphs;
+    paragraphs.append(MakeParagraph("Основной текст", MakeRow(MakeCodeBlock(MakeCodeParagraph(make_matrix(60))))));
+    paragraphs.append(MakeParagraph("Основной текст", MakeRow(MakeCodeBlock(MakeCodeParagraph(make_matrix(61))))));
+
+    Json::Value document = MakeDocument(paragraphs);
+    SsrDocument ssr(document);
+    ASSERT_TRUE(ssr.GenerateArticle("Матрица") ==
+        "<article>"
+            "<h1>Матрица</h1>"
+            "<p><math xmlns='http://www.w3.org/1998/Math/MathML'><mo>(</mo>" + grid + "<mo>)</mo></math></p>"
+            "<p><math xmlns='http://www.w3.org/1998/Math/MathML'><mo>|</mo>" + grid + "<mo>|</mo></math></p>"
+        "</article>"
+    ) << ssr.GenerateArticle("Матрица");
+}
+
+//A limit renders as the lim text with the "variable → value" row under it
+TEST_F(SsrTest, article_limit)
+{
+    Json::Value limit;
+    limit["type"] = 62;
+    limit["elements"].append(MakeCodeString("lim"));
+    limit["elements"].append(MakeCodeRow(MakeCodeString("x")));
+    limit["elements"].append(MakeCodeString("→"));
+    limit["elements"].append(MakeCodeRow(MakeCodeString("0")));
+
+    Json::Value paragraphs;
+    paragraphs.append(MakeParagraph("Основной текст", MakeRow(MakeCodeBlock(MakeCodeParagraph(limit)))));
+
+    Json::Value document = MakeDocument(paragraphs);
+    SsrDocument ssr(document);
+    ASSERT_TRUE(ssr.GenerateArticle("Предел") ==
+        "<article>"
+            "<h1>Предел</h1>"
+            "<p><math xmlns='http://www.w3.org/1998/Math/MathML'>"
+                "<munder>"
+                    "<mi>lim</mi>"
+                    "<mrow>"
+                        "<mrow><mi>x</mi></mrow>"
+                        "<mo>→</mo>"
+                        "<mrow><mi>0</mi></mrow>"
+                    "</mrow>"
+                "</munder>"
+            "</math></p>"
+        "</article>"
+    ) << ssr.GenerateArticle("Предел");
+}
+
 //Links and images
 TEST_F(SsrTest, article_link_image)
 {

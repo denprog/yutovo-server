@@ -68,7 +68,9 @@ private:
     std::string IterationToHtml(const Json::Value& element, const std::string& symbol) const;
     std::string DefiniteIntegralToHtml(const Json::Value& element) const;
     std::string IndefiniteIntegralToHtml(const Json::Value& element) const;
+    std::string LimitToHtml(const Json::Value& element) const;
     std::string EvaluationBarToHtml(const Json::Value& element) const;
+    std::string MatrixToHtml(const Json::Value& element) const;
     std::string GraphToHtml(const Json::Value& element) const;
     std::string StringStyle(const Json::Value* format) const;
     const Json::Value* FindStringFormat(const Json::Value& element) const;

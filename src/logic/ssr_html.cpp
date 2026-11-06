@@ -81,6 +81,9 @@ constexpr int TYPE_TEXT_EQUATION = 56;
 constexpr int TYPE_TEXT_ASSIGNMENT = 57;
 constexpr int TYPE_GRAPH_SURFACE = 58;
 constexpr int TYPE_GRAPH_HISTOGRAM = 59;
+constexpr int TYPE_MATRIX = 60;
+constexpr int TYPE_DETERMINANT = 61;
+constexpr int TYPE_LIMIT = 62;
 
 const Json::Value empty_value;
 
@@ -438,8 +441,13 @@ std::string SsrDocument::ElementToHtml(const Json::Value& element) const
         return DefiniteIntegralToHtml(element);
     case TYPE_INDEFINITE_INTEGRAL:
         return IndefiniteIntegralToHtml(element);
+    case TYPE_LIMIT:
+        return LimitToHtml(element);
     case TYPE_EVALUATION_BAR_SUBSCRIPT:
         return EvaluationBarToHtml(element);
+    case TYPE_MATRIX:
+    case TYPE_DETERMINANT:
+        return MatrixToHtml(element);
     default:
         return "";
     }
@@ -606,6 +614,43 @@ std::string SsrDocument::IndefiniteIntegralToHtml(const Json::Value& element) co
     s += ElementToHtml(Child(element, 1));
     s += ElementToHtml(Child(element, 2));
     s += ElementToHtml(Child(element, 3));
+    return s;
+}
+
+std::string SsrDocument::LimitToHtml(const Json::Value& element) const
+{
+    std::string s = "<munder><mi>lim</mi><mrow>";
+    s += ElementToHtml(Child(element, 1));
+    s += "<mo>→</mo>";
+    s += ElementToHtml(Child(element, 3));
+    s += "</mrow></munder>";
+    return s;
+}
+
+std::string SsrDocument::MatrixToHtml(const Json::Value& element) const
+{
+    unsigned rows = element.get("rows", 0).asUInt();
+    unsigned columns = element.get("columns", 0).asUInt();
+    if (rows == 0 || columns == 0)
+        return "";
+
+    const Json::Value& children = element["elements"];
+    if (!children.isArray() || children.size() != 2 + rows * columns)
+        return "";
+
+    bool bars = element["type"].asInt() == TYPE_DETERMINANT;
+    std::string open_fence = bars ? "<mo>|</mo>" : "<mo>(</mo>";
+    std::string close_fence = bars ? "<mo>|</mo>" : "<mo>)</mo>";
+
+    std::string s = open_fence + "<mtable>";
+    for (unsigned r = 0; r < rows; ++r)
+    {
+        s += "<mtr>";
+        for (unsigned c = 0; c < columns; ++c)
+            s += "<mtd>" + ElementToHtml(Child(element, 1 + r * columns + c)) + "</mtd>";
+        s += "</mtr>";
+    }
+    s += "</mtable>" + close_fence;
     return s;
 }
 
