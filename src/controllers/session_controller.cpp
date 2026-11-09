@@ -218,7 +218,7 @@ void SessionController::UserDocument(const HttpRequestPtr& req, std::function<vo
         {
             if (!AddSession(param, session_id))
             {
-                logger->Error("Database error: Error inserting a session");
+                GetLogger("")->Error("Database error: Error inserting a session");
                 SendError(k500InternalServerError, "Error inserting a session", session_id, callback);
                 return;
             }

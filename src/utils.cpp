@@ -13,33 +13,31 @@ namespace yutovo_server
 
 extern std::string GetDeployPath();
 
-yutovo::Logger* logger = yutovo::Logger::GetInstance(GetDeployPath() + "/log/yutovo-server", "server", true, true);
-
 yutovo::Logger* GetLogger(const std::string& session_id)
 {
     if (session_id.empty() || !IsGuid(session_id))
-        return logger;
+        return yutovo::Logger::GetInstance(GetDeployPath() + "/log/yutovo-server", "server", true, true);
     return yutovo::Logger::GetInstance(GetDeployPath() + "/log/yutovo-server/sessions/" + session_id, "server", true, true);
 }
 
 yutovo::Logger* GetSolverLogger(const std::string& solver_id)
 {
     if (!IsGuid(solver_id))
-        return logger;
+        return yutovo::Logger::GetInstance(GetDeployPath() + "/log/yutovo-server", "server", true, true);
     return yutovo::Logger::GetInstance(GetDeployPath() + "/log/yutovo-server/solver/" + solver_id, "solver", true, true);
 }
 
 yutovo::Logger* GetCalculatorLogger(const std::string& solver_id)
 {
     if (!IsGuid(solver_id))
-        return logger;
+        return yutovo::Logger::GetInstance(GetDeployPath() + "/log/yutovo-server", "server", true, true);
     return yutovo::Logger::GetInstance(GetDeployPath() + "/log/yutovo-server/calculator/" + solver_id, "calculator", true, true);
 }
 
 yutovo::Logger* GetUpdatesLogger(const std::string& session_id)
 {
     if (!IsGuid(session_id))
-        return logger;
+        return yutovo::Logger::GetInstance(GetDeployPath() + "/log/yutovo-server", "server", true, true);
     return yutovo::Logger::GetInstance(GetDeployPath() + "/log/yutovo-server/updates/" + session_id, "calculator", true, true);
 }
 

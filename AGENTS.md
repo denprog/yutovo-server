@@ -93,6 +93,20 @@ arr [0] = foo (1);
 
 Comments that precede a function, method, or class (header/descriptive comments above the definition) start with a capital letter, e.g. `//Group of code paragraphs`, `//TextEquation`, `//Insert a text block into the document text`.
 
+### Names of variables and constants
+
+Variables and constants (including `constexpr` and class data members) are named in lowercase with words separated by underscores, without prefixes such as `k`, `m`, or `g`:
+
+```cpp
+// CORRECT
+int max_files = 10;
+constexpr size_t max_cached_loggers = 256;
+
+// WRONG
+int MaxFiles = 10;
+constexpr size_t kMaxCachedLoggers = 256;
+```
+
 ### Lambdas
 
 Place the capture clause on a new line, indented by 4 spaces. Parameters, the `->` return type, and the opening brace follow the normal rules: parameters and return type stay on the same line as the capture clause, and the opening brace goes on its own line.

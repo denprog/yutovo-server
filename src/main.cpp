@@ -18,12 +18,11 @@ int main(int argc, char *argv[])
 {
     const char* version = "1.1.11";
 
-    Logger* logger = Logger::GetInstance(yutovo_server::GetDeployPath() + "/log/yutovo-server/", "server", true, true);
-    logger->Info("Yutovo server start, version: {}", version);
-    logger->SetLevel(yutovo::LogLevel::LEVEL_DEBUG);
+    yutovo_server::GetLogger("")->Info("Yutovo server start, version: {}", version);
+    yutovo_server::GetLogger("")->SetLevel(yutovo::LogLevel::LEVEL_DEBUG);
 
-    Logger* server_logger = Logger::GetInstance(yutovo_server::GetDeployPath() + "/log/yutovo-server/server", "server", true, true);
-    server_logger->Info("Yutovo server start, version: {}", version);
+    Logger::GetInstance(yutovo_server::GetDeployPath() + "/log/yutovo-server/server", "server", true, true)->Info(
+        "Yutovo server start, version: {}", version);
 
     const char* db_host = std::getenv("DB_HOST");
     int db_port = 5432;
@@ -34,7 +33,7 @@ int main(int argc, char *argv[])
     const char* db_password = std::getenv("DB_PASSWORD");
     if (!db_name || !db_user || !db_password)
     {
-        logger->Error("Enviroment variables not found");
+        yutovo_server::GetLogger("")->Error("Enviroment variables not found");
         return 1;
     }
 
@@ -48,14 +47,14 @@ int main(int argc, char *argv[])
                 document_root = argv[++i];
             else
             {
-                logger->Critical("--document_root option requires one argument");
+                yutovo_server::GetLogger("")->Critical("--document_root option requires one argument");
                 return 1;
             }
         }
     }
 
     if (!document_root.empty())
-        logger->Info("Document root={}", document_root);
+        yutovo_server::GetLogger("")->Info("Document root={}", document_root);
 
     {
         std::thread app_thread = std::thread(
@@ -81,7 +80,7 @@ int main(int argc, char *argv[])
         app_thread.join();
     }
 
-    logger->Info("Yutovo server finish");
-    server_logger->Info("Yutovo server finish");
+    yutovo_server::GetLogger("")->Info("Yutovo server finish");
+    Logger::GetInstance(yutovo_server::GetDeployPath() + "/log/yutovo-server/server", "server", true, true)->Info("Yutovo server finish");
     return 0;
 }

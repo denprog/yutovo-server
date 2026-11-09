@@ -643,13 +643,13 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
     auto captcha = (*json)["captcha"].asString();
     if (captcha.empty() || session->get<std::string>("captcha") != captcha)
     {
-        logger->Error("Wrong captcha: {}", captcha);
+        GetLogger("")->Error("Wrong captcha: {}", captcha);
         SendError(k400BadRequest, "Wrong captcha", session_id, callback);
         return;
     }
 #endif
 
-    logger->Info("Login request: login={}, load_last={}", login, load_last);
+    GetLogger("")->Info("Login request: login={}, load_last={}", login, load_last);
 #ifdef TEST
     GetLogger(session_id)->Info("Login request: login={}, load_last={}", login, load_last);
 #else

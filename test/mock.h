@@ -67,6 +67,15 @@ struct MailUtilsTest : public testing::Test, TestBase
 {
 };
 
+struct LoggerTest : public testing::Test
+{
+    void SetUp() override;
+    void TearDown() override;
+
+    static int OpenLogFiles(const std::string& dir);
+    static std::string ReadLogFile(const std::string& dir);
+};
+
 struct SsrTest : public testing::Test
 {
     Json::Value MakeString(const std::string& text);

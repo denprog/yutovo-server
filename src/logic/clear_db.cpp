@@ -75,7 +75,7 @@ void ClearDb::ClearDbThread()
                 }
                 catch (const orm::DrogonDbException& e)
                 {
-                    logger->Error("Database error: {}", e.base().what());
+                    GetLogger("")->Error("Database error: {}", e.base().what());
                 }
                 now = trantor::Date::now();
             }
