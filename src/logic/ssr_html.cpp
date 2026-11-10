@@ -10,6 +10,7 @@
 #include <sstream>
 #include <functional>
 #include <cstdio>
+#include <cctype>
 #include <drogon/HttpAppFramework.h>
 #include <boost/iostreams/filtering_streambuf.hpp>
 #include <boost/iostreams/copy.hpp>
@@ -819,14 +820,80 @@ const Json::Value& SsrDocument::Child(const Json::Value& element, unsigned index
 
 //SsrPage
 
+std::string SsrPage::CanonicalUrl(const std::string& host, const std::string& path)
+{
+    //the host header is normalized: lower case, without the port, the www variants are folded into the site hosts
+    std::string name = host;
+    for (char& c : name)
+        c = static_cast<char>(std::tolower(static_cast<unsigned char>(c)));
+    size_t port = name.find(':');
+    if (port != std::string::npos)
+        name.erase(port);
+    std::string russia_suffix = std::string(".") + russia_host;
+    bool russia = name == russia_host || name.ends_with(russia_suffix);
+    return "https://" + std::string(russia ? russia_host : default_host) + path;
+}
+
+size_t SsrPage::HeadInsertPosition(const std::string& page)
+{
+    size_t title_end = page.find("</title>");
+    if (title_end != std::string::npos)
+        return title_end + 8;
+    size_t head = page.find("<head>");
+    if (head != std::string::npos)
+        return head + 6;
+    return std::string::npos;
+}
+
+std::string SsrPage::UrlOnHost(const std::string& url, const char* host)
+{
+    //the url is absolute: the path part starts at the slash after the host
+    size_t authority = url.find('/');
+    size_t path = authority == std::string::npos ? std::string::npos : url.find('/', authority + 2);
+    if (path == std::string::npos)
+        return url;
+    return "https://" + std::string(host) + url.substr(path);
+}
+
+std::string SsrPage::HeadLinks(const std::string& canonical_url)
+{
+    //the hreflang alternates are the same on both hosts: the ru users are served by the russian host,
+    //everyone else by the default one, and each host is canonical for itself
+    std::string links = "<link rel=\"canonical\" href=\"" + SsrDocument::EscapeHtml(canonical_url) + "\">";
+    links += "<link rel=\"alternate\" hreflang=\"ru-RU\" href=\"" + SsrDocument::EscapeHtml(UrlOnHost(canonical_url, russia_host)) + "\">";
+    links += "<link rel=\"alternate\" hreflang=\"x-default\" href=\"" + SsrDocument::EscapeHtml(UrlOnHost(canonical_url, default_host)) + "\">";
+    return links;
+}
+
+std::string SsrPage::AddHeadLinks(const std::string& index_html, const std::string& canonical_url)
+{
+    if (index_html.empty() || canonical_url.empty())
+        return "";
+
+    std::string page = index_html;
+    size_t insert = HeadInsertPosition(page);
+    if (insert == std::string::npos)
+        return "";
+    page.insert(insert, HeadLinks(canonical_url));
+    return page;
+}
+
 std::string SsrPage::MakePage(const std::string& index_html, const std::string& title, const std::string& description, const std::string& lang,
-    const std::string& article)
+    const std::string& article, const std::string& canonical_url)
 {
     if (index_html.empty() || article.empty())
         return "";
 
     //the head is modified before the article is injected: the document content is user text and must not be scanned for head markup
     std::string page = index_html;
+
+    if (!canonical_url.empty())
+    {
+        //inserted first at the head position: the meta description takes the same position below and ends up before the links
+        size_t insert = HeadInsertPosition(page);
+        if (insert != std::string::npos)
+            page.insert(insert, HeadLinks(canonical_url));
+    }
 
     if (!description.empty())
     {
@@ -847,15 +914,9 @@ std::string SsrPage::MakePage(const std::string& index_html, const std::string& 
         }
 
         std::string meta_description = "<meta name=\"description\" content=\"" + SsrDocument::EscapeHtml(description) + "\">";
-        size_t title_end = page.find("</title>");
-        if (title_end != std::string::npos)
-            page.insert(title_end + 8, meta_description);
-        else
-        {
-            size_t head = page.find("<head>");
-            if (head != std::string::npos)
-                page.insert(head + 6, meta_description);
-        }
+        size_t insert = HeadInsertPosition(page);
+        if (insert != std::string::npos)
+            page.insert(insert, meta_description);
     }
 
     if (!title.empty())
@@ -934,7 +995,8 @@ bool SsrCache::GetIndexPage(std::string& index_html)
 }
 
 //Returns the cached page of a library document or generates it
-bool SsrCache::GetLibraryPage(const std::string& path, const std::string& title, std::string& page_html)
+bool SsrCache::GetLibraryPage(const std::string& path, const std::string& title, const std::string& canonical_url,
+    std::string& page_html)
 {
     std::error_code ec;
     FileTime mtime = fs::last_write_time(path, ec);
@@ -947,7 +1009,7 @@ bool SsrCache::GetLibraryPage(const std::string& path, const std::string& title,
 
     {
         std::lock_guard<std::mutex> lock(cache_mutex);
-        auto it = library_pages.find(path);
+        auto it = library_pages.find(canonical_url);
         if (it != library_pages.end() && it->second.mtime == mtime)
         {
             page_html = it->second.page;
@@ -963,13 +1025,13 @@ bool SsrCache::GetLibraryPage(const std::string& path, const std::string& title,
     SsrDocument ssr(document);
     std::string description = ssr.FirstParagraphText(160);
     std::string lang = SsrDocument::LangFromLanguage(ssr.Language());
-    std::string page = SsrPage::MakePage(index_html, title, description, lang, ssr.GenerateArticle(title));
+    std::string page = SsrPage::MakePage(index_html, title, description, lang, ssr.GenerateArticle(title), canonical_url);
     if (page.empty())
         return false;
 
     std::lock_guard<std::mutex> lock(cache_mutex);
-    library_pages[path] = {mtime, std::move(page)};
-    page_html = library_pages[path].page;
+    library_pages[canonical_url] = {mtime, std::move(page)};
+    page_html = library_pages[canonical_url].page;
     return true;
 }
 

@@ -51,7 +51,13 @@ private:
     bool SendStaticFile(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>& callback,
         const std::string& session_id, const fs::path& root, const std::string& relative);
 
-    static std::string MakeDocumentPage(const std::string& document_json, const std::string& name, const std::string& session_id);
+    void SendIndexPage(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>& callback,
+        const std::string& session_id);
+
+    static std::string MakeDocumentPage(const std::string& document_json, const std::string& name, const std::string& canonical_url,
+        const std::string& session_id);
+
+    static std::string PercentEncode(const std::string& path);
 
     std::string MakeSitemap(const std::string& base_url);
 

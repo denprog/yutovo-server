@@ -89,12 +89,32 @@ private:
 class SsrPage
 {
 public:
+    //The site hosts: the version for the Russian users and the default one
+    static constexpr const char* russia_host = "yutovo.ru";
+    static constexpr const char* default_host = "yutovo.com";
+
+    //Returns the absolute url of the page on its own site host: the yutovo.ru requests stay on yutovo.ru, the rest use yutovo.com
+    static std::string CanonicalUrl(const std::string& host, const std::string& path);
+
+    //Returns the index.html page with the canonical and hreflang head links inserted, or an empty string when the head is not found
+    static std::string AddHeadLinks(const std::string& index_html, const std::string& canonical_url);
+
     //Returns the page html, or an empty string when the app container is not found
-    static std::string MakePage(const std::string& index_html, const std::string& title,
-        const std::string& description, const std::string& lang, const std::string& article);
+    static std::string MakePage(const std::string& index_html, const std::string& title, const std::string& description, 
+        const std::string& lang, const std::string& article, const std::string& canonical_url);
+
+private:
+    //Returns the canonical link of the page and the hreflang alternates of the two site hosts
+    static std::string HeadLinks(const std::string& canonical_url);
+
+    //Returns the url with the host part replaced
+    static std::string UrlOnHost(const std::string& url, const char* host);
+
+    //Returns the position in the page head where new tags are inserted, npos when the head is not found
+    static size_t HeadInsertPosition(const std::string& page);
 };
 
-//Caches the index.html template and generated library pages, invalidated by mtime
+//Caches the index.html template and generated library pages, keyed by the canonical url, invalidated by mtime
 class SsrCache
 {
 public:
@@ -103,7 +123,7 @@ public:
     static SsrCache& GetInstance();
 
     bool GetIndexPage(std::string& index_html);
-    bool GetLibraryPage(const std::string& path, const std::string& title, std::string& page_html);
+    bool GetLibraryPage(const std::string& path, const std::string& title, const std::string& canonical_url, std::string& page_html);
 
 private:
     struct LibraryPage

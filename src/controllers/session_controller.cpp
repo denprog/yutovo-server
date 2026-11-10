@@ -78,10 +78,7 @@ void SessionController::Root(const HttpRequestPtr& req, std::function<void (cons
 
                     if (user_id.empty() || document_id == "-1")
                     {
-                        std::string r = HttpAppFramework::instance().getDocumentRoot();
-                        auto resp = HttpResponse::newFileResponse(r + "/index.html");
-                        SetSessionCookie(session_id, resp);
-                        callback(resp);
+                        SendIndexPage(req, callback, session_id);
                         return;
                     }
 
@@ -122,10 +119,7 @@ void SessionController::Root(const HttpRequestPtr& req, std::function<void (cons
             if (user_id.empty())
             {
                 //a non-registered user doesn't have a document in the DB
-                std::string r = HttpAppFramework::instance().getDocumentRoot();
-                auto resp = HttpResponse::newFileResponse(r + "/index.html");
-                SetSessionCookie(session_id, resp);
-                callback(resp);
+                SendIndexPage(req, callback, session_id);
                 return;
             }
 
@@ -271,7 +265,8 @@ void SessionController::UserDocument(const HttpRequestPtr& req, std::function<vo
         //generate the SEO version of the page with the document content
         if (document_public)
         {
-            std::string page = MakeDocumentPage(document_json, document_name, session_id);
+            std::string canonical_url = SsrPage::CanonicalUrl(req->getHeader("Host"), "/document/" + param);
+            std::string page = MakeDocumentPage(document_json, document_name, canonical_url, session_id);
             if (!page.empty())
             {
                 auto resp = HttpResponse::newHttpResponse();
@@ -326,10 +321,11 @@ void SessionController::LibraryDocument(const HttpRequestPtr& req, std::function
     path = utils::urlDecode(path);
     std::replace(path.begin(), path.end(), '\\', '/');
 
+    fs::path canonical_lib;
     fs::path file_path;
     try
     {
-        fs::path canonical_lib = fs::canonical(library_path);
+        canonical_lib = fs::canonical(library_path);
         file_path = fs::canonical(canonical_lib / path);
         if (!file_path.string().starts_with(canonical_lib.string()))
         {
@@ -378,8 +374,10 @@ void SessionController::LibraryDocument(const HttpRequestPtr& req, std::function
     session->insert("session_id", session_id);
 
     //generate the SEO version of the page with the document content
+    std::string canonical_url = SsrPage::CanonicalUrl(req->getHeader("Host"),
+        "/library/" + PercentEncode(file_path.lexically_relative(canonical_lib).string()));
     std::string page;
-    if (SsrCache::GetInstance().GetLibraryPage(file_path.string(), file_path.stem().string(), page))
+    if (SsrCache::GetInstance().GetLibraryPage(file_path.string(), file_path.stem().string(), canonical_url, page))
     {
         auto resp = HttpResponse::newHttpResponse();
         resp->setContentTypeString("text/html; charset=utf-8");
@@ -414,6 +412,28 @@ void SessionController::Sitemap(const HttpRequestPtr& req, std::function<void (c
     else
         resp->setBody(sitemap);
     callback(resp);
+}
+
+//Percent encodes the path for a url: only the unreserved characters are kept
+std::string SessionController::PercentEncode(const std::string& path)
+{
+    const char* hex = "0123456789ABCDEF";
+    std::string url;
+    for (char c : path)
+    {
+        unsigned char u = static_cast<unsigned char>(c);
+        bool unreserved = (u >= 'A' && u <= 'Z') || (u >= 'a' && u <= 'z') || (u >= '0' && u <= '9') ||
+            c == '-' || c == '.' || c == '_' || c == '~' || c == '/';
+        if (unreserved)
+            url += c;
+        else
+        {
+            url += '%';
+            url += hex[u >> 4];
+            url += hex[u & 0xf];
+        }
+    }
+    return url;
 }
 
 std::string SessionController::MakeSitemap(const std::string& base_url)
@@ -454,27 +474,12 @@ std::string SessionController::MakeSitemap(const std::string& base_url)
         "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
     sitemap += "<url><loc>" + base_url + "/</loc></url>\n";
 
-    const char* hex = "0123456789ABCDEF";
     for (const auto& file : files)
     {
         std::string relative = file.lexically_relative(library_path).string();
 
         //the document path is percent encoded, only the url unreserved characters are kept
-        std::string url;
-        for (char c : relative)
-        {
-            unsigned char u = static_cast<unsigned char>(c);
-            bool unreserved = (u >= 'A' && u <= 'Z') || (u >= 'a' && u <= 'z') || (u >= '0' && u <= '9') ||
-                c == '-' || c == '.' || c == '_' || c == '~' || c == '/';
-            if (unreserved)
-                url += c;
-            else
-            {
-                url += '%';
-                url += hex[u >> 4];
-                url += hex[u & 0xf];
-            }
-        }
+        std::string url = PercentEncode(relative);
 
         //the modification date of the document file, empty on an error
         std::string lastmod;
@@ -543,7 +548,8 @@ void SessionController::Downloads(const HttpRequestPtr& req, std::function<void 
 }
 
 //Build the SPA page with the document content injected, empty on any error
-std::string SessionController::MakeDocumentPage(const std::string& document_json, const std::string& name, const std::string& session_id)
+std::string SessionController::MakeDocumentPage(const std::string& document_json, const std::string& name,
+    const std::string& canonical_url, const std::string& session_id)
 {
     Json::Value document;
     Json::Reader reader;
@@ -558,7 +564,31 @@ std::string SessionController::MakeDocumentPage(const std::string& document_json
         return "";
 
     SsrDocument ssr(document);
-    return SsrPage::MakePage(index_html, name, ssr.FirstParagraphText(160), SsrDocument::LangFromLanguage(ssr.Language()), ssr.GenerateArticle(name));
+    return SsrPage::MakePage(index_html, name, ssr.FirstParagraphText(160), SsrDocument::LangFromLanguage(ssr.Language()),
+        ssr.GenerateArticle(name), canonical_url);
+}
+
+//Serves the SPA index page with the canonical and hreflang head links of the requested host
+void SessionController::SendIndexPage(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>& callback,
+    const std::string& session_id)
+{
+    std::string index_html;
+    std::string canonical_url = SsrPage::CanonicalUrl(req->getHeader("Host"), req->path());
+    std::string page = SsrCache::GetInstance().GetIndexPage(index_html) ? SsrPage::AddHeadLinks(index_html, canonical_url) : "";
+    if (page.empty())
+    {
+        std::string r = HttpAppFramework::instance().getDocumentRoot();
+        auto resp = HttpResponse::newFileResponse(r + "/index.html");
+        SetSessionCookie(session_id, resp);
+        callback(resp);
+        return;
+    }
+
+    auto resp = HttpResponse::newHttpResponse();
+    resp->setContentTypeString("text/html; charset=utf-8");
+    resp->setBody(page);
+    SetSessionCookie(session_id, resp);
+    callback(resp);
 }
 
 bool SessionController::SendStaticFile(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>& callback,

@@ -295,6 +295,49 @@ TEST_F(SsrTest, first_paragraph_text)
     ASSERT_TRUE(ssr_truncated.FirstParagraphText(10) == "abcdefghij…") << ssr_truncated.FirstParagraphText(10);
 }
 
+//The canonical host of the request: the yutovo.ru variants stay on yutovo.ru, the rest use yutovo.com
+TEST_F(SsrTest, canonical_url)
+{
+    ASSERT_TRUE(SsrPage::CanonicalUrl("yutovo.ru", "/") == "https://yutovo.ru/");
+    ASSERT_TRUE(SsrPage::CanonicalUrl("www.yutovo.ru:9001", "/library/Force.yut") == "https://yutovo.ru/library/Force.yut");
+    ASSERT_TRUE(SsrPage::CanonicalUrl("YUTOVO.RU", "/") == "https://yutovo.ru/");
+    ASSERT_TRUE(SsrPage::CanonicalUrl("yutovo.com", "/") == "https://yutovo.com/");
+    ASSERT_TRUE(SsrPage::CanonicalUrl("www.yutovo.com:443", "/document/7") == "https://yutovo.com/document/7");
+    ASSERT_TRUE(SsrPage::CanonicalUrl("example.org:8080", "/") == "https://yutovo.com/");
+}
+
+//The index page gets only the head links, the rest of the page is untouched
+TEST_F(SsrTest, head_links)
+{
+    std::string index_html =
+        "<html>"
+            "<head>"
+                "<title>Yutovo - visual online calculator</title>"
+            "</head>"
+            "<body>"
+                "<div id=q-app></div>"
+            "</body>"
+        "</html>";
+
+    std::string page = SsrPage::AddHeadLinks(index_html, "https://yutovo.com/");
+    ASSERT_TRUE(page ==
+        "<html>"
+            "<head>"
+                "<title>Yutovo - visual online calculator</title>"
+                "<link rel=\"canonical\" href=\"https://yutovo.com/\">"
+                "<link rel=\"alternate\" hreflang=\"ru-RU\" href=\"https://yutovo.ru/\">"
+                "<link rel=\"alternate\" hreflang=\"x-default\" href=\"https://yutovo.com/\">"
+            "</head>"
+            "<body>"
+                "<div id=q-app></div>"
+            "</body>"
+        "</html>"
+    ) << page;
+
+    ASSERT_TRUE(SsrPage::AddHeadLinks(index_html, "").empty());
+    ASSERT_TRUE(SsrPage::AddHeadLinks("<html></html>", "https://yutovo.ru/").empty());
+}
+
 //The article is injected into the SPA page
 TEST_F(SsrTest, page)
 {
@@ -309,13 +352,17 @@ TEST_F(SsrTest, page)
             "</body>"
         "</html>";
 
-    std::string page = SsrPage::MakePage(index_html, "Частота генератора", "Описание документа", "ru", "<article><h1>Частота генератора</h1></article>");
+    std::string page = SsrPage::MakePage(index_html, "Частота генератора", "Описание документа", "ru",
+        "<article><h1>Частота генератора</h1></article>", "https://yutovo.ru/library/ru/Frequency.yut");
 
     ASSERT_TRUE(page ==
         "<html lang=\"ru\">"
             "<head>"
                 "<title>Частота генератора</title>"
                 "<meta name=\"description\" content=\"Описание документа\">"
+                "<link rel=\"canonical\" href=\"https://yutovo.ru/library/ru/Frequency.yut\">"
+                "<link rel=\"alternate\" hreflang=\"ru-RU\" href=\"https://yutovo.ru/library/ru/Frequency.yut\">"
+                "<link rel=\"alternate\" hreflang=\"x-default\" href=\"https://yutovo.com/library/ru/Frequency.yut\">"
                 "<meta charset=utf-8>"
             "</head>"
             "<body>"
@@ -345,13 +392,17 @@ TEST_F(SsrTest, page_replace_description)
             "</body>"
         "</html>";
 
-    std::string page = SsrPage::MakePage(index_html, "Документ", "новое описание", "ru", "<article>x</article>");
+    std::string page = SsrPage::MakePage(index_html, "Документ", "новое описание", "ru", "<article>x</article>",
+        "https://yutovo.com/document/7");
 
     ASSERT_TRUE(page ==
         "<html lang=\"ru\">"
             "<head>"
                 "<title>Документ</title>"
                 "<meta name=\"description\" content=\"новое описание\">"
+                "<link rel=\"canonical\" href=\"https://yutovo.com/document/7\">"
+                "<link rel=\"alternate\" hreflang=\"ru-RU\" href=\"https://yutovo.ru/document/7\">"
+                "<link rel=\"alternate\" hreflang=\"x-default\" href=\"https://yutovo.com/document/7\">"
             "</head>"
             "<body>"
             "<div id=\"q-app\">"
@@ -367,7 +418,7 @@ TEST_F(SsrTest, page_replace_description)
 //Without the app container the page is not modified
 TEST_F(SsrTest, page_no_container)
 {
-    ASSERT_TRUE(SsrPage::MakePage("<html><body></body></html>", "t", "d", "ru", "<article>x</article>").empty());
+    ASSERT_TRUE(SsrPage::MakePage("<html><body></body></html>", "t", "d", "ru", "<article>x</article>", "").empty());
 }
 
 //The page is not corrupted when the document text contains the word "description"
@@ -386,7 +437,8 @@ TEST_F(SsrTest, page_description_word_in_article)
         "</html>";
 
     std::string article = "<article><p>a document description field</p><p>tail</p></article>";
-    std::string page = SsrPage::MakePage(index_html, "Document", "the description of the document", "en", article);
+    std::string page = SsrPage::MakePage(index_html, "Document", "the description of the document", "en", article,
+        "https://yutovo.ru/library/en/Document.yut");
 
     //the head tags survive and the article is injected intact
     ASSERT_TRUE(page ==
@@ -394,6 +446,9 @@ TEST_F(SsrTest, page_description_word_in_article)
             "<head>"
                 "<title>Document</title>"
                 "<meta name=\"description\" content=\"the description of the document\">"
+                "<link rel=\"canonical\" href=\"https://yutovo.ru/library/en/Document.yut\">"
+                "<link rel=\"alternate\" hreflang=\"ru-RU\" href=\"https://yutovo.ru/library/en/Document.yut\">"
+                "<link rel=\"alternate\" hreflang=\"x-default\" href=\"https://yutovo.com/library/en/Document.yut\">"
                 "<meta charset=utf-8>"
                 "<meta name=viewport content=\"width=device-width\">"
             "</head>"
@@ -411,7 +466,8 @@ TEST_F(SsrTest, page_description_word_in_article)
     ) << page;
 }
 
-//An existing meta description is replaced even when the article mentions the word
+//An existing meta description is replaced even when the article mentions the word;
+//an empty canonical url adds no head links
 TEST_F(SsrTest, page_replace_description_word_in_article)
 {
     std::string index_html =
@@ -427,7 +483,7 @@ TEST_F(SsrTest, page_replace_description_word_in_article)
         "</html>";
 
     std::string article = "<article><p>description inside the article</p></article>";
-    std::string page = SsrPage::MakePage(index_html, "Документ", "новое описание", "ru", article);
+    std::string page = SsrPage::MakePage(index_html, "Документ", "новое описание", "ru", article, "");
 
     ASSERT_TRUE(page ==
         "<html lang=\"ru\">"
@@ -519,6 +575,9 @@ TEST_F(SessionTest, library_ssr_page)
             "<head>"
                 "<title>Force</title>"
                 "<meta name=\"description\" content=\"To convert a unit, edit the expression and select the desired unit in the result context menu:\">"
+                "<link rel=\"canonical\" href=\"https://yutovo.ru/library/en/Units/Force.yut\">"
+                "<link rel=\"alternate\" hreflang=\"ru-RU\" href=\"https://yutovo.ru/library/en/Units/Force.yut\">"
+                "<link rel=\"alternate\" hreflang=\"x-default\" href=\"https://yutovo.com/library/en/Units/Force.yut\">"
             "</head>"
             "<body>"
                 "<div id=q-app>"
@@ -687,6 +746,9 @@ TEST_F(SessionTest, user_document_ssr_page)
             "<head>"
                 "<title>SSR document</title>"
                 "<meta name=\"description\" content=\"Text red blue\">"
+                "<link rel=\"canonical\" href=\"https://yutovo.ru/document/" + document_id + "\">"
+                "<link rel=\"alternate\" hreflang=\"ru-RU\" href=\"https://yutovo.ru/document/" + document_id + "\">"
+                "<link rel=\"alternate\" hreflang=\"x-default\" href=\"https://yutovo.com/document/" + document_id + "\">"
             "</head>"
             "<body>"
                 "<div id=q-app>"
@@ -724,6 +786,38 @@ TEST_F(SessionTest, user_document_ssr_page)
     ) << body;
 
     UnRegister(client, "UserSsr", access_token);
+}
+
+//The root page gets the canonical and hreflang head links of the requested host
+TEST_F(SessionTest, root_page)
+{
+    auto client = HttpClient::newHttpClient(address);
+    client->enableCookies(true);
+
+    auto req = HttpRequest::newHttpRequest();
+    req->setMethod(drogon::Get);
+    req->setPath("/");
+
+    auto resp = client->sendRequest(req);
+    ReqResult& res = resp.first;
+    HttpResponsePtr& r = resp.second;
+    ASSERT_TRUE(res == ReqResult::Ok) << res;
+    ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
+
+    std::string body(r->getBody());
+    ASSERT_TRUE(body ==
+        "<html>"
+            "<head>"
+                "<title>Yutovo - visual online calculator</title>"
+                "<link rel=\"canonical\" href=\"https://yutovo.ru/\">"
+                "<link rel=\"alternate\" hreflang=\"ru-RU\" href=\"https://yutovo.ru/\">"
+                "<link rel=\"alternate\" hreflang=\"x-default\" href=\"https://yutovo.com/\">"
+            "</head>"
+            "<body>"
+                "<div id=q-app></div>"
+            "</body>"
+        "</html>\n"
+    ) << body;
 }
 
 }
