@@ -276,6 +276,40 @@ TEST_F(SsrTest, article_link_image)
     ) << ssr.GenerateArticle("Ссылки");
 }
 
+//Spaces in the link urls are percent encoded
+TEST_F(SsrTest, article_link_url_encoding)
+{
+    Json::Value link;
+    link["type"] = 39;
+    link["elements"] = "правила";
+    link["url"] = "./Regole di base.yut";
+
+    Json::Value external;
+    external["type"] = 39;
+    external["elements"] = "поиск";
+    external["url"] = "https://example.com/search?q=a b";
+
+    Json::Value row;
+    row["type"] = 3;
+    row["elements"].append(link);
+    row["elements"].append(external);
+
+    Json::Value paragraphs;
+    paragraphs.append(MakeParagraph("Основной текст", row));
+
+    Json::Value document = MakeDocument(paragraphs);
+    SsrDocument ssr(document);
+    ASSERT_TRUE(ssr.GenerateArticle("Ссылки") ==
+        "<article>"
+            "<h1>Ссылки</h1>"
+            "<p>"
+                "<a href=\"./Regole%20di%20base.yut\">правила</a>"
+                "<a href=\"https://example.com/search?q=a%20b\">поиск</a>"
+            "</p>"
+        "</article>"
+    ) << ssr.GenerateArticle("Ссылки");
+}
+
 //The meta description text
 TEST_F(SsrTest, first_paragraph_text)
 {

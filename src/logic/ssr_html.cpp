@@ -506,14 +506,17 @@ std::string SsrDocument::StringToHtml(const Json::Value& element) const
 
 std::string SsrDocument::LinkToHtml(const Json::Value& element) const
 {
-    //spaces and control characters are not allowed in the url
+    //control characters are not allowed in the url and are removed, spaces are percent encoded
     std::string url;
     for (char c : element["url"].asString())
     {
         unsigned char u = static_cast<unsigned char>(c);
-        if (u <= ' ')
+        if (u < ' ')
             continue;
-        url += c;
+        if (u == ' ')
+            url += "%20";
+        else
+            url += c;
     }
 
     const Json::Value* format = FindStringFormat(element);
