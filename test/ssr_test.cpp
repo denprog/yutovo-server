@@ -243,6 +243,34 @@ TEST_F(SsrTest, article_limit)
     ) << ssr.GenerateArticle("Предел");
 }
 
+//Comparison operators are generated as MathML with escaped signs
+TEST_F(SsrTest, article_comparison)
+{
+    Json::Value paragraphs;
+    paragraphs.append(MakeParagraph("Основной текст", MakeRow(MakeCodeBlock(MakeCodeParagraph(
+        MakeLeftRight(71, MakeCodeRow(MakeCodeString("2")), MakeCodeRow(MakeCodeString("x"))))))));
+    paragraphs.append(MakeParagraph("Ещё текст", MakeRow(MakeCodeBlock(MakeCodeParagraph(
+        MakeLeftRight(72, MakeCodeRow(MakeCodeString("a")), MakeCodeRow(MakeCodeString("b"))))))));
+
+    Json::Value document = MakeDocument(paragraphs);
+    SsrDocument ssr(document);
+    ASSERT_TRUE(ssr.GenerateArticle("Сравнение") ==
+        "<article>"
+            "<h1>Сравнение</h1>"
+            "<p><math xmlns='http://www.w3.org/1998/Math/MathML'>"
+                "<mrow><mi>2</mi></mrow>"
+                "<mo>\u2A7D</mo>"
+                "<mrow><mi>x</mi></mrow>"
+            "</math></p>"
+            "<p><math xmlns='http://www.w3.org/1998/Math/MathML'>"
+                "<mrow><mi>a</mi></mrow>"
+                "<mo>\u2260</mo>"
+                "<mrow><mi>b</mi></mrow>"
+            "</math></p>"
+        "</article>"
+    ) << ssr.GenerateArticle("Сравнение");
+}
+
 //Links and images
 TEST_F(SsrTest, article_link_image)
 {

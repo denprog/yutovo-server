@@ -85,6 +85,12 @@ constexpr int TYPE_GRAPH_HISTOGRAM = 59;
 constexpr int TYPE_MATRIX = 60;
 constexpr int TYPE_DETERMINANT = 61;
 constexpr int TYPE_LIMIT = 62;
+constexpr int TYPE_EQUAL = 67;
+constexpr int TYPE_GREATER = 68;
+constexpr int TYPE_LESS = 69;
+constexpr int TYPE_GREATER_EQUAL = 70;
+constexpr int TYPE_LESS_EQUAL = 71;
+constexpr int TYPE_NOT_EQUAL = 72;
 
 const Json::Value empty_value;
 
@@ -383,6 +389,18 @@ std::string SsrDocument::ElementToHtml(const Json::Value& element) const
     case TYPE_EQUATION:
     case TYPE_TEXT_EQUATION:
         return LeftRightToHtml(element, "=");
+    case TYPE_EQUAL:
+        return LeftRightToHtml(element, "=");
+    case TYPE_GREATER:
+        return LeftRightToHtml(element, "&gt;");
+    case TYPE_LESS:
+        return LeftRightToHtml(element, "&lt;");
+    case TYPE_GREATER_EQUAL:
+        return LeftRightToHtml(element, "\u2A7E");
+    case TYPE_LESS_EQUAL:
+        return LeftRightToHtml(element, "\u2A7D");
+    case TYPE_NOT_EQUAL:
+        return LeftRightToHtml(element, "\u2260");
     case TYPE_OPEN_ROUND_BRACKET:
         return OperatorToHtml(element, "(");
     case TYPE_CLOSE_ROUND_BRACKET:
