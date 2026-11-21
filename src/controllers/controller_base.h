@@ -66,6 +66,7 @@ protected:
 
     void SetSessionCookie(const std::string& session_id, HttpResponsePtr resp);
     void SetDocumentCookie(const std::string& document_id, const std::string& session_id, HttpResponsePtr resp);
+    void SetSessionDocument(const SessionPtr& session, const std::string& document_id);
 
     bool AddSession(const std::string& document_id, std::string& session_id);
     bool AddDocument(const HttpRequestPtr& req, const std::string& user_id, std::string& document_id, std::string& name, int language, 

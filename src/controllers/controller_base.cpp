@@ -411,6 +411,12 @@ void ControllerBase::SetDocumentCookie(const std::string& document_id, const std
     resp->addCookie(document_cookie);
 }
 
+void ControllerBase::SetSessionDocument(const SessionPtr& session, const std::string& document_id)
+{
+    session->erase("document_id");
+    session->insert("document_id", document_id);
+}
+
 bool ControllerBase::AddSession(const std::string& document_id, std::string& session_id)
 {
     session_id = std::string(boost::uuids::to_string(boost::uuids::random_generator()()));

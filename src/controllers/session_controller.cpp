@@ -75,6 +75,7 @@ void SessionController::Root(const HttpRequestPtr& req, std::function<void (cons
 
                     auto row = result[0];
                     std::string document_id = row["document_id"].as<std::string>();
+                    SetSessionDocument(session, document_id);
 
                     if (user_id.empty() || document_id == "-1")
                     {
@@ -83,7 +84,6 @@ void SessionController::Root(const HttpRequestPtr& req, std::function<void (cons
                     }
 
                     //redirect to the document
-                    session->insert("document_id", document_id);
                     auto resp = HttpResponse::newRedirectionResponse("/document/" + document_id);
 
                     callback(resp);
@@ -113,7 +113,7 @@ void SessionController::Root(const HttpRequestPtr& req, std::function<void (cons
                 return;
             }
 
-            session->insert("document_id", document_id);
+            SetSessionDocument(session, document_id);
             session->insert("session_id", session_id);
 
             if (user_id.empty())
@@ -259,7 +259,7 @@ void SessionController::UserDocument(const HttpRequestPtr& req, std::function<vo
         }
 
         SessionPtr session = req->session();
-        session->insert("document_id", param);
+        SetSessionDocument(session, param);
         session->insert("session_id", session_id);
 
         //generate the SEO version of the page with the document content
@@ -368,6 +368,7 @@ void SessionController::LibraryDocument(const HttpRequestPtr& req, std::function
 
         SessionPtr session = req->session();
         session->insert("session_id", session_id);
+        SetSessionDocument(session, "-1");
     }
 
     SessionPtr session = req->session();

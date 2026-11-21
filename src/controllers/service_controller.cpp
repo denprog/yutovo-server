@@ -332,6 +332,7 @@ void ServiceController::SaveLibraryDocument(const HttpRequestPtr& req, std::func
         }
 
         db->execSqlSync("update user_sessions set document_id=$1 where session_id=$2", document_id, session_id);
+        SetSessionDocument(session, document_id);
         SendOkDocumentName(callback, document_id, session_id, name);
     }
     catch (const orm::DrogonDbException& e)
@@ -490,6 +491,7 @@ void ServiceController::NewDocument(const HttpRequestPtr& req, std::function<voi
             }
 
             db->execSqlSync("update user_sessions set document_id=$1 where session_id=$2", document_id, session_id);
+            SetSessionDocument(session, document_id);
 
             SendOkDocumentName(callback, document_id, session_id, name);
         }
@@ -621,6 +623,7 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
             }
 
             db->execSqlSync("update user_sessions set document_id=$1 where session_id=$2", document_id, session_id);
+            SetSessionDocument(session, document_id);
             SendOkDocumentName(callback, document_id, session_id, name);
         }
         catch (const orm::DrogonDbException& e)
@@ -667,6 +670,7 @@ void ServiceController::SaveDocument(const HttpRequestPtr& req, std::function<vo
         orm::Result result = db->execSqlSync("update user_documents set document=jsonb_set(document,$1::text[], $2::jsonb) "
             "where document_id=$3", path, document, document_id);
         result = db->execSqlSync("update user_sessions set document_id=$1 where session_id=$2", document_id, session_id);
+        SetSessionDocument(session, document_id);
         SendOk(callback);
     }
     catch (const orm::DrogonDbException& e)
@@ -881,6 +885,7 @@ void ServiceController::LoadDocument(const HttpRequestPtr& req, std::function<vo
         if (!session_id.empty())
         {
             db->execSqlSync("update user_sessions set document_id=$1 where session_id=$2", document_id, session_id);
+            SetSessionDocument(session, document_id);
             if (!user_id.empty())
                 db->execSqlSync("update users set document_id=$1 where user_id=$2", document_id, user_id);
         }
@@ -1040,6 +1045,7 @@ void ServiceController::DeleteDocument(const HttpRequestPtr& req, std::function<
 
         db->execSqlSync("delete from user_documents where document_id=$1", document_id);
         db->execSqlSync("update user_sessions set document_id=-1 where session_id=$1", session_id);
+        SetSessionDocument(session, "-1");
         SendOk(callback);
     }
     catch (const orm::DrogonDbException& e)
@@ -1863,6 +1869,7 @@ void ServiceController::SolverAction(const HttpRequestPtr& req, std::function<vo
     }
 
     SessionPtr session = req->session();
+    std::string document_id = session->get<std::string>("document_id");
     if (session->get<std::string>("solver_id") != guid)
     {
         session->erase("solver_id");
@@ -1872,9 +1879,11 @@ void ServiceController::SolverAction(const HttpRequestPtr& req, std::function<vo
         if (!login.empty())
             GetCalculatorLogger(guid)->Info("Calculator started: {}, login: {}", guid, login);
         if (!login.empty())
-            GetSolverLogger(guid)->Info("Solver started: ip={}, guid={}, login: {}", drogon::plugin::RealIpResolver::GetRealAddr(req).toIp(), guid, login);
+            GetSolverLogger(guid)->Info("Solver started: ip={}, guid={}, document_id={}, login: {}",
+                drogon::plugin::RealIpResolver::GetRealAddr(req).toIp(), guid, document_id, login);
         else
-            GetSolverLogger(guid)->Info("Solver started: ip={}, guid={}", drogon::plugin::RealIpResolver::GetRealAddr(req).toIp(), guid);
+            GetSolverLogger(guid)->Info("Solver started: ip={}, guid={}, document_id={}",
+                drogon::plugin::RealIpResolver::GetRealAddr(req).toIp(), guid, document_id);
     }
     
     std::string id;
@@ -1952,12 +1961,14 @@ void ServiceController::SolverAction(const HttpRequestPtr& req, std::function<vo
         if (json->isMember("complex_max_count") && (*json)["complex_max_count"].isInt())
             complex_max_count = (*json)["complex_max_count"].asInt();
         
-        GetSolverLogger(guid)->Info("SOLVE_CODE: expression={}, expression_type={}, id={}, results_order={}, result_type={}, real_exponent_size={}, "
-            "real_precision={}, real_default_angle_measure={}, real_result_angle_measure={}, integer_default_notation={}, integer_result_notation={}, "
-            "fraction_form={}, complex_form={}, complex_default_angle_measure={}, complex_exponent_size={}, complex_precision={}, "
-            "complex_result_angle_measure={}, complex_max_count={}", expression, expression_type, id, results_order, result_type, real_exponent_size,
-            real_precision, real_default_angle_measure, real_result_angle_measure, integer_default_notation, integer_result_notation, 
-            fraction_form, complex_form, complex_default_angle_measure, complex_exponent_size, complex_precision, complex_result_angle_measure, complex_max_count);
+        GetSolverLogger(guid)->Info("SOLVE_CODE: expression={}, expression_type={}, id={}, document_id={}, results_order={}, "
+            "result_type={}, real_exponent_size={}, real_precision={}, real_default_angle_measure={}, real_result_angle_measure={}, "
+            "integer_default_notation={}, integer_result_notation={}, fraction_form={}, complex_form={}, complex_default_angle_measure={}, "
+            "complex_exponent_size={}, complex_precision={}, complex_result_angle_measure={}, complex_max_count={}",
+            expression, expression_type, id, document_id, results_order, result_type, real_exponent_size, real_precision,
+            real_default_angle_measure, real_result_angle_measure, integer_default_notation, integer_result_notation,
+            fraction_form, complex_form, complex_default_angle_measure, complex_exponent_size, complex_precision,
+            complex_result_angle_measure, complex_max_count);
     }
     else
     {
@@ -1965,7 +1976,7 @@ void ServiceController::SolverAction(const HttpRequestPtr& req, std::function<vo
         std::string output = fastWriter.write(*json);
         if (!output.empty() && output[output.size() - 1] == '\n')
             output.pop_back();
-        GetSolverLogger(guid)->Info("Solve result: {}", output);
+        GetSolverLogger(guid)->Info("Solve result: document_id={}, json={}", document_id, output);
 
         //short calculator log
         std::string mantissa, exponent, numerator, denomerator, integer, value, unit, error;

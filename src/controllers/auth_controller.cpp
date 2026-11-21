@@ -739,9 +739,11 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
             //if a user has many logins, a session may have another login
             db->execSqlSync("delete from user_sessions where session_id=$1", session_id);
             //the user session starts to have an owner
-            db->execSqlSync("insert into user_sessions (session_id, user_id, expire_time, document_id) values ($1, $2, $3, $4)", 
+            db->execSqlSync("insert into user_sessions (session_id, user_id, expire_time, document_id) values ($1, $2, $3, $4)",
                 session_id, user_id, session_expires_date.secondsSinceEpoch(), document_id);
         }
+
+        SetSessionDocument(session, document_id);
 
         std::string language = row["language"].as<std::string>();
         std::string settings = row["settings"].as<std::string>();
