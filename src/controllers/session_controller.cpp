@@ -37,7 +37,7 @@ void SessionController::Root(const HttpRequestPtr& req, std::function<void (cons
     if (!ref.empty())
     {
         GetLogger(session_id)->Debug("Request root: path={}, ref={}, ip={}", p, ref, drogon::plugin::RealIpResolver::GetRealAddr(req).toIp());
-        ref_logger->Info("Request: ref={}, session_id={}, ip={}, Accept-Language={}, Host={}, Referer={}, User-Agent={}", ref, session_id, 
+        GetReferencesLogger()->Info("Request: ref={}, session_id={}, ip={}, Accept-Language={}, Host={}, Referer={}, User-Agent={}", ref, session_id, 
             drogon::plugin::RealIpResolver::GetRealAddr(req).toIp(), req->getHeader("Accept-Language"), req->getHeader("Host"), req->getHeader("Referer"), 
             req->getHeader("User-Agent"));
     }
@@ -305,7 +305,7 @@ void SessionController::LibraryDocument(const HttpRequestPtr& req, std::function
     if (!ref.empty())
     {
         GetLogger(session_id)->Debug("Request library document: path={}, ref={}, ip={}", path, ref, drogon::plugin::RealIpResolver::GetRealAddr(req).toIp());
-        ref_logger->Info("Request: ref={}, session_id={}, ip={}, Accept-Language={}, Host={}, Referer={}, User-Agent={}", ref, session_id,
+        GetReferencesLogger()->Info("Request: ref={}, session_id={}, ip={}, Accept-Language={}, Host={}, Referer={}, User-Agent={}", ref, session_id,
             drogon::plugin::RealIpResolver::GetRealAddr(req).toIp(), req->getHeader("Accept-Language"), req->getHeader("Host"), req->getHeader("Referer"),
             req->getHeader("User-Agent"));
     }
@@ -537,7 +537,7 @@ void SessionController::Downloads(const HttpRequestPtr& req, std::function<void 
         }
 
         auto resp = HttpResponse::newFileResponse(file_path.c_str());
-        downloads_logger->Info("Request download: path={}, session_id={}, ip={}, result={}", p, session_id, drogon::plugin::RealIpResolver::GetRealAddr(req).toIp(),
+        GetDownloadsLogger()->Info("Request download: path={}, session_id={}, ip={}, result={}", p, session_id, drogon::plugin::RealIpResolver::GetRealAddr(req).toIp(),
             (int)resp->getStatusCode());
         callback(resp);
     }

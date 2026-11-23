@@ -41,6 +41,26 @@ yutovo::Logger* GetUpdatesLogger(const std::string& session_id)
     return yutovo::Logger::GetInstance(GetDeployPath() + "/log/yutovo-server/updates/" + session_id, "calculator", true, true);
 }
 
+yutovo::Logger* GetReferencesLogger()
+{
+    return yutovo::Logger::GetInstance(GetDeployPath() + "/log/yutovo-server/references", "server", true, true);
+}
+
+yutovo::Logger* GetDownloadsLogger()
+{
+    return yutovo::Logger::GetInstance(GetDeployPath() + "/log/yutovo-server/downloads", "server", true, true);
+}
+
+yutovo::Logger* GetAuthLogger()
+{
+    return yutovo::Logger::GetInstance(GetDeployPath() + "/log/yutovo-server/auth", "server", true, true);
+}
+
+yutovo::Logger* GetRegisterLogger()
+{
+    return yutovo::Logger::GetInstance(GetDeployPath() + "/log/yutovo-server/register", "server", true, true);
+}
+
 bool IsGuid(const std::string& str)
 {
     static std::regex guid("(^([0-9A-Fa-f]{8}[-]?[0-9A-Fa-f]{4}[-]?[0-9A-Fa-f]{4}[-]?[0-9A-Fa-f]{4}[-]?[0-9A-Fa-f]{12})$)");

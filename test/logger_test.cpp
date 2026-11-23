@@ -98,4 +98,61 @@ TEST_F(LoggerTest, cache_hit)
     ASSERT_TRUE(text.find("cache hit message") != std::string::npos) << text;
 }
 
+//A pointer stored after a GetInstance call does not survive the cache churn, the evicted logger is destroyed with its file handle
+TEST_F(LoggerTest, evicted_pointer_is_destroyed)
+{
+    Logger* stored = Logger::GetInstance(cache_dir + "/stored", "server", true, true);
+    stored->Info("before eviction");
+
+    for (int i = 0; i < 12; ++i)
+        Logger::GetInstance(cache_dir + "/e" + std::to_string(i), "server", true, true)->Info("filler");
+
+    ASSERT_TRUE(OpenLogFiles(cache_dir + "/stored") == 0) << OpenLogFiles(cache_dir + "/stored");
+
+    //acquiring the logger again recreates it and keeps appending to the same file
+    Logger::GetInstance(cache_dir + "/stored", "server", true, true)->Info("after eviction");
+    std::string text = ReadLogFile(cache_dir + "/stored");
+    ASSERT_TRUE(text.find("before eviction") != std::string::npos) << text;
+    ASSERT_TRUE(text.find("after eviction") != std::string::npos) << text;
+}
+
+//A request with a ref parameter must survive the session loggers filling the cache and evicting the references logger
+TEST_F(LoggerTest, ref_request_after_eviction)
+{
+    auto client = HttpClient::newHttpClient(address);
+
+    auto send_ref_request =
+        [&]() -> HttpResponsePtr
+        {
+            auto req = HttpRequest::newHttpRequest();
+            req->setMethod(drogon::Get);
+            req->setPath("/?ref=eviction");
+            req->setPathEncode(false);
+            auto resp = client->sendRequest(req);
+            EXPECT_TRUE(resp.first == ReqResult::Ok) << (int)resp.first;
+            return resp.second;
+        };
+
+    HttpResponsePtr r = send_ref_request();
+    ASSERT_TRUE(r != nullptr);
+    ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
+
+    //requests without a session cookie create a new session logger each, the cache limit of the fixture evicts the references logger
+    for (int i = 0; i < 12; ++i)
+    {
+        auto req = HttpRequest::newHttpRequest();
+        req->setMethod(drogon::Get);
+        req->setPath("/");
+        auto resp = client->sendRequest(req);
+        ASSERT_TRUE(resp.first == ReqResult::Ok) << (int)resp.first;
+        ASSERT_TRUE(resp.second->getStatusCode() == k200OK) << resp.second->getStatusCode();
+    }
+
+    r = send_ref_request();
+    ASSERT_TRUE(r != nullptr);
+    ASSERT_TRUE(r->getStatusCode() == k200OK) << r->getStatusCode();
+    std::string body(r->getBody());
+    ASSERT_TRUE(body.find("<title>Yutovo - visual online calculator</title>") != std::string::npos) << body;
+}
+
 }

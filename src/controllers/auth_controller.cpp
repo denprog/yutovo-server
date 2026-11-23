@@ -538,7 +538,7 @@ void AuthController::Register(const HttpRequestPtr& req, std::function<void (con
             session->insert("max_files", r["max_files"].as<int>());
 
             SendOk(callback);
-            register_logger->Info("Register: login={}, ip={}", user.login, drogon::plugin::RealIpResolver::GetRealAddr(req).toIp());
+            GetRegisterLogger()->Info("Register: login={}, ip={}", user.login, drogon::plugin::RealIpResolver::GetRealAddr(req).toIp());
         }
         else
         {
@@ -600,7 +600,7 @@ void AuthController::UnRegister(const HttpRequestPtr& req, std::function<void (c
             return;
         }
         session->erase("user_id");
-        register_logger->Info("Unregister: user_id={}, ip={}", user_id, drogon::plugin::RealIpResolver::GetRealAddr(req).toIp());
+        GetRegisterLogger()->Info("Unregister: user_id={}, ip={}", user_id, drogon::plugin::RealIpResolver::GetRealAddr(req).toIp());
     }
     catch (const orm::DrogonDbException& e)
     {
@@ -609,7 +609,7 @@ void AuthController::UnRegister(const HttpRequestPtr& req, std::function<void (c
         return;
     }
 
-    auth_logger->Info("Unregister: login={}, user_id={}", login, user_id);
+    GetAuthLogger()->Info("Unregister: login={}, user_id={}", login, user_id);
     SendOk(callback);
 }
 
@@ -758,7 +758,7 @@ void AuthController::Login(const HttpRequestPtr& req, std::function<void (const 
     }
 
     session->erase("captcha");
-    auth_logger->Info("Login: login={}, user_id={}, ip={}", login, user_id, drogon::plugin::RealIpResolver::GetRealAddr(req).toIp());
+    GetAuthLogger()->Info("Login: login={}, user_id={}, ip={}", login, user_id, drogon::plugin::RealIpResolver::GetRealAddr(req).toIp());
     GetLogger(session_id)->Info("Login: login={}, user_id={}, ip={}", login, user_id, drogon::plugin::RealIpResolver::GetRealAddr(req).toIp());
 }
 
@@ -808,7 +808,7 @@ void AuthController::Logout(const HttpRequestPtr& req, std::function<void (const
         SendError(k500InternalServerError, e.base().what(), session_id, callback);
     }
 
-    auth_logger->Info("Logout: login={}, user_id={}", login, user_id);
+    GetAuthLogger()->Info("Logout: login={}, user_id={}", login, user_id);
 }
 
 void AuthController::RefreshToken(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)>&& callback)
@@ -881,7 +881,7 @@ void AuthController::RefreshToken(const HttpRequestPtr& req, std::function<void 
         session->insert("session_id", session_id);
 
         if (last_login != login)
-            auth_logger->Info("Login: login={}, user_id={}", login, user_id);
+            GetAuthLogger()->Info("Login: login={}, user_id={}", login, user_id);
 
         auto session_expires_date = trantor::Date::now().after(session_expires);
         SendOkTokens(callback, login, access_uuid, refresh_uuid, session_id, access_expires, refresh_expires, session_expires_date);

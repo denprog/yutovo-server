@@ -61,9 +61,6 @@ private:
 
     std::string MakeSitemap(const std::string& base_url);
 
-    Logger* ref_logger = Logger::GetInstance(GetDeployPath() + "/log/yutovo-server/references", "server", true, true);
-    Logger* downloads_logger = Logger::GetInstance(GetDeployPath() + "/log/yutovo-server/downloads", "server", true, true);
-
     struct SitemapEntry
     {
         std::chrono::steady_clock::time_point time;

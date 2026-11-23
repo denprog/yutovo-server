@@ -19,6 +19,10 @@ yutovo::Logger* GetLogger(const std::string& session_id);
 yutovo::Logger* GetSolverLogger(const std::string& solver_id);
 yutovo::Logger* GetCalculatorLogger(const std::string& solver_id);
 yutovo::Logger* GetUpdatesLogger(const std::string& session_id);
+yutovo::Logger* GetReferencesLogger();
+yutovo::Logger* GetDownloadsLogger();
+yutovo::Logger* GetAuthLogger();
+yutovo::Logger* GetRegisterLogger();
 
 bool IsGuid(const std::string& str);
 

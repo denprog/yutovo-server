@@ -87,10 +87,6 @@ public:
 private:
     void UpdateSessionTime(const std::string& session_id);
     static unsigned int SecureRandomUInt(unsigned int max);
-
-private:
-    Logger* auth_logger = Logger::GetInstance(GetDeployPath() + "/log/yutovo-server/auth", "server", true, true);
-    Logger* register_logger = Logger::GetInstance(GetDeployPath() + "/log/yutovo-server/register", "server", true, true);
 };
 
 }
