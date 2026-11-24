@@ -882,4 +882,33 @@ TEST_F(SessionTest, root_page)
     ) << body;
 }
 
+//Module brackets render as the vertical bar operators
+TEST_F(SsrTest, article_module_brackets)
+{
+    Json::Value open_bracket;
+    open_bracket["type"] = 73;
+    open_bracket["symbol"] = "|";
+    Json::Value close_bracket;
+    close_bracket["type"] = 74;
+    close_bracket["symbol"] = "|";
+
+    Json::Value paragraph = MakeCodeParagraph(open_bracket);
+    paragraph["elements"].append(MakeCodeString("-5"));
+    paragraph["elements"].append(close_bracket);
+
+    Json::Value paragraphs;
+    paragraphs.append(MakeParagraph("Основной текст", MakeRow(MakeCodeBlock(paragraph))));
+
+    Json::Value document = MakeDocument(paragraphs);
+    SsrDocument ssr(document);
+    ASSERT_TRUE(ssr.GenerateArticle("Модуль") ==
+        "<article>"
+            "<h1>Модуль</h1>"
+            "<p><math xmlns='http://www.w3.org/1998/Math/MathML'>"
+                "<mo>|</mo><mi>-5</mi><mo>|</mo>"
+            "</math></p>"
+        "</article>"
+    ) << ssr.GenerateArticle("Модуль");
+}
+
 }
